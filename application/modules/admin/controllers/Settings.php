@@ -44,20 +44,6 @@ if (!defined('BASEPATH'))
 			if ($this->mdl_users->run_validation('validation_rules_change_password_setting')) {
 				$this->mdl_users->save_change_password($this->session->userdata('user_id'), $this->input->post('user_password'));
 			}
-			/*Editor details change*/
-			if ($this->mdl_users->run_validation('validation_rules_editors')) {
-				$editor = $this->mdl_users->where('role', '6')->get()->row();
-				if($editor->email != $this->input->post('editor_email')) {
-					$user_exists = $this->mdl_users->user_exists($this->input->post('editor_email'));
-					if(!$user_exists) {
-						$this->mdl_users->save_editor_details($this->input->post('editor_email'), $this->input->post('editor_password'));
-						$this->session->set_flashdata('alert_success', lang('settings_successfully_saved'));
-					} else {
-						$error[] = lang('exists_username');
-						$this->session->set_flashdata('alert_error', 'Editors '.lang('exists_username'));
-					}
-				}
-			}
 			redirect('admin/settings');
 		}
 		$editor = $this->mdl_users->getEditorDetails();

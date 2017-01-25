@@ -49,7 +49,7 @@ $lang['currency_symbol_placement'] = 'Currency Symbol Placement';
 $lang['currency_symbol'] = 'Currency Symbol';
 $lang['current_activity'] = 'Current Activity';
 $lang['customer'] = 'Customer';
-$lang['dashboard'] = 'Dashboard';
+
 $lang['database_properly_configured'] = 'The database is properly configured';
 $lang['database'] = 'Database';
 $lang['date_applied'] = 'Date Applied';
@@ -606,7 +606,7 @@ $lang['time_end'] = 'Time end';
 $lang['available_seats'] = 'Available seats';
 $lang['no_route'] = 'Nº Route';
 $lang['rate'] = 'Rate';
-$lang['exists_username'] = 'Email id alredy exists';
+
 $lang['pending'] = 'Pending';
 $lang['avail_seats'] = 'City to Airp. Available seats.';
 $lang['return_seats'] = 'Airp. To City available seats.';
@@ -673,4 +673,61 @@ $lang['kids_popup'] = 'Kids are under 5 years. More than 5 years are adults.';
 $lang['passengers_price'] = 'Passengers Price';
 $lang['pay_by_credit'] = 'Credit card';
 $lang['how_pay'] = 'How you want to pay?';
+
+
+/*----*/
+$lang['exists_username'] = 'Email id alredy exists';
+$lang['business'] = 'Business';
+$lang['business_title'] = 'Business';
+$lang['business_id'] = 'ID business';
+$lang['name'] = 'Name';
+$lang['email'] = 'E-mail';
+$lang['direction'] = 'direction';
+$lang['telephone'] = 'Telephone';
+$lang['contact_person'] = 'Contact person';
+$lang['time_limit'] = 'Time limit';
+$lang['hour'] = 'Hour';
+$lang['minutes'] = 'Minutes';
+$lang['edit'] = 'Edit';
+
+$lang['menus'] = 'Menus';
+$lang['menu'] = 'Menu';
+$lang['basic_menu'] = 'Basic menu';
+$lang['diet_menu'] = 'Diet menu';
+$lang['image'] = 'Image';
+$lang['disabled'] = 'Disabled';
+
+$lang['basic'] = 'Basic';
+$lang['diet'] = 'Diet';
+
+$lang['complement'] = 'Complement';
+$lang['primary_plate'] = 'Primary plate';
+$lang['description_primary_plate'] = 'Description primary plate';
+$lang['secondary_plate'] = 'Secondary plate';
+$lang['description_secondary_plate'] = 'Description secondary plate';
+$lang['postre'] = 'Postre';
+$lang['date'] = 'Date';
+
+$lang['client'] = 'Client';
+$lang['clients'] = 'Clients';
+$lang['clients_list'] = 'Clients list';
+$lang['validation_pending'] = 'Pending validation';
+$lang['client_code'] = 'client code';
+$lang['surname'] = 'Surname';
+$lang['password'] = 'Password';
+$lang['dni'] = 'DNI';
+$lang['intolerances'] = 'Intolerances';
+$lang['iban'] = 'IBAN';
+$lang['bill'] = 'Bill';
+$lang['billing_data'] = 'Billing data';
+$lang['yes'] = 'Yes';
+$lang['no'] = 'No';
+
+$lang['orders'] = 'Orders';
+$lang['today_menus'] = 'Today menus';
+$lang['total_clients'] = 'Clients';
+$lang['total_business'] = 'Business';
+$lang['dashboard'] = 'Dashboard';
+$lang['legal_condition'] = 'Legal condition';
+/*----*/
 ?>

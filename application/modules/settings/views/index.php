@@ -2,7 +2,6 @@
 	<div class="headerbar">
 		<div class="clearfix">
 			<h1 class="pull-left"><?php echo lang('settings'); ?></h1>
-			<?php $this->layout->load_view('layout/header_buttons'); ?>
 		</div>
 	</div>
 	<div class="row">
@@ -20,27 +19,34 @@
 							<li><a href="#profile-4" data-toggle="tab">Social</a></li>
 							<li><a href="#profile-2" data-toggle="tab">Footer</a></li>
 							<li><a href="#profile-3" data-toggle="tab">File</a></li>
-							<li><a href="#profile-5" data-toggle="tab">Editor details</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="panel-body">
 					<div class="tab-content">
 						<div class="tab-pane active" id="profile-1">
-							<?php $this->layout->load_view('settings/form_general'); ?>
+							<div class="form-content">
+								<?php $this->layout->load_view('settings/form_general'); ?>
+							</div>
 						</div>
 						<div class="tab-pane" id="profile-2">
-							<?php $this->layout->load_view('settings/form_footer'); ?>
+							<div class="form-content">
+								<?php $this->layout->load_view('settings/form_footer'); ?>
+							</div>
 						</div>
 						<div class="tab-pane" id="profile-3">
-							<?php $this->layout->load_view('settings/form_file'); ?>
+							<div class="form-content">
+								<?php $this->layout->load_view('settings/form_file'); ?>
+							</div>
 						</div>
 						<div class="tab-pane" id="profile-4">
-							<?php $this->layout->load_view('settings/form_social'); ?>
+							<div class="form-content">
+								<?php $this->layout->load_view('settings/form_social'); ?>
+							</div>
 						</div>
-						<div class="tab-pane" id="profile-5">
-							<?php $this->layout->load_view('settings/form_password'); ?>
-						</div>
+					</div>
+					<div style="margin-top:60px !important;">
+						<?php $this->layout->load_view('layout/header_buttons'); ?>
 					</div>
 				</div>
 			</div>

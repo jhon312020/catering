@@ -24,49 +24,27 @@ class Dashboard extends Admin_Controller {
 	}
 
 	public function index() {
-		$this->load->model('collaborators/mdl_collaborators');
-		$this->load->model('routes/mdl_calendars');
-		$this->load->model('routes/mdl_routes');
-		$this->load->model('faq/mdl_faq');
-		$this->load->model('shuttles/mdl_shuttles');
-		$this->load->model('partners/mdl_partners');
-		$this->load->model('contacts/mdl_contacts');
-		$this->load->model('users/mdl_clients');
-		$this->load->model('charts/mdl_charts');
-		$total_passengers = $this->db->query("select sum(kids+adults) as total from tbl_booking where is_active=1")->row();
-		$total_price = $this->db->query("select sum(price) as total from tbl_booking where is_active=1")->row();
-		$today_sales = $this->db->query("select sum(price) as total from tbl_booking where is_active=1 and created like '".Date('Y-m-d')."%'")->row();
-		$today_billing = $this->db->query("select sum(price) as total from tbl_booking where is_active=1 and start_journey = '".Date('Y-m-d')."'")->row();
-		$today_passengers = $this->db->query("select sum(kids+adults) as total from tbl_booking where is_active=1 and start_journey = '".Date('Y-m-d')."'")->row();
+		$this->load->model('business/mdl_business');
+		$this->load->model('clients/mdl_clients');
+		$this->load->model('menus/mdl_menus');
+
+		$today_menus = $this->mdl_menus->where('created_at', date('Y-m-d'))->get()->num_rows();
+		$total_clients = $this->mdl_clients->get()->num_rows();
+		$total_business = $this->mdl_business->get()->num_rows();
 		$data = array(
-			'shuttles' =>$this->mdl_shuttles->get()->num_rows(),
-			'partners' =>$this->mdl_partners->get()->num_rows(),
-			'contacts' =>$this->mdl_contacts->get()->num_rows(),
-			'collaborators' =>$this->mdl_collaborators->get()->num_rows(),
-			'calendars' => $this->mdl_calendars->get()->num_rows(),
-			'clients' => $this->mdl_clients->get()->num_rows(),
-			'routes' => $this->mdl_routes->get()->num_rows(),
-			'faq' =>$this->mdl_faq->get()->num_rows(),
-			'total_passengers' =>$total_passengers->total,
-			'total_price'=>$total_price->total,
-			'passengers_country'=>$this->mdl_charts->get_passengerByCountry(),
-			'today_booking'=>$this->mdl_shuttles->where("start_journey = '".Date('Y-m-d')."' and is_active = 1")->get()->num_rows(),
-			'today_billing'=>$today_billing->total,
-			'today_sales'=>$today_sales->total,
-			'today_passengers'=>$today_passengers->total
+			'today_menus' => $today_menus,
+			'total_clients' => $total_clients,
+			'total_business' => $total_business,
 		);
-		
 		/*$otherdb = $this->load->database('otherdb', TRUE);
 		$data = $otherdb->query('show tables')->result_array();
 		print_r($data);die;*/
-		
 		$this->layout->set($data);
 		$this->layout->buffer('content', 'admin/index');
 		$this->layout->render();
 	}
 	
 	public function set_lang($lang) {
-		
 		if(trim($lang) == "english") {
 			$lang = "spanish";
 		} else if (trim($lang) == "spanish") {

@@ -26,7 +26,6 @@ class Anonymous_Controller extends MX_Controller {
       } else $lang = "spanish";
       $this->load->helper('language');
       $this->lang->load('cms', $lang);
-      $this->load->model('menu/mdl_menu');
       $this->load->module('layout');
     }
 }

@@ -59,11 +59,14 @@ class Base_Controller extends MX_Controller {
 						 array('JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'),
 						);
 		$this->ckeditor->config['language'] = 'en';
-		$this->ckeditor->config['width'] = '600px';
+		$this->ckeditor->config['width'] = '100%';
 		$this->ckeditor->config['height'] = '300px';            
 		$this->ckeditor->config['allowedContent'] = TRUE;     
 		//Add Ckfinder to Ckeditor
-
+		$prepend = array('00', '01','02','03','04','05','06','07','08','09');
+    $data['hours'] = array_merge($prepend, range(10, 23));
+		$data['minutes'] = array('00'=>'00','05'=>'05') + array_combine(range(10, 55, 5), range(10, 55, 5));
+		$this->load->vars($data);
 		
 		$this->ckfinder->SetupCKEditor($this->ckeditor,"../../../../assets/ckfinder/"); 
 		

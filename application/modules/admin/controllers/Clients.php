@@ -3,87 +3,55 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Clients extends Admin_Controller {
-
-    public function __construct() {
-        parent::__construct();
-        $this->load->helper('comman_helper');
-        $this->load->model('users/mdl_clients');
-		$this->load->model('users/mdl_users');
-    }
-
+	public function __construct() {
+		parent::__construct();
+		$this->load->model('clients/mdl_clients');
+		$this->load->model('business/mdl_business');
+		$data = array();
+		$business_list = $this->mdl_business->select('id, name')->where('is_active', 1)->get()->result_array();
+		$data['business_list'] = array(''=>'Select') + array_combine(array_column($business_list, 'id'), array_column($business_list, 'name'));
+		$this->load->vars($data);
+		$this->path = $this->mdl_settings->setting('site_url').$this->mdl_settings->setting('upload_folder')."images/clients/";
+	}
 	public function index() {
-		$data = array(
-			'clients' => $this->mdl_clients->order_by('created', 'desc')->get()->result()
-		);
-		
-		$this->layout->set($data);
-		$this->layout->buffer('content', 'users/clients_list');
+		$pending_clients = $this->mdl_clients
+								->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, clients.is_active, clients.created_at, clients.updated_at, business.name as business')
+								->join('business', 'business.id = clients.business_id', 'left')
+								->where('clients.is_active', 0)
+								->get()->result();
+		$clients_list = $this->mdl_clients
+								->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, clients.is_active, clients.created_at, clients.updated_at, business.name as business')
+								->join('business', 'business.id = clients.business_id', 'left')
+								->where('clients.is_active', 1)
+								->get()->result();						
+		$this->layout->set(array('pending_clients' => $pending_clients, 'clients_list' => $clients_list));
+		$this->layout->buffer('content', 'clients/index');
 		$this->layout->render();
 	}
 	public function form($id = NULL) {
+		$error_flg = false;
+		$error = array();
 		if ($this->input->post('btn_cancel')) {
 			redirect('admin/clients');
 		}
-		$error = array();
-		
-		$clients = $this->db->where('id', $id)->get('clients')->row();
-		
 		if ($this->mdl_clients->run_validation()) {
-			if($id == null){
-				$email_exists = $this->mdl_users->user_exists($this->input->post('email'));
-			} else {
-				if($clients->email != $this->input->post('email'))
-					$email_exists = $this->mdl_users->user_exists($this->input->post('email'));
-				else
-					$email_exists = false;
+			$data = $this->input->post();
+			unset($data['btn_submit']);
+			if(is_null($id) || $id == ''){
+				$id = $this->mdl_clients->save(null, $data);
 			}
-			
-			if (!$email_exists) {
-				$user = array();
-				$user['role'] = 4;
-				$user['first_name'] = $this->input->post('name');
-				$user['last_name'] = $this->input->post('surname');
-				$user['email'] = $this->input->post('email');
-				$user['password'] = md5($this->input->post('password'));
-				$user['secret_key'] = base64_encode($this->input->post('password').'_pickngo');
-				$clients = $this->input->post();
-				unset($clients['password']);
-				unset($clients['fakeusernameremembered']);
-				unset($clients['btn_submit']);
-				if(is_null($id) || $id == ''){
-					$this->mdl_clients->save(null,$clients);
-					$user['client_id'] = $this->db->insert_id();
-					$this->mdl_users->save(null, $user);
-				} else {
-					$user_array = current($this->db->from('users')->where('client_id',$id)->get()->result_array());
-					$this->mdl_users->save($user_array['id'], $user);
-					$this->mdl_clients->save($id,$clients);
-				}
+			else{
+				$this->mdl_clients->save($id,$data);
+			}
+			if(!$error_flg) {
 				redirect('admin/clients');
-			} else {
-				$error_flg = true;
-				$error[] = lang('exists_username');
-				//redirect($this->uri->uri_string());
 			}
 		}
-
 		if ($id and !$this->input->post('btn_submit')) {
 			$this->mdl_clients->prep_form($id);
 		}
-		$user_array = current($this->db->from('users')->where('client_id',$id)->get()->result_array());
-		if($this->input->post('password'))
-			$this->mdl_clients->form_values['password'] = $this->input->post('password');
-		else
-			$this->mdl_clients->form_values['password'] = str_replace('_pickngo', '', base64_decode($user_array['secret_key']));
-		$this->layout->set(
-			array(
-				'id'           => $id,
-				'readonly'=>false,
-				'user_array'=>$user_array,
-				'error'=>$error
-			)
-		);
-		$this->layout->buffer('content', 'users/client_form');
+		$this->layout->set(array('readonly'=>false, 'error'=>$error));
+		$this->layout->buffer('content', 'clients/form');
 		$this->layout->render();
 	}
 	public function view($id) {
@@ -92,28 +60,44 @@ class Clients extends Admin_Controller {
 		if ($this->input->post('btn_cancel')) {
 			redirect('admin/clients');
 		}
-
-		if ($id) {
-			$this->mdl_clients->prep_form($id);
-		}
-		
-		$user_array = current($this->db->from('users')->where('client_id',$id)->get()->result_array());
-		$this->layout->set(array('id'=>$id, 'readonly'=>true, 'user_array'=>$user_array, 'error'=>$error));
-		$this->layout->buffer('content', 'users/client_form');
+		$this->mdl_clients->prep_form($id);
+		$this->layout->set(array('readonly'=>true, 'error'=>$error, 'path'=>'./assets/cc/images/clients/'));
+		$this->layout->buffer('content', 'clients/form');
 		$this->layout->render();
 	}
 	public function toggle($id, $bool){
 		if ($id){
 			$bool = ($bool) ? false : true;
 			$this->mdl_clients->save($id, array('is_active'=>$bool));
-			redirect('admin/clients/index');
+			redirect('admin/clients');
 		}
 	}
 	public function delete($id) {
-		$this->db->where('client_id',$id);
-		$this->db->delete('tbl_users');
 		$this->mdl_clients->delete($id);
 		redirect('admin/clients');
 	}
-
+	function do_upload($id, $name) {
+		$config['upload_path'] = './assets/cc/images/clients/'.$name.'/'.$id.'/';
+		if(!is_dir($config['upload_path'])) {
+			mkdir($config['upload_path'], 0777, true);
+		}
+		$config['allowed_types'] = 'gif|jpg|png';
+		$this->load->library('upload', $config);
+		//print_r($_FILES);
+		$files = $_FILES; // storing all the files in a temp variable;
+		$cpt = count($_FILES[$name]['name']);
+		log_message("error", "FILE COUNT = " . $cpt);
+		log_message("error", "FILE NAME = " . $files[$name]['name']);
+		$success = $this->upload->do_upload($name);
+		if (!$success) {
+			$data = array('error' => $this->upload->display_errors());
+			echo "Server upload issue.  Please try after sometimes! Kindly press ctrl + F5";
+			//print_r($data);
+			exit;
+			//break;
+		} else {
+			$data = $this->upload->data();
+		}
+		return $data;
+  }
 }

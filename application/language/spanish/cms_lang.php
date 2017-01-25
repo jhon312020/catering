@@ -1168,7 +1168,7 @@ $lang['no_route'] = 'Nº Route';
 
 $lang['rate'] = 'Rate';
 
-$lang['exists_username'] = 'Email id alredy exists';
+
 
 $lang['pending'] = 'Pending';
 
@@ -1304,5 +1304,74 @@ $lang['pay_by_credit'] = 'Credit card';
 
 $lang['how_pay'] = 'How you want to pay?';
 
-?>
 
+/*----*/
+$lang['exists_username'] = 'Email id alredy exists';
+$lang['business'] = 'Empresas';
+$lang['business_title'] = 'Empresa';
+$lang['business_id'] = 'ID empresa';
+$lang['name'] = 'Nombre';
+$lang['email'] = 'E-mail';
+$lang['direction'] = 'Dirección';
+$lang['telephone'] = 'Teléfono';
+$lang['contact_person'] = 'Persona de contacto';
+$lang['time_limit'] = 'Hora limite';
+$lang['hour'] = 'Hora';
+$lang['minutes'] = 'Minutos';
+$lang['edit'] = 'Edit';
+
+$lang['menus'] = 'Menús';
+$lang['menu'] = 'Menu';
+$lang['basic_menu'] = 'Menú básico';
+$lang['diet_menu'] = 'Menú diet';
+$lang['image'] = 'Imagen';
+$lang['disabled'] = 'Deshabilitar';
+
+$lang['basic'] = 'Básico';
+$lang['diet'] = 'Diet';
+
+$lang['complement'] = 'Complemento';
+$lang['primary_plate'] = 'Primar plato';
+$lang['description_primary_plate'] = 'Descripción primar plato';
+$lang['secondary_plate'] = 'Segundo plate';
+$lang['description_secondary_plate'] = 'Descripción segundo plate';
+$lang['postre'] = 'Postre';
+$lang['date'] = 'Fecha';
+
+$lang['basic_complement'] = 'Básico complemento';
+$lang['basic_primary_plate'] = 'Básico primar plato';
+$lang['basic_description_primary_plate'] = 'Básico primar plato descripción';
+$lang['basic_secondary_plate'] = 'Básico segundo plate';
+$lang['basic_description_secondary_plate'] = 'Básico segundo plate descripción';
+$lang['basic_postre'] = 'Básico postre';
+$lang['diet_complement'] = 'Diet complemento';
+$lang['diet_primary_plate'] = 'Diet primary plato';
+$lang['diet_description_primary_plate'] = 'Diet primar plato descripción';
+$lang['diet_secondary_plate'] = 'Diet segundo plato';
+$lang['diet_description_secondary_plate'] = 'Diet segundo plato descripción';
+$lang['diet_postre'] = 'Diet postre';
+
+$lang['client'] = 'Cliente';
+$lang['clients'] = 'Clientes';
+$lang['clients_list'] = 'Lista clientes';
+$lang['validation_pending'] = 'Pendiente validación';
+$lang['client_code'] = 'Cod. cliente';
+$lang['surname'] = 'Apellidos';
+$lang['password'] = 'Contraseña';
+$lang['dni'] = 'DNI';
+$lang['intolerances'] = 'Intolerancias';
+$lang['iban'] = 'IBAN';
+$lang['bill'] = 'Factura';
+$lang['billing_data'] = 'Datos de facturation';
+$lang['yes'] = 'Si';
+$lang['no'] = 'No';
+
+$lang['orders'] = 'Pedidos';
+$lang['today_menus'] = 'Menús hoy';
+$lang['total_clients'] = 'Clientes';
+$lang['total_business'] = 'Empresas';
+$lang['dashboard'] = 'Tablero';
+$lang['legal_condition'] = 'Condiciones legales';
+/*----*/
+
+?>

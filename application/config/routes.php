@@ -59,105 +59,28 @@ $route['login']         = "sessions/login";
 $route['admin/(:any)']      = 'admin/$1';
 
 
-$route['es/project_details/(:any)/(:num)'] = 'node/loadprojectdata_es/$1/$2';
-$route['en/project_details/(:any)/(:num)'] = 'node/loadprojectdata_en/$1/$2';
-$route['ca/project_details/(:any)/(:num)'] = 'node/loadprojectdata_ca/$1/$2';
+$route['en/list'] = 'node/list';
+$route['es/list'] = 'node/list';
 
-$route['es/categories/(:num)'] = 'node/loadcategories_es/$1';
-$route['en/categories/(:num)'] = 'node/loadcategories_en/$1';
-$route['ca/categories/(:num)'] = 'node/loadcategories_ca/$1';
+$route['en/register'] = 'node/register';
+$route['es/register'] = 'node/register';
 
-$route['en/news/(:num)'] = 'node/display_news/en/$1';
-$route['es/news/(:num)'] = 'node/display_news/es/$1';
-$route['ca/news/(:num)'] = 'node/display_news/ca/$1';
+$route['en/listmenu'] = 'node/listmenu';
+$route['es/listmenu'] = 'node/listmenu';
 
-$route['en/search'] = 'node/display_projects/en';
-$route['es/search'] = 'node/display_projects/es';
-$route['ca/search'] = 'node/display_projects/ca';
+$route['en/menu'] = 'node/menu';
+$route['es/menu'] = 'node/menu';
 
-$route['en/change_password/:any'] = 'node/change_password/$1';
-$route['es/change_password/:any'] = 'node/change_password/$1';
+$route['en/payment'] = 'node/payment';
+$route['es/payment'] = 'node/payment';
 
-$route['en/changepassword'] = 'node/changepassword';
-$route['es/changepassword'] = 'node/changepassword';
+$route['en/profile'] = 'node/profile';
+$route['es/profile'] = 'node/profile';
 
-$route['en/recovery_password/:any'] = 'node/recovery_password/$1';
-$route['es/recovery_password/:any'] = 'node/recovery_password/$1';
-
-$route['en/collaborators_logout'] = 'node/collaborators_logout';
-$route['es/collaborators_logout'] = 'node/collaborators_logout';
-
-$route['en/carchannel'] = 'node/drivers_login';
-$route['es/carchannel'] = 'node/drivers_login';
-
-$route['en/drivers_logout'] = 'node/drivers_logout';
-$route['es/drivers_logout'] = 'node/drivers_logout';
-
-$route['en/route_details'] = 'node/route_details';
-$route['es/route_details'] = 'node/route_details';
-
-$route['en/calendar_details/:any'] = 'node/calendar_details/$1';
-$route['es/calendar_details/:any'] = 'node/calendar_details/$1';
-
-$route['en/booking_details'] = 'node/booking_details';
-$route['es/booking_details'] = 'node/booking_details';
-
-$route['en/view_booking_details/:any'] = 'node/view_booking_details/$1';
-$route['es/view_booking_details/:any'] = 'node/view_booking_details/$1';
-
-
-$route['en/contact']  = 'node/contact/en/';
-$route['es/contact']  = 'node/contact/es/';
-
-$route['en/contacts']   = 'node/contacts';
-$route['es/contacts']   = 'node/contacts';
-
-$route['en/partners']   = 'node/partners';
-$route['es/partners']   = 'node/partners';
-
-$route['en/faq']  = 'node/faq';
-$route['es/faq']  = 'node/faq';
-
-$route['en/aboutus']  = 'node/aboutus';
-$route['es/aboutus']  = 'node/aboutus';
-
-$route['en/franquicias']  = 'node/franquicias';
-$route['es/franquicias']  = 'node/franquicias';
-
-$route['en/concierge']  = 'node/concierge';
-$route['es/concierge']  = 'node/concierge';
-
-$route['en/mobile_booking']   = 'node/mobile_booking';
-$route['es/mobile_booking']   = 'node/mobile_booking';
+$route['en/contact'] = 'node/contact';
+$route['es/contact'] = 'node/contact';
 
 $route['en'] = 'node/index';
 $route['es'] = 'node/index';
 
-$route['en/collaborators_login'] = 'node/collaborators_login';
-$route['es/collaborators_login'] = 'node/collaborators_login';
-
-$route['en/terms'] = 'node/terms';
-$route['es/terms'] = 'node/terms';
-
-$route['en/success'] = 'node/success';
-$route['es/success'] = 'node/success';
-
-$route['en/confirmation'] = 'node/confirmation';
-$route['es/confirmation'] = 'node/confirmation';
-
-$route['en/error'] = 'node/error';
-$route['es/error'] = 'node/error';
-
-$route['en/process'] = 'node/process';
-$route['es/process'] = 'node/process';
-
-$route['en/reservation'] = 'node/reservation';
-$route['es/reservation'] = 'node/reservation';
-
-$route['en/ajaxreturn1'] = 'node/ajaxreturn1';
-$route['es/ajaxreturn1'] = 'node/ajaxreturn1';
-
-$route['en/(:any)'] = 'node/loaddata_en/$1';
-$route['es/(:any)'] = 'node/loaddata_es/$1';
-$route['ca/(:any)'] = 'node/loaddata_ca/$1';
 

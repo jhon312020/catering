@@ -20,10 +20,10 @@ $cms_lang = $this->session->userdata('cms_lang');
 	if($cms_lang == 'english'){
 	?>
 	<TITLE><?php echo $title; ?>  -  Low Cost Barcelona - Airport Shuttle</TITLE>
-	<META NAME="description" CONTENT="Pick´n Go is a premium and low cost shuttle transfer (door to door) between Barcelona´s airport and your hostel/hotel. With numerous advantages like free Internet, Welcome Pack, Discounts, etc.">
+	<META NAME="description" CONTENT="Caterings is a premium and low cost shuttle transfer (door to door) between Barcelona´s airport and your hostel/hotel. With numerous advantages like free Internet, Welcome Pack, Discounts, etc.">
 	<META NAME="keywords" CONTENT="barcelona, low cost, premium, shuttle, car, bus, trip, airport, city, travel, trip, hotel, hostel, free internet, discounts, transfers, booking.">
 	<META NAME="robot" CONTENT="index,follow">
-	<META NAME="copyright" CONTENT="Copyright © Pick\'n Go">
+	<META NAME="copyright" CONTENT="Copyright © Caterings">
 	<META NAME="author" CONTENT="Grupo Visualiza - www.grupovisualiza.com">
 	<META NAME="generator" CONTENT="www.onlinemetatag.com">
 	<META NAME="language" CONTENT="EN">
@@ -54,8 +54,8 @@ $cms_lang = $this->session->userdata('cms_lang');
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/neon/css/neon-theme.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/neon/css/neon-forms.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/neon/css/custom.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/datepicker.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/bootstrap-datepicker.min.css">
+	<!--<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/bootstrap-datetimepicker.css">-->
 	<script src="<?php echo base_url(); ?>assets/neon/js/jquery-1.11.0.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/cc/js/bootstrap.js"></script>
 	<link href="<?php echo base_url(); ?>assets/cc/css/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">
@@ -336,8 +336,9 @@ $cms_lang = $this->session->userdata('cms_lang');
 		<!-- data table -->
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/neon/js/datatables/responsive/css/datatables.responsive.css">
 		<script src="<?php echo base_url(); ?>assets/neon/js/jquery.dataTables.min.js"></script>
-		<script src="<?php echo base_url(); ?>assets/cc/js/bootstrap-datepicker.js"></script>
-		<script src="<?php echo base_url(); ?>assets/default/js/bootstrap-datetimepicker.min.js"></script>
+		
+		<script src="<?php echo base_url(); ?>assets/cc/js/moment-with-locales.js"></script>
+		<script src="<?php echo base_url(); ?>assets/cc/js/bootstrap-datetimepicker.min.js"></script>
 		
 
 			
@@ -357,6 +358,7 @@ $cms_lang = $this->session->userdata('cms_lang');
 		<!-- Bottom Scripts -->
 		<script src="<?php echo base_url(); ?>assets/neon/js/gsap/main-gsap.js"></script>
 		<script src="<?php echo base_url(); ?>assets/neon/js/jquery-ui/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="<?php echo base_url(); ?>assets/cc/js/bootstrap-datepicker.min.js"></script>
 		<script src="<?php echo base_url(); ?>assets/neon/js/bootstrap.js"></script>
 		<script src="<?php echo base_url(); ?>assets/neon/js/joinable.js"></script>
 		<script src="<?php echo base_url(); ?>assets/neon/js/resizeable.js"></script>
