@@ -25,6 +25,11 @@ class Mdl_menus extends Response_Model {
                 'label' => lang('description_primary_plate'),
                 'rules' => 'required'
             ),
+						/* 'primary_image' => array(
+                'field' => 'primary_image',
+                'label' => lang('primary_image'),
+                'rules' => 'required'
+            ), */
             'secondary_plate' => array(
                 'field' => 'secondary_plate',
                 'label' => lang('secondary_plate'),
@@ -35,6 +40,11 @@ class Mdl_menus extends Response_Model {
                 'label' => lang('description_secondary_plate'),
                 'rules' => 'required'
             ),
+						/* 'secondary_image' => array(
+                'field' => 'secondary_image',
+                'label' => lang('secondary_image'),
+                'rules' => 'required'
+            ), */
 						'postre' => array(
                 'field' => 'postre',
                 'label' => lang('postre'),

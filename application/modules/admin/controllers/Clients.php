@@ -36,6 +36,8 @@ class Clients extends Admin_Controller {
 		}
 		if ($this->mdl_clients->run_validation()) {
 			$data = $this->input->post();
+			$data['password'] = md5($data['password']);
+			$data['password_key'] = base64_encode($data['password'].'_catering');
 			unset($data['btn_submit']);
 			if(is_null($id) || $id == ''){
 				$id = $this->mdl_clients->save(null, $data);

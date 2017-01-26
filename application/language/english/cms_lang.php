@@ -703,8 +703,10 @@ $lang['diet'] = 'Diet';
 $lang['complement'] = 'Complement';
 $lang['primary_plate'] = 'Primary plate';
 $lang['description_primary_plate'] = 'Description primary plate';
+$lang['primary_image'] = 'Primary image';
 $lang['secondary_plate'] = 'Secondary plate';
 $lang['description_secondary_plate'] = 'Description secondary plate';
+$lang['secondary_image'] = 'Secondary image';
 $lang['postre'] = 'Postre';
 $lang['date'] = 'Date';
 
@@ -729,5 +731,12 @@ $lang['total_clients'] = 'Clients';
 $lang['total_business'] = 'Business';
 $lang['dashboard'] = 'Dashboard';
 $lang['legal_condition'] = 'Legal condition';
+
+$lang['menu_reservations'] = 'Menu reservations';
+$lang['statistics'] = 'Statistics';
+
+$lang['username'] = 'Username';
+
+$lang['invalid_credentials'] = 'Invalid credentials';
 /*----*/
 ?>

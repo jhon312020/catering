@@ -13,7 +13,7 @@ class Mdl_clients extends Response_Model {
             'client_code' => array(
                 'field' => 'client_code',
                 'label' => lang('client_code'),
-                'rules' => 'required'
+                'rules' => 'required|min_length[4]|is_unique[clients.client_code]'
             ),
             'name' => array(
                 'field' => 'name',
@@ -33,7 +33,7 @@ class Mdl_clients extends Response_Model {
 						'email' => array(
                 'field' => 'email',
                 'label' => lang('email'),
-                'rules' => 'required'
+                'rules' => 'required|valid_email'
             ),
 						'password' => array(
                 'field' => 'password',
@@ -72,5 +72,37 @@ class Mdl_clients extends Response_Model {
             ),
         );
     }
+		public function validation_rules_clients_login() {
+        return array(
+            'username'  => array(
+                'field' => 'username',
+                'label' => 'username',
+                'rules' => 'required'
+            ),
+            'password' => array(
+                'field' => 'password',
+                'label' => 'password',
+                'rules' => 'required'
+            )
+        );
+    }
+		public function check_clients($data){
+			$result = $this->mdl_clients->where(array('email'=>$data['username'], 'password'=>md5($data['password'])))->get()->row();
+			if(count($result)>0) {
+				foreach($result as $res){
+					if($res->is_active == 0) {
+							$this->session->set_flashdata('alert_error', 'The given user is inactive. Please check with administrator');
+							return false;
+					} else {
+    				$session_data = array('user_type'	 => $res->role, 'user_id'	 => $res->id, 'user_name' => $res->first_name." ".$res->last_name);
+    				$this->session->set_userdata($session_data);
+          }
+          return true;
+				}
+			} else {
+				$this->session->set_flashdata('alert_error', lang('invalid_credentials'));
+				return false;
+			}
+		}
 }
 ?>

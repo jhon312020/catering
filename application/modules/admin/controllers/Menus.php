@@ -25,19 +25,26 @@ class Menus extends Admin_Controller {
 		if ($this->input->post('btn_cancel')) {
 			redirect('admin/menus');
 		}
+		$editForm = false;
+		//var_dump($this->mdl_menus->run_validation());die;
 		if ($this->mdl_menus->run_validation()) {
 			$data = $this->input->post();
 			unset($data['btn_submit']);
 			$data['menu_date'] = date('Y-m-d', strtotime($data['menu_date']));
-			if(is_null($id) || $id == ''){
-				$id = $this->mdl_menus->save(null, $data);
+			if(is_null($id) || $id == '') {
+				$menu_data = $this->mdl_menus->where(['menu_date' => $data['menu_date'], 'menu_type_id' => $data['menu_type_id']])->get()->row();
+				$id = null;
+				if($menu_data) {
+					$id = $menu_data->id;
+				}
+				$res = $this->mdl_menus->save($id, $data);
 			}
 			else{
 				$this->mdl_menus->save($id,$data);
 			}
 			$file_array = array('primary_image', 'secondary_image');
 			foreach($file_array as $file) {
-				if(isset($_FILES[$file]['name'])) {
+				if(isset($_FILES[$file]['name']) && $_FILES[$file]['name']) {
 					$data = $this->do_upload($id, $file);
 				}
 			}
@@ -45,28 +52,58 @@ class Menus extends Admin_Controller {
 				redirect('admin/menus');
 			}
 		}
+		$menuEdit = false;
+		$menu_types = $this->mdl_menu_types->where('is_active', 1)->get()->result();
+		if($id) {
+			$menuEdit = true;
+			$data = $this->mdl_menus->where('id', $id)->get()->result_array();
+			$menu_types = $this->mdl_menu_types->where('id', $data[0]['menu_type_id'])->get()->result();
+		}
+		if(($id && !$this->input->post('btn_submit')) or ($id && $this->input->post('btn_submit')) or $this->input->post('btn_submit')) {
+			$editForm = true;
+		}
+		$post_params = $this->input->post();
+		$menu_id = $id;
 		if(!$id) {
 			$menu = $this->mdl_menus->where('menu_date', date('Y-m-d'))->get()->result_array();
 			if($menu) {
-				$id = array_column($menu, 'id');
+				$menu_id = array_column($menu, 'id');
 			}
 		}
-		$menu_types = $this->mdl_menu_types->where('is_active', 1)->get()->result();
-		if ($id and !$this->input->post('btn_submit')) {
-			$result = array();
-			if(is_array($id)) {
-				$data = $this->mdl_menus->where_in('id', $id)->get()->result_array();
+		
+		$result = array();
+		if ($menu_id and !$this->input->post('btn_submit')) {
+			if(is_array($menu_id)) {
+				$data = $this->mdl_menus->where_in('id', $menu_id)->get()->result_array();
 			} else {
-				$data = $this->mdl_menus->where('id', $id)->get()->result_array();
+				$data = $this->mdl_menus->where('id', $menu_id)->get()->result_array();
 				$menu_types = $this->mdl_menu_types->where('id', $data[0]['menu_type_id'])->get()->result();
 			}
 			foreach($data as $row) {
 				$result[$row['menu_type_id']] = $row;
 			}
 		}
-		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'path'=>'./assets/cc/images/menus/', 'result' => $result, 'menu_types' => $menu_types));
+		$show_image = true;
+		if($this->input->post('btn_submit')) {
+			$show_image = false;
+			$result[$post_params['menu_type_id']] = $post_params;
+		}
+		//print_r($menu_types);die;
+		//print_r($result);die;
+		/* echo "<pre>";
+		echo $editForm;
+		print_r(menu_types);
+		print_r($result);die; */
+		//echo $menuEdit;die;
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'path'=>base_url().'assets/cc/images/menus/', 'result' => $result, 'menu_types' => $menu_types, 'editForm' => $editForm, 'show_image' => $show_image, 'menuEdit' => $menuEdit));
 		$this->layout->buffer('content', 'menus/form');
 		$this->layout->render();
+	}
+	public function getMenus() {
+		$data = $this->input->post();
+		$menus = $this->mdl_menus->where('menu_date', date('Y-m-d', strtotime($data['menu_date'])))->get()->result_array();
+		$menu_type_id = array_column($menus, 'menu_type_id');
+		echo json_encode($menu_type_id);exit;
 	}
 	public function view($id) {
 		$error_flg = false;
@@ -91,7 +128,7 @@ class Menus extends Admin_Controller {
 		redirect('admin/menus');
 	}
 	function do_upload($id, $name) {
-		$config['upload_path'] = './assets/cc/images/menus/'.$name.'/'.$id.'/';
+		$config['upload_path'] = './assets/cc/images/menus/';
 		if(!is_dir($config['upload_path'])) {
 			mkdir($config['upload_path'], 0777, true);
 		}
@@ -111,6 +148,7 @@ class Menus extends Admin_Controller {
 			//break;
 		} else {
 			$data = $this->upload->data();
+			$this->mdl_menus->save($id, array($name=>$data['file_name']));
 		}
 		return $data;
   }

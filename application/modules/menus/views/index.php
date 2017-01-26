@@ -22,14 +22,27 @@
 	<tbody>
 		<?php 
 		$date = '';
-		$bgclass = 'trgreybg';
+		$bgclass = '';
+		$topClass = '';
 		foreach ($menus as $menu) {
-			if($date != '' && $date != $menu->menu_date) {
-				$bgclass = 'trwhitebg';
+			if($date != '' && $date == $menu->menu_date) {
+				$topClass = 'topBorder';
+			} else {
+				$topClass = '';
+				if($bgclass == '') {
+					$bgclass = 'trgreybg';
+				} else {
+					if($bgclass == 'trgreybg') {
+						$bgclass = 'trwhitebg';
+					}
+					else {
+						$bgclass = 'trgreybg';
+					}
+				}
 			}
 		?>
-			<tr class="<?php echo $bgclass; ?>">
-				<td class=""><?php echo $menu->menu_date; ?></td>
+			<tr class="<?php echo $bgclass.' '.$topClass; ?>">
+				<td class=""><?php echo !$topClass?$menu->menu_date:''; ?></td>
 				<td class=""><?php echo $menu->menu_name;; ?></td>
 				<td class=""><?php echo $menu->complement; ?></td>
 				<td class=""><?php echo $menu->primary_plate; ?></td>
@@ -56,3 +69,8 @@
 		?>
 	</tbody>
 </table>
+<script>
+$(document).ready(function(){
+	$('.topBorder').prev().addClass('bottomBorder');
+});
+</script>

@@ -1333,23 +1333,12 @@ $lang['diet'] = 'Diet';
 $lang['complement'] = 'Complemento';
 $lang['primary_plate'] = 'Primar plato';
 $lang['description_primary_plate'] = 'Descripción primar plato';
+$lang['primary_image'] = 'Primar imagen';
 $lang['secondary_plate'] = 'Segundo plate';
 $lang['description_secondary_plate'] = 'Descripción segundo plate';
+$lang['secondary_image'] = 'Segundo imagen';
 $lang['postre'] = 'Postre';
 $lang['date'] = 'Fecha';
-
-$lang['basic_complement'] = 'Básico complemento';
-$lang['basic_primary_plate'] = 'Básico primar plato';
-$lang['basic_description_primary_plate'] = 'Básico primar plato descripción';
-$lang['basic_secondary_plate'] = 'Básico segundo plate';
-$lang['basic_description_secondary_plate'] = 'Básico segundo plate descripción';
-$lang['basic_postre'] = 'Básico postre';
-$lang['diet_complement'] = 'Diet complemento';
-$lang['diet_primary_plate'] = 'Diet primary plato';
-$lang['diet_description_primary_plate'] = 'Diet primar plato descripción';
-$lang['diet_secondary_plate'] = 'Diet segundo plato';
-$lang['diet_description_secondary_plate'] = 'Diet segundo plato descripción';
-$lang['diet_postre'] = 'Diet postre';
 
 $lang['client'] = 'Cliente';
 $lang['clients'] = 'Clientes';
@@ -1372,6 +1361,12 @@ $lang['total_clients'] = 'Clientes';
 $lang['total_business'] = 'Empresas';
 $lang['dashboard'] = 'Tablero';
 $lang['legal_condition'] = 'Condiciones legales';
-/*----*/
 
+$lang['menu_reservations'] = 'Menu reservations';
+$lang['statistics'] = 'Estadisticas';
+
+$lang['username'] = 'Nombre de Usuario';
+
+$lang['invalid_credentials'] = 'credenciales no válidas';
+/*----*/
 ?>
