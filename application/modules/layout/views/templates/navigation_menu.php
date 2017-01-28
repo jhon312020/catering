@@ -16,8 +16,9 @@ $ln = $this->uri->segment(1);
     </div>
     <div id="navbar3" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="#">Nombre Apellido  -></a>
+        <li class="active"><a href="#"><?php echo $user_name; ?>  -></a>
         </li>
+        <li><a href="<?php echo site_url($ln) . '/logout';?>">Logout</a></li>
         <li class="active"><a href="#">PERFIL</a>
         </li>
         <li><a href="#">MENUS</a>

@@ -36,7 +36,22 @@ class Node extends Anonymous_Controller {
   public function register() {
 		if ($this->session->userdata('user_name'))
 			redirect($this->uri->segment(1).'/profile');
-		
+    
+    if ($this->mdl_clients->run_validation('validation_rules_on_register_page')) {
+      $data = $this->input->post();
+      if (isset($data['terms'])){
+        unset($data['terms']);
+      }
+      $data['password'] = md5($data['password']);
+      $data['is_active'] = 0;
+      $data['created_at'] = date('Y-m-d H:i:s');
+      $data['updated_at'] = date('Y-m-d H:i:s');
+      $id = $this->mdl_clients->save(null, $data);
+      $this->session->set_flashdata('alert_success', lang('record_successfully_created'));
+    }
+    else {
+      $this->session->set_flashdata('alert_error', validation_errors());
+    }
     $data_array = array();
     $this->load->view('layout/templates/register', $data_array);
   }
@@ -66,10 +81,9 @@ class Node extends Anonymous_Controller {
   }
   
   public function profile() {
-		if ($this->session->userdata('user_name'))
+		if (!$this->session->userdata('user_name'))
 			redirect($this->uri->segment(1));
-		
-    $data_array = array();
+    $data_array = $this->session->get_userdata();
     $this->load->view('layout/templates/profile', $data_array);
   }
   
@@ -78,6 +92,11 @@ class Node extends Anonymous_Controller {
 			redirect($this->uri->segment(1));
 		
     $this->load->view('layout/templates/contact');
+  }
+
+  public function logout(){
+    $this->session->sess_destroy();
+    redirect($this->uri->segment(1));
   }
 }
 ?>

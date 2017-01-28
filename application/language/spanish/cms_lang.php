@@ -332,8 +332,6 @@ $lang['month_prefix'] = 'Month Prefix';
 
 $lang['my_profile'] = 'My Profile';
 
-$lang['name'] = 'Name';
-
 $lang['new'] = 'Nuevo';
 
 $lang['next_id'] = 'Next ID';
@@ -363,8 +361,6 @@ $lang['overdue'] = 'Overdue';
 $lang['owner'] = 'Propietario';
 
 $lang['paid'] = 'Paid';
-
-$lang['password'] = 'Password';
 
 $lang['payment_cannot_exceed_balance'] = 'Payment amount cannot exceed invoice balance.';
 
@@ -670,13 +666,9 @@ $lang['login_title'] = 'Area Usuario';
 
 $lang['username'] = 'User';
 
-$lang['password'] = 'Password';
-
 $lang['password_recovery'] = 'Recuperar contraseña';
 
 //$lang['change_password'] = 'Change password';
-
-$lang['password'] = 'Password';
 
 $lang['password_recovery'] = 'Recuperar contraseña';
 
@@ -897,14 +889,18 @@ $lang['apply'] = 'Aplicar';
 $lang['user'] = 'Usuario (E-mail)';
 
 $lang['password'] = 'Contraseña';
+$lang['password_error'] = 'Se requiere contraseña';
 
 $lang['lost_your_password'] = '¿Olvidaste la contraseña?';
 
 $lang['please_enter_your_details'] = 'Por favor, introducde tus datos personales';
 
 $lang['name'] = 'Nombre';
+$lang['name_error'] = 'Se requiere el nombre';
 
 $lang['surname'] = 'Apellidos';
+$lang['surname_error'] = 'El apellido es obligatorio';
+$lang['create_account'] = 'CREAR CUENTA';
 
 $lang['confirm_email'] = 'Confirmar Email';
 
@@ -935,6 +931,8 @@ $lang['return'] = 'Volver';
 $lang['more_info'] = 'Mas informacion';
 
 $lang['you_have_forgotten_the_password'] = '<span style="font-family:sans-serif;">&#191;</span>Has olvidado la contraseña<span style="font-family:sans-serif;">?</span>';
+
+$lang['forgot_password'] = 'He olvidado mi constrasena';
 
 $lang['invalid_credentials'] = 'credenciales no válidas';
 
@@ -1121,6 +1119,7 @@ $lang['deduction'] = 'Deduction';
 $lang['alert_info'] = 'Si continua toda la información de la reserva se perderá.';
 
 $lang['accept'] = 'Acepto los';
+$lang['accept_terms'] = 'Accepto los terminos y condiciones';
 
 $lang['privacy_policy'] = 'la politica de privacidad';
 
@@ -1308,9 +1307,9 @@ $lang['how_pay'] = 'How you want to pay?';
 /*----*/
 $lang['exists_username'] = 'Email id alredy exists';
 $lang['business'] = 'Empresas';
+$lang['business_error'] = 'El nombre de la empresa es obligatorio';
 $lang['business_title'] = 'Empresa';
 $lang['business_id'] = 'ID empresa';
-$lang['name'] = 'Nombre';
 $lang['email'] = 'E-mail';
 $lang['direction'] = 'Dirección';
 $lang['telephone'] = 'Teléfono';
@@ -1345,8 +1344,6 @@ $lang['clients'] = 'Clientes';
 $lang['clients_list'] = 'Lista clientes';
 $lang['validation_pending'] = 'Pendiente validación';
 $lang['client_code'] = 'Cod. cliente';
-$lang['surname'] = 'Apellidos';
-$lang['password'] = 'Contraseña';
 $lang['dni'] = 'DNI';
 $lang['intolerances'] = 'Intolerancias';
 $lang['iban'] = 'IBAN';
@@ -1368,5 +1365,13 @@ $lang['statistics'] = 'Estadisticas';
 $lang['username'] = 'Nombre de Usuario';
 
 $lang['invalid_credentials'] = 'credenciales no válidas';
+$lang['checkbox_error'] = 'Por favor marque esta casilla si desea continuar';
+$lang['email_error'] = 'Correo electronico es requerido';
+$lang['unique_business_error'] = 'El negocio debe ser único';
+$lang['minlength_business_error'] = 'El nombre comercial debe ser al menos de 4 letras';
+$lang['do_not_have_account'] = 'Todavia no tienes tu cuenta?';
+$lang['register'] = 'Registrate';
+$lang['already_have_acc'] = 'Ya tienes cuenta?';
+$lang['in_active_user'] = 'El usuario dado está inactivo. Consulte con el administrador.';
 /*----*/
 ?>

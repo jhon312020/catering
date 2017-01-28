@@ -80,6 +80,9 @@ $route['es/profile'] = 'node/profile';
 $route['en/contact'] = 'node/contact';
 $route['es/contact'] = 'node/contact';
 
+$route['en/logout'] = 'node/logout';
+$route['es/logout'] = 'node/logout';
+
 $route['en'] = 'node/index';
 $route['es'] = 'node/index';
 

@@ -19,23 +19,25 @@ $ln = $this->uri->segment(1);
           </div>
           <div class="form-bottom">
 						<?php echo $this->layout->load_view('layout/web_alerts'); ?>
-            <form role="form" action="" method="post" class="login-form">
+            <form role="form" action="" method="post" class="login-form" data-toggle="validator">
               <div class="form-group">
                 <label class="sr-only" for="form-username">Username</label>
-                <input type="text" name="form-username" placeholder="<?php echo lang('username'); ?>" class="form-username form-control" id="form-username">
+                <input type="email" required name="email" placeholder="<?php echo lang('email'); ?>" class="form-username form-control" id="form-username" data-error="<?php echo lang('invalid_email'); ?>">
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-password">Password</label>
-                <input type="password" name="form-password" placeholder="<?php echo lang('password'); ?>" class="form-password form-control" id="form-password">
+                <input type="password" name="password" placeholder="<?php echo lang('password'); ?>" class="form-password form-control" id="form-password" required data-error="<?php echo lang('password_error'); ?>">
+                <div class="help-block with-errors"></div>
               </div>
               <div class="forget form-group">
-                <a href="" class="btn btn-link">He olvidado mi constrasena</a>
+                <a href="" class="btn btn-link"><?php echo lang('forgot_password');?></a>
               </div>
-              <button type="submit" class="btn center-block"><a href="javascript:;">ENTRAR</a></button>
+              <button type="submit" class="btn center-block"><a href="javascript:;" style="text-transform:uppercase;"><?php echo lang('enter'); ?></a></button>
             </form>
             <div class="register">
-              <P>Todavia no tienes tu cuenta?</p>
-              <a href="<?php echo site_url($ln.'/register'); ?>" class="btn btn-link center-block">Registrate</a>
+              <P><?php echo lang('do_not_have_account');?></p>
+              <a href="<?php echo site_url($ln.'/register'); ?>" class="btn btn-link center-block"><?php echo lang('register');?></a>
             </div>
           </div>
         </div>

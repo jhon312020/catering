@@ -18,35 +18,58 @@ $ln = $this->uri->segment(1);
             </div>
           </div>
           <div class="form-bottom">
-            <form role="form" action="" method="post" class="login-form">
+            <?php echo $this->layout->load_view('layout/web_alerts'); ?>
+            <form role="form" action="" method="post" class="login-form" data-toggle="validator">
               <div class="form-group">
-                <label class="sr-only" for="form-username">First Name</label>
-                <input type="text" name="form-username" placeholder="Nombre" class="form-username form-control" id="form-username">
+                <label class="sr-only" for="form-username"><?php echo lang('name'); ?></label>
+                <input type="text" name="name" id = "form-username" placeholder="<?php echo lang('name'); ?>" class="form-username form-control" 
+                  data-error="<?php echo lang('name_error'); ?>" 
+                required>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-username">Last Name</label>
-                <input type="text" name="form-username" placeholder="Apellidos" class="form-username form-control" id="form-username">
+                <label class="sr-only" for="form-surname"><?php echo lang('surname'); ?></label>
+                <input type="text" name="surname" id = "form-surname" placeholder="<?php echo lang('surname'); ?>" class="form-username form-control" 
+                  data-error="<?php echo lang('surname_error'); ?>" 
+                required>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-username">Email</label>
-                <input type="email" name="form-username" placeholder="Email" class="form-username form-control" id="form-username">
+                <label class="sr-only" for="form-email">Email</label>
+                <input type="email" name="email" id="form-email" placeholder="Email" class="form-username form-control" 
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                  data-error="<?php echo lang('invalid_email'); ?>" 
+                required>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-username">Contrasena</label>
-                <input type="text" name="form-username" placeholder="Contrasena" class="form-username form-control" id="form-username">
+                <label class="sr-only" for="form-password"><?php echo lang('password');?></label>
+                <input type="password" name="password" id="form-password" placeholder="<?php echo lang('password');?>" class="form-password form-control" 
+                  data-error="<?php echo lang('password_error');?>" 
+                required>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-password">Empresa</label>
-                <input type="password" name="form-password" placeholder="Empresa" class="form-password form-control" id="form-password">
+                <label class="sr-only" for="form-business"><?php echo lang('business');?></label>
+                <input type="text" id="form-business" name="client_code" placeholder="<?php echo lang('business');?>" class="form-username form-control" 
+                  data-error="<?php echo lang('business_error');?>" 
+                required>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
-                <input type="checkbox" name="remember" value="1"> <a href="javascript:;" class="btn-link"> Accepto los terminos y condiciones</a>
+                <label>
+                  <input type="checkbox" name="terms" value="1" 
+                    required 
+                    data-error="<?php echo lang('checkbox_error');?>"
+                    style="position:relative;top:2px;"> <?php echo lang('accept_terms'); ?>
+                </label>
+                <div class="help-block with-errors"></div>
               </div>
-              <button type="submit" class="btn center-block">CREAR CUENTA</button>
+              <button type="submit" class="btn center-block"><?php echo lang('create_account');?></button>
             </form>
             <div class="register">
-              <P>Ya tienes cuenta?</p>
-              <a href="<?php echo site_url($ln); ?>" class="btn btn-link center-block">Entrar</a>
+              <P><?php echo lang('already_have_acc');?></p>
+              <a href="<?php echo site_url($ln); ?>" class="btn btn-link center-block"><?php echo lang('enter'); ?></a>
             </div>
           </div>
         </div>

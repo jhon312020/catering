@@ -738,5 +738,18 @@ $lang['statistics'] = 'Statistics';
 $lang['username'] = 'Username';
 
 $lang['invalid_credentials'] = 'Invalid credentials';
+$lang['create_account'] = 'CREATE ACCOUNT';
+$lang['unique_business_error'] = 'Business should be unique';
+$lang['minlength_business_error'] = 'Business name should be atleast of 4 letters';
+$lang['forgot_password'] = 'I forgot my password';
+$lang['do_not_have_account'] = 'Do not have your account yet?';
+$lang['register'] = 'Register';
+$lang['accept_terms'] = 'Accept terms and conditions';
+$lang['already_have_acc'] = 'Already have an account?';
+$lang['name_error'] = 'Name is required';
+$lang['surname_error'] = 'Surname is required';
+$lang['password_error'] = 'Password is required';
+$lang['business_error'] = 'Business Name is required';
+$lang['in_active_user'] = 'The given user is inactive. Please check with administrator.';
 /*----*/
 ?>
