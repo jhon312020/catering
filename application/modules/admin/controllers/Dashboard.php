@@ -3,26 +3,32 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-/*
- * FusionInvoice
- * 
- * A free and open source web based invoicing system
- *
- * @package		FusionInvoice
- * @author		Jesse Terry
- * @copyright	Copyright (c) 2012 - 2013, Jesse Terry
- * @license		http://www.fusioninvoice.com/license.txt
- * @link		http://www.fusioninvoice.
+/**
+ * Dashboard Controller 
+ * for admin user
  * 
  */
 
 class Dashboard extends Admin_Controller {
 
-	public function __construct() {
+	/**
+   * class constructor
+   *
+   * @return  void
+   * 
+   */
+  public function __construct() {
 		parent::__construct();
 		$this->load->model('settings/mdl_settings');
 	}
-
+  
+  /**
+   * Function index
+   * Displays the dashboard page
+   *
+   * @return  void
+   * 
+   */
 	public function index() {
 		$this->load->model('business/mdl_business');
 		$this->load->model('clients/mdl_clients');
@@ -36,14 +42,17 @@ class Dashboard extends Admin_Controller {
 			'total_clients' => $total_clients,
 			'total_business' => $total_business,
 		);
-		/*$otherdb = $this->load->database('otherdb', TRUE);
-		$data = $otherdb->query('show tables')->result_array();
-		print_r($data);die;*/
 		$this->layout->set($data);
 		$this->layout->buffer('content', 'admin/index');
 		$this->layout->render();
 	}
 	
+  /**
+   * Set the Language
+   *
+   * @return  redirect to referrer 
+   * or dashboard page
+   */
 	public function set_lang($lang) {
 		if(trim($lang) == "english") {
 			$lang = "spanish";
@@ -56,11 +65,12 @@ class Dashboard extends Admin_Controller {
 		//print_r($newdata);die();
 		$this->session->set_userdata($newdata);
 		$this->load->library('user_agent');
-		if ($this->agent->is_referral()) {
-			redirect($this->agent->referrer());
-		} else{
-			redirect('admin/dashboard');
-		}
+		$referrer = $this->agent->referrer();
+    if (!empty($referrer)) {
+      redirect($referrer);
+    } else{
+      redirect('admin/dashboard');
+    }
 	}
 }
 ?>

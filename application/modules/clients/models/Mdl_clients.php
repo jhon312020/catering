@@ -8,6 +8,12 @@ class Mdl_clients extends Response_Model {
     public function default_order_by() {
         $this->db->order_by('clients.id');
     }
+  /**
+   * Function register
+   *
+   * @return  void
+   * 
+   */
     public function validation_rules() {
         return array(
             'client_code' => array(
@@ -72,7 +78,13 @@ class Mdl_clients extends Response_Model {
             ),
         );
     }
-		public function validation_rules_clients_login() {
+  /**
+   * Function validation_rules_clients_login
+   *
+   * @return  void
+   * 
+   */
+    public function validation_rules_clients_login() {
         return array(
             'username'  => array(
                 'field' => 'username',
@@ -86,7 +98,43 @@ class Mdl_clients extends Response_Model {
             )
         );
     }
-		public function check_clients($data){
+  /**
+   * Function validation_rules_clients_register
+   *
+   * @return  void
+   * 
+   */
+		public function validation_rules_client_register() {
+        return array(
+            'name'  => array(
+                'field' => 'name',
+                'label' => lang('name'),
+                'rules' => 'required'
+            ),
+            'email'  => array(
+                'field' => 'email',
+                'label' => lang('email'),
+                'rules' => 'required|valid_email'
+            ),
+            'password' => array(
+                'field' => 'password',
+                'label' => lang('password'),
+                'rules' => 'required'
+            ),
+            'business' => array(
+                'field' => 'client_code',
+                'label' => lang('business'),
+                'rules' => 'required'
+            )
+        );
+    }
+  /**
+   * Function register
+   *
+   * @return  void
+   * 
+   */
+    public function check_clients($data){
 			$result = $this->mdl_clients->where(array('email'=>$data['username'], 'password'=>md5($data['password'])))->get()->row();
 			if(count($result)>0) {
 				foreach($result as $res){

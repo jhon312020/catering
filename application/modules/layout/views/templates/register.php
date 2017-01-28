@@ -18,29 +18,30 @@ $ln = $this->uri->segment(1);
             </div>
           </div>
           <div class="form-bottom">
+            <?php echo validation_errors(); ?>
             <form role="form" action="" method="post" class="login-form">
               <div class="form-group">
-                <label class="sr-only" for="form-username">First Name</label>
-                <input type="text" name="form-username" placeholder="Nombre" class="form-username form-control" id="form-username">
+                <label class="sr-only" for="name">First Name</label>
+                <input type="text" name="name" placeholder="Nombre" class="form-control" id="name" required>
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-username">Last Name</label>
-                <input type="text" name="form-username" placeholder="Apellidos" class="form-username form-control" id="form-username">
+                <label class="sr-only" for="surname">Last Name</label>
+                <input type="text" name="surname" placeholder="Apellidos" class="form-control" id="surname">
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-username">Email</label>
-                <input type="email" name="form-username" placeholder="Email" class="form-username form-control" id="form-username">
+                <label class="sr-only" for="email">Email</label>
+                <input type="email" name="email" placeholder="Email" class="form-control" id="email" required>
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-username">Contrasena</label>
-                <input type="text" name="form-username" placeholder="Contrasena" class="form-username form-control" id="form-username">
+                <label class="sr-only" for="password">Contrasena</label>
+                <input type="password" name="password" placeholder="Contrasena" class="form-control" id="password">
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-password">Empresa</label>
-                <input type="password" name="form-password" placeholder="Empresa" class="form-password form-control" id="form-password">
+                <label class="sr-only" for="client_code">Empresa</label>
+                <input type="text" name="client_code" placeholder="Empresa" class="form-control" id="business" required>
               </div>
               <div class="form-group">
-                <input type="checkbox" name="remember" value="1"> <a href="javascript:;" class="btn-link"> Accepto los terminos y condiciones</a>
+                <input type="checkbox" name="remember" value="1"> <a href="javascript:;" class="btn-link" required> Accepto los terminos y condiciones</a>
               </div>
               <button type="submit" class="btn center-block">CREAR CUENTA</button>
             </form>
