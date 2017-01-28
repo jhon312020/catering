@@ -8,6 +8,12 @@ class Mdl_clients extends Response_Model {
     public function default_order_by() {
         $this->db->order_by('clients.id');
     }
+  /**
+   * Function register
+   *
+   * @return  void
+   * 
+   */
     public function validation_rules() {
         return array(
             'client_code' => array(
@@ -72,7 +78,13 @@ class Mdl_clients extends Response_Model {
             ),
         );
     }
-		public function validation_rules_clients_login() {
+  /**
+   * Function validation_rules_clients_login
+   *
+   * @return  void
+   * 
+   */
+    public function validation_rules_clients_login() {
         return array(
             'email'  => array(
                 'field' => 'email',
@@ -99,7 +111,7 @@ class Mdl_clients extends Response_Model {
                     'is_unique' => lang('unique_business_error')
                 )
             ),
-            'name' => array(
+            'name'  => array(
                 'field' => 'name',
                 'label' => lang('name'),
                 'rules' => 'required'
@@ -121,7 +133,14 @@ class Mdl_clients extends Response_Model {
             )
         );
     }
-		public function check_clients($data){
+	
+  /**
+   * Function register
+   *
+   * @return  void
+   * 
+   */
+    public function check_clients($data){
 			$result = $this->mdl_clients->where(array('email'=>$data['email'], 'password'=>md5($data['password'])))->get()->row();
 			if(count($result)>0) {
 				if($result->is_active == 0) {

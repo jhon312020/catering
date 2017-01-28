@@ -68,7 +68,7 @@ $ln = $this->uri->segment(1);
               <button type="submit" class="btn center-block"><?php echo lang('create_account');?></button>
             </form>
             <div class="register">
-              <P><?php echo lang('already_have_acc');?></p>
+              <p><?php echo lang('already_have_acc');?></p>
               <a href="<?php echo site_url($ln); ?>" class="btn btn-link center-block"><?php echo lang('enter'); ?></a>
             </div>
           </div>
