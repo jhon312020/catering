@@ -19,7 +19,12 @@ class Mdl_clients extends Response_Model {
             'client_code' => array(
                 'field' => 'client_code',
                 'label' => lang('client_code'),
-                'rules' => 'required|min_length[4]|is_unique[clients.client_code]'
+                'rules' => 'required|min_length[4]|is_unique[clients.client_code]',
+                'errors' => array(
+                    'required' => lang('business_error'),
+                    'min_length' => lang('minlength_business_error'),
+                    'is_unique' => lang('unique_business_error')
+                )
             ),
             'name' => array(
                 'field' => 'name',
@@ -39,7 +44,12 @@ class Mdl_clients extends Response_Model {
             'email' => array(
                 'field' => 'email',
                 'label' => lang('email'),
-                'rules' => 'required|valid_email'
+                'rules' => 'required|valid_email|is_unique[clients.email]',
+                'errors' => array(
+                    'required' => lang('invalid_email'),
+                    'valid_email' => lang('invalid_email'),
+                    'is_unique' => lang('email_exists')
+                )
             ),
             'password' => array(
                 'field' => 'password',
@@ -104,11 +114,9 @@ class Mdl_clients extends Response_Model {
             'client_code' => array(
                 'field' => 'client_code',
                 'label' => lang('client_code'),
-                'rules' => 'required|min_length[4]|is_unique[clients.client_code]',
+                'rules' => 'required',
                 'errors' => array(
                     'required' => lang('business_error'),
-                    'min_length' => lang('minlength_business_error'),
-                    'is_unique' => lang('unique_business_error')
                 )
             ),
             'name'  => array(
@@ -124,7 +132,12 @@ class Mdl_clients extends Response_Model {
             'email' => array(
                 'field' => 'email',
                 'label' => lang('email'),
-                'rules' => 'required|valid_email'
+                'rules' => 'required|valid_email|is_unique[clients.email]',
+                'errors' => array(
+                    'required' => lang('invalid_email'),
+                    'valid_email' => lang('invalid_email'),
+                    'is_unique' => lang('email_exists')
+                )
             ),
             'password' => array(
                 'field' => 'password',

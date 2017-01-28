@@ -51,9 +51,17 @@ $ln = $this->uri->segment(1);
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-business"><?php echo lang('business');?></label>
-                <input type="text" id="form-business" name="client_code" placeholder="<?php echo lang('business');?>" class="form-username form-control" 
+                <select name="client_code" id="form-business" class="form-username form-control" data-error="<?php echo lang('business_error');?>" required>
+                  <option value="">-Select-</option>
+                  <?php
+                    foreach($list_of_business as $b) {
+                      printf('<option value="%d">%s</option>', $b['id'], $b['name']);
+                    }
+                  ?>
+                </select>
+                <!-- <input type="text" id="form-business" name="client_code" placeholder="<?php echo lang('business');?>" class="form-username form-control" 
                   data-error="<?php echo lang('business_error');?>" 
-                required>
+                required> -->
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">

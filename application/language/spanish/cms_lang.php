@@ -1373,5 +1373,6 @@ $lang['do_not_have_account'] = 'Todavia no tienes tu cuenta?';
 $lang['register'] = 'Registrate';
 $lang['already_have_acc'] = 'Ya tienes cuenta?';
 $lang['in_active_user'] = 'El usuario dado está inactivo. Consulte con el administrador.';
+$lang['email_exists'] = 'La dirección de correo ya existe';
 /*----*/
 ?>

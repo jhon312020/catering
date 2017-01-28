@@ -17,7 +17,8 @@ class Node extends Anonymous_Controller {
    */
   public function __construct() {
     parent::__construct();
-		$this->load->model('clients/mdl_clients');
+    $this->load->model('clients/mdl_clients');
+		$this->load->model('business/mdl_business');
   }
   
   /**
@@ -82,7 +83,10 @@ class Node extends Anonymous_Controller {
     else {
       $this->session->set_flashdata('alert_error', validation_errors());
     }
-    $data_array = array();
+
+    $data_array = array(
+      'list_of_business' => $this->mdl_business->select(['id','name'])->where('is_active', 1)->get()->result_array()
+    );
     $this->load->view('layout/templates/register', $data_array);
   }
   

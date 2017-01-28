@@ -751,5 +751,6 @@ $lang['surname_error'] = 'Surname is required';
 $lang['password_error'] = 'Password is required';
 $lang['business_error'] = 'Business Name is required';
 $lang['in_active_user'] = 'The given user is inactive. Please check with administrator.';
+$lang['email_exists'] = 'Email address already exists!';
 /*----*/
 ?>
