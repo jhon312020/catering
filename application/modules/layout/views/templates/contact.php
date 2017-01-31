@@ -1,6 +1,7 @@
 <?php
-$this->load->view('header');
-$this->load->view('navigation_menu');
+  $this->load->view('header');
+  $this->load->view('navigation_menu');
+  //print_r($this->_ci_cached_vars);
 ?>
     <div class="top-content">
         <div class="inner-bg">
@@ -10,28 +11,29 @@ $this->load->view('navigation_menu');
                     <div class="col-sm-12">
                         <div class="col-sm-3">
                             <div class="form-bottom">
-                                <p>Calle Cato, 6 bajos
+                                <p>Calle cato, 6 bajos
                                     <br> 08206 Sabadell
                                     <br> Barcelona
-                                    <br> Tel i fax. 93 717 83 35
-                                    <br> info@gumen-catering.com
+                                    <br> Tel i fax. 93 717 83 35<?php //echo $settings['telephone'];?>
+                                    <br> <?php echo $settings['site_email'];?>
                                 </p>
                             </div>
                         </div>
                         <div class="col-sm-5">
                             <div class="form-bottom ribbon-down">
+                              <?php echo $this->layout->load_view('layout/web_alerts'); ?>
                                 <form role="form" action="" method="post" class="login-form">
                                     <div class="form-group">
                                         <label for="form-username">Nombre y Apellidos</label>
-                                        <input type="text" name="form-username" class="form-username form-control" id="form-username">
+                                        <input type="text" name="name" class="form-username form-control" id="fusername">
                                     </div>
                                     <div class="form-group">
                                         <label for="form-username">Email</label>
-                                        <input type="email" name="form-email" class="form-email form-control" id="form-email">
+                                        <input type="email" name="email" class="form-email form-control" id="email">
                                     </div>
                                     <div class="form-group">
                                         <label for="form-message">Mensaje</label>
-                                        <input type="message" name="form-message" class="form-message form-control" id="form-message">
+                                        <textarea name="message" id="message" class="form-control"></textarea>
                                     </div>
                                     <button type="submit" class="btn center-block">ENVIAR</button>
                                 </form>
@@ -44,24 +46,7 @@ $this->load->view('navigation_menu');
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="copyright">
-                            Gumen Catering | Calle cato, 6 bajos. 08206 Sabadell | Tel/Fax. 93 717 8335
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="design">
-                            <a href="#" class="btn-link">Condiciones legales</a> <i class="fa fa-lg fa-twitter-square"></i> <i class="fa fa-lg fa-facebook-square"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 <?php
-$this->load->view('footer');
+  $this->load->view('footer_nav_bar');
+  $this->load->view('footer');
 ?>

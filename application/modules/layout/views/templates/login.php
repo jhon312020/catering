@@ -33,7 +33,7 @@ $ln = $this->uri->segment(1);
               <div class="forget form-group">
                 <a href="" class="btn btn-link"><?php echo lang('forgot_password');?></a>
               </div>
-              <button type="submit" class="btn center-block"><a href="javascript:;" style="text-transform:uppercase;"><?php echo lang('enter'); ?></a></button>
+              <button type="submit" class="btn center-block"><?php echo strtoupper(lang('enter')); ?></button>
             </form>
             <div class="register">
               <P><?php echo lang('do_not_have_account');?></p>

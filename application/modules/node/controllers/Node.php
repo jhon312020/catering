@@ -15,10 +15,12 @@ class Node extends Anonymous_Controller {
    * @return  void
    * 
    */
+  
   public function __construct() {
     parent::__construct();
     $this->load->model('clients/mdl_clients');
 		$this->load->model('business/mdl_business');
+    $this->load->vars(array('user_info'=>$this->session->get_userdata()));
   }
   
   /**
@@ -67,23 +69,25 @@ class Node extends Anonymous_Controller {
 		$message = '';
     if ($this->session->userdata('user_name'))
 			redirect($this->uri->segment(1).'/profile');
-    
-    if ($this->mdl_clients->run_validation('validation_rules_on_register_page')) {
-      $data = $this->input->post();
-      if (isset($data['terms'])){
-        unset($data['terms']);
+    $method = strtolower($this->input->method(TRUE));
+    if ($method == 'post') {
+      if ($this->mdl_clients->run_validation('validation_rules_on_register_page')) {
+        $data = $this->input->post();
+        if (isset($data['terms'])){
+          unset($data['terms']);
+        }
+        $data['password'] = md5($data['password']);
+        $data['is_active'] = 0;
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $id = $this->mdl_clients->save(null, $data);
+        $this->session->set_flashdata('alert_success', lang('record_successfully_created'));
+        redirect($this->uri->segment(1));
+      } else {
+        $this->session->set_flashdata('alert_error', validation_errors());
+        redirect($this->uri->segment(1).'/register');
       }
-      $data['password'] = md5($data['password']);
-      $data['is_active'] = 0;
-      $data['created_at'] = date('Y-m-d H:i:s');
-      $data['updated_at'] = date('Y-m-d H:i:s');
-      $id = $this->mdl_clients->save(null, $data);
-      $this->session->set_flashdata('alert_success', lang('record_successfully_created'));
     }
-    else {
-      $this->session->set_flashdata('alert_error', validation_errors());
-    }
-
     $data_array = array(
       'list_of_business' => $this->mdl_business->select(['id','name'])->where('is_active', 1)->get()->result_array()
     );
@@ -91,19 +95,19 @@ class Node extends Anonymous_Controller {
   }
   
   public function listmenu() {
-		if ($this->session->userdata('user_name'))
+		if (!$this->session->userdata('user_name'))
 			redirect($this->uri->segment(1));
 		
     $data_array = array();
     $this->load->view('layout/templates/listmenu', $data_array);
   }
   
-  public function menu() {
-		if ($this->session->userdata('user_name'))
+  public function menus() {
+		if (!$this->session->userdata('user_name'))
 			redirect($this->uri->segment(1));
 		
     $data_array = array();
-    $this->load->view('layout/templates/menu', $data_array);
+    $this->load->view('layout/templates/menus', $data_array);
   }
   
   public function payment() {
@@ -113,21 +117,50 @@ class Node extends Anonymous_Controller {
     $data_array = array();
     $this->load->view('layout/templates/payment', $data_array);
   }
-  
+  /**
+   * Function profile
+   *
+   * @return  void
+   * 
+   */
   public function profile() {
 		if (!$this->session->userdata('user_name'))
 			redirect($this->uri->segment(1));
-    $data_array = $this->session->get_userdata();
+    $data_array = '';
     $this->load->view('layout/templates/profile', $data_array);
   }
-  
+  /**
+   * Function contact
+   *
+   * @return  void
+   * 
+   */
   public function contact() {
-		if ($this->session->userdata('user_name'))
+    if (!$this->session->userdata('user_name'))
 			redirect($this->uri->segment(1));
-		
-    $this->load->view('layout/templates/contact');
+    $method = strtolower($this->input->method(TRUE));
+    if ($method == 'post') {
+        $this->load->library('email');
+        $this->email->from($this->input->post('email'), $this->input->post('name'));
+        $this->email->to($this->settings['site_email']); 
+        $this->email->subject('Enquiry');
+        $this->email->message($this->input->post('description'));
+        if ($this->email->send()) {
+          $this->session->set_flashdata('alert_success', lang('email_send'));
+        } else {
+          $this->session->set_flashdata('alert_fail', lang('server_error'));
+        }
+        redirect($this->uri->segment(1).'/contact');
+    }
+		$data_array = '';
+    $this->load->view('layout/templates/contact', $data_array);
   }
-
+  /**
+   * Function contact
+   *
+   * @return  void
+   * 
+   */
   public function logout(){
     $this->session->sess_destroy();
     redirect($this->uri->segment(1));

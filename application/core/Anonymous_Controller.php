@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 class Anonymous_Controller extends MX_Controller {
 
     public $ajax_controller = false;
-
+    public $settings;
     public function __construct() {
       parent::__construct();
       $this->config->load('my_config');
@@ -17,7 +17,8 @@ class Anonymous_Controller extends MX_Controller {
       $this->load->helper('url');
       $this->load->database();
       $this->load->model('settings/mdl_settings');
-      $this->mdl_settings->load_settings();
+      $this->settings = $this->mdl_settings->load_settings();
+      $this->load->vars(array('settings'=>$this->settings));
       // some define to use globally
       define('IMAGEPATH',base_url()."assets/default/images/");
       $ln = $this->uri->segment(1);

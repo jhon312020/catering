@@ -68,8 +68,8 @@ $route['es/register'] = 'node/register';
 $route['en/listmenu'] = 'node/listmenu';
 $route['es/listmenu'] = 'node/listmenu';
 
-$route['en/menu'] = 'node/menu';
-$route['es/menu'] = 'node/menu';
+$route['en/menus'] = 'node/menus';
+$route['es/menus'] = 'node/menus';
 
 $route['en/payment'] = 'node/payment';
 $route['es/payment'] = 'node/payment';

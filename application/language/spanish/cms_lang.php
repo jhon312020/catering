@@ -1251,7 +1251,8 @@ $lang['booking_confirmation'] = 'Enviar confirmacion de reserva a';
 
 $lang['your_email'] = 'Your Email';
 
-$lang['email_send'] = 'Email send successfully';
+$lang['email_send'] = 'Email sent successfully!';
+$lang['server_error'] = 'Please try after sometimes!';
 
 $lang['cp'] = 'C.P';
 
