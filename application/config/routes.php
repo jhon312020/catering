@@ -69,6 +69,7 @@ $route['en/listmenu'] = 'node/listmenu';
 $route['es/listmenu'] = 'node/listmenu';
 
 $route['en/menus'] = 'node/menus';
+$route['add-menus'] = 'node/addMenu';
 $route['es/menus'] = 'node/menus';
 
 $route['en/payment'] = 'node/payment';
@@ -79,6 +80,9 @@ $route['es/profile'] = 'node/profile';
 
 $route['en/contact'] = 'node/contact';
 $route['es/contact'] = 'node/contact';
+
+$route['en/orders'] = 'node/orders';
+$route['es/orders'] = 'node/orders';
 
 $route['en/logout'] = 'node/logout';
 $route['es/logout'] = 'node/logout';

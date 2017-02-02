@@ -1,4 +1,5 @@
 <?php
+/*
 //english
 $lang['account_information'] = 'Account Information';
 $lang['active_client'] = 'Active Client';
@@ -674,7 +675,7 @@ $lang['passengers_price'] = 'Passengers Price';
 $lang['pay_by_credit'] = 'Credit card';
 $lang['how_pay'] = 'How you want to pay?';
 
-
+*/
 /*----*/
 $lang['exists_username'] = 'Email id alredy exists';
 $lang['business'] = 'Business';
@@ -708,6 +709,8 @@ $lang['secondary_plate'] = 'Secondary plate';
 $lang['description_secondary_plate'] = 'Description secondary plate';
 $lang['secondary_image'] = 'Secondary image';
 $lang['postre'] = 'Postre';
+$lang['full_price'] = 'Full price';
+$lang['half_price'] = 'Half price';
 $lang['date'] = 'Date';
 
 $lang['client'] = 'Client';
@@ -752,5 +755,14 @@ $lang['password_error'] = 'Password is required';
 $lang['business_error'] = 'Business Name is required';
 $lang['in_active_user'] = 'The given user is inactive. Please check with administrator.';
 $lang['email_exists'] = 'Email address already exists!';
+
+$lang['profile'] = 'Profile';
+$lang['contact'] = 'Contact';
+
+$lang['reference_no'] = 'Referencia';
+$lang['order_date'] = 'Order date';
+$lang['price'] = 'Precio';
+$lang['payment_method'] = 'Forma de pago';
+$lang['action'] = 'Action';
 /*----*/
 ?>

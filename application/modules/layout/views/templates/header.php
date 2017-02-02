@@ -1,10 +1,3 @@
-<?php
-	$template_path = base_url()."assets/cc/";
-	$ln = $this->uri->segment(1);
-	//echo current_url();die;
-	$path = $this->uri->segment(2);
-	$title = $this->mdl_settings->setting('site_title');
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,6 +12,9 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/form-elements.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/style.css">
+		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/bootstrap-datepicker.min.css">
+		
+		<script src="<?php echo base_url(); ?>assets/cc/js/jquery-1.11.1.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

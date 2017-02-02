@@ -1,3 +1,4 @@
+
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -50,7 +51,28 @@ class Mdl_menus extends Response_Model {
                 'label' => lang('postre'),
                 'rules' => 'required'
             ),
+						'half_price' => array(
+                'field' => 'half_price',
+                'label' => lang('half_price'),
+                'rules' => 'required|numeric'
+            ),
+						'full_price' => array(
+                'field' => 'full_price',
+                'label' => lang('full_price'),
+                'rules' => 'required|numeric'
+            ),
         );
     }
+		/**
+   * Function get_menus_by_date
+   *
+   * @return  Array
+   * 
+  */
+		public function get_menus_by_date($date) {
+			$menus_by_date = $this->mdl_menus->where(array('menu_date' => $date, 'disabled' => 0))->get()->result_array();
+			
+			return $menus_by_date;
+		}
 }
 ?>

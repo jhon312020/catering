@@ -23,35 +23,26 @@ class Sessions extends Base_Controller {
         redirect('sessions/login');
     }
 
-    public function login()
-    {
-		
-        if ($this->input->post('btn_login'))
-        {
-            if ($this->authenticate($this->input->post('email'), $this->input->post('password')))
-            {
-                if ($this->session->userdata('user_type') == 1 || $this->session->userdata('user_type') == 6)
-                {
+    public function login() {
+			if ($this->input->post('btn_login')) {
+				
+				if ($this->authenticate($this->input->post('email'), $this->input->post('password'))) {
+					//echo var_dump($this->input->is_ajax_request());exit;
 					if ($this->input->is_ajax_request()) {
-					   echo json_encode(array('login_status'=>'success','redirect_url'=>site_url('admin/dashboard')));
-					   die();
-					}else{
+						echo json_encode(array('login_status'=>'success','redirect_url'=>site_url('admin/dashboard')));
+						die();
+					} else {
+						echo json_encode(array('login_status'=>'success','redirect_url'=>site_url('admin/dashboard')));exit;
 						redirect('admin/dashboard');
 					}
-                }
-                elseif ($this->session->userdata('user_type') == 2)
-                {
-                    redirect('guest');
-                }
-            }else{
-				if ($this->input->is_ajax_request()) {
-					echo json_encode(array('login_status'=>'invalid'));
-					die();
+				} else {
+					if ($this->input->is_ajax_request()) {
+						echo json_encode(array('login_status'=>'invalid'));
+						die();
+					}
 				}
 			}
-        }
-
-        $this->load->view('session_login');
+      $this->load->view('session_login');
     }
 
     public function logout()
