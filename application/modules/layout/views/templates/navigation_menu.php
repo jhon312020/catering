@@ -18,6 +18,8 @@
       </button>
       <a class="navbar-brand" href="#"><img src="<?php echo $template_path; ?>gumen-logo.png" alt="Gumen-Catering">
       </a>
+      <a href="#"><img class="cart-logo respo_cart" src="<?php echo $template_path; ?>cart-white.png">
+                        </a>
     </div>
     <div id="navbar3" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
@@ -31,7 +33,7 @@
         <?php } } ?>
         <li><a href="<?php echo site_url($ln) . '/logout';?>">LOGOUT</a></li>
         <li>
-          <a href="#"><img class="cart-logo" src="<?php echo $template_path; ?>cart-white.png">
+          <a href="#"><img class="cart-logo desk_cart" src="<?php echo $template_path; ?>cart-green.png"><span class="desk_cart basketitems">5</span>
           </a>
         </li>
       </ul>

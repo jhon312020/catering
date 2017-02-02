@@ -72,11 +72,13 @@ $this->load->view('navigation_menu');
 								<span class="box-brown"><span class="tick"></span></span>
 								</span>
                             </div>
+
                         </div>
                         <div id="ribbon-container" class="ribbon-fix">
                             <a href="#" id="ribbon" target="_blank">MENU BASICO</a>
                         </div>
                     </div>
+                    
                     <div class="col-sm-12 section-down">
                         <div class="menu-bottom">
                             <div class="col-sm-2 smallpad">
