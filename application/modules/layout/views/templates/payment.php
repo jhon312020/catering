@@ -81,7 +81,7 @@ $this->load->view('navigation_menu');
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" id="card"/>
                   <span class="box"><span class="tick"></span></span>
                   </span>
                 </div>
@@ -92,7 +92,7 @@ $this->load->view('navigation_menu');
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" id="draft"/>
                   <span class="box"><span class="tick"></span></span>
                   </span>
                 </div>
@@ -103,7 +103,7 @@ $this->load->view('navigation_menu');
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox"/>
+                  <input type="checkbox" id="ticket"/>
                   <span class="box"><span class="tick"></span></span>
                   </span>
                 </div>
