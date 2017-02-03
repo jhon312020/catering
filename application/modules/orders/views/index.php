@@ -19,10 +19,10 @@
 		<?php foreach ($orders as $order) { ?>
 			<tr>
 				<td class=""><?php echo $order->client_code; ?></td>
-				<td class=""><?php echo $order->order_date; ?></td>
+				<td class=""><?php echo date('d/m/Y', strtotime($order->order_date)); ?></td>
 				<td class=""><?php echo $order->name; ?></td>
 				<td class=""><?php echo $order->business; ?></td>
-				<td class=""><?php echo $order->menu_name; ?></td>
+				<td class=""><?php echo lang('menu').' '.$order->menu_name; ?></td>
 				<td class="">
 					<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/orders/view/' . $order->id); ?>">
 						<i class="entypo-eye"></i>

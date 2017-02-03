@@ -14,3 +14,18 @@ ALTER TABLE `tbl_orders`  ADD `reference_no` VARCHAR(255) NOT NULL  AFTER `id`;
 ALTER TABLE `tbl_orders` DROP `menu_name`;
 ALTER TABLE `tbl_orders`  ADD `payment_method` VARCHAR(255) NOT NULL  AFTER `order_date`;
 ALTER TABLE `tbl_orders`  ADD `price` INT NOT NULL  AFTER `payment_method`;
+
+
+CREATE TABLE IF NOT EXISTS `tbl_temporary_orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) NOT NULL,
+  `menu_id` int(11) NOT NULL,
+  `order_type` varchar(255) NOT NULL,
+  `order_date` date NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tbl_clients`  ADD `client_business_name` VARCHAR(255) NOT NULL  AFTER `surname`;

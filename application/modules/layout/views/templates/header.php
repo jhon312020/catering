@@ -15,6 +15,9 @@
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/bootstrap-datepicker.min.css">
 		
 		<script src="<?php echo base_url(); ?>assets/cc/js/jquery-1.11.1.min.js"></script>
+		<script>
+		var SITE_URL = "<?php echo site_url(); ?>";
+		</script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

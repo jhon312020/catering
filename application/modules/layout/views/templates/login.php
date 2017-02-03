@@ -1,7 +1,5 @@
 <?php
 $this->load->view('header');
-$template_path = base_url()."assets/cc/img/";
-$ln = $this->uri->segment(1);
 ?>
 <!-- Top content -->
 <div class="top-content">
@@ -11,7 +9,7 @@ $ln = $this->uri->segment(1);
         <div class="col-sm-5 col-sm-offset-4 form-box">
           <div class="form-top">
             <div class="logo-heading">
-              <img src="<?php echo $template_path; ?>gumen-logo.png" class="img-responsive center-block" alt="" />
+              <img src="<?php echo TEMPLATE_PATH; ?>gumen-logo.png" class="img-responsive center-block" alt="" />
             </div>
             <div class="logo-para">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
@@ -37,7 +35,7 @@ $ln = $this->uri->segment(1);
             </form>
             <div class="register">
               <P><?php echo lang('do_not_have_account');?></p>
-              <a href="<?php echo site_url($ln.'/register'); ?>" class="btn btn-link center-block"><?php echo lang('register');?></a>
+              <a href="<?php echo site_url(PAGE_LANGUAGE.'/register'); ?>" class="btn btn-link center-block"><?php echo lang('register');?></a>
             </div>
           </div>
         </div>
@@ -52,5 +50,5 @@ $this->load->view('footer');
 /*
 		Fullscreen background
 */
-$.backstretch("<?php echo $template_path; ?>backgrounds/1.jpg");
+$.backstretch("<?php echo TEMPLATE_PATH; ?>backgrounds/1.jpg");
 </script>

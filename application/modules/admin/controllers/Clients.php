@@ -14,16 +14,11 @@ class Clients extends Admin_Controller {
 		$this->path = $this->mdl_settings->setting('site_url').$this->mdl_settings->setting('upload_folder')."images/clients/";
 	}
 	public function index() {
-		$pending_clients = $this->mdl_clients
-								->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, clients.is_active, clients.created_at, clients.updated_at, business.name as business')
-								->join('business', 'business.id = clients.business_id', 'left')
-								->where('clients.is_active', 0)
-								->get()->result();
-		$clients_list = $this->mdl_clients
-								->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, clients.is_active, clients.created_at, clients.updated_at, business.name as business')
-								->join('business', 'business.id = clients.business_id', 'left')
-								->where('clients.is_active', 1)
-								->get()->result();						
+		
+		$pending_clients = $this->mdl_clients->get_pending_clients();
+		
+		$clients_list = $this->mdl_clients->get_active_clients();
+								
 		$this->layout->set(array('pending_clients' => $pending_clients, 'clients_list' => $clients_list));
 		$this->layout->buffer('content', 'clients/index');
 		$this->layout->render();
@@ -34,10 +29,25 @@ class Clients extends Admin_Controller {
 		if ($this->input->post('btn_cancel')) {
 			redirect('admin/clients');
 		}
+		if($this->input->post('bill') == 1) {
+			//echo "true";die;
+			$this->mdl_clients->form_validation->set_rules('billing_data', lang('billing_data'), 'required');
+			
+		} 
+		if($id) {
+			$this->mdl_clients->form_validation->set_rules('email', lang('email'), 'required|valid_email|edit_unique[clients.email.'.$id.']');
+			$this->mdl_clients->form_validation->set_rules('client_code', lang('client_code'), 'required|min_length[4]|edit_unique[clients.client_code.'.$id.']');
+		}
+		else {
+			$this->mdl_clients->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[clients.email]');
+			$this->mdl_clients->form_validation->set_rules('client_code', lang('client_code'), 'required|min_length[4]|is_unique[clients.client_code]');
+		}
+		
 		if ($this->mdl_clients->run_validation()) {
 			$data = $this->input->post();
-			$data['password'] = md5($data['password']);
-			$data['password_key'] = base64_encode($data['password'].'_catering');
+			$password = $this->input->post('password');
+			$data['password'] = md5($password);
+			$data['password_key'] = base64_encode($password.'_catering');
 			unset($data['btn_submit']);
 			if(is_null($id) || $id == ''){
 				$id = $this->mdl_clients->save(null, $data);

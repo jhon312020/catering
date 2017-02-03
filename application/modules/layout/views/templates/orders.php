@@ -24,10 +24,15 @@ $this->load->view('navigation_menu');
 								foreach($orders as $order) {
 							?>
 							<tr>
-                <td><?php echo $orders['reference_no']; ?></td>
+                <td><?php echo $order['reference_no']; ?></td>
                 <td><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
-                <td><?php echo $order['total_price']; ?></td>
-                <td><?php echo lang('action'); ?></td>
+                <td><?php echo $order['total_price']; ?>&euro;</td>
+								<td><?php echo $order['payment_method']; ?></td>
+                <td>
+									<a href="<?php echo site_url(PAGE_LANGUAGE.'/order-details/'.$order['reference_no']); ?>">
+										<i class="fa fa-eye fa-2x"></i>
+									</a>
+								</td>
               </tr>
 							<?php
 								}

@@ -11,11 +11,11 @@ $this->load->view('navigation_menu');
           <table class="table table-striped paymentTable">
             <thead>
               <tr>
-                <th>Menu</th>
-                <th>DIA</th>
-                <th>PRECIO</th>
-                <th>Action</th>
-              </tr>
+								<th><?php echo lang('menu'); ?></th>
+                <th><?php echo lang('date'); ?></th>
+                <th><?php echo lang('price'); ?></th>
+                <th><?php echo lang('action'); ?></th>              
+							</tr>
             </thead>
             <tbody>
 							<?php
@@ -53,7 +53,11 @@ $this->load->view('navigation_menu');
                 </td>
                 <td><?php echo date('d/m/Y', strtotime($menu['menu_date'])); ?></td>
                 <td><?php echo $price; ?></td>
-                <td></td>
+                <td>
+									<a href="javascript:;" class="removeOrder" data-id="<?php echo $menu['id']; ?>">
+										<i class="fa fa-trash fa-2x"></i>
+									</a>
+								</td>
               </tr>
 							<?php
 								}

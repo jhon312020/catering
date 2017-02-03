@@ -34,8 +34,12 @@ class Node extends Anonymous_Controller {
 			}
 			
 			//print_r($todaySelectedMenus);die;
+
+			$this->login_client_profile = $this->mdl_clients->get_client_details_by_id($this->session->userdata('client_id'));
 			
-			$this->load->vars(array('todaySelectedMenus'=>$todaySelectedMenus));
+			//print_r($login_client_profile);die;
+			
+			$this->load->vars(array('todaySelectedMenus'=>$todaySelectedMenus, 'login_client_profile' => $this->login_client_profile));
 		}
 		
     $this->load->vars(array('user_info'=>$this->session->get_userdata()));
@@ -87,7 +91,9 @@ class Node extends Anonymous_Controller {
         if (isset($data['terms'])){
           unset($data['terms']);
         }
-        $data['password'] = md5($data['password']);
+				$password = $data['password'];
+        $data['password'] = md5($password);
+				$data['password_key'] = base64_encode($password.'_catering');
         $data['is_active'] = 0;
         $data['created_at'] = date('Y-m-d H:i:s');
         $data['updated_at'] = date('Y-m-d H:i:s');
@@ -189,6 +195,25 @@ class Node extends Anonymous_Controller {
    */
   public function profile() {
 		
+		$client_id = $this->login_client_profile->id;
+		if($this->input->post()) {
+			if($this->input->post('bill') == 1) {
+				$this->mdl_clients->form_validation->set_rules('billing_data', lang('billing_data'), 'required');
+			} 
+			$this->mdl_clients->form_validation->set_rules('email', lang('email'), 'required|valid_email|edit_unique[clients.email.'.$client_id.']');
+			if ($this->mdl_clients->run_validation('validation_rules_clients_profile_update')) {
+				$data = $this->input->post();
+				$password = $this->input->post('password');
+				$data['password'] = md5($password);
+				$data['password_key'] = base64_encode($password.'_catering');
+				$this->mdl_clients->save($this->login_client_profile->id, $data);
+				
+				$this->session->set_flashdata('alert_success', lang('success_profile_update'));
+				
+				redirect(PAGE_LANGUAGE.'/profile');
+			}
+		}
+		$this->mdl_clients->prep_form($client_id);
     $data_array = '';
     $this->load->view('layout/templates/profile', $data_array);
 		
@@ -244,6 +269,37 @@ class Node extends Anonymous_Controller {
 		$data_array['orders'] = $this->mdl_orders->get_orders_by_client_date();
 		
 		$this->load->view('layout/templates/orders', $data_array);
+  }
+	/**
+   * Function removeOrder
+   *
+   * @return  Bool
+   * 
+   */
+  public function removeOrder() {
+		
+		$post_params = $this->input->post();
+		
+		$this->mdl_temporary_orders->delete($post_params['order_id']);
+		
+		echo json_encode(array('success' => true, 'message' => 'The order has been succesfully removed.'));exit;
+  }
+	
+	/**
+   * Function removeOrder
+   *
+   * @return  Bool
+   * 
+   */
+  public function orderDetails($reference_no) {
+
+		$data_array['orders'] = $this->mdl_orders->get_orders_by_ref_no($reference_no);
+		
+		//print_r($data_array['orders']);die;
+		
+		$data_array['reference_no'] = $reference_no;
+		
+		$this->load->view('layout/templates/order-details', $data_array);
   }
 	
   /**

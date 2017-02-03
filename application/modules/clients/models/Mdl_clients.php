@@ -16,7 +16,7 @@ class Mdl_clients extends Response_Model {
    */
     public function validation_rules() {
         return array(
-            'client_code' => array(
+            /* 'client_code' => array(
                 'field' => 'client_code',
                 'label' => lang('client_code'),
                 'rules' => 'required|min_length[4]|is_unique[clients.client_code]',
@@ -25,13 +25,13 @@ class Mdl_clients extends Response_Model {
                     'min_length' => lang('minlength_business_error'),
                     'is_unique' => lang('unique_business_error')
                 )
-            ),
+            ), */
             'name' => array(
                 'field' => 'name',
                 'label' => lang('name'),
                 'rules' => 'required'
             ),
-			'surname' => array(
+						'surname' => array(
                 'field' => 'surname',
                 'label' => lang('surname'),
                 'rules' => 'required'
@@ -41,7 +41,7 @@ class Mdl_clients extends Response_Model {
                 'label' => lang('business'),
                 'rules' => 'required'
             ),
-            'email' => array(
+            /* 'email' => array(
                 'field' => 'email',
                 'label' => lang('email'),
                 'rules' => 'required|valid_email|is_unique[clients.email]',
@@ -50,7 +50,7 @@ class Mdl_clients extends Response_Model {
                     'valid_email' => lang('invalid_email'),
                     'is_unique' => lang('email_exists')
                 )
-            ),
+            ), */
             'password' => array(
                 'field' => 'password',
                 'label' => lang('password'),
@@ -81,9 +81,44 @@ class Mdl_clients extends Response_Model {
                 'label' => lang('bill'),
                 'rules' => 'required'
             ),
-            'billing_data' => array(
-                'field' => 'billing_data',
-                'label' => lang('billing_data'),
+        );
+    }
+		/**
+   * Function validation_rules_clients_profile_update
+   *
+   * @return  void
+   * 
+   */
+		public function validation_rules_clients_profile_update() {
+        return array(
+            'password' => array(
+                'field' => 'password',
+                'label' => lang('password'),
+                'rules' => 'required'
+            ),
+            'telephone' => array(
+                'field' => 'telephone',
+                'label' => lang('telephone'),
+                'rules' => 'required|numeric'
+            ),
+            'dni' => array(
+                'field' => 'dni',
+                'label' => lang('dni'),
+                'rules' => 'required'
+            ),
+            'intolerances' => array(
+                'field' => 'intolerances',
+                'label' => lang('intolerances'),
+                'rules' => 'required'
+            ),
+            'iban' => array(
+                'field' => 'iban',
+                'label' => lang('iban'),
+                'rules' => 'required'
+            ),
+            'bill' => array(
+                'field' => 'bill',
+                'label' => lang('bill'),
                 'rules' => 'required'
             ),
         );
@@ -111,9 +146,9 @@ class Mdl_clients extends Response_Model {
 
     public function validation_rules_on_register_page() {
         return array(
-            'client_code' => array(
-                'field' => 'client_code',
-                'label' => lang('client_code'),
+            'client_business_name' => array(
+                'field' => 'client_business_name',
+                'label' => lang('client_business_name'),
                 'rules' => 'required',
                 'errors' => array(
                     'required' => lang('business_error'),
@@ -187,6 +222,54 @@ class Mdl_clients extends Response_Model {
 			} else {
 				return false;
 			}
+		}
+		
+		/**
+   * Function check if the login clients session.
+   *
+   * @return  Bool
+   * 
+   */
+    public function get_client_details_by_id($id) {
+			
+			$client_details_by_id = $this->mdl_clients
+																		->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, business.name as business_name, clients.password_key, clients.bill')
+																		->join('business', 'business.id = clients.business_id', 'left')
+																		->where('clients.id', $id)->get()->row();
+			
+			return $client_details_by_id;
+		}
+			/**
+   * Function get_pending_clients.
+   *
+   * @return  Array
+   * 
+   */
+    public function get_pending_clients() {
+			
+			$pending_clients = $this->mdl_clients
+																	->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, clients.is_active, clients.created_at, clients.updated_at, business.name as business')
+																	->join('business', 'business.id = clients.business_id', 'left')
+																	->where('clients.is_active', 0)
+																	->get()->result();
+			
+			return $pending_clients;
+		}
+		/**
+   * Function get_active_clients.
+   *
+   * @return  Array
+   * 
+   */
+    public function get_active_clients() {
+			
+			$active_clients = $this->mdl_clients
+															->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, clients.is_active, clients.created_at, clients.updated_at, business.name as business')
+															->join('business', 'business.id = clients.business_id', 'left')
+															->where('clients.is_active', 1)
+															->get()->result();
+			
+			return $active_clients;
 		}
 }
 ?>
