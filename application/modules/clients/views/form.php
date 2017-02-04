@@ -4,6 +4,12 @@
 <?php
 $readonly = ($readonly)?'readonly':'';
 $disabled = ($readonly)?'disabled':'';
+
+$password = $this->mdl_clients->form_value('password');
+if($this->mdl_clients->form_value('password') && !$this->input->post()) {
+	$password = base64_decode($this->mdl_clients->form_value('password_key'));
+	$password = substr($password, 0, -9);
+}
 ?>
 <div class="headerbar">
 	<div class="clearfix">
@@ -41,6 +47,12 @@ $disabled = ($readonly)?'disabled':'';
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-sm-2 pull-left"><?php echo lang('client_business_name');?>: </label>
+					<div class="col-sm-10">
+						<?php echo form_input(array('name'=>'client_business_name', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('client_business_name'), $readonly=>true)); ?>
+					</div>	
+				</div>	
+				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('business');?>: </label>
 					<div class="col-sm-10">
 						<?php echo form_dropdown('business_id', $business_list, $this->mdl_clients->form_value('business_id'), 'class="form-control" '.$disabled.''); ?>
@@ -55,7 +67,7 @@ $disabled = ($readonly)?'disabled':'';
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('password');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'password', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('password'), $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>'password', 'type' => 'password', 'class'=>'form-control', 'value'=>$password, $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
@@ -92,7 +104,7 @@ $disabled = ($readonly)?'disabled':'';
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('billing_data');?>: </label>
 					<div class="col-sm-10">
-						<textarea <?php echo $readonly?'disabled':''; ?> name="billing_data" class="form-control"><?php echo $this->mdl_clients->form_value('billing_data'); ?></textarea>
+						<textarea <?php echo $readonly || $this->mdl_clients->form_value('bill') == 0?'disabled':''; ?> name="billing_data" id="billing_data" class="form-control"><?php echo $this->mdl_clients->form_value('bill') == 1?$this->mdl_clients->form_value('billing_data'):'';  ?></textarea>
 					</div>
 				</div>
 				<div class="form-group">
@@ -105,5 +117,14 @@ $disabled = ($readonly)?'disabled':'';
 		</div>
 	</div>
 <script type="text/javascript">
-
+$(document).ready(function(){
+	$(document).on('change', '[name="bill"]', function(){
+		if($(this).val() == 1) {
+			$('#billing_data').prop('disabled', false);
+		} else {
+			$('#billing_data').prop('disabled', true);
+			$('#billing_data').val('');
+		}
+	})
+})
 </script>

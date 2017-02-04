@@ -36,6 +36,7 @@ $this->load->view('navigation_menu');
 						$headerClass = '';
 					}
 				?>
+				<div class="clear-pad">
 				<div class="col-sm-12 section-down">
 					<div id="ribbon-container<?php echo $headerClass; ?>" class="ribbon-fix">
             <a href="javascript:;" id="ribbon">MENU <?php echo $menu_type['menu_name'] ?></a>
@@ -65,13 +66,13 @@ $this->load->view('navigation_menu');
 									}
 								}
 						?>
-						<div class="col-sm-2 smallpad">
-              <img src="<?php echo TEMPLATE_PATH; ?>dish1.png"><span>+</span>
+						<div class="col-sm-2 col-my-2 smallpad">
+              <span class="menu-plus">+</span><span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish1.png"></span>
               <br>
               <span><?php echo $menu_list['complement']; ?></span>
             </div>
-            <div class="col-sm-2 dishpad">
-              <img src="<?php echo MENU_IMAGE_PATH.$menu_list['primary_image']; ?>"> +
+            <div class="col-sm-2 col-my-4 dishpad">
+              <span class="menu-plus img-plus">+</span><span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['primary_image']; ?>">
               <br>
               <span><?php echo $menu_list['primary_plate']; ?></span>
               <p style="text-align: left;font-size: 12px;"><?php echo $menu_list['description_primary_plate']; ?></p>
@@ -80,8 +81,8 @@ $this->load->view('navigation_menu');
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
               </span>
             </div>
-            <div class="col-sm-2 dishpad">
-              <img src="<?php echo MENU_IMAGE_PATH.$menu_list['secondary_image']; ?>"> +
+            <div class="col-sm-2 col-my-4 dishpad">
+              <span class="menu-plus img-plus">+</span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['secondary_image']; ?>">
               <br>
               <span><?php echo $menu_list['secondary_plate']; ?></span>
               <p style="text-align: left;font-size: 12px;"><?php echo $menu_list['description_secondary_plate']; ?></p>
@@ -90,27 +91,24 @@ $this->load->view('navigation_menu');
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
               </span>
             </div>
-            <div class="col-sm-1 smallpad">
-              <img src="<?php echo TEMPLATE_PATH; ?>dish2.png"> +
+            <div class="col-sm-1 col-my-2 smallpad">
+              <span class="menu-plus">+</span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish2.png">
               <br>
               <span><?php echo $menu_list['postre']; ?></span>
             </div>
-            <div class="col-sm-1 smallpad">
-              <img src="<?php echo TEMPLATE_PATH; ?>dish3.png"> +
+            <div class="col-sm-1 col-my-3 smallpad">
+              <span class="menu-plus">+</span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish6.png">
               <br>
               <span>Pa</span>
             </div>
-            <div class="col-sm-1 smallpad">
-              <img src="<?php echo TEMPLATE_PATH; ?>dish4.png"> +
-              <br>
-              <span>Oli i Vinagre</span>
+			<div class="col-sm-1 col-my-2 smallpad">
+              <select class="selectpicker select-menu">
+				  <option>Mustard</option>
+				  <option>Ketchup</option>
+				  <option>Relish</option>
+			  </select>
             </div>
-            <div class="col-sm-1 smallpad">
-              <img src="<?php echo TEMPLATE_PATH; ?>dish5.png">
-              <br>
-              <span>Coberts</span>
-            </div>
-            <div class="col-sm-2 smallpad">
+            <div class="col-sm-2 col-my-3 smallpad">
               <h4>MENU SENCER</h4>
               <span class="custom-checkbox col-sm-offset-5">
               <input type="checkbox" class="jsSelectOrder" <?php echo $primaryChecked == 'checked' || $secondaryChecked == 'checked' ? 'checked' :'';; ?> value="<?php echo $menu_list['half_price']; ?>" data-half-price="<?php echo $menu_list['half_price']; ?>" data-full-price="<?php echo $menu_list['full_price']; ?>" />
@@ -122,7 +120,10 @@ $this->load->view('navigation_menu');
 							}
 						?>		
           </div>
+		  
         </div>
+		
+		</div>
 				<?php
 				}
 				?>

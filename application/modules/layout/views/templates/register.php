@@ -1,7 +1,5 @@
 <?php
 $this->load->view('header');
-$template_path = base_url()."assets/cc/img/";
-$ln = $this->uri->segment(1);
 ?>
 <!-- Top content -->
 <div class="top-content">
@@ -11,7 +9,7 @@ $ln = $this->uri->segment(1);
         <div class="col-sm-5 col-sm-offset-4 form-box">
           <div class="form-top">
             <div class="logo-heading">
-              <img src="<?php echo $template_path; ?>gumen-logo.png" class="img-responsive center-block" alt="" />
+              <img src="<?php echo TEMPLATE_PATH; ?>gumen-logo.png" class="img-responsive center-block" alt="" />
             </div>
             <div class="logo-para">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
@@ -51,17 +49,9 @@ $ln = $this->uri->segment(1);
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-business"><?php echo lang('business');?></label>
-                <select name="client_code" id="form-business" class="form-username form-control" data-error="<?php echo lang('business_error');?>" required>
-                  <option value="">-Select-</option>
-                  <?php
-                    foreach($list_of_business as $b) {
-                      printf('<option value="%d">%s</option>', $b['id'], $b['name']);
-                    }
-                  ?>
-                </select>
-                <!-- <input type="text" id="form-business" name="client_code" placeholder="<?php echo lang('business');?>" class="form-username form-control" 
-                  data-error="<?php echo lang('business_error');?>" 
-                required> -->
+                <input type="text" name="client_business_name" id="client_business_name" placeholder="<?php echo lang('business'); ?>" class="form-control" 
+                  data-error="<?php echo lang('bussiness_error');?>" 
+                required>
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
@@ -77,7 +67,7 @@ $ln = $this->uri->segment(1);
             </form>
             <div class="register">
               <p><?php echo lang('already_have_acc');?></p>
-              <a href="<?php echo site_url($ln); ?>" class="btn btn-link center-block"><?php echo lang('enter'); ?></a>
+              <a href="<?php echo site_url(PAGE_LANGUAGE); ?>" class="btn btn-link center-block"><?php echo lang('enter'); ?></a>
             </div>
           </div>
         </div>
@@ -92,5 +82,5 @@ $this->load->view('footer');
 /*
 		Fullscreen background
 */
-$.backstretch("<?php echo $template_path; ?>backgrounds/1.jpg");
+$.backstretch("<?php echo TEMPLATE_PATH; ?>backgrounds/1.jpg");
 </script>

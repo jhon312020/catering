@@ -14,29 +14,34 @@ class Anonymous_Controller extends MX_Controller {
         exit;
       }
 			
-			define('PAGE_LANGUAGE', 'es');
+			define('PAGE_LANGUAGE', 'es', true);
       $ln = $this->uri->segment(1);
       if($ln == "en") {
         $lang = "english";
 				define('PAGE_LANGUAGE', 'en');
-      } else $lang = "spanish";
+      } else {
+				$lang = "spanish";
+			}
 			
 			/*check valid login clients*/
 			$this->load->model('clients/mdl_clients');
 			$this->load->library('session');
+			$this->load->library('MY_Form_validation');
 			$this->load->helper('url');
+			$this->load->library('user_agent');
 			$controller_method = $this->router->fetch_method();
 			
 			$method_array = array('register', 'index');
-			
+			//echo $controller_method;die;
 			if($this->mdl_clients->is_login_clients()) {
-				
+				//echo "true";
 				//check the requested page is an register page.
-				if(in_array($controller_method, $method_array)) {
+				if(!$this->input->post() && in_array($controller_method, $method_array) && $controller_method != 'logout') {
+					//echo "hello";die;
 					redirect(PAGE_LANGUAGE.'/profile');
 				}
 			} else {
-				
+				//echo "false";
 				//Check if the request is an ajax.
 				if($this->input->is_ajax_request()) {
 					echo json_encode(array('error' => 'Invalid clients', 'success' => false));
@@ -44,12 +49,12 @@ class Anonymous_Controller extends MX_Controller {
 					
 					//Check if the requested page is not an register or login page.
 					if(!in_array($controller_method, $method_array)) {
-						redirect(PAGE_LANGUAGE.'/login');
+						redirect(PAGE_LANGUAGE);
 					}
 				}
 			}
-      
-			$this->load->library('user_agent');
+			
+			
       
       $this->load->database();
       $this->load->model('settings/mdl_settings');

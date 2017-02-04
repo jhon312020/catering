@@ -10,10 +10,11 @@ class Orders extends Admin_Controller {
 
 	public function index() {
 		$orders = $this->mdl_orders
-							->select('clients.name, clients.client_code, business.name as business, orders.menu_name, orders.id, orders.order_date, orders.is_active')
+							->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name')
 							->join('clients', 'clients.id = orders.client_id', 'left')
 							->join('business', 'business.id = clients.business_id', 'left')
 							->join('menus', 'menus.id = orders.menu_id', 'left')
+							->join('menu_types', 'menus.menu_type_id = menu_types.id', 'left')
 							->get()->result();
 		$this->layout->set(array('orders' => $orders));
 		$this->layout->buffer('content', 'orders/index');

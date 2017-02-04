@@ -84,6 +84,9 @@ $route['es/contact'] = 'node/contact';
 $route['en/orders'] = 'node/orders';
 $route['es/orders'] = 'node/orders';
 
+$route['en/order-details/(:any)'] = 'node/orderDetails/$1';
+$route['es/order-details/(:any)'] = 'node/orderDetails/$1';
+
 $route['en/logout'] = 'node/logout';
 $route['es/logout'] = 'node/logout';
 
