@@ -155,21 +155,36 @@ class Mdl_clients extends Response_Model {
    */
     public function check_clients($data){
 			$result = $this->mdl_clients->where(array('email'=>$data['email'], 'password'=>md5($data['password'])))->get()->row();
+			//print_r($result);die;
 			if(count($result)>0) {
 				if($result->is_active == 0) {
                 	$this->session->set_flashdata('alert_error', lang('in_active_user'));
                 	return false;
                 } else {
                     $session_data = array(
-                        'user_type'	=> $result->role,
-                        'user_id'	=> $result->id,
-                        'user_name' => ucfirst($result->name)." ".ucfirst($result->surname)
+                        'client_id'	=> $result->id,
+                        'client_name' => ucfirst($result->name)." ".ucfirst($result->surname)
                     );
                     $this->session->set_userdata($session_data);
                 }
                 return true;
 			} else {
 				$this->session->set_flashdata('alert_error', lang('invalid_credentials'));
+				return false;
+			}
+		}
+		/**
+   * Function check if the login clients session.
+   *
+   * @return  Bool
+   * 
+   */
+    public function is_login_clients() {
+			$session = $this->session->get_userdata();
+			
+			if(isset($session['client_id'])) {
+				return true;
+			} else {
 				return false;
 			}
 		}

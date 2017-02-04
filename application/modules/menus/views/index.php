@@ -42,7 +42,7 @@
 			}
 		?>
 			<tr class="<?php echo $bgclass.' '.$topClass; ?>">
-				<td class=""><?php echo !$topClass?$menu->menu_date:''; ?></td>
+				<td class=""><?php echo !$topClass?date('d/m/Y', strtotime($menu->menu_date)):''; ?></td>
 				<td class=""><?php echo $menu->menu_name;; ?></td>
 				<td class=""><?php echo $menu->complement; ?></td>
 				<td class=""><?php echo $menu->primary_plate; ?></td>
@@ -52,7 +52,7 @@
 					<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/menus/view/' . $menu->id); ?>">
 						<i class="entypo-eye"></i>
 					</a>
-					<a class="btn btn-primary edit btn-sm" href="<?php echo site_url('admin/menus/form/' . $menu->id); ?>">
+					<a class="btn btn-primary edit btn-sm" href="<?php echo site_url('admin/menus/edit/' . $menu->id); ?>">
 						<i class="entypo-pencil"></i>
 					</a>
 					<a class="btn btn-warning btn-sm <?php echo $menu->is_active ? '' : 'inactive'; ?>" href="<?php echo site_url('admin/menus/toggle/' . $menu->id . '/' . $menu->is_active); ?>">

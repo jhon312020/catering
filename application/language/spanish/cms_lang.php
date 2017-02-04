@@ -1,5 +1,5 @@
 <?php
-
+/*
 //spanish
 
 $lang['account_information'] = 'Account Information';
@@ -752,8 +752,6 @@ $lang['dni_passport'] = 'Pasaporte';
 
 
 
-/* Menu */
-
 $lang['about_us'] = 'NOSOTROS';
 
 $lang['vip_pass'] = 'VIP PASS';
@@ -784,7 +782,6 @@ $lang['send'] = 'Enviar';
 
 
 
-/* Reservation */
 
 $lang['book_now'] = 'RESERVA';
 
@@ -824,8 +821,6 @@ $lang['back_minutes'] = 'Vu. mins';
 
 
 
-/* Booking 2nd Page*/
-
 $lang['summary'] = 'Resumen';
 
 $lang['edit'] = 'Editar';
@@ -848,7 +843,6 @@ $lang['price'] = 'Precio';
 
 
 
-/*Booking last page*/
 
 $lang['your_reservation_includes'] = 'Tu reserva incluye';
 
@@ -1303,7 +1297,7 @@ $lang['passengers_price'] = 'Precio Pasageros';
 $lang['pay_by_credit'] = 'Credit card';
 
 $lang['how_pay'] = 'How you want to pay?';
-
+*/
 
 /*----*/
 $lang['exists_username'] = 'Email id alredy exists';
@@ -1339,6 +1333,8 @@ $lang['description_secondary_plate'] = 'Descripción segundo plate';
 $lang['secondary_image'] = 'Segundo imagen';
 $lang['postre'] = 'Postre';
 $lang['date'] = 'Fecha';
+$lang['full_price'] = 'Full price';
+$lang['half_price'] = 'Half price';
 
 $lang['client'] = 'Cliente';
 $lang['clients'] = 'Clientes';
@@ -1375,5 +1371,14 @@ $lang['register'] = 'Registrate';
 $lang['already_have_acc'] = 'Ya tienes cuenta?';
 $lang['in_active_user'] = 'El usuario dado está inactivo. Consulte con el administrador.';
 $lang['email_exists'] = 'La dirección de correo ya existe';
+
+$lang['profile'] = 'Perfil';
+$lang['contact'] = 'Contacto';
+
+$lang['reference_no'] = 'Reference no';
+$lang['order_date'] = 'Order date';
+$lang['price'] = 'Price';
+$lang['payment_method'] = 'Wat to pay';
+$lang['action'] = 'Action';
 /*----*/
 ?>

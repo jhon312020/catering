@@ -1,9 +1,7 @@
 <?php
-  $template_path = base_url()."assets/cc/img/";
-  $ln = $this->uri->segment(1);
   $menu_selected = $this->uri->segment(2);
   /* Forming the menu statically with the url as key */
-  $menus = array('profile'=>'PERFIL', 'menus'=>'MENUS','contact'=>'CONTACTO');
+  $menus = array('profile' => lang('profile'), 'orders'=> lang('orders'), 'menus' => lang('menus'),'contact' => lang('contact'));
   # Used for printing all the array variables */
   //print_r($this->_ci_cached_vars);
 ?>
@@ -16,24 +14,26 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><img src="<?php echo $template_path; ?>gumen-logo.png" alt="Gumen-Catering">
+      <a class="navbar-brand" href="#"><img src="<?php echo TEMPLATE_PATH; ?>gumen-logo.png" alt="Gumen-Catering">
       </a>
-      <a href="#"><img class="cart-logo respo_cart" src="<?php echo $template_path; ?>cart-white.png">
+      <a href="#"><img class="cart-logo respo_cart" src="<?php echo TEMPLATE_PATH; ?>cart-white.png">
                         </a>
     </div>
     <div id="navbar3" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="" javascript="return false"><?php echo $user_info['user_name']; ?></a></li>
+        <li><a href="" javascript="return false"><?php echo $user_info['client_name']; ?></a></li>
         <?php 
         foreach ($menus as $url=>$menu) { 
-          if ($url == $menu_selected) { ?>
-            <li class="active"><a href="<?php echo site_url($ln).'/'.$url?>"><?php echo $menu; ?></a></li>
-        <?php } else { ?>
-            <li><a href="<?php echo site_url($ln).'/'.$url?>"><?php echo $menu; ?></a></li>
-        <?php } } ?>
-        <li><a href="<?php echo site_url($ln) . '/logout';?>">LOGOUT</a></li>
+				?>
+          <li class="<?php echo $url == $menu_selected? 'active' : ''; ?>">
+						<a href="<?php echo site_url(PAGE_LANGUAGE.'/'.$url); ?>">
+							<?php echo strtoupper($menu); ?>
+						</a>
+					</li>
+        <?php  } ?>
+        <li><a href="<?php echo site_url(PAGE_LANGUAGE.'/logout');?>">LOGOUT</a></li>
         <li>
-          <a href="#"><img class="cart-logo desk_cart" src="<?php echo $template_path; ?>cart-green.png"><span class="desk_cart basketitems">5</span>
+          <a href="<?php echo site_url(PAGE_LANGUAGE.'/payment'); ?>"><img class="cart-logo desk_cart" src="<?php echo TEMPLATE_PATH; ?>cart-green.png"><span class="desk_cart basketitems">5</span>
           </a>
         </li>
       </ul>
