@@ -41,6 +41,7 @@ $this->load->view('navigation_menu');
 					<div id="ribbon-container<?php echo $headerClass; ?>" class="ribbon-fix">
             <a href="javascript:;" id="ribbon">MENU <?php echo $menu_type['menu_name'] ?></a>
           </div>
+		  <div class="row doublemenu">
           <div class="menu-bottom jsMenuDiv">
 						<?php 
 						if(isset($menu_lists[$menu_type['id']])) {
@@ -120,6 +121,89 @@ $this->load->view('navigation_menu');
 							}
 						?>		
           </div>
+		  </div>
+		  <div class="row doublemenu">
+          <div class="menu-bottom jsMenuDiv">
+						<?php 
+						if(isset($menu_lists[$menu_type['id']])) {
+							foreach($menu_lists[$menu_type['id']] as $menu_list) {
+								$menuIds[] = $menu_list['id'];
+								
+								$primaryChecked = '';
+								$secondaryChecked = '';
+								if(isset($todaySelectedMenus[$menu_list['id']])) {
+									$type = $todaySelectedMenus[$menu_list['id']]['order_type'];
+									
+									//check if the slected menus primary or secondary or both
+									switch($type) {
+										case 'primary':
+											$primaryChecked = 'checked';
+											break;
+										case 'secondary':
+											$secondaryChecked = 'checked';
+											break;	
+										case 'all':
+											$secondaryChecked = 'checked';
+											break;	
+									}
+								}
+						?>
+						<div class="col-sm-2 col-my-2 smallpad">
+              <span class="menu-plus">+</span><span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish1.png"></span>
+              <br>
+              <span><?php echo $menu_list['complement']; ?></span>
+            </div>
+            <div class="col-sm-2 col-my-4 dishpad">
+              <span class="menu-plus img-plus">+</span><span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['primary_image']; ?>">
+              <br>
+              <span><?php echo $menu_list['primary_plate']; ?></span>
+              <p style="text-align: left;font-size: 12px;"><?php echo $menu_list['description_primary_plate']; ?></p>
+              <span class="custom-checkbox col-sm-offset-5">
+              <input type="checkbox" class="jsSelectMenu" <?php echo $primaryChecked; ?> name="select_food[<?php echo $menu_list['id']; ?>][primary]" value="<?php echo $menu_list['half_price']; ?>" />
+              <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
+              </span>
+            </div>
+            <div class="col-sm-2 col-my-4 dishpad">
+              <span class="menu-plus img-plus">+</span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['secondary_image']; ?>">
+              <br>
+              <span><?php echo $menu_list['secondary_plate']; ?></span>
+              <p style="text-align: left;font-size: 12px;"><?php echo $menu_list['description_secondary_plate']; ?></p>
+              <span class="custom-checkbox col-sm-offset-5">
+              <input type="checkbox" class="jsSelectMenu" <?php echo $secondaryChecked; ?> name="select_food[<?php echo $menu_list['id']; ?>][secondary]" value="<?php echo $menu_list['half_price']; ?>" />
+              <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
+              </span>
+            </div>
+            <div class="col-sm-1 col-my-2 smallpad">
+              <span class="menu-plus">+</span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish2.png">
+              <br>
+              <span><?php echo $menu_list['postre']; ?></span>
+            </div>
+            <div class="col-sm-1 col-my-3 smallpad">
+              <span class="menu-plus">+</span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish6.png">
+              <br>
+              <span>Pa</span>
+            </div>
+			<div class="col-sm-1 col-my-2 smallpad">
+              <select class="selectpicker select-menu">
+				  <option>Mustard</option>
+				  <option>Ketchup</option>
+				  <option>Relish</option>
+			  </select>
+            </div>
+            <div class="col-sm-2 col-my-3 smallpad">
+              <h4>MENU SENCER</h4>
+              <span class="custom-checkbox col-sm-offset-5">
+              <input type="checkbox" class="jsSelectOrder" <?php echo $primaryChecked == 'checked' || $secondaryChecked == 'checked' ? 'checked' :'';; ?> value="<?php echo $menu_list['half_price']; ?>" data-half-price="<?php echo $menu_list['half_price']; ?>" data-full-price="<?php echo $menu_list['full_price']; ?>" />
+              <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
+              </span>
+            </div>
+						<?php
+								}
+							}
+						?>		
+          </div>
+		  </div>
+		  
 		  
         </div>
 		
@@ -150,7 +234,6 @@ $this->load->view('navigation_menu');
 </div>
 <div class="footer-bottom">
   <div class="container">
-    <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <div class="copyright">
           Gumen Catering | Calle cato, 6 bajos. 08206 Sabadell | Tel/Fax. 93 717 8335
@@ -161,7 +244,6 @@ $this->load->view('navigation_menu');
           <a href="#" class="btn-link">Condiciones legales</a> <i class="fa fa-lg fa-twitter-square"></i> <i class="fa fa-lg fa-facebook-square"></i>
         </div>
       </div>
-    </div>
   </div>
 </div>
 </div>

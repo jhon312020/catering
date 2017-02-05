@@ -22,15 +22,23 @@
     <div id="navbar3" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="" javascript="return false"><?php echo $user_info['client_name']; ?></a></li>
+		<li><i class="fa fa-long-arrow-right" aria-hidden="true"></i></li>
         <?php 
+		$licount = 1;
         foreach ($menus as $url=>$menu) { 
 				?>
           <li class="<?php echo $url == $menu_selected? 'active' : ''; ?>">
 						<a href="<?php echo site_url(PAGE_LANGUAGE.'/'.$url); ?>">
-							<?php echo strtoupper($menu); ?>
+							<?php echo strtoupper($menu);
+							if($licount == 1) {
+							//echo '<i class="fa fa-long-arrow-right" aria-hidden="true"></i>';
+							}
+							?>
 						</a>
 					</li>
-        <?php  } ?>
+        <?php  
+		$licount;
+		} ?>
         <li><a href="<?php echo site_url(PAGE_LANGUAGE.'/logout');?>">LOGOUT</a></li>
         <li>
           <a href="<?php echo site_url(PAGE_LANGUAGE.'/payment'); ?>"><img class="cart-logo desk_cart" src="<?php echo TEMPLATE_PATH; ?>cart-green.png"><span class="desk_cart basketitems">5</span>
