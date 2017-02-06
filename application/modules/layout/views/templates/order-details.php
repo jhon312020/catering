@@ -4,7 +4,7 @@ $this->load->view('navigation_menu');
 ?>
 <div class="top-content">
   <div class="inner-bg">
-    <div class="container">
+    <div class="container page-height">
       <div class="row">
         <h3 class="head_2">Pedidos ref. <?php echo $reference_no; ?></h3>
         <div class="col-sm-912fix-left-right">

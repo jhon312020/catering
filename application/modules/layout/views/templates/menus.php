@@ -77,7 +77,7 @@ $this->load->view('navigation_menu');
               <span class="menu-plus img-plus">+</span><span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['primary_image']; ?>">
               <br>
               <span><?php echo $menu_list['primary_plate']; ?></span>
-              <p style="text-align: left;font-size: 12px;"><?php echo $menu_list['description_primary_plate']; ?></p>
+              <p class="menu-desc"><?php echo $menu_list['description_primary_plate']; ?></p>
               <span class="custom-checkbox col-sm-offset-5">
               <input type="checkbox" class="jsSelectMenu" <?php echo $primaryChecked; ?> name="select_food[<?php echo $menu_list['id']; ?>][primary]" value="<?php echo $menu_list['half_price']; ?>" />
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
@@ -87,7 +87,7 @@ $this->load->view('navigation_menu');
               <span class="menu-plus img-plus">+</span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['secondary_image']; ?>">
               <br>
               <span><?php echo $menu_list['secondary_plate']; ?></span>
-              <p style="text-align: left;font-size: 12px;"><?php echo $menu_list['description_secondary_plate']; ?></p>
+              <p class="menu-desc"><?php echo $menu_list['description_secondary_plate']; ?></p>
               <span class="custom-checkbox col-sm-offset-5">
               <input type="checkbox" class="jsSelectMenu" <?php echo $secondaryChecked; ?> name="select_food[<?php echo $menu_list['id']; ?>][secondary]" value="<?php echo $menu_list['half_price']; ?>" />
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
