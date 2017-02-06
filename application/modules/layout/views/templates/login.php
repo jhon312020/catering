@@ -20,7 +20,7 @@ $this->load->view('header');
             <form role="form" action="" method="post" class="login-form" data-toggle="validator">
               <div class="form-group">
                 <label class="sr-only" for="form-username">Username</label>
-                <input type="email" required name="email" placeholder="<?php echo lang('email'); ?>" class="form-username form-control" id="form-username" data-error="<?php echo lang('invalid_email'); ?>">
+                <input type="email" required name="email" placeholder="<?php echo lang('username'); ?>" class="form-username form-control" id="form-username" data-error="<?php echo lang('invalid_email'); ?>">
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
@@ -29,7 +29,7 @@ $this->load->view('header');
                 <div class="help-block with-errors"></div>
               </div>
               <div class="forget form-group">
-                <a href="" class="btn btn-link"><?php echo lang('forgot_password');?></a>
+                <a href="<?php echo site_url(PAGE_LANGUAGE.'/forgot_password'); ?>" class="btn btn-link"><?php echo lang('forgot_password');?></a>
               </div>
               <button type="submit" class="btn center-block"><?php echo strtoupper(lang('enter')); ?></button>
             </form>

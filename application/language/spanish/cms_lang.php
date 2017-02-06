@@ -1,7 +1,7 @@
 <?php
 /*----*/
 $lang['exists_username'] = 'Email id alredy exists';
-$lang['business'] = 'Empresas';
+$lang['business'] = 'Empresa';
 $lang['business_error'] = 'El nombre de la empresa es obligatorio';
 $lang['business_title'] = 'Empresa';
 $lang['business_id'] = 'ID empresa';
@@ -63,15 +63,15 @@ $lang['statistics'] = 'Estadisticas';
 $lang['username'] = 'Nombre de Usuario';
 
 $lang['invalid_credentials'] = 'credenciales no válidas';
-$lang['create_account'] = 'CREATE ACCOUNT';
+$lang['create_account'] = 'CREAR CUENTA';
 $lang['checkbox_error'] = 'Por favor marque esta casilla si desea continuar';
 $lang['email_error'] = 'Correo electronico es requerido';
 $lang['unique_business_error'] = 'El negocio debe ser único';
 $lang['minlength_business_error'] = 'El nombre comercial debe ser al menos de 4 letras';
-$lang['do_not_have_account'] = 'Todavia no tienes tu cuenta?';
-$lang['accept_terms'] = 'Accept terms and conditions';
-$lang['register'] = 'Registrate';
-$lang['already_have_acc'] = 'Ya tienes cuenta?';
+$lang['do_not_have_account'] = '¿Todavía no tienes tu cuenta?';
+$lang['accept_terms'] = 'Acepto los términos y condiciones';
+$lang['register'] = 'Regístrate';
+$lang['already_have_acc'] = '¿Ya tienes cuenta?';
 $lang['in_active_user'] = 'El usuario dado está inactivo. Consulte con el administrador.';
 $lang['email_exists'] = 'La dirección de correo ya existe';
 $lang['client_business_name'] = 'Client business name';
@@ -99,7 +99,9 @@ $lang['new'] = 'Nuevo';
 $lang['surname'] = 'Apellidos';
 $lang['name'] = 'Nombre';
 $lang['password'] = 'Contraseña';
-$lang['enter'] = 'Enter';
+$lang['enter'] = 'Entrar';
+$lang['forgot_password'] = 'He olvidado mi Contraseña';
+$lang['forgot_password_page_heading'] = 'Recuperar contraseña';
 
 $lang['success_profile_update'] = 'Profile has been updated successfully';
 
@@ -107,6 +109,11 @@ $lang['personal_information'] = 'Datos Personales';
 $lang['payment_details'] = 'Datos de pago';
 
 $lang['form_validation_edit_unique']= 'The {field} already exists.';
-
+$lang['recover_email_success_message'] = 'Kindly check your email to reset your password!';
+$lang['confirm_password'] = 'Confirma Password';
+$lang['reset_password_page_heading'] = 'Restablecer la contraseña';
+$lang['password_error'] = 'Password necesario';
+$lang['confirm_password_error'] = 'Confrim password necesario';
+$lang['change_password_success_message'] = 'Su contraseña se ha restablecido correctamente!';
 /*----*/
 ?>

@@ -1,7 +1,7 @@
 <?php
   $menu_selected = $this->uri->segment(2);
   /* Forming the menu statically with the url as key */
-  $menus = array('profile' => lang('profile'), 'orders'=> lang('orders'), 'menus' => lang('menus'),'contact' => lang('contact'));
+  $menus = array('profile' => lang('profile'), 'menus' => lang('menus'), 'orders'=> lang('orders'), 'contact' => lang('contact'));
   # Used for printing all the array variables */
   //print_r($this->_ci_cached_vars);
 ?>

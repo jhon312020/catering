@@ -28,6 +28,7 @@ $this->load->view('navigation_menu');
 				<input type="hidden" name="language" value="<?php echo PAGE_LANGUAGE; ?>">
 				<?php
 				$menuIds = [];
+        //print_r($menu_types);
 				foreach($menu_types as $key => $menu_type) {
 					$checkboxClass = '';
 					$headerClass = '-green';
@@ -36,7 +37,7 @@ $this->load->view('navigation_menu');
 						$headerClass = '';
 					}
 				?>
-				<div class="clear-pad">
+				<div class="clear-pad" style="clear:both">
 				<div class="col-sm-12 section-down">
 					<div id="ribbon-container<?php echo $headerClass; ?>" class="ribbon-fix">
             <a href="javascript:;" id="ribbon">MENU <?php echo $menu_type['menu_name'] ?></a>
@@ -66,6 +67,7 @@ $this->load->view('navigation_menu');
 									}
 								}
 						?>
+            <div class="row doublemenu">
 						<div class="col-sm-2 col-my-2 smallpad">
               <span class="menu-plus">+</span><span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish1.png"></span>
               <br>
@@ -115,6 +117,7 @@ $this->load->view('navigation_menu');
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
               </span>
             </div>
+            </div>
 						<?php
 								}
 							}
@@ -148,22 +151,7 @@ $this->load->view('navigation_menu');
     </div>
   </div>
 </div>
-<div class="footer-bottom">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <div class="copyright">
-          Gumen Catering | Calle cato, 6 bajos. 08206 Sabadell | Tel/Fax. 93 717 8335
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <div class="design">
-          <a href="#" class="btn-link">Condiciones legales</a> <i class="fa fa-lg fa-twitter-square"></i> <i class="fa fa-lg fa-facebook-square"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<?php $this->load->view('footer_nav_bar'); ?>
 </div>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/menus.js"></script>
 <?php $this->load->view('footer'); ?>

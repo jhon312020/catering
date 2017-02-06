@@ -312,5 +312,90 @@ class Node extends Anonymous_Controller {
     $this->session->sess_destroy();
     redirect(PAGE_LANGUAGE);
   }
+  
+  /**
+	 * Function Password 
+	 * Displays the password recovery page
+   * 
+	 * @return	void
+	 */
+  public function forgotPassword() {
+    $error='';
+    $method = strtolower($this->input->method(TRUE));
+    if ($method == 'post') {
+      if ($this->mdl_clients->run_validation('validation_rules_forgot_password')) {
+        $this->load->library('email');
+        $data = $this->mdl_clients->resetPasswordCode($this->input->post('email'));
+        if ($data) {
+          $subject  = 'Change Password';
+          $message  = 'Hi <b>' . ucfirst($data['name']) . '</b>,<br/><br/>';
+          $message .= 'To change your current password <a href = "' . $data['url'] . '">click here</a>.<br/><br/>';
+          $message .= 'If your not able click on it, kindly copy the below link<br/>' . $data['url'] . '<br/> and paste it on the new tab.<br/><br/>';
+          echo $message .= 'For your information the above links will be valid for only 1 hour.';
+          $this->email->set_mailtype("html");
+          //Need to change admin email dynamically
+          $this->email->from('admin@catering.com', 'Reset password');
+          $this->email->to($data['email']); 
+          $this->email->subject($subject);
+          $this->email->message($message);
+          $this->email->send();
+          $this->session->set_flashdata('alert_success', lang('recover_email_success_message'));
+          //redirect($this->uri->uri_string());
+        } else {
+          $this->session->set_flashdata('alert_error', lang('invalid_username'));
+          redirect($this->uri->uri_string());
+        }
+      }
+    }
+    $this->load->view('layout/templates/forgot_password');
+  }
+  
+  /**
+	 * Function change password
+	 * Displays the password recovery page
+   * 
+	 * @return	void
+	 */
+  public function changePassword() {
+    $record_num = $this->uri->segment_array();
+    $record_num = end($record_num);
+    $error = '';
+    $decodedString = base64_decode($record_num);
+    if (strpos($decodedString, '_') !== false) {
+      $currentTime = date('Y-m-d H:i:s');
+      list($userEmail, $requestedTime) = explode('_', $decodedString);
+      if (strtotime($currentTime) > strtotime($requestedTime)) {
+        redirect($this->uri->segment(1));
+      }
+      else {
+        $verifiedUser = current($this->mdl_clients->findByEmail($userEmail));
+        if (!$verifiedUser)
+          redirect($this->uri->segment(1));
+        if ($this->input->post('password')) {
+          if ($this->mdl_clients->run_validation('validation_rules_reset_password')) {
+            $this->mdl_clients->resetClientPassword($verifiedUser['id'], $this->input->post('password'));
+            $this->load->library('email');
+            $subject = 'Password Reset Confirmation';
+            $message  = 'Hello ' . $verifiedUser['first_name'] .' <br/><br/>';
+            $message .= ' This is to confirm that login password for your account has been successfully changed. <br/><br/>';
+            $message .= 'For security reasons, we do not send any account information to your email address. For any support related issues, please email us and one of our customer care executive will get back to you as early as possible. <br/><br/> ';
+            $this->email->set_mailtype("html");
+            $this->email->from($this->set['site_email'], 'Change password');
+            $this->email->to($userEmail); 
+            $this->email->subject($subject);
+            $this->email->message($message);
+            $this->email->send();
+            //redirect($this->uri->segment(1));
+            $this->session->set_flashdata('alert_success', lang('change_password_success_message'));
+            redirect($this->uri->uri_string());
+          }
+        }
+      }
+    }
+    else{
+      redirect($this->uri->segment(1));
+    }
+    $this->load->view('layout/templates/change_password');
+  }
 }
 ?>

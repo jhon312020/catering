@@ -5,6 +5,12 @@ $this->load->view('navigation_menu');
 <div class="top-content">
   <div class="inner-bg">
     <div class="container">
+      <!-- form action when set via javascript is not working so directly given -->
+      <form id="bank_form" action="" method="POST" style="display:none;">
+        <input type="text" name="Ds_SignatureVersion" id="Ds_SignatureVersion" value=""/>
+        <input type="text" name="Ds_MerchantParameters" id="Ds_MerchantParameters" value=""/>
+        <input type="text" name="Ds_Signature" id="Ds_Signature" value="" />
+      </form>
       <div class="row">
         <h3 class="head_2">Pedidos(<?php echo count($todaySelectedMenus); ?>)</h3>
         <div class="col-sm-9 fix-left-right">
@@ -108,13 +114,17 @@ $this->load->view('navigation_menu');
                   </span>
                 </div>
               </div>
+              <div class="row payrow">
+                <div class="col-sm-12">
+                  <span class="error" id="jsPaymentType">Kindly select credito/debito</span>
+                </div>
+              </div>
             </div>
             <div class="paysection-3">
               <div class="row">
                 <div class="paysection3text">
-									<form method="post" action="<?php echo site_url('node/clientPayment'); ?>" id="paymentForm">
-										<input type="checkbox" name="accept" id="accept" value="1"> <a href="" class="btn-link"> Accepto los terminos y condiciones</a>
-									</form>
+                  <input type="checkbox" name="accept" id="accept" value="1"> <a href="" class="btn-link"> Accepto los terminos y condiciones</a>
+                    <span class="error" id="jsAcceptTerms">Kindly select terminos y condiciones</span>
                 </div>
                 <div class="row">
                   <h3 class="paytotalh2">Total: <?php echo $total_price; ?>&euro;</h3>
@@ -127,24 +137,9 @@ $this->load->view('navigation_menu');
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <div class="copyright">
-            Gumen Catering | Calle cato, 6 bajos. 08206 Sabadell | Tel/Fax. 93 717 8335
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <div class="design">
-            <a href="#" class="btn-link">Condiciones legales</a> <i class="fa fa-lg fa-twitter-square"></i> <i class="fa fa-lg fa-facebook-square"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php $this->load->view('footer_nav_bar'); ?>
 </div>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/payment.js"></script>
 <?php
-$this->load->view('footer');
+  $this->load->view('footer');
 ?>

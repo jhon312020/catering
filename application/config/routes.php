@@ -84,6 +84,15 @@ $route['es/contact'] = 'node/contact';
 $route['en/orders'] = 'node/orders';
 $route['es/orders'] = 'node/orders';
 
+$route['en/checkout'] = 'ajax/bankPaymentProcess';
+$route['es/checkout'] = 'ajax/bankPaymentProcess';
+
+$route['en/forgot_password'] = 'node/forgotPassword';
+$route['es/forgot_password'] = 'node/forgotPassword';
+
+$route['en/change_password/(:any)'] = 'node/changePassword';
+$route['es/change_password/(:any)'] = 'node/changePassword';
+
 $route['en/order-details/(:any)'] = 'node/orderDetails/$1';
 $route['es/order-details/(:any)'] = 'node/orderDetails/$1';
 

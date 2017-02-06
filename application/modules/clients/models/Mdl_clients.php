@@ -181,6 +181,31 @@ class Mdl_clients extends Response_Model {
             )
         );
     }
+  public function validation_rules_forgot_password()
+  {
+    return array(
+        'email'  => array(
+            'field' => 'email',
+            'label' => 'username',
+            'rules' => 'required|valid_email'
+        ),
+    );
+  }
+  public function validation_rules_reset_password()
+  {
+      return array(
+        'password'  => array(
+            'field' => 'password',
+            'label' => lang('password'),
+            'rules' => 'required'
+        ),
+        'confirm_password' => array(
+            'field' => 'confirm_password',
+            'label' => lang('confirm_password'),
+            'rules' => 'required|matches[password]'
+        )
+      );
+  }
 	
   /**
    * Function register
@@ -255,7 +280,7 @@ class Mdl_clients extends Response_Model {
 			
 			return $pending_clients;
 		}
-		/**
+  /**
    * Function get_active_clients.
    *
    * @return  Array
@@ -271,5 +296,51 @@ class Mdl_clients extends Response_Model {
 			
 			return $active_clients;
 		}
+  
+  /**
+	 * Function resetPasswordCode
+	 * Finds the user by email
+   * and then generates a hash string
+   * 
+	 * @return	void
+	 */  
+  public function resetPasswordCode($email) {
+		$query = $this->db->select('*')->from('clients')->where(array('email'=>$email))->get();
+		if($query->num_rows()) {
+      $result = current($query->result_array());
+      $hashString = base64_encode($result['email'] . '_' . date('Y-m-d H:i:s', strtotime('+1 hour')));
+			$fullUrl = str_replace('/forgot_password', '/change_password', current_url()).'/'.str_replace('=', '', $hashString);
+			$result['url'] = $fullUrl;
+      return $result;
+		}
+		return false;
+	}
+ 
+  /**
+	 * Function findByEmail
+	 * Finds the user by given
+   * email address
+   * 
+	 * @return	void
+	 */
+  public function findByEmail($email) {
+		$query = $this->db->select('*')->from('clients')->where(array('email'=>$email))->get();
+		if($query->num_rows()) {
+      return $query->result_array();
+		}
+		return false;
+	}
+  
+  /**
+	 * Function resetClientpassword
+	 * Resets the client password
+   * 
+	 * @return	void
+	 */
+  public function resetClientPassword($user_id, $password) {
+      $this->db->where('id', $user_id);
+      $this->db->set(array('password'=>md5($password), 'password_key' => base64_encode($password.'_catering')));
+      $this->db->update('clients');
+  }
 }
 ?>
