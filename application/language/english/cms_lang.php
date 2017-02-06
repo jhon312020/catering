@@ -524,5 +524,6 @@ $lang['payment_details'] = 'Payment details';
 
 $lang['form_validation_edit_unique']= 'The {field} already exists.';
 
+$lang['menu_type'] = 'Menu type';
 /*----*/
 ?>

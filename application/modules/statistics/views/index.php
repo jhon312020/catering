@@ -20,8 +20,16 @@ echo $this->layout->load_view('layout/alerts');
 	</div>
 	<div class="col-sm-3">	
 		<div class="tile-stats tile-purple-dark" style="background-color:#BA9551;">
-			<div class="num" data-start="0" data-end="0" data-postfix="&euro;" data-duration="1400" data-delay="0">0</div>
-			<span></span>
+			<div class="num" data-start="0" data-end="<?php echo $total_income; ?>" data-postfix=" &euro;" data-duration="1400" data-delay="0">0</div>
+			
+			<div class="priceDiv">
+			<?php 
+			foreach($total_income_by_payments as $payment) {
+			?>
+			<p class="totalSpan"><?php echo $payment['total_income'].' - '.$payment['payment_method']; ?></p>
+			<?php } ?>
+			</div>
 		</div>
+		
 	</div>
 </div>	

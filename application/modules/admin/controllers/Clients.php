@@ -7,6 +7,7 @@ class Clients extends Admin_Controller {
 		parent::__construct();
 		$this->load->model('clients/mdl_clients');
 		$this->load->model('business/mdl_business');
+		$this->load->model('orders/mdl_orders');
 		$data = array();
 		$business_list = $this->mdl_business->select('id, name')->where('is_active', 1)->get()->result_array();
 		$data['business_list'] = array(''=>'Select') + array_combine(array_column($business_list, 'id'), array_column($business_list, 'name'));
@@ -62,7 +63,10 @@ class Clients extends Admin_Controller {
 		if ($id and !$this->input->post('btn_submit')) {
 			$this->mdl_clients->prep_form($id);
 		}
-		$this->layout->set(array('readonly'=>false, 'error'=>$error));
+		
+		$orders_by_client_id = $this->mdl_orders->get_orders_by_client_id($id);
+		
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'orders_by_client_id' => $orders_by_client_id));
 		$this->layout->buffer('content', 'clients/form');
 		$this->layout->render();
 	}
@@ -73,7 +77,9 @@ class Clients extends Admin_Controller {
 			redirect('admin/clients');
 		}
 		$this->mdl_clients->prep_form($id);
-		$this->layout->set(array('readonly'=>true, 'error'=>$error, 'path'=>'./assets/cc/images/clients/'));
+		$orders_by_client_id = $this->mdl_orders->get_orders_by_client_id($id);
+		
+		$this->layout->set(array('readonly'=>true, 'error'=>$error, 'path'=>'./assets/cc/images/clients/', 'orders_by_client_id' => $orders_by_client_id));
 		$this->layout->buffer('content', 'clients/form');
 		$this->layout->render();
 	}

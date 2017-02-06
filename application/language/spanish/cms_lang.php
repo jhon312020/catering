@@ -113,6 +113,8 @@ $lang['personal_information'] = 'Datos Personales';
 $lang['payment_details'] = 'Datos de pago';
 
 $lang['form_validation_edit_unique']= 'The {field} already exists.';
+
+$lang['menu_type'] = 'Tipo de menú';
 $lang['recover_email_success_message'] = 'Kindly check your email to reset your password!';
 $lang['confirm_password'] = 'Confirma Password';
 $lang['reset_password_page_heading'] = 'Restablecer la contraseña';

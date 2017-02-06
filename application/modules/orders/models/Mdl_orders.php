@@ -51,5 +51,76 @@ class Mdl_orders extends Response_Model {
 			
 			return $orders_client_by_ref_no;
 		}
+		/**
+   * Function get_orders_list
+   *
+   * @return  Array
+   * 
+  */
+	public function get_orders_list() {
+		$orders_list = $this->mdl_orders
+											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name')
+											->join('clients', 'clients.id = orders.client_id', 'left')
+											->join('business', 'business.id = clients.business_id', 'left')
+											->join('menus', 'menus.id = orders.menu_id', 'left')
+											->join('menu_types', 'menus.menu_type_id = menu_types.id', 'left')
+											->get()->result();
+											
+		return $orders_list;
+	}
+	/**
+   * Function get_orders_list
+   *
+   * @return  Array
+   * 
+  */
+	public function get_orders_list_by_id($order_id) {
+		$order_list = $this->mdl_orders
+											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name, clients.telephone, clients.email, orders.order_type, orders.menu_id, orders.reference_no, orders.payment_method, orders.client_id')
+											->join('clients', 'clients.id = orders.client_id', 'left')
+											->join('business', 'business.id = clients.business_id', 'left')
+											->join('menus', 'menus.id = orders.menu_id', 'left')
+											->join('menu_types', 'menus.menu_type_id = menu_types.id', 'left')
+											->where('orders.id', $order_id)
+											->get()->row();
+											
+		return $order_list;
+	}
+	/**
+   * Function get_orders_by_client_id
+   *
+   * @return  Array
+   * 
+  */
+	public function get_orders_by_client_id($client_id) {
+		$orders_by_client_id = $this->mdl_orders
+											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name')
+											->join('clients', 'clients.id = orders.client_id', 'left')
+											->join('business', 'business.id = clients.business_id', 'left')
+											->join('menus', 'menus.id = orders.menu_id', 'left')
+											->join('menu_types', 'menus.menu_type_id = menu_types.id', 'left')
+											->where('orders.client_id', $client_id)
+											->get()->result();
+											
+		return $orders_by_client_id;
+	}
+		/**
+   * Function get_orders_by_date
+   *
+   * @return  Array
+   * 
+  */
+	public function get_orders_by_date($order_date) {
+		$orders_list_by_date = $this->mdl_orders
+											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name')
+											->join('clients', 'clients.id = orders.client_id', 'left')
+											->join('business', 'business.id = clients.business_id', 'left')
+											->join('menus', 'menus.id = orders.menu_id', 'left')
+											->join('menu_types', 'menus.menu_type_id = menu_types.id', 'left')
+											->where('orders.order_date', $order_date)
+											->get()->result();
+											
+		return $orders_list_by_date;
+	}
 }
 ?>

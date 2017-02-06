@@ -1,6 +1,20 @@
 <div class="headerbar">
 	<div class="clearfix">
-		<h1 class="pull-left"><?php echo lang('orders'); ?></h1>
+		<div class="row">
+			<div class="col-sm-4">
+				<h1 class="pull-left"><?php echo lang('orders'); ?></h1> 
+				<h1>&nbsp;<span class="dateSpan"><?php echo date('d/m/Y', strtotime($order_date)); ?> </span></h1>
+			</div>
+			<div class="col-sm-4">
+				<form method="post" class="order-form">
+					<input type='hidden' class="form-control datepicker12" name="order_date" value="<?php echo $order_date; ?>" />
+				</form>
+				<h1><span class="spancal glyphicon glyphicon-calendar" ></span></h1>
+			</div>
+		</div>		
+		<?php /* <a class="btn btn-primary pull-right" href="<?php echo site_url('admin/orders/form'); ?>">
+			<i class="icon-plus icon-white"></i> <?php echo lang('new'); ?>
+		</a> */ ?>
 	</div>
 </div>
 <?php echo $this->layout->load_view('layout/alerts'); ?>
@@ -41,3 +55,18 @@
 		<?php } ?>
 	</tbody>
 </table>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.datepicker12').datepicker({
+		format:'yyyy-mm-dd',
+		autoclose:true,
+	}).on('show', function(e) {
+			$('.datepicker-dropdown').css({top:$('.spancal').offset().top + $('.spancal').height(), left:$('.spancal').offset().left})
+	}).on('changeDate', function(e) {
+		$('form.order-form').submit();
+	});
+	$(document).on('click', '.spancal', function(){
+		$('.datepicker12').datepicker('show');
+	})
+});
+</script>
