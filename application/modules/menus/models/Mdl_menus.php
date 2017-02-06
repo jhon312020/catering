@@ -84,5 +84,20 @@ class Mdl_menus extends Response_Model {
 			
 			return $menu_by_id;
 		}
+  /**
+   * Function getClientOrders
+   * 
+   * 
+   * 
+   */
+  public function getClientOrders() {
+    $clientId = $this->session->userdata('client_id');
+    $this->mdl_menus->select('SUM(total) AS price');
+    $this->mdl_menus->where('`id` NOT IN (SELECT `menu_id` FROM `tbl_temporary_orders` WHERE `client_id` ='.$clientId.')', NULL, FALSE);
+    echo $this->mdl_menus->get();
+    echo $this->db->last_query();
+    exit;											
+    return $today_menus;
+  }
 }
 ?>

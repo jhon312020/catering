@@ -54,5 +54,14 @@ class Mdl_business extends Response_Model {
 			else
 				return false;
 		}
+    
+    
+		public function businessInfo($businessId) {
+			$qry = $this->db->where('id', $businessId)->get('business');
+			if($qry->num_rows())
+				return $qry->row();
+			else
+				return false;
+		}
 }
 ?>

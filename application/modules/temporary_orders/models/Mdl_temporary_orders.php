@@ -101,5 +101,22 @@ class Mdl_temporary_orders extends Response_Model {
 														
 			return $today_menus;
 		}
+    
+  /**
+   * Function getClientOrders
+   * 
+   * 
+   * 
+   */
+  public function getClientOrders() {
+    $today_orders = $this->mdl_temporary_orders
+													->select('temporary_orders.id, temporary_orders.order_type, menus.full_price, menus.half_price')
+													->join('menus', 'menus.id = temporary_orders.menu_id', 'left')
+													->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
+													->where(array('order_date' => date('Y-m-d'), 'client_id' => $this->session->userdata('client_id')))
+													->get()
+													->result_array();		
+    return $today_orders;
+  }
 }
 ?>

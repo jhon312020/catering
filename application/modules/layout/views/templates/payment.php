@@ -5,46 +5,53 @@ $this->load->view('navigation_menu');
 <div class="top-content">
   <div class="inner-bg">
     <div class="container">
+      <!-- form action when set via javascript is not working so directly given -->
+      <form id="bank_form" action="" method="POST" style="display:none;">
+        <input type="text" name="Ds_SignatureVersion" id="Ds_SignatureVersion" value=""/>
+        <input type="text" name="Ds_MerchantParameters" id="Ds_MerchantParameters" value=""/>
+        <input type="text" name="Ds_Signature" id="Ds_Signature" value="" />
+      </form>
       <div class="row">
         <h3 class="head_2">Pedidos(<?php echo count($todaySelectedMenus); ?>)</h3>
         <div class="col-sm-9 fix-left-right">
           <table class="table table-striped paymentTable">
             <thead>
               <tr>
-								<th><?php echo lang('menu'); ?></th>
-                <th><?php echo lang('date'); ?></th>
-                <th><?php echo lang('price'); ?></th>
-                <th><?php echo lang('action'); ?></th>              
+								<th><?php echo strtoupper(lang('menu')); ?></th>
+                <th><?php echo strtoupper(lang('day')); ?></th>
+                <th><?php echo strtoupper(lang('price')); ?></th>
+                <th><?php//echo lang('action'); ?></th>              
 							</tr>
             </thead>
             <tbody>
 							<?php
 							$total_price = 0;
 							$bool = false;
-							if($todaySelectedMenus) {
+             	if($todaySelectedMenus) {
 								$bool = true;
 								foreach($todaySelectedMenus as $menu) {
 							?>
 							<tr>
                 <td>
-									<p><b>Menu <?php echo $menu['menu_name']; ?></b></p>
+									<p><b> <?php $menu_name = strtolower($menu['menu_name']).'_menu'; echo lang($menu_name); ?></b></p>
                   <?php 
 										$description = array();
 										$description[] =  $menu['complement'];
 										$price = $menu['half_price'];
-										
 										switch($menu['order_type']) {
 											case 'primary':
 												$description[] = $menu['primary_plate'];
+                      break;
 											case 'secondary':
 												$description[] = $menu['secondary_plate'];
+                      break;
 											case 'both':
 												$price = $menu['full_price'];
 												$description[] = $menu['primary_plate'];
 												$description[] = $menu['secondary_plate'];
+                      break;
 										}
 										$total_price += $price;
-										
 										$description[] = $menu['postre'];
 										
 										echo implode(', ', $description);
@@ -52,7 +59,7 @@ $this->load->view('navigation_menu');
 									, pan, aceite, vinagre y cubietros
                 </td>
                 <td><?php echo date('d/m/Y', strtotime($menu['menu_date'])); ?></td>
-                <td><?php echo $price; ?></td>
+                <td><?php echo number_format($price, 2); ?> &euro;</td>
                 <td>
 									<a href="javascript:;" class="removeOrder" data-id="<?php echo $menu['id']; ?>">
 										<i class="fa fa-trash fa-2x"></i>
@@ -108,16 +115,20 @@ $this->load->view('navigation_menu');
                   </span>
                 </div>
               </div>
+              <div class="row payrow">
+                <div class="col-sm-12">
+                  <span class="error" id="jsPaymentType">Kindly select credito/debito</span>
+                </div>
+              </div>
             </div>
             <div class="paysection-3">
               <div class="row">
                 <div class="paysection3text">
-									<form method="post" action="<?php echo site_url('node/clientPayment'); ?>" id="paymentForm">
-										<input type="checkbox" name="accept" id="accept" value="1"> <a href="" class="btn-link"> Accepto los terminos y condiciones</a>
-									</form>
+                  <input type="checkbox" name="accept" id="accept" value="1"> <a href="" class="btn-link"> Accepto los terminos y condiciones</a>
+                    <span class="error" id="jsAcceptTerms">Kindly select terminos y condiciones</span>
                 </div>
                 <div class="row">
-                  <h3 class="paytotalh2">Total: <?php echo $total_price; ?>&euro;</h3>
+                  <h3 class="paytotalh2">Total: <?php echo number_format($total_price, 2); ?> &euro;</h3>
                 </div>
                 <button type="button" <?php !$bool?'disabled':''; ?> class="btn center-block payButton">CONTINUAR</button>
               </div>
@@ -127,24 +138,9 @@ $this->load->view('navigation_menu');
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <div class="copyright">
-            Gumen Catering | Calle cato, 6 bajos. 08206 Sabadell | Tel/Fax. 93 717 8335
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <div class="design">
-            <a href="#" class="btn-link">Condiciones legales</a> <i class="fa fa-lg fa-twitter-square"></i> <i class="fa fa-lg fa-facebook-square"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php $this->load->view('footer_nav_bar'); ?>
 </div>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/payment.js"></script>
 <?php
-$this->load->view('footer');
+  $this->load->view('footer');
 ?>
