@@ -1,5 +1,6 @@
 <?php
 /*----*/
+//Ú É Á
 $lang['exists_username'] = 'Email id alredy exists';
 $lang['business'] = 'Empresa';
 $lang['business_error'] = 'El nombre de la empresa es obligatorio';
@@ -14,10 +15,10 @@ $lang['hour'] = 'Hora';
 $lang['minutes'] = 'Minutos';
 $lang['edit'] = 'Edit';
 
-$lang['menus'] = 'Menús';
-$lang['menu'] = 'Menu';
-$lang['basic_menu'] = 'Menú básico';
-$lang['diet_menu'] = 'Menú diet';
+$lang['menus'] = 'MENÚS';
+$lang['menu'] = 'MENÚ';
+$lang['basic_menu'] = 'MENÚ BÁSICO';
+$lang['diet_menu'] = 'MENÚ DIET';
 $lang['image'] = 'Imagen';
 $lang['disabled'] = 'Deshabilitar';
 
@@ -33,6 +34,7 @@ $lang['description_secondary_plate'] = 'Descripción segundo plate';
 $lang['secondary_image'] = 'Segundo imagen';
 $lang['postre'] = 'Postre';
 $lang['date'] = 'Fecha';
+$lang['day'] = 'DÍA';
 $lang['full_price'] = 'Full price';
 $lang['half_price'] = 'Half price';
 
@@ -100,6 +102,8 @@ $lang['surname'] = 'Apellidos';
 $lang['name'] = 'Nombre';
 $lang['password'] = 'Contraseña';
 $lang['enter'] = 'Entrar';
+$lang['payment_error'] = 'Payment Error';
+$lang['payment_success'] = 'Payment Success';
 $lang['forgot_password'] = 'He olvidado mi Contraseña';
 $lang['forgot_password_page_heading'] = 'Recuperar contraseña';
 

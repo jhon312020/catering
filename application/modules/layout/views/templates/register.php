@@ -6,7 +6,7 @@ $this->load->view('header');
   <div class="inner-bg">
     <div class="container">
       <div class="row">
-        <div class="col-sm-5 col-sm-offset-4 form-box">
+        <div class="col-sm-5 col-sm-offset-4 col-my-offset-4 form-box">
           <div class="form-top">
             <div class="logo-heading">
               <img src="<?php echo TEMPLATE_PATH; ?>gumen-logo.png" class="img-responsive center-block" alt="" />

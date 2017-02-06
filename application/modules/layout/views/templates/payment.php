@@ -17,40 +17,41 @@ $this->load->view('navigation_menu');
           <table class="table table-striped paymentTable">
             <thead>
               <tr>
-								<th><?php echo lang('menu'); ?></th>
-                <th><?php echo lang('date'); ?></th>
-                <th><?php echo lang('price'); ?></th>
-                <th><?php echo lang('action'); ?></th>              
+								<th><?php echo strtoupper(lang('menu')); ?></th>
+                <th><?php echo strtoupper(lang('day')); ?></th>
+                <th><?php echo strtoupper(lang('price')); ?></th>
+                <th><?php//echo lang('action'); ?></th>              
 							</tr>
             </thead>
             <tbody>
 							<?php
 							$total_price = 0;
 							$bool = false;
-							if($todaySelectedMenus) {
+             	if($todaySelectedMenus) {
 								$bool = true;
 								foreach($todaySelectedMenus as $menu) {
 							?>
 							<tr>
                 <td>
-									<p><b>Menu <?php echo $menu['menu_name']; ?></b></p>
+									<p><b> <?php $menu_name = strtolower($menu['menu_name']).'_menu'; echo lang($menu_name); ?></b></p>
                   <?php 
 										$description = array();
 										$description[] =  $menu['complement'];
 										$price = $menu['half_price'];
-										
 										switch($menu['order_type']) {
 											case 'primary':
 												$description[] = $menu['primary_plate'];
+                      break;
 											case 'secondary':
 												$description[] = $menu['secondary_plate'];
+                      break;
 											case 'both':
 												$price = $menu['full_price'];
 												$description[] = $menu['primary_plate'];
 												$description[] = $menu['secondary_plate'];
+                      break;
 										}
 										$total_price += $price;
-										
 										$description[] = $menu['postre'];
 										
 										echo implode(', ', $description);
@@ -58,7 +59,7 @@ $this->load->view('navigation_menu');
 									, pan, aceite, vinagre y cubietros
                 </td>
                 <td><?php echo date('d/m/Y', strtotime($menu['menu_date'])); ?></td>
-                <td><?php echo $price; ?></td>
+                <td><?php echo number_format($price, 2); ?> &euro;</td>
                 <td>
 									<a href="javascript:;" class="removeOrder" data-id="<?php echo $menu['id']; ?>">
 										<i class="fa fa-trash fa-2x"></i>
@@ -127,7 +128,7 @@ $this->load->view('navigation_menu');
                     <span class="error" id="jsAcceptTerms">Kindly select terminos y condiciones</span>
                 </div>
                 <div class="row">
-                  <h3 class="paytotalh2">Total: <?php echo $total_price; ?>&euro;</h3>
+                  <h3 class="paytotalh2">Total: <?php echo number_format($total_price, 2); ?> &euro;</h3>
                 </div>
                 <button type="button" <?php !$bool?'disabled':''; ?> class="btn center-block payButton">CONTINUAR</button>
               </div>

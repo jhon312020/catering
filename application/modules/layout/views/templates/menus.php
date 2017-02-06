@@ -123,16 +123,14 @@ $this->load->view('navigation_menu');
 							}
 						?>		
           </div>
-		  
-        </div>
-		
-		</div>
+		  </div>
+    </div>
 				<?php
 				}
 				?>
 				<div class="col-sm-12 menubottom">
           <div class="col-sm-8">
-            <h4>Tienes 01:35h para pedir este menu</h4>
+            <h4>Tienes <span id="time"></span> para pedir este menu</h4>
           </div>
           <div class="col-sm-4">
             <div class="row">
@@ -153,5 +151,10 @@ $this->load->view('navigation_menu');
 </div>
 <?php $this->load->view('footer_nav_bar'); ?>
 </div>
+<script type='text/javascript'>
+  var timeLeft = parseInt(<?php echo $left_time; ?>);
+  console.log(timeLeft);
+  var display = $('#time');
+</script>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/menus.js"></script>
 <?php $this->load->view('footer'); ?>

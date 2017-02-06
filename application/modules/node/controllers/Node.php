@@ -32,14 +32,14 @@ class Node extends Anonymous_Controller {
 			foreach($selectedMenus as $menus) {
 				$todaySelectedMenus[$menus['menu_id']] = $menus;
 			}
-			
+			$totalCartItems = count($todaySelectedMenus);
 			//print_r($todaySelectedMenus);die;
 
 			$this->login_client_profile = $this->mdl_clients->get_client_details_by_id($this->session->userdata('client_id'));
 			
 			//print_r($login_client_profile);die;
 			
-			$this->load->vars(array('todaySelectedMenus'=>$todaySelectedMenus, 'login_client_profile' => $this->login_client_profile));
+			$this->load->vars(array('todaySelectedMenus'=>$todaySelectedMenus, 'login_client_profile' => $this->login_client_profile, 'totalCartItems'=>$totalCartItems));
 		}
 		
     $this->load->vars(array('user_info'=>$this->session->get_userdata()));
@@ -126,7 +126,19 @@ class Node extends Anonymous_Controller {
 		
 		$menuDate = date('Y-m-d');
     $data_array = array();
-		
+		$business_id = $this->session->userdata('business_id');
+    $businessInfo = $this->mdl_business->businessInfo($business_id);
+    if ($businessInfo) {
+      $time1 = strtotime($businessInfo->time_limit);
+      //echo date('d/m/Y H:i', $time1 );
+      //echo '<br/>';
+      $time2 = time();
+      //echo date('d/m/Y H:i', $time2 );
+      //echo '<br/>';
+      $data_array['left_time'] = ($time1 - $time2);
+       //echo date('d/m/Y H:M:S', $data_array['left_time'] );
+    }
+   
 		if($this->input->post()) {
 			$postParams = $this->input->post();
 			
@@ -265,9 +277,8 @@ class Node extends Anonymous_Controller {
    * 
    */
   public function orders() {
-		
-		$data_array['orders'] = $this->mdl_orders->get_orders_by_client_date();
-		
+		//$data_array['orders'] = $this->mdl_orders->get_orders_by_client_date();
+		$data_array['orders'] = '';
 		$this->load->view('layout/templates/orders', $data_array);
   }
 	/**
@@ -396,6 +407,44 @@ class Node extends Anonymous_Controller {
       redirect($this->uri->segment(1));
     }
     $this->load->view('layout/templates/change_password');
+  }
+  
+  /**
+	 * Function error
+	 * Displays the error page
+   * for payment cancellation
+   * 
+	 * @return	void
+	 */
+  public function paymentError() {
+    //~ $this->load->library('email');
+    //~ //$this->email->set_mailtype("html");
+    //~ $this->email->from($this->set['site_email'], $this->set['site_title']);
+    //~ $this->email->to('bright@proisc.com'); 
+    //~ $this->email->subject('Order Confirmation: '.$book_id.' has been rejected');
+    //~ $this->email->message('rejected');
+    //~ $this->email->send();
+    /*return journey end*/
+    $this->load->view('layout/templates/error');
+  }
+  
+  /**
+	 * Function success
+	 * Displays the success page
+   * for payment success
+   * 
+	 * @return	void
+	 */
+  public function paymentSuccess() {
+    //~ $this->load->library('email');
+    //~ //$this->email->set_mailtype("html");
+    //~ $this->email->from($this->set['site_email'], $this->set['site_title']);
+    //~ $this->email->to('bright@proisc.com'); 
+    //~ $this->email->subject('Order Confirmation: '.$book_id.' has been rejected');
+    //~ $this->email->message('rejected');
+    //~ $this->email->send();
+    /*return journey end*/
+    $this->load->view('layout/templates/success');
   }
 }
 ?>

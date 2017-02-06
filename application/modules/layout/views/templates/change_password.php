@@ -6,36 +6,33 @@ $this->load->view('header');
   <div class="inner-bg">
     <div class="container">
       <div class="row">
-        <div class="col-sm-5 col-sm-offset-4 col-my-offset-4 form-box">
+        <div class="col-sm-5 col-sm-offset-4 form-box">
           <div class="form-top">
             <div class="logo-heading">
               <img src="<?php echo TEMPLATE_PATH; ?>gumen-logo.png" class="img-responsive center-block" alt="" />
             </div>
             <div class="logo-para">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+              <h3><?php echo strtoupper(lang('reset_password_page_heading'));?></h3>
             </div>
           </div>
           <div class="form-bottom">
 						<?php echo $this->layout->load_view('layout/web_alerts'); ?>
             <form role="form" action="" method="post" class="login-form" data-toggle="validator">
               <div class="form-group">
-                <label class="sr-only" for="form-username">Username</label>
-                <input type="email" required name="email" placeholder="<?php echo lang('username'); ?>" class="form-username form-control" id="form-username" data-error="<?php echo lang('invalid_email'); ?>">
+                <label class="sr-only" for="password"><?php echo lang('password'); ?></label>
+                <input type="password" required name="password" placeholder="<?php echo lang('password'); ?>" class="form-username form-control" id="password" data-error="<?php echo lang('password_error'); ?>">
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
-                <label class="sr-only" for="form-password">Password</label>
-                <input type="password" name="password" placeholder="<?php echo lang('password'); ?>" class="form-password form-control" id="form-password" required data-error="<?php echo lang('password_error'); ?>">
+                <label class="sr-only" for="password"><?php echo lang('confirm_password');?></label>
+                <input type="password" required name="confirm_password" placeholder="<?php echo lang('confirm_password'); ?>" class="form-username form-control" id="confirm_password" data-error="<?php echo lang('confirm_password_error'); ?>">
                 <div class="help-block with-errors"></div>
-              </div>
-              <div class="forget form-group">
-                <a href="<?php echo site_url(PAGE_LANGUAGE.'/forgot_password'); ?>" class="btn btn-link"><?php echo lang('forgot_password');?></a>
               </div>
               <button type="submit" class="btn center-block"><?php echo strtoupper(lang('enter')); ?></button>
             </form>
             <div class="register">
-              <P><?php echo lang('do_not_have_account');?></p>
-              <a href="<?php echo site_url(PAGE_LANGUAGE.'/register'); ?>" class="btn btn-link center-block"><?php echo lang('register');?></a>
+              <P><?php echo lang('already_have_acc');?></p>
+              <a href="<?php echo site_url(PAGE_LANGUAGE.'/'); ?>" class="btn btn-link center-block"><?php echo lang('enter');?></a>
             </div>
           </div>
         </div>
