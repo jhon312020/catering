@@ -12,8 +12,8 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 	<div class="clearfix">
 		<h1 class="pull-left"><?php echo lang('menu'); ?> 
 			<span class="dateSpan"><?php echo $datePickerDate; ?> </span>
-				<input type='hidden' class="form-control datepicker12" value="<?php echo $datePickerDate; ?>" />
-				<span class="spancal glyphicon glyphicon-calendar"></span>
+			<input type='hidden' class="form-control datepicker12" value="<?php echo $datePickerDate; ?>" />
+			<span class="spancal glyphicon glyphicon-calendar"></span>
 		</h1>
 	</div>
 </div>

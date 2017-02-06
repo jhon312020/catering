@@ -108,5 +108,6 @@ $lang['payment_details'] = 'Datos de pago';
 
 $lang['form_validation_edit_unique']= 'The {field} already exists.';
 
+$lang['menu_type'] = 'Tipo de menú';
 /*----*/
 ?>

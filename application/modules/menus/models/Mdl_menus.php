@@ -73,5 +73,16 @@ class Mdl_menus extends Response_Model {
 			
 			return $menus_by_date;
 		}
+		/**
+   * Function get_menu_by_id
+   *
+   * @return  Array
+   * 
+  */
+		public function get_menu_by_id($id) {
+			$menu_by_id = $this->mdl_menus->where(array('id' => $id))->get()->row();
+			
+			return $menu_by_id;
+		}
 }
 ?>
