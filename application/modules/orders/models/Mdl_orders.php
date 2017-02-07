@@ -129,6 +129,9 @@ class Mdl_orders extends Response_Model {
    * 
   */
 	public function insert_from_temperory() {
+		
+		$this->load->model('order_drinks/mdl_order_drinks');
+		
 		$total_price = 0;
 		$temperory_orders = $this->mdl_temporary_orders->get_client_today_menus();
 		$temperory_order_ids = [];
@@ -141,13 +144,14 @@ class Mdl_orders extends Response_Model {
 			}
 			
 			$total_price += $price;
-			$data = array('client_id' => $order['client_id'], 'menu_id' => $order['menu_id'], 'order_type' => $order_type, 'order_date' => date('Y-m-d'), 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no);
+			$client_id = $this->session->userdata('client_id');
+			$data = array('client_id' => $client_id, 'menu_id' => $order['menu_id'], 'order_type' => $order_type, 'order_date' => date('Y-m-d'), 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no);
 			
-			$order = $this->mdl_orders->save(null, $data);
+			$order_id = $this->mdl_orders->save(null, $data);
 			
 			if($key == 0) {
-				$reference_no = $order->client_id.''.date('d').''.$order->id;
-				$this->mdl_orders->save($order->id, $reference_no);
+				$reference_no = $client_id.''.strtotime(date('Y-m-d')).''.$order_id;
+				$this->mdl_orders->save($order_id, array('reference_no' => $reference_no));
 			}
 			
 			$cool_drinks = json_decode($order['cool_drinks_array'], true);
@@ -155,21 +159,75 @@ class Mdl_orders extends Response_Model {
 			$drinks_data = array();
 			if(count($cool_drinks) > 0) {
 				foreach($cool_drinks as $drinks) {
-					$drinks_data[] = array('order_id' => $order->id, 'drinks_id' => $drinks);
+					$drinks_data[] = array('order_id' => $order_id, 'drinks_id' => $drinks);
 				}
 				
-				$this->mdl_order_drinks->insert($drinks_data);
+				$this->db->insert_batch('order_drinks', $drinks_data);
 			}
 			
 			$temperory_order_ids[] = $order['id'];
 		}
 		
-		$this->mdl_temporary_orders->order_delete_using_id($temperory_order_ids);
+		if(count($temperory_order_ids) > 0) {
+			$this->mdl_temporary_orders->order_delete_using_id($temperory_order_ids);
+		}
 		
 		$return_data = array('total_price' => $total_price);
 		
 		return $return_data;
 	}
-	
+	/**
+   * Function insert_from_temperory
+   *
+   * @return  Array
+   * 
+  */
+	public function check_today_menus_insert() {
+		
+		$this->load->model('temporary_orders/mdl_temporary_orders');
+		$this->load->model('business/mdl_business');
+		$this->load->model('menus/mdl_menus');
+		
+		$selectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
+		
+		$today_menus_removed = [];
+		
+		/*Check and remove the expired data from the temperory order table*/
+		$business_id = $this->session->userdata('business_id');
+		
+		$businessInfo = $this->mdl_business->businessInfo($business_id);
+		
+		$left_time = 0;
+		
+    if ($businessInfo) {
+      $time1 = strtotime($businessInfo->time_limit);
+			
+      $time2 = time();
+			
+			if($time1 > $time2) {
+				$left_time = ($time1 - $time2);
+			}
+    }
+		if($left_time == 0) {
+			$menus = $this->mdl_menus->select('id')->where('menu_date', date('Y-m-d'))->get()->result_array();
+			$menus_id = array_column($menus, 'id');
+			
+			$selectedMenusIds = array_keys($selectedMenus, 'menu_id');
+			
+			$menusExists = array_intersect($menus_id, $selectedMenusIds);
+			
+			if(count($menusExists) > 0) {
+				$today_menus_removed = $menusExists;
+				$this->mdl_temporary_orders->order_delete($menusExists);
+			}
+		}
+		
+		if(count($today_menus_removed) > 0) {
+			return array('success' => false, 'msg' => 'Today menus expired', 'menu_ids' => $today_menus_removed);
+		} else {
+			$data = $this->mdl_orders->insert_from_temperory();
+			return array('success' => true, 'msg' => 'Order successfully placed', 'order_data' => $data);
+		}
+	}
 }
 ?>

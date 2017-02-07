@@ -28,5 +28,28 @@ CREATE TABLE IF NOT EXISTS `tbl_temporary_orders` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+
+/*7-2-2017*/
 ALTER TABLE `tbl_clients`  ADD `client_business_name` VARCHAR(255) NOT NULL  AFTER `surname`;
 ALTER TABLE `tbl_temporary_orders`  ADD `cool_drinks_array` TEXT NOT NULL  AFTER `order_type`;
+
+CREATE TABLE IF NOT EXISTS `tbl_cool_drinks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `drinks_name` varchar(255) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `tbl_order_drinks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `drinks_id` int(11) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+

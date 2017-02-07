@@ -52,6 +52,8 @@ class Mdl_temporary_orders extends Response_Model {
 		*/
 		public function order_exists_update_or_insert($menuListIds, $purchasedItems, $purchaseIds, $cool_drinks_array) {
 			
+			$this->load->model('menus/mdl_menus');
+			
 			$menu_types = $this->mdl_menus->where('is_active', 1)->get()->result_array();
 			
 			$previousRecords = $this->mdl_temporary_orders
