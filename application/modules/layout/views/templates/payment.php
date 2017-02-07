@@ -6,10 +6,10 @@ $this->load->view('navigation_menu');
   <div class="inner-bg">
     <div class="container">
       <!-- form action when set via javascript is not working so directly given -->
-      <form id="bank_form" action="" method="POST" style="display:none;">
-        <input type="text" name="Ds_SignatureVersion" id="Ds_SignatureVersion" value=""/>
-        <input type="text" name="Ds_MerchantParameters" id="Ds_MerchantParameters" value=""/>
-        <input type="text" name="Ds_Signature" id="Ds_Signature" value="" />
+      <form id="bank_form" name="bank_form" action="" method="POST" style="display:none;" enctype="multipart/form-data">
+        <input type="hidden" name="Ds_SignatureVersion" id="Ds_SignatureVersion" value=""/>
+        <input type="hidden" name="Ds_MerchantParameters" id="Ds_MerchantParameters" value=""/>
+        <input type="hidden" name="Ds_Signature" id="Ds_Signature" value="" />
       </form>
       <div class="row">
         <h3 class="head_2">Pedidos(<?php echo count($todaySelectedMenus); ?>)</h3>

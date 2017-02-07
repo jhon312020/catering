@@ -37,29 +37,31 @@ class Ajax extends Anonymous_Controller {
 			$this->load->library('apiRedsys');
 			$miObj = new apiRedsys;
 			
+			//$merchantCode = "336472105";
 			$merchantCode = "336472105";
 			$terminal = "001";
-			$amount = str_replace('.', '', number_format($amount, 2));
+			//$amount = str_replace('.', '', number_format($amount, 2));
+			$amount = 2;
 			$currency = "978";
 			$transactionType = "0";
 			$merchantURL = "";
 			//Needs to be changed to order id
-			$clientId = $this->session->userdata('client_id');
-			$urlOK = site_url('es/success/?cm='.$clientId);
-			$urlKO = site_url('es/error/?cm='.$clientId);
+			$reference_no = $orders['reference_no'];
+			$urlOK = site_url('es/success/?cm='.$reference_no);
+			$urlKO = site_url('es/error/?cm='.$reference_no);
 			$order = time();
 			$testurlPago = 'https://sis-t.redsys.es:25443/sis/realizarPago';
 			//$realurlPago = 'https://sis.redsys.es/sis/realizarPago';
 			
 			$miObj->setParameter("DS_MERCHANT_AMOUNT", $amount);
-			$miObj->setParameter("DS_MERCHANT_ORDER",strval($order));
-			$miObj->setParameter("DS_MERCHANT_MERCHANTCODE",$merchantCode);
-			$miObj->setParameter("DS_MERCHANT_CURRENCY",$currency);
-			$miObj->setParameter("DS_MERCHANT_TRANSACTIONTYPE",$transactionType);
-			$miObj->setParameter("DS_MERCHANT_TERMINAL",$terminal);
-			$miObj->setParameter("DS_MERCHANT_MERCHANTURL",$merchantURL);
-			$miObj->setParameter("DS_MERCHANT_URLOK",$urlOK);   
-			$miObj->setParameter("DS_MERCHANT_URLKO",$urlKO);
+			$miObj->setParameter("DS_MERCHANT_ORDER", strval($order));
+			$miObj->setParameter("DS_MERCHANT_MERCHANTCODE", $merchantCode);
+			$miObj->setParameter("DS_MERCHANT_CURRENCY", $currency);
+			$miObj->setParameter("DS_MERCHANT_TRANSACTIONTYPE", $transactionType);
+			$miObj->setParameter("DS_MERCHANT_TERMINAL", $terminal);
+			$miObj->setParameter("DS_MERCHANT_MERCHANTURL", $merchantURL);
+			$miObj->setParameter("DS_MERCHANT_URLOK", $urlOK);   
+			$miObj->setParameter("DS_MERCHANT_URLKO", $urlKO);
 			
 			$version="HMAC_SHA256_V1";
 			$testKey = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
@@ -69,11 +71,7 @@ class Ajax extends Anonymous_Controller {
 			$params = $miObj->createMerchantParameters();
 			$signature = $miObj->createMerchantSignature($testKey);
 			
-			$bank['version'] = $version;
-			$bank['params'] = $params;
-			$bank['signature'] = $signature;
-			$bank['bank_url'] = $testurlPago;
-			echo json_encode($bank);
+			echo json_encode(array('success' => true, 'version' => $version, 'params' => $params, 'signature' => $signature, 'bank_url' => $testurlPago));exit;
 			/*Sabadell payment end*/
 			
 		} else {

@@ -24,9 +24,11 @@ class Mdl_orders extends Response_Model {
    * 
   */
 		public function get_orders_by_client_date() {
+			$client_id = $this->session->userdata('client_id');
 			$orders_client_by_date = $this->mdl_orders
-																	->select('id, SUM(price) as total_price, reference_no, menu_id, order_type, order_date, payment_method')
-																	->where(array('is_active' => 1, 'client_id' => $this->session->userdata('client_id')))
+																	->select('id, ref_order.total_price, ref_order.reference_no, menu_id, order_type, order_date, payment_method')
+																	->join('(SELECT reference_no, SUM(price) as total_price FROM tbl_orders where is_active = 1 and client_id = '.$client_id.' GROUP BY reference_no) as ref_order', 'ref_order.reference_no = tbl_orders.reference_no', 'inner')
+																	->where(array('is_active' => 1, 'client_id' => $client_id))
 																	->group_by('reference_no')
 																	->get()
 																	->result_array();
@@ -45,7 +47,6 @@ class Mdl_orders extends Response_Model {
 																	->join('menus', 'menus.id = orders.menu_id', 'left')
 																	->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
 																	->where(array('orders.is_active' => 1, 'orders.client_id' => $this->session->userdata('client_id'), 'orders.reference_no' => $reference_no))
-																	->group_by('orders.reference_no')
 																	->get()
 																	->result_array();
 			
@@ -172,7 +173,7 @@ class Mdl_orders extends Response_Model {
 			$this->mdl_temporary_orders->order_delete_using_id($temperory_order_ids);
 		}
 		
-		$return_data = array('total_price' => $total_price);
+		$return_data = array('total_price' => $total_price, 'reference_no' => $reference_no);
 		
 		return $return_data;
 	}
