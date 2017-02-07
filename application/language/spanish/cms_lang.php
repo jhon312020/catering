@@ -121,5 +121,10 @@ $lang['reset_password_page_heading'] = 'Restablecer la contraseña';
 $lang['password_error'] = 'Password necesario';
 $lang['confirm_password_error'] = 'Confrim password necesario';
 $lang['change_password_success_message'] = 'Su contraseña se ha restablecido correctamente!';
+
+
+$lang['drinks_name'] = 'Drinks name';
+$lang['cool_drinks'] = 'Cool drinks';
+$lang['id'] = 'Id';
 /*----*/
 ?>

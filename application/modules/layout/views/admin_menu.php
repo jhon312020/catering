@@ -2,7 +2,7 @@
 	$segments = $this->uri->segment_array();
 	$end_segment = end($segments);
 	$websiteClass = array('home','contacts');
-	$settingClass = array('business','menus', 'legal_conditions');
+	$settingClass = array('business','menus', 'legal_conditions', 'drinks', 'settings');
 	$url_segment = $this->uri->segment_array();
 ?>
 <ul id="main-menu" class="">
@@ -60,6 +60,12 @@
 				<a href="<?php echo site_url('admin/conditions/form'); ?>">
 					<i class="entypo-ticket"></i>
 					<span><?php echo lang('legal_condition'); ?></span>
+				</a>
+			</li>
+			<li class="<?php echo $this->router->class == 'drinks' ? 'opened active' : ''; ?>">
+				<a href="<?php echo site_url('admin/drinks/index'); ?>">
+					<i class="entypo-ticket"></i>
+					<span><?php echo lang('cool_drinks'); ?></span>
 				</a>
 			</li>
 			<li class="<?php echo $this->router->class == 'settings' && $this->router->method == 'index' ? 'opened active' : ''; ?>">

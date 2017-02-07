@@ -29,3 +29,4 @@ CREATE TABLE IF NOT EXISTS `tbl_temporary_orders` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 ALTER TABLE `tbl_clients`  ADD `client_business_name` VARCHAR(255) NOT NULL  AFTER `surname`;
+ALTER TABLE `tbl_temporary_orders`  ADD `cool_drinks_array` TEXT NOT NULL  AFTER `order_type`;

@@ -20,7 +20,7 @@ $this->load->view('navigation_menu');
 								<th><?php echo strtoupper(lang('menu')); ?></th>
                 <th><?php echo strtoupper(lang('day')); ?></th>
                 <th><?php echo strtoupper(lang('price')); ?></th>
-                <th><?php//echo lang('action'); ?></th>              
+                <th><?php //echo lang('action'); ?></th>              
 							</tr>
             </thead>
             <tbody>

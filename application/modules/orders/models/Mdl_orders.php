@@ -104,7 +104,7 @@ class Mdl_orders extends Response_Model {
 											
 		return $orders_by_client_id;
 	}
-		/**
+	/**
    * Function get_orders_by_date
    *
    * @return  Array
@@ -122,5 +122,54 @@ class Mdl_orders extends Response_Model {
 											
 		return $orders_list_by_date;
 	}
+	/**
+   * Function insert_from_temperory
+   *
+   * @return  Array
+   * 
+  */
+	public function insert_from_temperory() {
+		$total_price = 0;
+		$temperory_orders = $this->mdl_temporary_orders->get_client_today_menus();
+		$temperory_order_ids = [];
+		$reference_no = '';
+		foreach($temperory_orders as $key => $order) {
+			$order_type = $order['order_type'];
+			$price = $order['half_price'];
+			if($order_type == 'both') {
+				$price = $order['full_price'];
+			}
+			
+			$total_price += $price;
+			$data = array('client_id' => $order['client_id'], 'menu_id' => $order['menu_id'], 'order_type' => $order_type, 'order_date' => date('Y-m-d'), 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no);
+			
+			$order = $this->mdl_orders->save(null, $data);
+			
+			if($key == 0) {
+				$reference_no = $order->client_id.''.date('d').''.$order->id;
+				$this->mdl_orders->save($order->id, $reference_no);
+			}
+			
+			$cool_drinks = json_decode($order['cool_drinks_array'], true);
+			
+			$drinks_data = array();
+			if(count($cool_drinks) > 0) {
+				foreach($cool_drinks as $drinks) {
+					$drinks_data[] = array('order_id' => $order->id, 'drinks_id' => $drinks);
+				}
+				
+				$this->mdl_order_drinks->insert($drinks_data);
+			}
+			
+			$temperory_order_ids[] = $order['id'];
+		}
+		
+		$this->mdl_temporary_orders->order_delete_using_id($temperory_order_ids);
+		
+		$return_data = array('total_price' => $total_price);
+		
+		return $return_data;
+	}
+	
 }
 ?>

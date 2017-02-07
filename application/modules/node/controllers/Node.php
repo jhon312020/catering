@@ -22,27 +22,60 @@ class Node extends Anonymous_Controller {
 		$this->load->model('business/mdl_business');
 		$this->load->model('menus/mdl_menus');
 		$this->load->model('orders/mdl_orders');
+		$this->load->model('drinks/mdl_drinks');
 		$this->load->model('menu_types/mdl_menu_types');
 		$this->load->model('temporary_orders/mdl_temporary_orders');
 		
-		if($this->session->userdata('client_id')) {
-			$selectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
-			
-			$todaySelectedMenus = [];
-			foreach($selectedMenus as $menus) {
-				$todaySelectedMenus[$menus['menu_id']] = $menus;
-			}
-			$totalCartItems = count($todaySelectedMenus);
-			//print_r($todaySelectedMenus);die;
-
-			$this->login_client_profile = $this->mdl_clients->get_client_details_by_id($this->session->userdata('client_id'));
-			
-			//print_r($login_client_profile);die;
-			
-			$this->load->vars(array('todaySelectedMenus'=>$todaySelectedMenus, 'login_client_profile' => $this->login_client_profile, 'totalCartItems'=>$totalCartItems));
-		}
+		$selectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
 		
-    $this->load->vars(array('user_info'=>$this->session->get_userdata()));
+		$todaySelectedMenus = [];
+		foreach($selectedMenus as $menus) {
+			$todaySelectedMenus[$menus['menu_id']] = $menus;
+		}
+		$totalCartItems = count($todaySelectedMenus);
+		//print_r($todaySelectedMenus);die;
+
+		$this->login_client_profile = $this->mdl_clients->get_client_details_by_id($this->session->userdata('client_id'));
+		
+		$cool_drinks = $this->mdl_drinks->get_cool_drinks();
+		//print_r($login_client_profile);die;
+		
+		/* echo "<pre>";
+		print_r($todaySelectedMenus);die; */
+		
+		$this->today_menus_removed = [];
+		
+		/*Check and remove the expired data from the temperory order table*/
+		$business_id = $this->session->userdata('business_id');
+		
+		$businessInfo = $this->mdl_business->businessInfo($business_id);
+		
+		$left_time = 0;
+		
+    if ($businessInfo) {
+      $time1 = strtotime($businessInfo->time_limit);
+			
+      $time2 = time();
+			
+			if($time1 > $time2) {
+				$left_time = ($time1 - $time2);
+			}
+    }
+		if($left_time == 0) {
+			$menus = $this->mdl_menus->select('id')->where('menu_date', date('Y-m-d'))->get()->result_array();
+			$menus_id = array_column($menus, 'id');
+			
+			$selectedMenusIds = array_keys($todaySelectedMenus);
+			
+			$menusExists = array_intersect($menus_id, $selectedMenusIds);
+			
+			if(count($menusExists) > 0) {
+				$this->today_menus_removed = $menusExists;
+				$this->mdl_temporary_orders->order_delete($menusExists);
+			}
+		}
+
+		$this->load->vars(array('todaySelectedMenus'=> $todaySelectedMenus, 'login_client_profile' => $this->login_client_profile, 'totalCartItems'=>$totalCartItems, 'cool_drinks' => $cool_drinks, 'user_info'=>$this->session->get_userdata(), 'today_menus_removed' => $this->today_menus_removed));
   }
   
   /**
@@ -128,34 +161,49 @@ class Node extends Anonymous_Controller {
     $data_array = array();
 		$business_id = $this->session->userdata('business_id');
     $businessInfo = $this->mdl_business->businessInfo($business_id);
-    if ($businessInfo) {
+		//echo $businessInfo->time_limit;die;
+		//echo time();die;
+		$data_array['left_time'] = 0;
+		if($this->input->post()) {
+			$postParams = $this->input->post();
+			
+			$menuDate = date('Y-m-d', strtotime($postParams['menu_date']));
+		}
+		$menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
+		//print_r($menu_list);die;
+    if ($businessInfo && $menuDate == date('Y-m-d') && count($menu_list) > 0) {
       $time1 = strtotime($businessInfo->time_limit);
       //echo date('d/m/Y H:i', $time1 );
       //echo '<br/>';
       $time2 = time();
       //echo date('d/m/Y H:i', $time2 );
       //echo '<br/>';
-      $data_array['left_time'] = ($time1 - $time2);
+			if($time1 > $time2) {
+				$data_array['left_time'] = ($time1 - $time2);
+			}
        //echo date('d/m/Y H:M:S', $data_array['left_time'] );
     }
-   
-		if($this->input->post()) {
-			$postParams = $this->input->post();
-			
-			$menuDate = date('Y-m-d', strtotime($postParams['menu_date']));
-		}
-		
-		$menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
+		//echo $data_array['left_time'];die;
 		
 		$data_array['menu_types'] = $this->mdl_menu_types->get()->result_array();
 		
 		$data_menu = [];
 		
-		//Set menu_type_id as key in all menus list.
-		foreach($menu_list as $menus) {
-			$data_menu[$menus['menu_type_id']][] = $menus;
+		$show_menus = true;
+		if($data_array['left_time'] == 0 && $menuDate == date('Y-m-d')) {
+			$show_menus = false;
 		}
+		//echo $data_array['left_time'];
+		if($show_menus) {
+			//Set menu_type_id as key in all menus list.
+			foreach($menu_list as $menus) {
+				$data_menu[$menus['menu_type_id']][] = $menus;
+			}
+		}
+		
+		
 		$data_array['menu_lists'] = $data_menu;
+		//print_r($data_array['menu_lists']);die;
 		$data_array['menu_date'] = date('d-m-Y', strtotime($menuDate));
     $this->load->view('layout/templates/menus', $data_array);
   }
@@ -171,6 +219,7 @@ class Node extends Anonymous_Controller {
 		
 		$menuListIds = json_decode($this->input->post('menu_list_ids'), true);
 		
+		$cool_drinks_array = $this->input->post('cool_drinks');
 		//print_r($menuListIds);die;
 		//print_r($purchasedItems);die;
 		
@@ -183,7 +232,7 @@ class Node extends Anonymous_Controller {
 				
 				$menuListIds = array_diff($purchase_ids, $ids);
 			}
-			$this->mdl_temporary_orders->order_exists_update_or_insert($menuListIds, $purchasedItems, $purchase_ids);
+			$this->mdl_temporary_orders->order_exists_update_or_insert($menuListIds, $purchasedItems, $purchase_ids, $cool_drinks_array);
 			
 		} else {
 			
@@ -194,6 +243,8 @@ class Node extends Anonymous_Controller {
 		redirect(PAGE_LANGUAGE.'/payment');
 	}
   public function payment() {
+		
+		
 		
 		$data_array = array();
 		
@@ -312,7 +363,20 @@ class Node extends Anonymous_Controller {
 		
 		$this->load->view('layout/templates/order-details', $data_array);
   }
-	
+	/**
+   * Function Logout
+   *
+   * @return  void
+   * 
+   */
+  public function checkTodayMenusAndInsert(){
+    if(count($this->today_menus_removed) > 0) {
+			echo json_encode(array('success' => false, 'msg' => 'Today menus expired', 'menu_ids' => $this->today_menus_removed));
+		} else {
+			$data = $this->mdl_orders->insert_from_temperory();
+			echo json_encode(array('success' => true, 'msg' => 'Order successfully placed', 'data' => $data));
+		}
+  }
   /**
    * Function Logout
    *

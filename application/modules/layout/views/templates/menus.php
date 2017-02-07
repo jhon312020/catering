@@ -44,14 +44,18 @@ $this->load->view('navigation_menu');
           </div>
           <div class="menu-bottom jsMenuDiv">
 						<?php 
+						
 						if(isset($menu_lists[$menu_type['id']])) {
 							foreach($menu_lists[$menu_type['id']] as $menu_list) {
+								$selected_cool_drinks = [];
 								$menuIds[] = $menu_list['id'];
 								
 								$primaryChecked = '';
 								$secondaryChecked = '';
 								if(isset($todaySelectedMenus[$menu_list['id']])) {
 									$type = $todaySelectedMenus[$menu_list['id']]['order_type'];
+									//print_r($todaySelectedMenus[$menu_list['id']]);
+									$selected_cool_drinks = json_decode($todaySelectedMenus[$menu_list['id']]['cool_drinks_array']);
 									
 									//check if the slected menus primary or secondary or both
 									switch($type) {
@@ -61,13 +65,16 @@ $this->load->view('navigation_menu');
 										case 'secondary':
 											$secondaryChecked = 'checked';
 											break;	
-										case 'all':
+										case 'both':
 											$secondaryChecked = 'checked';
+											$primaryChecked = 'checked';
 											break;	
 									}
 								}
+								
+								
 						?>
-            <div class="row doublemenu">
+            <div class="row doublemenu jsSubMenu">
 						<div class="col-sm-2 col-my-2 smallpad">
               <span class="menu-plus">+</span><span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish1.png"></span>
               <br>
@@ -103,12 +110,12 @@ $this->load->view('navigation_menu');
               <br>
               <span>Pa</span>
             </div>
-			<div class="col-sm-1 col-my-2 smallpad">
-              <select class="selectpicker select-menu">
-				  <option>Mustard</option>
-				  <option>Ketchup</option>
-				  <option>Relish</option>
-			  </select>
+						<div class="col-sm-1 col-my-2 smallpad">
+              <select class="selectpicker select-menu boostrap-multiselect" name="cool_drinks[<?php echo $menu_list['id']; ?>][]" multiple="multiple">
+								<?php foreach($cool_drinks as $drinks) { ?>
+									<option value="<?php echo $drinks->id; ?>" <?php echo in_array($drinks->id, $selected_cool_drinks)?'selected':''; ?>><?php echo $drinks->drinks_name; ?></option>
+								<?php } ?>
+							</select>
             </div>
             <div class="col-sm-2 col-my-3 smallpad">
               <h4>MENU SENCER</h4>
@@ -127,10 +134,13 @@ $this->load->view('navigation_menu');
     </div>
 				<?php
 				}
+				if($left_time > 0 || count($menu_lists) > 0) {
 				?>
-				<div class="col-sm-12 menubottom">
+				<div class="col-sm-12 menubottom add_menu">
           <div class="col-sm-8">
-            <h4>Tienes <span id="time"></span> para pedir este menu</h4>
+						<?php if($left_time > 0) { ?>
+            <h4 id="timer_span">Tienes <span id="time"></span> para pedir este menu</h4>
+						<?php } ?>
           </div>
           <div class="col-sm-4">
             <div class="row">
@@ -143,6 +153,7 @@ $this->load->view('navigation_menu');
             </div>
           </div>
         </div>
+				<?php } ?>
 				<input type="hidden" name="menu_list_ids" value='<?php echo json_encode($menuIds); ?>'>
 				</form>
       </div>

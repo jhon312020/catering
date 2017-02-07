@@ -62,7 +62,7 @@ class Business extends Admin_Controller {
 		$error_flg = false;
 		$error = array();
 		if ($this->input->post('btn_cancel')) {
-			redirect('admin/collaborators');
+			redirect('admin/business');
 		}
 		$this->mdl_business->prep_form($id);
 		$this->layout->set(array('readonly'=>true, 'error'=>$error));

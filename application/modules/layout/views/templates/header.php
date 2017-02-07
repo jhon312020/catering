@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/form-elements.css">
+		
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/style.css">
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/bootstrap-datepicker.min.css">
-		
+		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/bootstrap-multiselect.css">
 		<script src="<?php echo base_url(); ?>assets/cc/js/jquery-1.11.1.min.js"></script>
 		<script>
 		var SITE_URL = "<?php echo site_url(); ?>";
