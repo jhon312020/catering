@@ -17,15 +17,15 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
       <div class="row">
         <h2 class="head_2"><?php echo lang('profile'); ?></h2>
         <div class="col-sm-12">
-          <div class="col-sm-4">
+          <div class="col-sm-4 pad-R">
             <div class="form-bottom">
               <p><span><?php echo lang('name').' y '.lang('surname'); ?>:</span><span> <?php echo $this->mdl_clients->form_value('name').' '.$this->mdl_clients->form_value('surname'); ?></span></p>
-              <p><span><?php echo lang('business'); ?></span>:<span> <?php echo $this->mdl_clients->form_value('business_name'); ?></span></p>
-              <p><span><?php echo lang('client_code'); ?>:</span><span> <?php echo $this->mdl_clients->form_value('client_code'); ?></span></p>
+              <p><span class="F-bold"><?php echo lang('business'); ?></span>:<span> <?php echo $this->mdl_clients->form_value('business_name'); ?></span></p>
+              <p><span class="F-bold"><?php echo lang('client_code'); ?>:</span><span> <?php echo $this->mdl_clients->form_value('client_code'); ?></span></p>
             </div>
           </div>
 					<form role="form" action="" method="post" class="login-form">
-						<div class="col-sm-4">
+						<div class="col-sm-4 pad-R">
 							<div class="form-bottom ribbon-down">
 								<div id="ribbon-container">
 									<a href="javascript:;" id="ribbon"><?php echo strtoupper(lang('personal_information')); ?></a>

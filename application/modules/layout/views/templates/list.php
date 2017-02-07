@@ -3,7 +3,7 @@ $this->load->view('header');
 ?>
     <div class="top-content">
         <div class="inner-bg">
-            <div class="container">
+            <div class="container page-height">
                 <div class="row">
                     <h2 class="head_2">Lista de pedidos</h2>
                     <div class="col-sm-12 fix-left-right">

@@ -92,6 +92,7 @@ $this->load->view('navigation_menu');
                   <span class="box"><span class="tick"></span></span>
                   </span>
                 </div>
+				<img class="img-responsive payment-img" src="<?php echo TEMPLATE_PATH; ?>payment.png">
               </div>
               <div class="row payrow">
                 <div class="col-sm-10">
