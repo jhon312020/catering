@@ -328,8 +328,8 @@ class Node extends Anonymous_Controller {
    * 
    */
   public function orders() {
-		//$data_array['orders'] = $this->mdl_orders->get_orders_by_client_date();
-		$data_array['orders'] = '';
+		$data_array['orders'] = $this->mdl_orders->get_orders_by_client_date();
+		//print_r($data_array['orders']);die;
 		$this->load->view('layout/templates/orders', $data_array);
   }
 	/**
