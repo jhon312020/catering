@@ -171,6 +171,7 @@ class Node extends Anonymous_Controller {
 		}
 		$menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
 		//print_r($menu_list);die;
+    //print_r($businessInfo);die;
     if ($businessInfo && $menuDate == date('Y-m-d') && count($menu_list) > 0) {
       $time1 = strtotime($businessInfo->time_limit);
       //echo date('d/m/Y H:i', $time1 );
@@ -193,7 +194,7 @@ class Node extends Anonymous_Controller {
 		if($data_array['left_time'] == 0 && $menuDate == date('Y-m-d')) {
 			$show_menus = false;
 		}
-		//echo $data_array['left_time'];
+		//echo $data_array['left_time'];die;
 		if($show_menus) {
 			//Set menu_type_id as key in all menus list.
 			foreach($menu_list as $menus) {

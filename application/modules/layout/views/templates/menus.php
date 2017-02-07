@@ -110,7 +110,7 @@ $this->load->view('navigation_menu');
               <br>
               <span>Pa</span>
             </div>
-						<div class="col-sm-1 col-my-2 smallpad">
+						<div class="col-sm-1 col-my-2 smallpad multi-pad">
               <select class="selectpicker select-menu boostrap-multiselect" name="cool_drinks[<?php echo $menu_list['id']; ?>][]" multiple="multiple">
 								<?php foreach($cool_drinks as $drinks) { ?>
 									<option value="<?php echo $drinks->id; ?>" <?php echo in_array($drinks->id, $selected_cool_drinks)?'selected':''; ?>><?php echo $drinks->drinks_name; ?></option>
