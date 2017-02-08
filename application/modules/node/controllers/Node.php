@@ -59,22 +59,27 @@ class Node extends Anonymous_Controller {
       $time1 = strtotime($businessInfo->time_limit);
 			
       $time2 = time();
-			
+
 			if($time1 > $time2) {
 				$left_time = ($time1 - $time2);
 			}
     }
+
 		if($left_time == 0) {
 			$menus = $this->mdl_menus->select('id')->where('menu_date', date('Y-m-d'))->get()->result_array();
 			$menus_id = array_column($menus, 'id');
 			
-			$selectedMenusIds = array_keys($todaySelectedMenus);
+			$selectedMenusIds = array_column($todaySelectedMenus, 'menu_id');
 			
 			$menusExists = array_intersect($menus_id, $selectedMenusIds);
 			
 			if(count($menusExists) > 0) {
 				$this->today_menus_removed = $menusExists;
 				$this->mdl_temporary_orders->order_delete($menusExists);
+				
+				$todaySelectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
+		
+				$totalCartItems = count($todaySelectedMenus);
 			}
 		}
 

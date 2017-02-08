@@ -43,13 +43,12 @@ class Mdl_orders extends Response_Model {
   */
 		public function get_orders_by_ref_no($reference_no) {
 			$orders_client_by_ref_no = $this->mdl_orders
-																	->select('orders.id, orders.order_date, orders.order_type, orders.menu_id, menus.menu_date, menus.menu_type_id, menus.complement, menus.primary_plate, menus.description_primary_plate, menus.secondary_plate, menus.description_secondary_plate, menus.postre, menus.full_price, menus.half_price, menu_types.menu_name, orders.payment_method, orders.price')
+																	->select('orders.id, orders.order_date, orders.order_type, orders.menu_id, menus.menu_date, menus.menu_type_id, menus.complement, menus.primary_plate, menus.description_primary_plate, menus.secondary_plate, menus.description_secondary_plate, menus.postre, menus.full_price, menus.half_price, menu_types.menu_name, orders.payment_method, orders.price, (SELECT GROUP_CONCAT(drinks_id) from tbl_order_drinks where order_id = tbl_orders.id) as drinks_id')
 																	->join('menus', 'menus.id = orders.menu_id', 'left')
 																	->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
 																	->where(array('orders.is_active' => 1, 'orders.client_id' => $this->session->userdata('client_id'), 'orders.reference_no' => $reference_no))
 																	->get()
 																	->result_array();
-			
 			return $orders_client_by_ref_no;
 		}
 		/**
@@ -188,7 +187,7 @@ class Mdl_orders extends Response_Model {
 		
 		$selectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
 		
-		$today_menus_removed = [];
+		$today_orders_removed = [];
 		
 		/*Check and remove the expired data from the temperory order table*/
 		$business_id = $this->session->userdata('business_id');
@@ -210,18 +209,18 @@ class Mdl_orders extends Response_Model {
 			$menus = $this->mdl_menus->select('id')->where('menu_date', date('Y-m-d'))->get()->result_array();
 			$menus_id = array_column($menus, 'id');
 			
-			$selectedMenusIds = array_keys($selectedMenus, 'menu_id');
+			$selectedMenusIds = array_column($selectedMenus, 'menu_id');
 			
 			$menusExists = array_intersect($menus_id, $selectedMenusIds);
 			
 			if(count($menusExists) > 0) {
-				$today_menus_removed = $menusExists;
+				$today_orders_removed = $this->mdl_temporary_orders->get_order_ids_by_menu_id($menusExists);
 				$this->mdl_temporary_orders->order_delete($menusExists);
 			}
 		}
 		
 		if(count($today_menus_removed) > 0) {
-			return array('success' => false, 'msg' => 'Today menus expired', 'menu_ids' => $today_menus_removed);
+			return array('success' => false, 'msg' => 'Today menus expired', 'order_ids' => array_column($today_orders_removed, 'id'));
 		} else {
 			$data = $this->mdl_orders->insert_from_temperory();
 			return array('success' => true, 'msg' => 'Order successfully placed', 'order_data' => $data);

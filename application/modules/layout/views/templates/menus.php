@@ -119,10 +119,10 @@ $this->load->view('navigation_menu');
           </div>
           <div class="col-sm-6">
             <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-5">
                 <span class="menuitemfont">Total: <span id="jsTotalPrice">0&euro;</span></span>
               </div>
-							<div class="col-sm-3">
+							<div class="col-sm-2">
                 <button type="button" class="btn btn-menu jsAddMenuButton" data-value="1"><?php echo lang('add'); ?></button>
               </div>
 							<div class="col-sm-1">

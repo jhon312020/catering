@@ -112,5 +112,20 @@ class Mdl_temporary_orders extends Response_Model {
 													->result_array();		
     return $today_orders;
   }
+	/**
+   * Function get_order_ids_by_menu_id
+   * 
+   * 
+   * 
+   */
+  public function get_order_ids_by_menu_id($menu_ids) {
+		$orders_id = $this->mdl_temporary_orders->select('id')
+											->where_in('menu_id', $menu_ids)
+											->where('client_id', $this->session->userdata('client_id'))
+											->get()->result_array();
+											
+		return $orders_id;
+	}
+	
 }
 ?>

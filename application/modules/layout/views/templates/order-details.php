@@ -44,12 +44,22 @@ $this->load->view('navigation_menu');
 										
 										$description[] = $order['postre'];
 										
+										if($order['drinks_id']) {
+											$drinks_array = explode(',', $order['drinks_id']);
+											if($drinks_array) {
+												foreach($drinks_array as $drinks) {
+													if($cool_drinks[$drinks]) {
+														$description[] = $cool_drinks[$drinks]->drinks_name;
+													}
+												}
+											}
+										}
 										echo implode(', ', $description);
 									?>
 									, pan, aceite, vinagre y cubietros
                 </td>
                 <td><?php echo date('d/m/Y', strtotime($order['menu_date'])); ?></td>
-                <td><?php echo $order['price']; ?></td>
+                <td><?php echo $order['price']; ?> &euro;</td>
                 <td><?php echo $order['payment_method']; ?></td>
               </tr>
 							<?php

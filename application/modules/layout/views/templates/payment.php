@@ -32,7 +32,7 @@ $this->load->view('navigation_menu');
 								$bool = true;
 								foreach($todaySelectedMenus as $menu) {
 							?>
-							<tr>
+							<tr class="order_<?php echo $menu['id']; ?>">
                 <td>
 									<p><b> <?php $menu_name = strtolower($menu['menu_name']).'_menu'; echo lang($menu_name); ?></b></p>
                   <?php 
@@ -53,7 +53,19 @@ $this->load->view('navigation_menu');
 												$description[] = $menu['secondary_plate'];
                       break;
 										}
+										
 										$description[] = $menu['postre'];
+										if($menu['cool_drinks_array']) {
+											$cool_drinks_data = json_decode($menu['cool_drinks_array'], true);
+											if($cool_drinks_data) {
+												foreach($cool_drinks_data as $drinks) {
+													if($cool_drinks[$drinks]) {
+														$description[] = $cool_drinks[$drinks]->drinks_name;
+													}
+												}
+											}
+										}
+										
 										$total_price += $price;
 										echo implode(', ', $description);
 									?>
@@ -63,7 +75,7 @@ $this->load->view('navigation_menu');
                 <td><?php echo number_format($price, 2); ?> &euro;</td>
                 <td>
 									<a href="javascript:;" class="removeOrder" data-id="<?php echo $menu['id']; ?>">
-										<i class="fa fa-trash fa-2x"></i>
+										<i class="fa fa-trash fa-2x eyecon"></i>
 									</a>
 								</td>
               </tr>
