@@ -9,7 +9,12 @@ class Mdl_drinks extends Response_Model {
         $this->db->order_by('cool_drinks.id');
     }
     public function validation_rules() {
-			
+			return array('price' => array(
+						'field' => 'price',
+						'label' => lang('price'),
+						'rules' => 'required|numeric'
+				),
+			);
     }
 		/**
    * Function get_cool_drinks

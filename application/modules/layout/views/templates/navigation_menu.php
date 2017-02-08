@@ -44,7 +44,7 @@
           <?php $cartImage = ($menu_selected == 'payment') ? 'cart-green.png':'cart-white.png'; ?>
           <a href="<?php echo site_url(PAGE_LANGUAGE.'/payment'); ?>"><img class="cart-logo desk_cart" src="<?php echo TEMPLATE_PATH.$cartImage; ?>">
           <?php if ($totalCartItems) { ?>
-          <span class="desk_cart basketitems"><?php echo $totalCartItems; ?></span>
+          <span class="desk_cart basketitems jsTotalCart"><?php echo $totalCartItems; ?></span>
           <?php } ?>
           </a>
         </li>

@@ -12,6 +12,7 @@
 		<tr>
 			<th><?php echo lang('id'); ?></th>
 			<th><?php echo lang('drinks_name'); ?></th>
+			<th><?php echo lang('price'); ?></th>
 			<th><?php echo lang('edit'); ?></th>
 		</tr>
 	</thead>
@@ -20,6 +21,7 @@
 		<tr>
 			<td><?php echo $drink->id; ?></td>
 			<td><?php echo $drink->drinks_name; ?></td>
+			<td><?php echo $drink->price; ?></td>
 			<td>
 				<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/drinks/view/' . $drink->id); ?>">
 					<i class="entypo-eye"></i>

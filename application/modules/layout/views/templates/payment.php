@@ -12,7 +12,7 @@ $this->load->view('navigation_menu');
         <input type="hidden" name="Ds_Signature" id="Ds_Signature" value="" />
       </form>
       <div class="row">
-        <h3 class="head_2">Pedidos(<?php echo count($todaySelectedMenus); ?>)</h3>
+        <h3 class="head_2"><?php echo lang('orders'); ?> (<span id="order_count"><?php echo count($todaySelectedMenus); ?></span>)</h3>
         <div class="col-sm-9 fix-left-right">
           <table class="table table-striped paymentTable">
             <thead>
@@ -27,6 +27,7 @@ $this->load->view('navigation_menu');
 							<?php
 							$total_price = 0;
 							$bool = false;
+							$price_with_menu_id = [];
              	if($todaySelectedMenus) {
 								$bool = true;
 								foreach($todaySelectedMenus as $menu) {
@@ -37,7 +38,9 @@ $this->load->view('navigation_menu');
                   <?php 
 										$description = array();
 										$description[] =  $menu['complement'];
-										$price = $menu['half_price'];
+										
+										$price = $menu['price'];
+										$price_with_menu_id[$menu['id']] = $price;
 										switch($menu['order_type']) {
 											case 'primary':
 												$description[] = $menu['primary_plate'];
@@ -46,14 +49,12 @@ $this->load->view('navigation_menu');
 												$description[] = $menu['secondary_plate'];
                       break;
 											case 'both':
-												$price = $menu['full_price'];
 												$description[] = $menu['primary_plate'];
 												$description[] = $menu['secondary_plate'];
                       break;
 										}
-										$total_price += $price;
 										$description[] = $menu['postre'];
-										
+										$total_price += $price;
 										echo implode(', ', $description);
 									?>
 									, pan, aceite, vinagre y cubietros
@@ -129,7 +130,7 @@ $this->load->view('navigation_menu');
                     <span class="error" id="jsAcceptTerms">Kindly select terminos y condiciones</span>
                 </div>
                 <div class="row">
-                  <h3 class="paytotalh2">Total: <?php echo number_format($total_price, 2); ?> &euro;</h3>
+                  <h3 class="paytotalh2">Total: <span id="total_price"><?php echo number_format($total_price, 2); ?></span> &euro;</h3>
                 </div>
                 <button type="button" <?php !$bool?'disabled':''; ?> class="btn center-block payButton">CONTINUAR</button>
               </div>
@@ -142,6 +143,8 @@ $this->load->view('navigation_menu');
   <?php $this->load->view('footer_nav_bar'); ?>
 </div>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/payment.js"></script>
-<?php
-  $this->load->view('footer');
-?>
+<script>
+var $total_price = <?php echo $total_price; ?>;
+var $price_with_menu_id = <?php echo json_encode($price_with_menu_id); ?>;
+</script>
+<?php $this->load->view('footer'); ?>

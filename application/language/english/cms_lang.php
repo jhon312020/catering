@@ -529,5 +529,9 @@ $lang['menu_type'] = 'Menu type';
 $lang['drinks_name'] = 'Drinks name';
 $lang['cool_drinks'] = 'Cool drinks';
 $lang['id'] = 'Id';
+
+
+$lang['add'] = 'Add';
+$lang['add_checkout'] = 'Add and checkout';
 /*----*/
 ?>
