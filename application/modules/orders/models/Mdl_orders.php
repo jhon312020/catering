@@ -139,10 +139,7 @@ class Mdl_orders extends Response_Model {
 		$reference_no = '';
 		foreach($temperory_orders as $key => $order) {
 			$order_type = $order['order_type'];
-			$price = $order['half_price'];
-			if($order_type == 'both') {
-				$price = $order['full_price'];
-			}
+			$price = $order['price'];
 			
 			$total_price += $price;
 			$client_id = $this->session->userdata('client_id');
@@ -173,7 +170,7 @@ class Mdl_orders extends Response_Model {
 			$this->mdl_temporary_orders->order_delete_using_id($temperory_order_ids);
 		}
 		
-		$return_data = array('total_price' => $total_price, 'reference_no' => $reference_no);
+		$return_data = array('total_price' => number_format($total_price, 2), 'reference_no' => $reference_no);
 		
 		return $return_data;
 	}

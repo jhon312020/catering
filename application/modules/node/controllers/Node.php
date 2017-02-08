@@ -26,22 +26,25 @@ class Node extends Anonymous_Controller {
 		$this->load->model('menu_types/mdl_menu_types');
 		$this->load->model('temporary_orders/mdl_temporary_orders');
 		
-		$selectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
+		$todaySelectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
 		
-		$todaySelectedMenus = [];
-		foreach($selectedMenus as $menus) {
-			$todaySelectedMenus[$menus['menu_id']] = $menus;
-		}
+		
 		$totalCartItems = count($todaySelectedMenus);
-		//print_r($todaySelectedMenus);die;
-
-		$this->login_client_profile = $this->mdl_clients->get_client_details_by_id($this->session->userdata('client_id'));
-		
-		$cool_drinks = $this->mdl_drinks->get_cool_drinks();
-		//print_r($login_client_profile);die;
 		
 		/* echo "<pre>";
 		print_r($todaySelectedMenus);die; */
+
+		$this->login_client_profile = $this->mdl_clients->get_client_details_by_id($this->session->userdata('client_id'));
+		
+		$cool_drinks_data = $this->mdl_drinks->get_cool_drinks();
+		$cool_drinks = [];
+		foreach($cool_drinks_data as $cool_drink) {
+			$cool_drinks[$cool_drink->id] = $cool_drink;
+		}
+		//print_r($login_client_profile);die;
+		
+		/* echo "<pre>";
+		print_r($cool_drinks);die; */
 		
 		$this->today_menus_removed = [];
 		
@@ -216,36 +219,22 @@ class Node extends Anonymous_Controller {
   */
   public function addMenu() {
 		
-		$purchasedItems = $this->input->post('select_food');
+		/* echo "<pre>";
+		print_r($this->input->post());die; */
 		
-		$menuListIds = json_decode($this->input->post('menu_list_ids'), true);
+		$post_params = $this->input->post();
 		
-		$cool_drinks_array = $this->input->post('cool_drinks');
-		//print_r($menuListIds);die;
-		//print_r($purchasedItems);die;
+		if($post_params['select_food']) {
+			$this->mdl_temporary_orders->insert_temporary_orders($this->input->post());
+		}
 		
-		if($purchasedItems) {
-			$purchase_ids = array_keys($purchasedItems);
-			$ids = array_diff($menuListIds, $purchase_ids);
-			//print_r($ids);die;
-			if($ids) {
-				$this->mdl_temporary_orders->order_delete($ids);
-				
-				$menuListIds = array_diff($purchase_ids, $ids);
-			}
-			$this->mdl_temporary_orders->order_exists_update_or_insert($menuListIds, $purchasedItems, $purchase_ids, $cool_drinks_array);
-			
-		} else {
-			
-			//print_r($menuListIds);die;
-			$this->mdl_temporary_orders->order_delete($menuListIds);
+		if($post_params['is_reload']) {
+			redirect(PAGE_LANGUAGE.'/menus');
 		}
 		
 		redirect(PAGE_LANGUAGE.'/payment');
 	}
   public function payment() {
-		
-		
 		
 		$data_array = array();
 		

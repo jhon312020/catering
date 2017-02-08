@@ -29,6 +29,12 @@ $disabled = ($readonly)?'disabled':'';
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 pull-left"><?php echo lang('price');?>: </label>
+				<div class="col-sm-10">
+					<?php echo form_input(array('name'=>'price', 'class'=>'form-control', 'value'=>$this->mdl_drinks->form_value('price'), $readonly=>true)); ?>
+				</div>
+			</div>
+			<div class="form-group">
 				<div class="col-sm-12">
 				<?php echo $this->layout->load_view('layout/header_buttons'); ?>
 				</div>

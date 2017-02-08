@@ -52,4 +52,13 @@ CREATE TABLE IF NOT EXISTS `tbl_order_drinks` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-
+/*8-2-2017*/
+ALTER TABLE `tbl_menus` CHANGE `full_price` `full_price` FLOAT NOT NULL, CHANGE `half_price` `half_price` FLOAT NOT NULL;
+ALTER TABLE `tbl_cool_drinks`  ADD `price` FLOAT NOT NULL  AFTER `drinks_name`;
+ALTER TABLE `tbl_temporary_orders`  ADD `price` FLOAT NOT NULL  AFTER `order_date`;
+ALTER TABLE `tbl_orders` CHANGE `price` `price` FLOAT NOT NULL;
+ALTER TABLE `tbl_temporary_orders` CHANGE `price` `price` FLOAT(10,2) NOT NULL;
+ALTER TABLE `tbl_orders` CHANGE `price` `price` FLOAT(10,2) NOT NULL;
+ALTER TABLE `tbl_menus` CHANGE `full_price` `full_price` FLOAT(10,2) NOT NULL;
+ALTER TABLE `tbl_menus` CHANGE `half_price` `half_price` FLOAT(10,2) NOT NULL;
+ALTER TABLE `tbl_cool_drinks` CHANGE `price` `price` FLOAT(10,2) NOT NULL;

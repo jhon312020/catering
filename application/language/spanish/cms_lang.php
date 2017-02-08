@@ -126,5 +126,8 @@ $lang['change_password_success_message'] = 'Su contraseña se ha restablecido co
 $lang['drinks_name'] = 'Drinks name';
 $lang['cool_drinks'] = 'Cool drinks';
 $lang['id'] = 'Id';
+
+$lang['add'] = 'Anadir';
+$lang['add_checkout'] = 'Anadir and checkout';
 /*----*/
 ?>
