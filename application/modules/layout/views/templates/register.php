@@ -63,7 +63,7 @@ $this->load->view('header');
                 </label>
                 <div class="help-block with-errors"></div>
               </div>
-              <button type="submit" class="btn center-block"><?php echo lang('create_account');?></button>
+              <button type="submit" class="btn log_in center-block"><?php echo lang('create_account');?></button>
             </form>
             <div class="register">
               <p><?php echo lang('already_have_acc');?></p>

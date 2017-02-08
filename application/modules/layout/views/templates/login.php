@@ -31,7 +31,7 @@ $this->load->view('header');
               <div class="forget form-group">
                 <a href="<?php echo site_url(PAGE_LANGUAGE.'/forgot_password'); ?>" class="btn btn-link"><?php echo lang('forgot_password');?></a>
               </div>
-              <button type="submit" class="btn center-block"><?php echo strtoupper(lang('enter')); ?></button>
+              <button type="submit" class="btn log_in center-block"><?php echo strtoupper(lang('enter')); ?></button>
             </form>
             <div class="register">
               <P><?php echo lang('do_not_have_account');?></p>

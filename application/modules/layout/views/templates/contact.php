@@ -35,7 +35,7 @@
                                         <label for="form-message">Mensaje</label>
                                         <textarea name="message" id="message" class="form-control"></textarea>
                                     </div>
-                                    <button type="submit" class="btn center-block">ENVIAR</button>
+                                    <button type="submit" class="btn log_in center-block">ENVIAR</button>
                                 </form>
                                 <div id="ribbon-container-green">
                                     <a href="#" id="ribbon" target="_blank">FORMULARIO DE CONACTO</a>
