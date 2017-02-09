@@ -31,12 +31,12 @@ class Anonymous_Controller extends MX_Controller {
 			$this->load->library('user_agent');
 			$controller_method = $this->router->fetch_method();
 			
-			$method_array = array('register', 'index', 'forgotPassword', 'changePassword');
+			$method_array = array('register', 'index', 'forgotPassword', 'changePassword', 'terms');
 			//echo $controller_method;die;
 			if($this->mdl_clients->is_login_clients()) {
 				//echo "true";
 				//check the requested page is an register page.
-				if(!$this->input->post() && in_array($controller_method, $method_array) && $controller_method != 'logout') {
+				if (!$this->input->post() && in_array($controller_method, $method_array) && !in_array($controller_method, array('terms', 'logout'))) {
 					//echo "hello";die;
 					redirect(PAGE_LANGUAGE.'/profile');
 				}

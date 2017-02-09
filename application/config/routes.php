@@ -96,6 +96,9 @@ $route['es/checkout'] = 'ajax/bankPaymentProcess';
 $route['en/forgot_password'] = 'node/forgotPassword';
 $route['es/forgot_password'] = 'node/forgotPassword';
 
+$route['en/terms'] = 'node/terms';
+$route['es/terms'] = 'node/terms';
+
 $route['en/change_password/(:any)'] = 'node/changePassword';
 $route['es/change_password/(:any)'] = 'node/changePassword';
 

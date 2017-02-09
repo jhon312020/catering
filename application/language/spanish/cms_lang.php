@@ -127,7 +127,13 @@ $lang['drinks_name'] = 'Drinks name';
 $lang['cool_drinks'] = 'Cool drinks';
 $lang['id'] = 'Id';
 
-$lang['add'] = 'Anadir';
-$lang['add_checkout'] = 'Anadir and checkout';
+$lang['add'] = 'Añadir y seguir comprando';
+$lang['add_checkout'] = 'Añadir y finalizar';
+$lang['registry_header_text'] = 'Rellene esta solicitud de alta y muy pronto nos pondremos en contacto con usted!​';
+$lang['terms_and_conditions'] = 'Rellene esta solicitud de alta y muy pronto nos pondremos en contacto con usted!​';
+$lang['update'] = 'GUARDAR';
+$lang['order_time_over'] = 'Selecciona tu menú. Puedes elegir un menú completo, medio menú o un menú combinado. También puedes seleccionar bebidas.';
+$lang['order_time_over'] = 'Se ha superado la hora límite para pedir el menú de hoy.<br/> Tu hora límite es a las 10:00h.';
+$lang['menu_complete'] = 'Menú Completo';
 /*----*/
 ?>

@@ -19,7 +19,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
         <div class="col-sm-12">
           <div class="col-sm-4 pad-R">
             <div class="form-bottom">
-              <p><span><?php echo lang('name').' y '.lang('surname'); ?>:</span><span> <?php echo $this->mdl_clients->form_value('name').' '.$this->mdl_clients->form_value('surname'); ?></span></p>
+              <p><span class="F-bold"><?php echo lang('name').' y '.lang('surname'); ?>:</span><span> <?php echo $this->mdl_clients->form_value('name').' '.$this->mdl_clients->form_value('surname'); ?></span></p>
               <p><span class="F-bold"><?php echo lang('business'); ?></span>:<span> <?php echo $this->mdl_clients->form_value('business_name'); ?></span></p>
               <p><span class="F-bold"><?php echo lang('client_code'); ?>:</span><span> <?php echo $this->mdl_clients->form_value('client_code'); ?></span></p>
             </div>
@@ -48,7 +48,8 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 								</div>
 								<div class="form-group">
 									<label for="form-text"><?php echo lang('intolerances'); ?></label>
-									<input type="text" name="intolerances" placeholder="" class="form-text form-control" id="form-text" value="<?php echo $this->mdl_clients->form_value('intolerances'); ?>">
+                  <textarea type="text" name="billing_data" id="billing_data" name="form-message" placeholder="" class="form-message form-control" id="intolerances"><?php echo $this->mdl_clients->form_value('intolerances'); ?></textarea>
+									<!-- <input type="text" name="intolerances" placeholder="" class="form-text form-control" id="form-text" value="<?php //echo $this->mdl_clients->form_value('intolerances'); ?>"> -->
 								</div>
 							</div>
 						</div>
@@ -69,14 +70,21 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 								</div>
 								<div class="form-group">
 									<label for="form-message"><?php echo lang('billing_data'); ?>:</label>
-									<textarea type="text" name="billing_data" id="billing_data" name="form-message" <?php echo $this->mdl_clients->form_value('bill') == 0?'disabled':''; ?> placeholder="" class="form-message form-control" id="form-message"><?php echo $this->mdl_clients->form_value('bill') == 1?$this->mdl_clients->form_value('billing_data'):'';; ?></textarea>
+									<textarea type="text" name="billing_data" id="billing_data" name="form-message" <?php echo $this->mdl_clients->form_value('bill') == 0?'disabled':''; ?> placeholder="" class="form-message form-control" id="form-message"><?php echo $this->mdl_clients->form_value('bill') == 1?$this->mdl_clients->form_value('billing_data'):''; ?></textarea>
 								</div>
-							</div>
-							<div class="form-group btn-update">
-								<button type="submit" class="btn btn-primary">Update</button>
 							</div>
 						</div>
 					</form>
+        </div>
+      </div>
+      <div class= "row">
+        &nbsp;
+      </div>
+      <div class= "row">
+        <div class="col-sm-2 pad-R col-sm-offset-5 col-my-offset-5">
+          <div class="form-group btn-update">
+            <button type="submit" class="btn btn-primary"><?php echo lang('update'); ?></button>
+          </div>
         </div>
       </div>
     </div>
