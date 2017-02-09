@@ -91,7 +91,7 @@ class Clients extends Admin_Controller {
 				$client = $this->mdl_clients->get_by_id($id);
 				$this->load->library('email');
 				$message  = "Hola ".$client->name. " " .$client->surname;
-				$message .=",<br/>Tu solicitud ha sido validada y aceptada. Ya puedes empezar a disfrutar de nuestros menús desde este acceso: http://www.gumen-catering.com/Delivery";
+				$message .=",<br/>Tu solicitud ha sido validada y aceptada. Ya puedes empezar a disfrutar de nuestros menús desde este acceso:<br/>http://www.gumen-catering.com/Delivery";
 				$emailBody['body'] = $message;
 				$this->email->set_mailtype("html");
 				//Need to change admin email dynamically
