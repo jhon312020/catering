@@ -26,67 +26,73 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 		<?php	} ?>
 	</div>	
 	<div class="row" id="business">
+		<form method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 		<?php
 		foreach($menu_types as $menu_type) {
 		?>
 		<div class="col-md-12 martop menuList" id="menuType_<?php echo $menu_type->id; ?>">
 			<div class="form-content">
-				<form method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 				<div class="row">
 					<div class="col-sm-12">
 						<span class="hmargin"><?php echo lang('menu').' '.$menu_type->menu_name; ?></span>
 							<div class="checkbox rightCheck" style="float:right;">
 								<label>
-								<?php echo form_checkbox('disabled', 1, $this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$checkDisabled:false); ?>
+								<?php echo form_checkbox($menu_type->menu_name.'[disabled]', 1, $this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$checkDisabled:false); ?>
 								<?php echo lang('disabled'); ?>
 								</label>
 							</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<input type="hidden" name="menu_type_id" value="<?php echo $menu_type->id; ?>">
-					<input type="hidden" name="menu_date" value="<?php echo $menuDate; ?>">
+					<input type="hidden" name="<?php echo $menu_type->menu_name; ?>[menu_type_id]" value="<?php echo $menu_type->id; ?>">
+					<input type="hidden" name="<?php echo $menu_type->menu_name; ?>[menu_date]" value="<?php echo $menuDate; ?>">
 					<div class="col-sm-2">
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish1.png" class="imgWidth" />
 					</div>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'complement', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('complement'):'', $readonly=>true)); ?>
+						<?php 
+							echo form_input(array(
+								'name'=>$menu_type->menu_name . '[complement]', 'class'=>'form-control', 
+								'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('complement'):'', 
+								$readonly=>true
+							)); 
+						?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('primary_plate');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'primary_plate', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('primary_plate'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name . '[primary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('primary_plate'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('description_primary_plate');?>: </label>
 					<div class="col-sm-10">
-						<textarea name="description_primary_plate" class="form-control"><?php echo $this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('description_primary_plate'):''; ?></textarea>
+						<textarea name="<?php echo $menu_type->menu_name; ?>[description_primary_plate]" class="form-control"><?php echo $this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('description_primary_plate'):''; ?></textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('image');?>: </label>
 					<div class="col-sm-10">
-						<input name="primary_image" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
+						<input name="<?php echo $menu_type->menu_name; ?>[primary_image]" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
 					</div>
 				</div>	
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('secondary_plate');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'secondary_plate', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('secondary_plate'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name.'[secondary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('secondary_plate'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('description_secondary_plate');?>: </label>
 					<div class="col-sm-10">
-						<textarea name="description_secondary_plate" class="form-control"><?php echo $this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('description_secondary_plate'):''; ?></textarea>
+						<textarea name="<?php echo $menu_type->menu_name; ?>[description_secondary_plate]" class="form-control"><?php echo $this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('description_secondary_plate'):''; ?></textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('image');?>: </label>
 					<div class="col-sm-10">
-						<input name="secondary_image" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
+						<input name="<?php echo $menu_type->menu_name; ?>[secondary_image]" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
 					</div>
 				</div>	
 				<div class="form-group">
@@ -94,30 +100,32 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish2.png" class="imgWidth" />
 					</div>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'postre', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('postre'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name . '[postre]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('postre'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('half_price');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'half_price', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('half_price'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name.'[half_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('half_price'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('full_price');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'full_price', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('full_price'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name.'[full_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('full_price'):'', $readonly=>true)); ?>
 					</div>
 				</div>
+				<?php if($menu_type->menu_name != 'Basic'){ ?>
 				<div class="form-group">
 					<div class="col-sm-12">
 					<?php echo $this->layout->load_view('layout/header_buttons'); ?>
 					</div>
 				</div>
-			</form>
+				<?php } ?>
 			</div>
 		</div>
 		<?php } ?>
+		</form>
 	</div>
 <script type="text/javascript">
 $(document).ready(function(){
