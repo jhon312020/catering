@@ -234,7 +234,7 @@ class Node extends Anonymous_Controller {
   */
   public function addMenu() {
 		
-		/* echo "<pre>";
+		/*echo "<pre>";
 		print_r($this->input->post());die; */
 		
 		$post_params = $this->input->post();
@@ -242,7 +242,7 @@ class Node extends Anonymous_Controller {
 		if($post_params['select_food']) {
 			$this->mdl_temporary_orders->insert_temporary_orders($this->input->post());
 		}
-		
+		//die;
 		if($post_params['is_reload']) {
 			redirect(PAGE_LANGUAGE.'/menus');
 		}

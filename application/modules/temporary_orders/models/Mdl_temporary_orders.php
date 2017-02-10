@@ -51,12 +51,11 @@ class Mdl_temporary_orders extends Response_Model {
 		 * 
 		*/
 		public function insert_temporary_orders($post_params) {
-			
 			$data = [];
 			$menu_orders = $post_params['select_food'];
 			$price_orders = $post_params['select_order'];
 			foreach($menu_orders as $menu_id => $order) {
-				
+				$menuObject = $this->mdl_menus->get_menu_by_id($menu_id);
 				$typeCount = count($order);
 				//echo $typeCount;die;
 				if($typeCount == 2) {
@@ -65,11 +64,15 @@ class Mdl_temporary_orders extends Response_Model {
 					$order_type = $order[0];
 				}
 				
-				$cool_drinks = json_encode($post_params['cool_drinks'][$menu_id]);
+        if (isset($post_params['cool_drinks'][$menu_id])) {
+          $cool_drinks = json_encode($post_params['cool_drinks'][$menu_id]);
+        } else {
+          $cool_drinks = '';
+        }
 				
 				$price = $price_orders[$menu_id];
 				
-				$data[] = array('menu_id' => $menu_id, 'order_date' => date('Y-m-d'), 'client_id' => $this->session->userdata('client_id'), 'order_type' => $order_type, 'cool_drinks_array' => $cool_drinks, 'price' => $price);
+				$data[] = array('menu_id' => $menu_id, 'order_date' => $menuObject->menu_date, 'client_id' => $this->session->userdata('client_id'), 'order_type' => $order_type, 'cool_drinks_array' => $cool_drinks, 'price' => $price);
 			}
 			//print_r($data);die;
 			if(count($data) > 0) {
@@ -89,7 +92,7 @@ class Mdl_temporary_orders extends Response_Model {
 													->select('temporary_orders.id, temporary_orders.order_date, temporary_orders.order_type, temporary_orders.menu_id, menus.menu_date, menus.menu_type_id, menus.complement, menus.primary_plate, menus.description_primary_plate, menus.secondary_plate, menus.description_secondary_plate, menus.postre, menus.full_price, menus.half_price, menu_types.menu_name, temporary_orders.cool_drinks_array, temporary_orders.price')
 													->join('menus', 'menus.id = temporary_orders.menu_id', 'left')
 													->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
-													->where(array('order_date' => date('Y-m-d'), 'client_id' => $this->session->userdata('client_id')))
+													->where(array('date(tbl_temporary_orders.created_at)' => date('Y-m-d'), 'client_id' => $this->session->userdata('client_id')))
 													->get()
 													->result_array();
 														

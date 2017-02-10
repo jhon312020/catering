@@ -38,10 +38,10 @@ class Ajax extends Anonymous_Controller {
 			$miObj = new apiRedsys;
 			
 			//$merchantCode = "336472105";
-			$merchantCode = "336472105";
+			$merchantCode = "p336472105";
 			$terminal = "001";
 			//$amount = str_replace('.', '', number_format($amount, 2));
-			$amount = 2;
+			$amount = '2';
 			$currency = "978";
 			$transactionType = "0";
 			$merchantURL = "";

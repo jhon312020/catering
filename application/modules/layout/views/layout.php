@@ -19,25 +19,25 @@ $cms_lang = $this->session->userdata('cms_lang');
 	<?php
 	if($cms_lang == 'english'){
 	?>
-	<TITLE><?php echo $title; ?>  -  Low Cost Barcelona - Airport Shuttle</TITLE>
-	<META NAME="description" CONTENT="Caterings is a premium and low cost shuttle transfer (door to door) between Barcelona´s airport and your hostel/hotel. With numerous advantages like free Internet, Welcome Pack, Discounts, etc.">
-	<META NAME="keywords" CONTENT="barcelona, low cost, premium, shuttle, car, bus, trip, airport, city, travel, trip, hotel, hostel, free internet, discounts, transfers, booking.">
+	<TITLE><?php echo $title; ?>  </TITLE>
+	<META NAME="description" CONTENT="">
+	<META NAME="keywords" CONTENT="">
 	<META NAME="robot" CONTENT="index,follow">
-	<META NAME="copyright" CONTENT="Copyright © Caterings">
+	<META NAME="copyright" CONTENT="Copyright © Gumen Catering">
 	<META NAME="author" CONTENT="Grupo Visualiza - www.grupovisualiza.com">
-	<META NAME="generator" CONTENT="www.onlinemetatag.com">
+	<META NAME="generator" CONTENT="">
 	<META NAME="language" CONTENT="EN">
 	<?php
 	}
 	else{
 	?>
-	<TITLE><?php echo $title; ?>  -  Transporte Low Cost Barcelona Aeropuerto</TITLE>
-	<META NAME="description" CONTENT="Pick´n Go es un servicio Premium y low cost de transporte (shuttle puerta a puerta) entre el aeropuerto de Barcelona y vuestro hotel/hostal. Un servicio hecho a medida y con numerosas ventajas como Internet gratis, pack de bienvenida, etc.">
-	<META NAME="keywords" CONTENT="barcelona, low cost, premium, shuttle, coche, bus, viaje, aeropuerto, ciudad, viajar, transporte, hotel, hostal, internet gratis, descuentos.">
+	<TITLE><?php echo $title; ?> </TITLE>
+	<META NAME="description" CONTENT="">
+	<META NAME="keywords" CONTENT="">
 	<META NAME="robot" CONTENT="index,follow">
-	<META NAME="copyright" CONTENT="Copyright © Pick\'n Go">
+	<META NAME="copyright" CONTENT="Copyright © Gumen Catering">
 	<META NAME="author" CONTENT="Grupo Visualiza - www.grupovisualiza.com">
-	<META NAME="generator" CONTENT="www.onlinemetatag.com">
+	<META NAME="generator" CONTENT="">
 	<META NAME="language" CONTENT="ES">
 	<?php	
 	}

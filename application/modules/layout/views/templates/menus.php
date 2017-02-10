@@ -12,11 +12,9 @@ $this->load->view('navigation_menu');
     <div class="container">
       <div class="row">
         <h3 class="head_2"><?php echo lang('menu'); ?>: <?php 
-        //echo strftime("%A");
-        //setlocale(LC_TIME, "es_ES");
-        //echo strftime("%A");
-
-        echo date('l d F Y', strtotime($menu_date)) ?></h3>
+        setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish'); 
+        echo ucwords(strftime('%A %d %B %Y',strtotime($menu_date)));
+        //echo date('l d F Y', strtotime($menu_date)) ?></h3>
         <div class="col-sm-12 menuhead">
           <div class="col-sm-8">
             <P>Selecciona tu menú. Puedes elegir un menú completo, medio menú o un menú combinado.<br/> También puedes seleccionar bebidas.</p>
@@ -29,6 +27,7 @@ $this->load->view('navigation_menu');
           </div>
         </div>
 				<form action="<?php echo site_url('node/addMenu'); ?>" method="post" id="jsMenuForm">
+        <input type='hidden' name="order_date" class="form-control" value="<?php echo $menu_date; ?>" />
 				<input type="hidden" name="language" value="<?php echo PAGE_LANGUAGE; ?>">
 				<?php
         //print_r($menu_types);
@@ -61,7 +60,7 @@ $this->load->view('navigation_menu');
             <div class="col-sm-2 col-my-4 dishpad">
               <span class="menu-plus img-plus">+</span><span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['primary_image']; ?>">
               <br>
-              <span><?php echo $menu_list['primary_plate']; ?></span>
+              <span class="title-aligned"><?php echo $menu_list['primary_plate']; ?></span>
               <p class="menu-desc"><?php echo $menu_list['description_primary_plate']; ?></p>
               <span class="custom-checkbox col-sm-offset-5">
               <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][]" value="primary" />
@@ -71,7 +70,7 @@ $this->load->view('navigation_menu');
             <div class="col-sm-2 col-my-4 dishpad">
               <span class="menu-plus img-plus">+</span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['secondary_image']; ?>">
               <br>
-              <span><?php echo $menu_list['secondary_plate']; ?></span>
+              <span class="title-aligned"><?php echo $menu_list['secondary_plate']; ?></span>
               <p class="menu-desc"><?php echo $menu_list['description_secondary_plate']; ?></p>
               <span class="custom-checkbox col-sm-offset-5">
               <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][]" value="secondary" />
@@ -128,13 +127,12 @@ $this->load->view('navigation_menu');
           <div class="col-sm-8">
             <div class="row">
               <div class="col-sm-5">
-                <span class="menuitemfont">Total: <span id="jsTotalPrice">0&euro;</span></span>
+                <span class="menuitemfont">Total: <span id="jsTotalPrice">0.00 &euro;</span></span>
               </div>
 							<div class="col-sm-3">
                 <button type="button" class="btn btn-menu jsAddMenuButton" data-value="1"><?php echo lang('add'); ?></button>
               </div>
-							<div class="col-sm-1">
-							</div>
+							
               <div class="col-sm-4">
                 <button type="button" class="btn btn-menu jsAddMenuButton" data-value="0"><?php echo lang('add_checkout'); ?></button>
               </div>
