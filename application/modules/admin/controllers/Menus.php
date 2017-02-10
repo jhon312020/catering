@@ -249,10 +249,14 @@ class Menus extends Admin_Controller {
   }
 
   function _setFileSessionOnMenuType($type, $image_field){
-  	$_FILES[$type]['name'][$image_field] = $_SESSION[$type]['name'][$image_field];
-  	$_FILES[$type]['type'][$image_field] = $_SESSION[$type]['type'][$image_field];
-  	$_FILES[$type]['size'][$image_field] = $_SESSION[$type]['size'][$image_field];
-  	$_FILES[$type]['error'][$image_field] = $_SESSION[$type]['error'][$image_field];
-  	$_FILES[$type]['tmp_name'][$image_field] = $_SESSION[$type]['tmp_name'][$image_field];
+  	$file_params = array('name','type','size','error','tmp_name');
+  	foreach ($file_params as $param) {
+  		if (isset($_SESSION['files'][$type][$param][$image_field])){
+  			$_FILES[$type][$param][$image_field] = $_SESSION['files'][$type][$param][$image_field];
+  		}
+  		else {
+  			$_FILES[$type][$param][$image_field] = '';
+  		}
+  	}
   }
 }
