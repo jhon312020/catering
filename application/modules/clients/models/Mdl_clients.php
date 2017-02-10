@@ -56,7 +56,7 @@ class Mdl_clients extends Response_Model {
                 'label' => lang('password'),
                 'rules' => 'required'
             ),
-            'telephone' => array(
+            /*'telephone' => array(
                 'field' => 'telephone',
                 'label' => lang('telephone'),
                 'rules' => 'required|numeric'
@@ -80,7 +80,7 @@ class Mdl_clients extends Response_Model {
                 'field' => 'bill',
                 'label' => lang('bill'),
                 'rules' => 'required'
-            ),
+            ),*/
         );
     }
 		/**

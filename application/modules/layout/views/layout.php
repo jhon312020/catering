@@ -191,13 +191,13 @@ $cms_lang = $this->session->userdata('cms_lang');
 						<li class="dropdown language-selector">
 						<?php
 							if(!($cms_lang) || $cms_lang == ""){
-								$cms_lang = "english";
+								$cms_lang = "spanish";
 							}
 						?>
 						<?php echo lang('language'); ?>: &nbsp;
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+							<a href="#" data-close-others="true">
 								<?php if ($cms_lang == "english"){?>
-								<img src="<?php echo base_url(); ?>assets/neon/images/flag-uk.png" />
+								<!-- <img src="<?php //echo base_url(); ?>assets/neon/images/flag-uk.png" /> -->
 								<?php }else{?>
 								<img src="<?php echo base_url(); ?>assets/neon/images/flag-es.png" />
 								<?php }?>
@@ -210,8 +210,8 @@ $cms_lang = $this->session->userdata('cms_lang');
 										<span>Español</span>
 										<?php }else{?>
 										
-										<img src="<?php echo base_url(); ?>assets/neon/images/flag-uk.png" />
-										<span>English</span>
+										<!-- <img src="<?php //echo base_url(); ?>assets/neon/images/flag-uk.png" />
+										<span>English</span> -->
 										<?php }?>
 									</a>
 								</li>

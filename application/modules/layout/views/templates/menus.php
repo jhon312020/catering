@@ -12,9 +12,9 @@ $this->load->view('navigation_menu');
     <div class="container">
       <div class="row">
         <h3 class="head_2"><?php echo lang('menu'); ?>: <?php 
-        echo strftime("%A");
-        setlocale(LC_TIME, "es_ES");
-        echo strftime("%A");
+        //echo strftime("%A");
+        //setlocale(LC_TIME, "es_ES");
+        //echo strftime("%A");
 
         echo date('l d F Y', strtotime($menu_date)) ?></h3>
         <div class="col-sm-12 menuhead">
@@ -121,7 +121,7 @@ $this->load->view('navigation_menu');
 						<?php if($left_time > 0) { ?>
             <h4 id="timer_span">Tienes <span id="time"></span> para pedir este menu</h4>
 						<?php } else {
-              echo $lang('order_time_over');
+              echo lang('order_time_over');
              } ?>
             
           </div>
