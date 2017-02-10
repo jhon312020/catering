@@ -343,5 +343,13 @@ class Mdl_clients extends Response_Model {
       $this->db->set(array('password'=>md5($password), 'password_key' => base64_encode($password.'_catering')));
       $this->db->update('clients');
   }
+
+  public function getNextIncrementId(){
+    $status = $this->db->query("SHOW TABLE STATUS LIKE '{$this->db->dbprefix}{$this->table}'")->result_array();
+    if ($status){
+      return $status[0]['Auto_increment'];
+    }
+    return 1;
+  }
 }
 ?>

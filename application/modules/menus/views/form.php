@@ -3,16 +3,15 @@
 </style>
 <?php
 $readonly = ($readonly)?'readonly':'';
-$menuDate = $this->mdl_menus->form_value('menu_date')?date('Y-m-d', strtotime($this->mdl_menus->form_value('menu_date'))):date('Y-m-d');
+//$menuDate = $this->mdl_menus->form_value('menu_date')?date('Y-m-d', strtotime($this->mdl_menus->form_value('menu_date'))):date('Y-m-d');
 $datePickerDate = date('d/m/Y', strtotime($menuDate));
-
 $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 ?>
 <div class="headerbar">
 	<div class="clearfix">
 		<h1 class="pull-left"><?php echo lang('menu'); ?> 
 			<span class="dateSpan"><?php echo $datePickerDate; ?> </span>
-			<input type='hidden' class="form-control datepicker12" value="<?php echo $datePickerDate; ?>" />
+			<input type='hidden' class="form-control datepicker123" value="<?php echo $datePickerDate; ?>" />
 			<span class="spancal glyphicon glyphicon-calendar"></span>
 		</h1>
 	</div>
@@ -37,7 +36,7 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 						<span class="hmargin"><?php echo lang('menu').' '.$menu_type->menu_name; ?></span>
 							<div class="checkbox rightCheck" style="float:right;">
 								<label>
-								<?php echo form_checkbox($menu_type->menu_name.'[disabled]', 1, $this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$checkDisabled:false); ?>
+								<?php echo form_checkbox($menu_type->menu_name.'[disabled]', 1, $this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$checkDisabled:false); ?>
 								<?php echo lang('disabled'); ?>
 								</label>
 							</div>
@@ -45,7 +44,7 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 				</div>
 				<div class="form-group">
 					<input type="hidden" name="<?php echo $menu_type->menu_name; ?>[menu_type_id]" value="<?php echo $menu_type->id; ?>">
-					<input type="hidden" name="<?php echo $menu_type->menu_name; ?>[menu_date]" value="<?php echo $menuDate; ?>">
+					<input type="hidden" name="<?php echo $menu_type->menu_name; ?>[menu_date]" value="<?php echo $menuDate; ?>" class="menu_date">
 					<div class="col-sm-2">
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish1.png" class="imgWidth" />
 					</div>
@@ -53,7 +52,7 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 						<?php 
 							echo form_input(array(
 								'name'=>$menu_type->menu_name . '[complement]', 'class'=>'form-control', 
-								'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('complement'):'', 
+								'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[complement]'):'', 
 								$readonly=>true
 							)); 
 						?>
@@ -62,37 +61,39 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('primary_plate');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>$menu_type->menu_name . '[primary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('primary_plate'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name . '[primary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[primary_plate]'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('description_primary_plate');?>: </label>
 					<div class="col-sm-10">
-						<textarea name="<?php echo $menu_type->menu_name; ?>[description_primary_plate]" class="form-control"><?php echo $this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('description_primary_plate'):''; ?></textarea>
+						<textarea name="<?php echo $menu_type->menu_name; ?>[description_primary_plate]" class="form-control"><?php echo $this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[description_primary_plate]'):''; ?></textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('image');?>: </label>
 					<div class="col-sm-10">
 						<input name="<?php echo $menu_type->menu_name; ?>[primary_image]" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
+						<span class="file-input-name"><?php echo isset($_FILES[$menu_type->menu_name]['name']['primary_image']) && $_FILES[$menu_type->menu_name]['name']['primary_image'] ? $_FILES[$menu_type->menu_name]['name']['primary_image'] : ''; ?></span>
 					</div>
 				</div>	
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('secondary_plate');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>$menu_type->menu_name.'[secondary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('secondary_plate'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name.'[secondary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[secondary_plate]'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('description_secondary_plate');?>: </label>
 					<div class="col-sm-10">
-						<textarea name="<?php echo $menu_type->menu_name; ?>[description_secondary_plate]" class="form-control"><?php echo $this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('description_secondary_plate'):''; ?></textarea>
+						<textarea name="<?php echo $menu_type->menu_name; ?>[description_secondary_plate]" class="form-control"><?php echo $this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[description_secondary_plate]'):''; ?></textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('image');?>: </label>
 					<div class="col-sm-10">
 						<input name="<?php echo $menu_type->menu_name; ?>[secondary_image]" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
+						<span class="file-input-name"><?php echo isset($_FILES[$menu_type->menu_name]['name']['secondary_image']) && $_FILES[$menu_type->menu_name]['name']['secondary_image'] ? $_FILES[$menu_type->menu_name]['name']['secondary_image'] : ''; ?></span>
 					</div>
 				</div>	
 				<div class="form-group">
@@ -100,19 +101,19 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish2.png" class="imgWidth" />
 					</div>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>$menu_type->menu_name . '[postre]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('postre'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name . '[postre]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[postre]'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('half_price');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>$menu_type->menu_name.'[half_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('half_price'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name.'[half_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[half_price]'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('full_price');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>$menu_type->menu_name.'[full_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('menu_type_id') == $menu_type->id?$this->mdl_menus->form_value('full_price'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type->menu_name.'[full_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[full_price]'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<?php if($menu_type->menu_name != 'Basic'){ ?>
@@ -129,10 +130,11 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 	</div>
 <script type="text/javascript">
 $(document).ready(function(){
-	$('.datepicker12').datepicker({
+	$('.datepicker123').datepicker({
 		format:'dd/mm/yyyy',
 		autoclose:true,
 		startDate:new Date(),
+		daysOfWeekDisabled: [0,6]
 	}).on('show', function(e) {
 			$('.datepicker-dropdown').css({top:$('.spancal').offset().top + $('.spancal').height(), left:$('.spancal').offset().left})
 	}).on('changeDate', function(e) {
@@ -140,8 +142,7 @@ $(document).ready(function(){
 			$('.dateSpan').text(val);
 			var split = val.split('/');
 			var date = split[2]+'-'+split[1]+'-'+split[0];
-			$('input[name="menu_date"]').val(date);
-			console.log()
+			$('.menu_date').val(date);
 			/* var formData = {menu_date:date};
 			$.ajax({
 				url:'<?php echo site_url('admin/menus/getMenus'); ?>',
@@ -160,7 +161,7 @@ $(document).ready(function(){
 			}); */
 	});
 	$(document).on('click', '.spancal', function(){
-		$('.datepicker12').datepicker('show');
+		$('.datepicker123').datepicker('show');
 	})
 });
 </script>
