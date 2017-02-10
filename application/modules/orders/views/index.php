@@ -33,7 +33,7 @@
 	<tbody>
 		<?php foreach ($orders as $order) { ?>
 			<tr>
-				<td class=""><?php echo $order->client_code; ?></td>
+				<td class=""><?php echo $order->client_code . '<br/>Order Ref : '. $order->reference_no; ?></td>
 				<td class=""><?php echo date('d/m/Y', strtotime($order->order_date)); ?></td>
 				<td class=""><?php echo $order->name . ' ' . $order->surname; ?></td>
 				<td class=""><?php echo $order->business; ?></td>
