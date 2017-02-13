@@ -136,5 +136,10 @@ $lang['order_time_over'] = 'Selecciona tu menú. Puedes elegir un menú completo
 $lang['order_time_over'] = 'Se ha superado la hora límite para pedir el menú de hoy.<br/> Tu hora límite es a las 10:00h.';
 $lang['menu_complete'] = 'Menú Completo';
 $lang['delete_record_warning'] = 'Seguro que quieres eliminar';
+$lang['address'] = 'Address';
+$lang['name'] = 'Name';
+$lang['telephone'] = 'Telephone';
+$lang['options'] = 'Options';
+$lang['login_description'] = 'Dear user, log in to access the admin area!';
 /*----*/
 ?>

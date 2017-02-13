@@ -25,8 +25,11 @@ class Node extends Anonymous_Controller {
 		$this->load->model('drinks/mdl_drinks');
 		$this->load->model('menu_types/mdl_menu_types');
 		$this->load->model('temporary_orders/mdl_temporary_orders');
+    $this->load->model('contacts/mdl_contacts');
+		$contact = $this->mdl_contacts->where(array('is_active' => 1))->get()->row();
 		
 		$todaySelectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
+		
 		
 		
 		$totalCartItems = count($todaySelectedMenus);
@@ -78,7 +81,7 @@ class Node extends Anonymous_Controller {
 			}
 		}
 
-		$this->load->vars(array('todaySelectedMenus'=> $todaySelectedMenus, 'login_client_profile' => $this->login_client_profile, 'totalCartItems'=>$totalCartItems, 'cool_drinks' => $cool_drinks, 'user_info'=>$this->session->get_userdata(), 'today_menus_removed' => $this->today_menus_removed));
+		$this->load->vars(array('todaySelectedMenus'=> $todaySelectedMenus, 'login_client_profile' => $this->login_client_profile, 'totalCartItems'=>$totalCartItems, 'cool_drinks' => $cool_drinks, 'user_info'=>$this->session->get_userdata(), 'today_menus_removed' => $this->today_menus_removed, 'contact'=>$contact));
   }
   
   /**
@@ -530,7 +533,9 @@ class Node extends Anonymous_Controller {
 	 * @return	void
 	 */
   public function terms() {
-    $this->load->view('layout/templates/terms');
+    $this->load->model('conditions/mdl_conditions');
+    $template_vars['conditions'] = $this->mdl_conditions->get_terms_and_condtions();
+    $this->load->view('layout/templates/terms', $template_vars);
   }
 }
 ?>

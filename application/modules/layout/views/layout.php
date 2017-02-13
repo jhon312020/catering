@@ -185,7 +185,11 @@ $cms_lang = $this->session->userdata('cms_lang');
 				<!-- Raw Links -->
 				<div class="col-md-6 col-sm-4 clearfix hidden-xs">		
 					<ul class="list-inline links-list pull-right">
-						<li><?php echo date('l jS \of F Y ');?></li>
+						<li><?php 
+            setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish'); 
+            echo ucwords(strftime('%A %d %B %Y',strtotime(date('Y-m-d'))));
+        
+            //echo date('l jS \of F Y ');?></li>
 						<li class="sep"></li>
 						<!-- Language Selector -->
 						<li class="dropdown language-selector">
