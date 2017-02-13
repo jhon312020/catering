@@ -12,7 +12,7 @@ $this->load->view('header');
               <img src="<?php echo TEMPLATE_PATH; ?>gumen-logo.png" class="img-responsive center-block" alt="" />
             </div>
             <div class="logo-para">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+              <p><?php echo lang('registry_header_text'); ?>.</p>
             </div>
           </div>
           <div class="form-bottom">
@@ -59,7 +59,7 @@ $this->load->view('header');
                   <input type="checkbox" name="terms" value="1" 
                     required 
                     data-error="<?php echo lang('checkbox_error');?>"
-                    style="position:relative;top:2px;"> <?php echo lang('accept_terms'); ?>
+                    style="position:relative;top:2px;"> <a href="<?php echo site_url(PAGE_LANGUAGE); ?>/terms" target="_blank" class="btn btn-link"><?php echo lang('accept_terms'); ?></a>
                 </label>
                 <div class="help-block with-errors"></div>
               </div>

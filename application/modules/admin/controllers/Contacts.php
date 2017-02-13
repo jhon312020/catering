@@ -9,16 +9,13 @@ if (!defined('BASEPATH'))
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('contacts/mdl_contacts');
-		$this->load->model('captions/mdl_captions');
 		$this->load->model('settings/mdl_settings');
-		//$this->path = $this->mdl_settings->setting('site_url').$this->mdl_settings->setting('upload_folder');
 		$this->caption_path = $this->mdl_settings->setting('site_url').$this->mdl_settings->setting('upload_folder')."images/captions/";
 	}
 
 	public function index() {
-		$this->layout->set(array('contactss'=>$this->mdl_contacts->get()->result(), 'banner'=>$this->mdl_captions->where(array('type' => 'contacts'))->get()->result(),
-								'caption_path' => $this->caption_path));//, 'path'=>$this->path));
-		$this->layout->buffer('content', 'contacts/index');
+    $contact = $this->mdl_contacts->where(array('is_active' => 1))->get()->row();
+		$this->layout->buffer('content', 'contacts/index', array('contact'=>$contact));
 		$this->layout->render();
 	}
 
@@ -32,7 +29,8 @@ if (!defined('BASEPATH'))
 			$contacts= array(
 				'email'				=>$this->input->post('email'),
 				'name'				=>$this->input->post('name'),
-				'description'				=>$this->input->post('description'),
+				'address'				=>$this->input->post('address'),
+				'telephone'				=>$this->input->post('telephone'),
 			);
 			log_message("debug", "%^%^% Saving contacts " . implode(",", $contacts));
 			$this->mdl_contacts->save($id, $contacts);

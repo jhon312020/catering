@@ -1,7 +1,6 @@
 <?php
   $this->load->view('header');
   $this->load->view('navigation_menu');
-  //print_r($this->_ci_cached_vars);
 ?>
     <div class="top-content">
         <div class="inner-bg">
@@ -11,11 +10,9 @@
                     <div class="col-sm-12">
                         <div class="col-sm-3">
                             <div class="form-bottom">
-                                <p>Calle cato, 6 bajos
-                                    <br> 08206 Sabadell
-                                    <br> Barcelona
-                                    <br> Tel i fax. 93 717 83 35<?php //echo $settings['telephone'];?>
-                                    <br> <?php echo $settings['site_email'];?>
+                                <p> <?php echo $contact->address; ?>
+                                    <br> Tel i fax. <?php echo $contact->telephone;?>
+                                    <br> <?php echo $contact->email;?>
                                 </p>
                             </div>
                         </div>

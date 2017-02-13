@@ -50,7 +50,7 @@ var baseurl = '';
 				<img src="<?php echo base_url(); ?>assets/cc/images/common/logo-gvadmin.jpg" width="120" alt="" />
 			</a>
 			
-			<p class="description">Dear user, log in to access the admin area!</p>
+			<p class="description"><?php echo lang('login_description'); ?></p>
 			
 			<!-- progress bar indicator -->
 			<div class="login-progressbar-indicator">
@@ -71,7 +71,7 @@ var baseurl = '';
 			
 			<div class="form-login-error">
 				<h3>Invalid login</h3>
-				<p>Invatd email or password.</p>
+				<p>Invalid email or password.</p>
 			</div>
 			
 			<form method="post" role="form" id="form_login" action="<?php echo site_url($this->uri->uri_string()); ?>">
@@ -83,7 +83,7 @@ var baseurl = '';
 							<i class="entypo-user"></i>
 						</div>
 						
-						<input type="text" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off" />
+						<input type="text" class="form-control" name="email" id="email" placeholder="<?php echo lang('username');?>" autocomplete="off" />
 					</div>
 					
 				</div>
@@ -95,7 +95,7 @@ var baseurl = '';
 							<i class="entypo-key"></i>
 						</div>
 						
-						<input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" />
+						<input type="password" class="form-control" name="password" id="password" placeholder="<?php echo lang('password');?>" autocomplete="off" />
 					</div>
 				
 				</div>
@@ -103,7 +103,7 @@ var baseurl = '';
 				<div class="form-group">
 					<button type="submit" name="btn_login" class="btn btn-primary btn-block btn-login">
 						<i class="entypo-login"></i>
-						Login In
+						<?php echo lang('enter'); ?>
 					</button>
 				</div>
 				

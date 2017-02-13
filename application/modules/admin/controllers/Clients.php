@@ -19,7 +19,7 @@ class Clients extends Admin_Controller {
 		$pending_clients = $this->mdl_clients->get_pending_clients();
 		
 		$clients_list = $this->mdl_clients->get_active_clients();
-								
+
 		$this->layout->set(array('pending_clients' => $pending_clients, 'clients_list' => $clients_list));
 		$this->layout->buffer('content', 'clients/index');
 		$this->layout->render();
@@ -65,8 +65,9 @@ class Clients extends Admin_Controller {
 		}
 		
 		$orders_by_client_id = $this->mdl_orders->get_orders_by_client_id($id);
-		
-		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'orders_by_client_id' => $orders_by_client_id));
+		$clientCode = 'GC-CL-' . sprintf("%04s", $this->mdl_clients->getNextIncrementId());
+
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'orders_by_client_id' => $orders_by_client_id, 'client_code'=>$clientCode));
 		$this->layout->buffer('content', 'clients/form');
 		$this->layout->render();
 	}
@@ -87,6 +88,21 @@ class Clients extends Admin_Controller {
 		if ($id){
 			$bool = ($bool) ? false : true;
 			$this->mdl_clients->save($id, array('is_active'=>$bool));
+			if ($bool){
+				$client = $this->mdl_clients->get_by_id($id);
+				$this->load->library('email');
+				$message  = "Hola ".$client->name. " " .$client->surname;
+				$message .=",<br/>Tu solicitud ha sido validada y aceptada. Ya puedes empezar a disfrutar de nuestros menús desde este acceso:<br/>http://www.gumen-catering.com/Delivery";
+				$emailBody['body'] = $message;
+				$this->email->set_mailtype("html");
+				//Need to change admin email dynamically
+				$this->email->from('admin@gumen-catering.com', 'Gumen-Catering');
+				$this->email->to($client->email); 
+				$this->email->subject('Validated');
+				$body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
+				$this->email->message($body);
+				$this->email->send();
+			}
 			redirect('admin/clients');
 		}
 	}

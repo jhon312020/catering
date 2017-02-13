@@ -112,7 +112,7 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_date($order_date) {
 		$orders_list_by_date = $this->mdl_orders
-											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name')
+											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.is_active, menu_types.menu_name')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->join('menus', 'menus.id = orders.menu_id', 'left')
@@ -133,16 +133,16 @@ class Mdl_orders extends Response_Model {
 		$this->load->model('order_drinks/mdl_order_drinks');
 		
 		$total_price = 0;
-		$temperory_orders = $this->mdl_temporary_orders->get_client_today_menus();
-		$temperory_order_ids = [];
+		$temporary_orders = $this->mdl_temporary_orders->get_client_today_menus();
+		$temporary_order_ids = [];
 		$reference_no = '';
-		foreach($temperory_orders as $key => $order) {
+ 		foreach($temporary_orders as $key => $order) {
 			$order_type = $order['order_type'];
 			$price = $order['price'];
 			
 			$total_price += $price;
 			$client_id = $this->session->userdata('client_id');
-			$data = array('client_id' => $client_id, 'menu_id' => $order['menu_id'], 'order_type' => $order_type, 'order_date' => date('Y-m-d'), 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no);
+			$data = array('client_id' => $client_id, 'menu_id' => $order['menu_id'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no);
 			
 			$order_id = $this->mdl_orders->save(null, $data);
 			
@@ -186,8 +186,12 @@ class Mdl_orders extends Response_Model {
 		$this->load->model('menus/mdl_menus');
 		
 		$selectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
+<<<<<<< HEAD
 		
 		$today_orders_removed = [];
+=======
+		$today_menus_removed = [];
+>>>>>>> 877d3fa7e323e234266624da16599d3fede5964c
 		
 		/*Check and remove the expired data from the temperory order table*/
 		$business_id = $this->session->userdata('business_id');
@@ -201,11 +205,11 @@ class Mdl_orders extends Response_Model {
 			
       $time2 = time();
 			
-			if($time1 > $time2) {
+			if ($time1 > $time2) {
 				$left_time = ($time1 - $time2);
 			}
     }
-		if($left_time == 0) {
+		if ($left_time == 0) {
 			$menus = $this->mdl_menus->select('id')->where('menu_date', date('Y-m-d'))->get()->result_array();
 			$menus_id = array_column($menus, 'id');
 			

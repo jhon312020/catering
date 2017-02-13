@@ -52,21 +52,27 @@ class Mdl_Contacts extends Response_Model {
                 'field' => 'fax',
                 'label' => 'Fax',
             ),*/
+      'name' => array(
+                'field' => 'name',
+                'label' => 'Name',
+                'rules' => 'required'
+            ),
 			'email' => array(
                 'field' => 'email',
                 'label' => 'Email',
                 'rules' => 'required'
             ),
-			'name' => array(
-                'field' => 'name',
-                'label' => 'Name',
+			'address' => array(
+                'field' => 'address',
+                'label' => 'Address',
                 'rules' => 'required'
             ),
-			'description' => array(
-                'field' => 'description',
-                'label' => 'Description',
+			'telephone' => array(
+                'field' => 'telephone',
+                'label' => 'Telephone',
                 'rules' => 'required'
             ),
+            
         );
     } 
 

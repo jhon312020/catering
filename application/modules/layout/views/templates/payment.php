@@ -105,7 +105,7 @@ $this->load->view('navigation_menu');
                   <span class="box"><span class="tick"></span></span>
                   </span>
                 </div>
-				<img class="img-responsive payment-img" src="<?php echo TEMPLATE_PATH; ?>payment.png">
+                <img class="img-responsive payment-img" src="<?php echo TEMPLATE_PATH; ?>payment.png">
               </div>
               <div class="row payrow">
                 <div class="col-sm-10">
@@ -138,7 +138,7 @@ $this->load->view('navigation_menu');
             <div class="paysection-3">
               <div class="row">
                 <div class="paysection3text">
-                  <input type="checkbox" name="accept" id="accept" value="1"> <a href="" class="btn-link"> Accepto los terminos y condiciones</a>
+                  <input type="checkbox" name="accept" id="accept" value="1"> <a href="<?php echo site_url(PAGE_LANGUAGE); ?>/terms" class="btn-link" target="_blank"> Accepto los terminos y condiciones</a>
                     <span class="error" id="jsAcceptTerms">Kindly select terminos y condiciones</span>
                 </div>
                 <div class="row">

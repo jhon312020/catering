@@ -25,8 +25,11 @@ class Node extends Anonymous_Controller {
 		$this->load->model('drinks/mdl_drinks');
 		$this->load->model('menu_types/mdl_menu_types');
 		$this->load->model('temporary_orders/mdl_temporary_orders');
+    $this->load->model('contacts/mdl_contacts');
+		$contact = $this->mdl_contacts->where(array('is_active' => 1))->get()->row();
 		
 		$todaySelectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
+		
 		
 		
 		$totalCartItems = count($todaySelectedMenus);
@@ -83,7 +86,7 @@ class Node extends Anonymous_Controller {
 			}
 		}
 
-		$this->load->vars(array('todaySelectedMenus'=> $todaySelectedMenus, 'login_client_profile' => $this->login_client_profile, 'totalCartItems'=>$totalCartItems, 'cool_drinks' => $cool_drinks, 'user_info'=>$this->session->get_userdata(), 'today_menus_removed' => $this->today_menus_removed));
+		$this->load->vars(array('todaySelectedMenus'=> $todaySelectedMenus, 'login_client_profile' => $this->login_client_profile, 'totalCartItems'=>$totalCartItems, 'cool_drinks' => $cool_drinks, 'user_info'=>$this->session->get_userdata(), 'today_menus_removed' => $this->today_menus_removed, 'contact'=>$contact));
   }
   
   /**
@@ -138,7 +141,23 @@ class Node extends Anonymous_Controller {
         $data['is_active'] = 0;
         $data['created_at'] = date('Y-m-d H:i:s');
         $data['updated_at'] = date('Y-m-d H:i:s');
+        $data['client_code'] = 'GC-CL-' . sprintf("%04s", $this->mdl_clients->getNextIncrementId());
         $id = $this->mdl_clients->save(null, $data);
+        if ($id) {
+          $this->load->library('email');
+          $subject  = 'Registry';
+          $message  = 'Hola <b>' . ucfirst($data['name']) . '</b>,<br/><br/>';
+          $message .= 'Hemos recibido tu solicitud de registro y se encuentra en proceso de validación. Muy pronto recibirás noticias nuestras.<br/><br/>';
+          $emailBody['body'] = $message;
+          $this->email->set_mailtype("html");
+          //Need to change admin email dynamically
+          $this->email->from('admin@gumen-catering.com', 'Gumen-Catering');
+          $this->email->to($data['email']); 
+          $this->email->subject($subject);
+          $body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
+          $this->email->message($body);
+          $this->email->send();
+        }
         $this->session->set_flashdata('alert_success', lang('record_successfully_created'));
         redirect(PAGE_LANGUAGE);
       } else {
@@ -224,7 +243,7 @@ class Node extends Anonymous_Controller {
   */
   public function addMenu() {
 		
-		/* echo "<pre>";
+		/*echo "<pre>";
 		print_r($this->input->post());die; */
 		
 		$post_params = $this->input->post();
@@ -232,7 +251,7 @@ class Node extends Anonymous_Controller {
 		if($post_params['select_food']) {
 			$this->mdl_temporary_orders->insert_temporary_orders($this->input->post());
 		}
-		
+		//die;
 		if($post_params['is_reload']) {
 			redirect(PAGE_LANGUAGE.'/menus');
 		}
@@ -397,17 +416,19 @@ class Node extends Anonymous_Controller {
         $this->load->library('email');
         $data = $this->mdl_clients->resetPasswordCode($this->input->post('email'));
         if ($data) {
-          $subject  = 'Change Password';
-          $message  = 'Hi <b>' . ucfirst($data['name']) . '</b>,<br/><br/>';
-          $message .= 'To change your current password <a href = "' . $data['url'] . '">click here</a>.<br/><br/>';
-          $message .= 'If your not able click on it, kindly copy the below link<br/>' . $data['url'] . '<br/> and paste it on the new tab.<br/><br/>';
-          echo $message .= 'For your information the above links will be valid for only 1 hour.';
+          $subject  = 'Reset Password';
+          $message  = 'Hola <b>' . ucfirst($data['name']) . '</b>,<br/><br/>';
+          $message .= 'Para restablecer su contraseña por favor haga <a href = "' . $data['url'] . '">click aquí.</a>.<br/><br/>';
+          $message .= 'Si no puede hacer click, por favor copie y pegue este link en su navegador:<br/>' . $data['url'];
+          $message .= '<br/><br/>Le informamos de que estos links estarán disponibles durante 1 hora.';
+          $emailBody['body'] = $message;
           $this->email->set_mailtype("html");
           //Need to change admin email dynamically
-          $this->email->from('admin@catering.com', 'Reset password');
+          $this->email->from('admin@gumen-catering.com', 'Gumen-Catering');
           $this->email->to($data['email']); 
           $this->email->subject($subject);
-          $this->email->message($message);
+          $body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
+          $this->email->message($body);
           $this->email->send();
           $this->session->set_flashdata('alert_success', lang('recover_email_success_message'));
           //redirect($this->uri->uri_string());
@@ -446,14 +467,17 @@ class Node extends Anonymous_Controller {
             $this->mdl_clients->resetClientPassword($verifiedUser['id'], $this->input->post('password'));
             $this->load->library('email');
             $subject = 'Password Reset Confirmation';
-            $message  = 'Hello ' . $verifiedUser['first_name'] .' <br/><br/>';
-            $message .= ' This is to confirm that login password for your account has been successfully changed. <br/><br/>';
-            $message .= 'For security reasons, we do not send any account information to your email address. For any support related issues, please email us and one of our customer care executive will get back to you as early as possible. <br/><br/> ';
+            $message  = 'Hola ' . $verifiedUser['name'] .', <br/><br/>';
+            $message .= ' Te confirmamos que tu contraseña ha sido actualizada con éxito. Ya puedes acceder y disfrutar de nuestros menús.<br/><br/>';
+            $message .= 'Para cualquier otro problema, por favor, contacte con nosotros vía email a: <a href="mailto:info@gumen-catering.com" target="_blank">info@gumen-catering.com</a>. <br/><br/> ';
+             $emailBody['body'] = $message;
             $this->email->set_mailtype("html");
-            $this->email->from($this->set['site_email'], 'Change password');
+            //Need to change admin email dynamically
+            $this->email->from('admin@gumen-catering.com', 'Gumen-Catering');
             $this->email->to($userEmail); 
             $this->email->subject($subject);
-            $this->email->message($message);
+            $body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
+            $this->email->message($body);
             $this->email->send();
             //redirect($this->uri->segment(1));
             $this->session->set_flashdata('alert_success', lang('change_password_success_message'));
@@ -504,6 +528,19 @@ class Node extends Anonymous_Controller {
     //~ $this->email->send();
     /*return journey end*/
     $this->load->view('layout/templates/success');
+  }
+  
+  /**
+	 * Function terms
+	 * Displays the success page
+   * for payment success
+   * 
+	 * @return	void
+	 */
+  public function terms() {
+    $this->load->model('conditions/mdl_conditions');
+    $template_vars['conditions'] = $this->mdl_conditions->get_terms_and_condtions();
+    $this->load->view('layout/templates/terms', $template_vars);
   }
 }
 ?>

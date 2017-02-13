@@ -24,6 +24,7 @@ class Sessions extends Base_Controller {
     }
 
     public function login() {
+      $this->session->set_userdata(array('cms_lang'  => 'spanish'));
 			if ($this->input->post('btn_login')) {
 				
 				if ($this->authenticate($this->input->post('email'), $this->input->post('password'))) {

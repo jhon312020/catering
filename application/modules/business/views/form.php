@@ -55,7 +55,7 @@ $disabled = ($readonly)?'disabled':'';
 			<div class="form-group">
 				<label class="col-sm-2 pull-left"><?php echo lang('time_limit');?>: </label>
 					<div class="col-sm-2">
-						<?php echo form_dropdown('hours', $hours, date('H', strtotime($this->mdl_business->form_value('time_limit'))), 'class="form-control" '.$disabled.''); ?>
+						<?php echo form_dropdown('hours', $hours, date('H', strtotime($this->mdl_business->form_value('time_limit') ? $this->mdl_business->form_value('time_limit') : '10:00:00')), 'class="form-control" '.$disabled.''); ?>
 						<div class="text-center">
 						<span><?php echo lang('hour'); ?></span>
 						</div>

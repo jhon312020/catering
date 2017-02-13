@@ -11,10 +11,13 @@ $this->load->view('navigation_menu');
   <div class="inner-bg">
     <div class="container">
       <div class="row">
-        <h3 class="head_2"><?php echo lang('menu'); ?>: <?php echo date('l d F Y', strtotime($menu_date)) ?></h3>
+        <h3 class="head_2"><?php echo lang('menu'); ?>: <?php 
+        setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish'); 
+        echo ucwords(strftime('%A %d %B %Y',strtotime($menu_date)));
+        //echo date('l d F Y', strtotime($menu_date)) ?></h3>
         <div class="col-sm-12 menuhead">
           <div class="col-sm-8">
-            <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+            <P>Selecciona tu menú. Puedes elegir un menú completo, medio menú o un menú combinado.<br/> También puedes seleccionar bebidas.</p>
           </div>
           <div class="col-sm-4">
             <button type="button" class="btn btn-menu button-datepicker"><i class="fa fa-calendar" aria-hidden="true"></i>SELECCIONA OTRO DIA</button>
@@ -24,6 +27,7 @@ $this->load->view('navigation_menu');
           </div>
         </div>
 				<form action="<?php echo site_url('node/addMenu'); ?>" method="post" id="jsMenuForm">
+        <input type='hidden' name="order_date" class="form-control" value="<?php echo $menu_date; ?>" />
 				<input type="hidden" name="language" value="<?php echo PAGE_LANGUAGE; ?>">
 				<?php
         //print_r($menu_types);
@@ -56,7 +60,7 @@ $this->load->view('navigation_menu');
             <div class="col-sm-2 col-my-4 dishpad">
               <span class="menu-plus img-plus">+</span><span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['primary_image']; ?>">
               <br>
-              <span><?php echo $menu_list['primary_plate']; ?></span>
+              <span class="title-aligned"><?php echo $menu_list['primary_plate']; ?></span>
               <p class="menu-desc"><?php echo $menu_list['description_primary_plate']; ?></p>
               <span class="custom-checkbox col-sm-offset-5">
               <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][]" value="primary" />
@@ -66,7 +70,7 @@ $this->load->view('navigation_menu');
             <div class="col-sm-2 col-my-4 dishpad">
               <span class="menu-plus img-plus">+</span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['secondary_image']; ?>">
               <br>
-              <span><?php echo $menu_list['secondary_plate']; ?></span>
+              <span class="title-aligned"><?php echo $menu_list['secondary_plate']; ?></span>
               <p class="menu-desc"><?php echo $menu_list['description_secondary_plate']; ?></p>
               <span class="custom-checkbox col-sm-offset-5">
               <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][]" value="secondary" />
@@ -91,7 +95,7 @@ $this->load->view('navigation_menu');
 							</select>
             </div>
             <div class="col-sm-2 col-my-3 smallpad sencer_fix">
-              <h4>MENU SENCER</h4>
+              <h4><?php echo lang('menu_complete'); ?></h4>
 							<?php /* <p><?php echo $menu_list['half_price']; ?></p>
 							<p><?php echo $menu_list['full_price']; ?></p> */ ?>
               <span class="custom-checkbox col-sm-offset-5">
@@ -112,21 +116,23 @@ $this->load->view('navigation_menu');
 				if($left_time > 0 || count($menu_lists) > 0) {
 				?>
 				<div class="col-sm-12 menubottom add_menu">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
 						<?php if($left_time > 0) { ?>
             <h4 id="timer_span">Tienes <span id="time"></span> para pedir este menu</h4>
-						<?php } ?>
+						<?php } else {
+              echo lang('order_time_over');
+             } ?>
+            
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-8">
             <div class="row">
               <div class="col-sm-5">
-                <span class="menuitemfont">Total: <span id="jsTotalPrice">0&euro;</span></span>
+                <span class="menuitemfont">Total: <span id="jsTotalPrice">0.00 &euro;</span></span>
               </div>
 							<div class="col-sm-2">
                 <button type="button" class="btn btn-menu jsAddMenuButton" data-value="1"><?php echo lang('add'); ?></button>
               </div>
-							<div class="col-sm-1">
-							</div>
+							
               <div class="col-sm-4">
                 <button type="button" class="btn btn-menu jsAddMenuButton" data-value="0"><?php echo lang('add_checkout'); ?></button>
               </div>

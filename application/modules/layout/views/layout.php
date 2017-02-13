@@ -19,25 +19,25 @@ $cms_lang = $this->session->userdata('cms_lang');
 	<?php
 	if($cms_lang == 'english'){
 	?>
-	<TITLE><?php echo $title; ?>  -  Low Cost Barcelona - Airport Shuttle</TITLE>
-	<META NAME="description" CONTENT="Caterings is a premium and low cost shuttle transfer (door to door) between Barcelona´s airport and your hostel/hotel. With numerous advantages like free Internet, Welcome Pack, Discounts, etc.">
-	<META NAME="keywords" CONTENT="barcelona, low cost, premium, shuttle, car, bus, trip, airport, city, travel, trip, hotel, hostel, free internet, discounts, transfers, booking.">
+	<TITLE><?php echo $title; ?>  </TITLE>
+	<META NAME="description" CONTENT="">
+	<META NAME="keywords" CONTENT="">
 	<META NAME="robot" CONTENT="index,follow">
-	<META NAME="copyright" CONTENT="Copyright © Caterings">
+	<META NAME="copyright" CONTENT="Copyright © Gumen Catering">
 	<META NAME="author" CONTENT="Grupo Visualiza - www.grupovisualiza.com">
-	<META NAME="generator" CONTENT="www.onlinemetatag.com">
+	<META NAME="generator" CONTENT="">
 	<META NAME="language" CONTENT="EN">
 	<?php
 	}
 	else{
 	?>
-	<TITLE><?php echo $title; ?>  -  Transporte Low Cost Barcelona Aeropuerto</TITLE>
-	<META NAME="description" CONTENT="Pick´n Go es un servicio Premium y low cost de transporte (shuttle puerta a puerta) entre el aeropuerto de Barcelona y vuestro hotel/hostal. Un servicio hecho a medida y con numerosas ventajas como Internet gratis, pack de bienvenida, etc.">
-	<META NAME="keywords" CONTENT="barcelona, low cost, premium, shuttle, coche, bus, viaje, aeropuerto, ciudad, viajar, transporte, hotel, hostal, internet gratis, descuentos.">
+	<TITLE><?php echo $title; ?> </TITLE>
+	<META NAME="description" CONTENT="">
+	<META NAME="keywords" CONTENT="">
 	<META NAME="robot" CONTENT="index,follow">
-	<META NAME="copyright" CONTENT="Copyright © Pick\'n Go">
+	<META NAME="copyright" CONTENT="Copyright © Gumen Catering">
 	<META NAME="author" CONTENT="Grupo Visualiza - www.grupovisualiza.com">
-	<META NAME="generator" CONTENT="www.onlinemetatag.com">
+	<META NAME="generator" CONTENT="">
 	<META NAME="language" CONTENT="ES">
 	<?php	
 	}
@@ -185,19 +185,23 @@ $cms_lang = $this->session->userdata('cms_lang');
 				<!-- Raw Links -->
 				<div class="col-md-6 col-sm-4 clearfix hidden-xs">		
 					<ul class="list-inline links-list pull-right">
-						<li><?php echo date('l jS \of F Y ');?></li>
+						<li><?php 
+            setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish'); 
+            echo ucwords(strftime('%A %d %B %Y',strtotime(date('Y-m-d'))));
+        
+            //echo date('l jS \of F Y ');?></li>
 						<li class="sep"></li>
 						<!-- Language Selector -->
 						<li class="dropdown language-selector">
 						<?php
 							if(!($cms_lang) || $cms_lang == ""){
-								$cms_lang = "english";
+								$cms_lang = "spanish";
 							}
 						?>
 						<?php echo lang('language'); ?>: &nbsp;
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+							<a href="#" data-close-others="true">
 								<?php if ($cms_lang == "english"){?>
-								<img src="<?php echo base_url(); ?>assets/neon/images/flag-uk.png" />
+								<!-- <img src="<?php //echo base_url(); ?>assets/neon/images/flag-uk.png" /> -->
 								<?php }else{?>
 								<img src="<?php echo base_url(); ?>assets/neon/images/flag-es.png" />
 								<?php }?>
@@ -210,8 +214,8 @@ $cms_lang = $this->session->userdata('cms_lang');
 										<span>Español</span>
 										<?php }else{?>
 										
-										<img src="<?php echo base_url(); ?>assets/neon/images/flag-uk.png" />
-										<span>English</span>
+										<!-- <img src="<?php //echo base_url(); ?>assets/neon/images/flag-uk.png" />
+										<span>English</span> -->
 										<?php }?>
 									</a>
 								</li>

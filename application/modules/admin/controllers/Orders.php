@@ -97,7 +97,7 @@ class Orders extends Admin_Controller {
 		$error = array();
 		$order = $this->mdl_orders->get_orders_list_by_id($id);
 		if ($this->input->post('btn_cancel')) {
-			redirect('admin/collaborators');
+			redirect('admin/orders');
 		}
 		$this->mdl_orders->prep_form($id);
 		

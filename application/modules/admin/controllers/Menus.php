@@ -15,6 +15,7 @@ class Menus extends Admin_Controller {
 							->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
 							->order_by('menu_date')
 							->get()->result();
+		unset($_SESSION['files']); // remove session from add page
 		$this->layout->set(array('menus' => $menus));
 		$this->layout->buffer('content', 'menus/index');
 		$this->layout->render();
@@ -22,34 +23,125 @@ class Menus extends Admin_Controller {
 	public function form() {
 		$error = [];
 		$bool = true;
+		$isBasicHasRecords = false;
+		$isDietHasRecords = false;
+		$menuDate = date('Y-m-d');
 		if ($this->input->post('btn_cancel')) {
 			redirect('admin/menus');
 		}
+		$data = $this->input->post();
+
+		/*echo "<pre>";
+		print_r($data);
+		echo "</pre>";*/
+		/*echo "<pre>";
+		print_r($_FILES);
+		echo "</pre>";*/
+		if ($data){
+			if (!$this->session->userdata('files')){
+				$this->session->set_userdata('files', $_FILES);
+			}
+			
+			foreach ($data['Basic'] as $key => $value) {
+				$this->mdl_menus->form_values["Basic[$key]"] = $value;
+			}
+			foreach ($data['Diet'] as $key => $value) {
+				$this->mdl_menus->form_values["Diet[$key]"] = $value;
+			}
+			$menuDate = $data['Basic']['menu_date'];
+			
+			if ($data['Basic']['primary_plate'] || $data['Basic']['description_primary_plate'] || $data['Basic']['secondary_plate'] || $data['Basic']['description_secondary_plate']){
+				$isBasicHasRecords = true;
+				$this->form_validation->set_data($data['Basic']);
+				unset($data['Basic']['primary_image'], $data['Basic']['secondary_image']);
+				if ($this->session->userdata('files')){
+					if (!$_FILES['Basic']['name']['primary_image'] && !$_FILES['Basic']['name']['secondary_image']){
+						$_FILES = $this->session->userdata('files');
+					}
+					elseif (!$_FILES['Basic']['name']['primary_image']) {
+						$this->_setFileSessionOnMenuType('Basic', 'primary_image');
+					}
+					elseif (!$_FILES['Basic']['name']['secondary_image']) {
+						$this->_setFileSessionOnMenuType('Basic', 'secondary_image');
+					}
+				}
+				if(!$_FILES['Basic']['name']['primary_image']) {
+					$bool = false;
+					$error[] = 'The primary image field is required.';
+				}
+				if(!$_FILES['Basic']['name']['secondary_image']) {
+					$bool = false;
+					$error[] = 'The secondary image field is required.';
+				}
+			}
+			if ($data['Diet']['primary_plate'] || $data['Diet']['description_primary_plate'] || $data['Diet']['secondary_plate'] || $data['Diet']['description_secondary_plate']){
+				$isDietHasRecords = true;
+				$this->form_validation->set_data($data['Diet']);
+				unset($data['Diet']['primary_image'], $data['Diet']['secondary_image']);
+				if ($this->session->userdata('files')){
+					if (!$_FILES['Diet']['name']['primary_image'] && !$_FILES['Diet']['name']['secondary_image']){
+						$_FILES = $this->session->userdata('files');
+					}
+					elseif (!$_FILES['Diet']['name']['primary_image']) {
+						$this->_setFileSessionOnMenuType('Diet', 'primary_image');
+					}
+					elseif (!$_FILES['Diet']['name']['secondary_image']) {
+						$this->_setFileSessionOnMenuType('Diet', 'secondary_image');
+					}
+				}
+				if(!$_FILES['Diet']['name']['primary_image']) {
+					$bool = false;
+					$error[] = 'The primary image field is required.';
+				}
+				if(!$_FILES['Diet']['name']['secondary_image']) {
+					$bool = false;
+					$error[] = 'The secondary image field is required.';
+				}
+			}
+		}
+		
 		if ($this->mdl_menus->run_validation()) {
-			$data = $this->input->post();
-			unset($data['btn_submit'], $data['primary_image'], $data['secondary_image']);
-			if(!$_FILES['primary_image']['name']) {
-				$bool = false;
-				$error[] = 'The primary image field is required.';
-			}
-			if(!$_FILES['secondary_image']['name']) {
-				$bool = false;
-				$error[] = 'The secondary image field is required.';
-			}
+			unset($data['btn_submit']);
+			unset($_SESSION['files']);
 			if($bool) {
-				$id = $this->mdl_menus->save(null, $data);
+				if ($isBasicHasRecords && $isDietHasRecords){
+					foreach ($data as $key => $record) {
+						$id = $this->mdl_menus->save(null, $record);
+						$this->_resetFilesInputBasedOnMenuType($key);
+						$files = array('primary_image', 'secondary_image');
+						foreach($files as $file) {
+							$this->do_upload($id, $file);
+						}
+					}
+				}
+				elseif ($isBasicHasRecords) {
+					$id = $this->mdl_menus->save(null, $data['Basic']);
+					$this->_resetFilesInputBasedOnMenuType('Basic');
+					$files = array('primary_image', 'secondary_image');
+					foreach($files as $file) {
+						$this->do_upload($id, $file);
+					}
+				}
+				elseif ($isDietHasRecords) {
+					$id = $this->mdl_menus->save(null, $data['Diet']);
+					$this->_resetFilesInputBasedOnMenuType('Diet');
+					$files = array('primary_image', 'secondary_image');
+					foreach($files as $file) {
+						$this->do_upload($id, $file);
+					}
+				}
+				/*$id = $this->mdl_menus->save(null, $data);
 				$files = array('primary_image', 'secondary_image');
 				foreach($files as $file) {
 					$this->do_upload($id, $file);
-				}
+				}*/
 				redirect('admin/menus');
 			}
 		}
 		
 		$menu_types = $this->mdl_menu_types->get()->result();
-		
-		$this->mdl_menus->prep_form(null);
-		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'menu_types' => $menu_types));
+		//$this->mdl_menus->prep_form(null);
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'menu_types' => $menu_types, 'menuDate'=>$menuDate));
 		$this->layout->buffer('content', 'menus/form');
 		$this->layout->render();
 	}
@@ -140,5 +232,31 @@ class Menus extends Admin_Controller {
 			$this->mdl_menus->save($id, array($name=>$data['file_name']));
 		}
 		return $data;
+  }
+
+  function _resetFilesInputBasedOnMenuType($type){
+  	$_FILES['primary_image']['name'] = $_FILES[$type]['name']['primary_image'];
+  	$_FILES['primary_image']['type'] = $_FILES[$type]['type']['primary_image'];
+  	$_FILES['primary_image']['size'] = $_FILES[$type]['size']['primary_image'];
+  	$_FILES['primary_image']['error'] = $_FILES[$type]['error']['primary_image'];
+  	$_FILES['primary_image']['tmp_name'] = $_FILES[$type]['tmp_name']['primary_image'];
+  	$_FILES['secondary_image']['name'] = $_FILES[$type]['name']['secondary_image'];
+  	$_FILES['secondary_image']['type'] = $_FILES[$type]['type']['secondary_image'];
+  	$_FILES['secondary_image']['size'] = $_FILES[$type]['size']['secondary_image'];
+  	$_FILES['secondary_image']['error'] = $_FILES[$type]['error']['secondary_image'];
+  	$_FILES['secondary_image']['tmp_name'] = $_FILES[$type]['tmp_name']['secondary_image'];
+  	unset($_FILES[$type]);
+  }
+
+  function _setFileSessionOnMenuType($type, $image_field){
+  	$file_params = array('name','type','size','error','tmp_name');
+  	foreach ($file_params as $param) {
+  		if (isset($_SESSION['files'][$type][$param][$image_field])){
+  			$_FILES[$type][$param][$image_field] = $_SESSION['files'][$type][$param][$image_field];
+  		}
+  		else {
+  			$_FILES[$type][$param][$image_field] = '';
+  		}
+  	}
   }
 }
