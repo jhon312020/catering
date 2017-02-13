@@ -81,7 +81,7 @@ class Mdl_temporary_orders extends Response_Model {
 				
 				$data[] = array('menu_id' => $menu_id, 'order_date' => $menuObject->menu_date, 'client_id' => $this->session->userdata('client_id'), 'order_type' => $order_type, 'cool_drinks_array' => $cool_drinks, 'price' => $price);
 			}
-			print_r($data);die;
+			// print_r($data);die;
 			if(count($data) > 0) {
 				$this->db->insert_batch('temporary_orders', $data);
 			}
