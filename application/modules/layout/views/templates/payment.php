@@ -101,7 +101,7 @@ $this->load->view('navigation_menu');
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox" id="card"/>
+                  <input type="checkbox" id="card" class="jsPaymentType" value="Credit/Debit" name="paymenttype[]"/>
                   <span class="box"><span class="tick"></span></span>
                   </span>
                 </div>
@@ -113,7 +113,7 @@ $this->load->view('navigation_menu');
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox" id="draft"/>
+                  <input type="checkbox" id="draft" class="jsPaymentType" value="Bank Draft" name="paymenttype[]"/>
                   <span class="box"><span class="tick"></span></span>
                   </span>
                 </div>
@@ -124,7 +124,7 @@ $this->load->view('navigation_menu');
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox" id="ticket"/>
+                  <input type="checkbox" id="ticket" class="jsPaymentType" value="Ticket Restaurant" name="paymenttype[]"/>
                   <span class="box"><span class="tick"></span></span>
                   </span>
                 </div>

@@ -53,28 +53,35 @@ class Mdl_temporary_orders extends Response_Model {
 		public function insert_temporary_orders($post_params) {
 			$data = [];
 			$menu_orders = $post_params['select_food'];
-			$price_orders = $post_params['select_order'];
+			//$price_orders = $post_params['select_order'];
+			$cool_drink_list = $this->mdl_drinks->get_cool_drink_list();
 			foreach($menu_orders as $menu_id => $order) {
+				$price = 0;
 				$menuObject = $this->mdl_menus->get_menu_by_id($menu_id);
 				$typeCount = count($order);
 				//echo $typeCount;die;
 				if($typeCount == 2) {
 					$order_type = 'both';
+					$price = $menuObject->full_price;
 				} else {
 					$order_type = $order[0];
+					$price = $menuObject->half_price;
 				}
 				
         if (isset($post_params['cool_drinks'][$menu_id])) {
           $cool_drinks = json_encode($post_params['cool_drinks'][$menu_id]);
+					foreach ($post_params['cool_drinks'][$menu_id] as $cool_drink) {
+						$price += $cool_drink_list[$cool_drink];
+					}
         } else {
           $cool_drinks = '';
         }
 				
-				$price = $price_orders[$menu_id];
+				//$price = $price_orders[$menu_id];
 				
 				$data[] = array('menu_id' => $menu_id, 'order_date' => $menuObject->menu_date, 'client_id' => $this->session->userdata('client_id'), 'order_type' => $order_type, 'cool_drinks_array' => $cool_drinks, 'price' => $price);
 			}
-			//print_r($data);die;
+			print_r($data);die;
 			if(count($data) > 0) {
 				$this->db->insert_batch('temporary_orders', $data);
 			}

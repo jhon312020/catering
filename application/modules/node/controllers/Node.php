@@ -9,7 +9,9 @@ if (!defined('BASEPATH'))
  * 
  */
 class Node extends Anonymous_Controller {
-  /**
+  var $site_contact = '';
+	
+	/**
    * class constructor
    *
    * @return  void
@@ -26,7 +28,7 @@ class Node extends Anonymous_Controller {
 		$this->load->model('menu_types/mdl_menu_types');
 		$this->load->model('temporary_orders/mdl_temporary_orders');
     $this->load->model('contacts/mdl_contacts');
-		$contact = $this->mdl_contacts->where(array('is_active' => 1))->get()->row();
+		$this->site_contact = $this->mdl_contacts->where(array('is_active' => 1))->get()->row();
 		
 		$todaySelectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
 		
@@ -86,7 +88,7 @@ class Node extends Anonymous_Controller {
 			}
 		}
 
-		$this->load->vars(array('todaySelectedMenus'=> $todaySelectedMenus, 'login_client_profile' => $this->login_client_profile, 'totalCartItems'=>$totalCartItems, 'cool_drinks' => $cool_drinks, 'user_info'=>$this->session->get_userdata(), 'today_menus_removed' => $this->today_menus_removed, 'contact'=>$contact));
+		$this->load->vars(array('todaySelectedMenus'=> $todaySelectedMenus, 'login_client_profile' => $this->login_client_profile, 'totalCartItems'=>$totalCartItems, 'cool_drinks' => $cool_drinks, 'user_info'=>$this->session->get_userdata(), 'today_menus_removed' => $this->today_menus_removed, 'contact'=>$this->site_contact));
   }
   
   /**
@@ -151,7 +153,7 @@ class Node extends Anonymous_Controller {
           $emailBody['body'] = $message;
           $this->email->set_mailtype("html");
           //Need to change admin email dynamically
-          $this->email->from('admin@gumen-catering.com', 'Gumen-Catering');
+          $this->email->from($this->site_contact->email, 'Gumen-Catering');
           $this->email->to($data['email']); 
           $this->email->subject($subject);
           $body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
@@ -424,7 +426,7 @@ class Node extends Anonymous_Controller {
           $emailBody['body'] = $message;
           $this->email->set_mailtype("html");
           //Need to change admin email dynamically
-          $this->email->from('admin@gumen-catering.com', 'Gumen-Catering');
+          $this->email->from($this->site_contact->email, 'Gumen-Catering');
           $this->email->to($data['email']); 
           $this->email->subject($subject);
           $body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
@@ -473,7 +475,7 @@ class Node extends Anonymous_Controller {
              $emailBody['body'] = $message;
             $this->email->set_mailtype("html");
             //Need to change admin email dynamically
-            $this->email->from('admin@gumen-catering.com', 'Gumen-Catering');
+            $this->email->from($this->site_contact->email, 'Gumen-Catering');
             $this->email->to($userEmail); 
             $this->email->subject($subject);
             $body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);

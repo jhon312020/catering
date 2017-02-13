@@ -120,20 +120,21 @@ $this->load->view('navigation_menu');
 						<?php if($left_time > 0) { ?>
             <h4 id="timer_span">Tienes <span id="time"></span> para pedir este menu</h4>
 						<?php } else {
-              echo lang('order_time_over');
+							if ($menu_date == date('Y-m-d')) {
+								echo lang('order_time_over');
+							}
              } ?>
             
           </div>
           <div class="col-sm-8">
             <div class="row">
-              <div class="col-sm-5">
+              <div class="col-sm-7 pull-left">
                 <span class="menuitemfont">Total: <span id="jsTotalPrice">0.00 &euro;</span></span>
               </div>
 							<div class="col-sm-2">
                 <button type="button" class="btn btn-menu jsAddMenuButton" data-value="1"><?php echo lang('add'); ?></button>
               </div>
-							
-              <div class="col-sm-4">
+							<div class="col-sm-2 pull-right">
                 <button type="button" class="btn btn-menu jsAddMenuButton" data-value="0"><?php echo lang('add_checkout'); ?></button>
               </div>
             </div>

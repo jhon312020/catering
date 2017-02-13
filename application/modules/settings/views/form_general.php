@@ -27,14 +27,14 @@
 			<input name="media_admin_logo" type="file" class="form-control file2 inline btn btn-primary" multiple="1" data-label="<i class='glyphicon glyphicon-circle-arrow-up'></i> &nbsp;Browse Files" />
 		</div>
 	</div>
-	<div class="form-group">
+	<!-- <div class="form-group">
 		<label class="col-sm-2">Default Language: </label>
 		<div class="col-sm-9">
 			<select name="settings[def_lang]" class="form-control">
-				<option value="en" <?php echo ($this->mdl_settings->setting('def_lang') == "en"?'selected':""); ?>>English</option>
-				<option value="es" <?php echo ($this->mdl_settings->setting('def_lang') == "es"?'selected':""); ?>>Spanish</option>
+				<option value="en" <?php //echo ($this->mdl_settings->setting('def_lang') == "en"?'selected':""); ?>>English</option>
+				<option value="es" <?php //echo ($this->mdl_settings->setting('def_lang') == "es"?'selected':""); ?>>Spanish</option>
 			</select>
 
 		</div>
-	</div>
+	</div>-->
 </div>

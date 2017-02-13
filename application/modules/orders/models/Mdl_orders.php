@@ -3,6 +3,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Mdl_orders extends Response_Model {
+		public $payment_types = array('Bank Draft', 'Ticket Restaurant');
     public $table               = 'orders';
     public $primary_key         = 'orders.id';
     public function default_order_by() {
@@ -123,12 +124,12 @@ class Mdl_orders extends Response_Model {
 		return $orders_list_by_date;
 	}
 	/**
-   * Function insert_from_temperory
+   * Function insert_from_temporary
    *
    * @return  Array
    * 
   */
-	public function insert_from_temperory() {
+	public function insert_from_temporary($payment_type = null) {
 		
 		$this->load->model('order_drinks/mdl_order_drinks');
 		
@@ -143,7 +144,10 @@ class Mdl_orders extends Response_Model {
 			$total_price += $price;
 			$client_id = $this->session->userdata('client_id');
 			$data = array('client_id' => $client_id, 'menu_id' => $order['menu_id'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no);
-			
+			if (in_array($payment_type, $this->payment_types)) {
+				$data['is_active'] = 1;
+				$data['payment_method'] = $payment_type;
+			}
 			$order_id = $this->mdl_orders->save(null, $data);
 			
 			if($key == 0) {
@@ -162,11 +166,11 @@ class Mdl_orders extends Response_Model {
 				$this->db->insert_batch('order_drinks', $drinks_data);
 			}
 			
-			$temperory_order_ids[] = $order['id'];
+			$temporary_order_ids[] = $order['id'];
 		}
 		
-		if(count($temperory_order_ids) > 0) {
-			$this->mdl_temporary_orders->order_delete_using_id($temperory_order_ids);
+		if(count($temporary_order_ids) > 0) {
+			$this->mdl_temporary_orders->order_delete_using_id($temporary_order_ids);
 		}
 		
 		$return_data = array('total_price' => number_format($total_price, 2), 'reference_no' => $reference_no);
@@ -174,26 +178,22 @@ class Mdl_orders extends Response_Model {
 		return $return_data;
 	}
 	/**
-   * Function insert_from_temperory
+   * Function insert_from_temporary
    *
    * @return  Array
    * 
   */
-	public function check_today_menus_insert() {
+	public function check_today_menus_insert($payment_type = null) {
 		
 		$this->load->model('temporary_orders/mdl_temporary_orders');
 		$this->load->model('business/mdl_business');
 		$this->load->model('menus/mdl_menus');
 		
 		$selectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
-<<<<<<< HEAD
-		
-		$today_orders_removed = [];
-=======
+
 		$today_menus_removed = [];
->>>>>>> 877d3fa7e323e234266624da16599d3fede5964c
 		
-		/*Check and remove the expired data from the temperory order table*/
+		/*Check and remove the expired data from the temporary order table*/
 		$business_id = $this->session->userdata('business_id');
 		
 		$businessInfo = $this->mdl_business->businessInfo($business_id);
@@ -226,7 +226,7 @@ class Mdl_orders extends Response_Model {
 		if(count($today_menus_removed) > 0) {
 			return array('success' => false, 'msg' => 'Today menus expired', 'order_ids' => array_column($today_orders_removed, 'id'));
 		} else {
-			$data = $this->mdl_orders->insert_from_temperory();
+			$data = $this->mdl_orders->insert_from_temporary($payment_type);
 			return array('success' => true, 'msg' => 'Order successfully placed', 'order_data' => $data);
 		}
 	}

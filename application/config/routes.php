@@ -90,8 +90,8 @@ $route['es/error'] = 'node/paymentError';
 $route['en/success'] = 'node/paymentSuccess';
 $route['es/success'] = 'node/paymentSuccess';
 
-$route['en/checkout'] = 'ajax/bankPaymentProcess';
-$route['es/checkout'] = 'ajax/bankPaymentProcess';
+$route['en/checkout'] = 'ajax/checkout';
+$route['es/checkout'] = 'ajax/checkout';
 
 $route['en/forgot_password'] = 'node/forgotPassword';
 $route['es/forgot_password'] = 'node/forgotPassword';

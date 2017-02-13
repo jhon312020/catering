@@ -20,13 +20,35 @@ class Ajax extends Anonymous_Controller {
    * @return  void
    * 
    */
-  public function bankPaymentProcess() {
-		
-    $result = $this->mdl_orders->check_today_menus_insert();
-		
-		if(!$result['success']) {
-			echo json_encode($result);exit;
+	public function checkout() {
+		//$result = $this->mdl_orders->check_today_menus_insert();
+		$payment_type = '';
+		if ($this->input->post('payment_type')) {
+			switch ($this->input->post('payment_type')) {
+				case 'card':
+					$payment_type = 'Credit/Debit';
+				break;
+				case 'draft':;
+					$payment_type = 'Bank Draft';
+				break;
+				case 'ticket':;
+					$payment_type = 'Ticket Restaurant';
+				break;
+				default:
+					echo json_encode(array('success' => false, 'msg' => 'Invalid order data'));
+			}
+			$result = $this->mdl_orders->check_today_menus_insert($payment_type);
+			if(!$result['success']) {
+				echo json_encode($result);exit;
+			}
+			if ($payment_type == 'Credit/Debit') {
+				echo $this->bankPaymentProcess($result);
+			} else {
+				echo json_encode(array('success' => true, 'process_type'=>'others'));
+			}
 		}
+	}
+  public function bankPaymentProcess() {
 		
 		$orders = $result['order_data'];
 		
@@ -71,11 +93,11 @@ class Ajax extends Anonymous_Controller {
 			$params = $miObj->createMerchantParameters();
 			$signature = $miObj->createMerchantSignature($testKey);
 			
-			echo json_encode(array('success' => true, 'version' => $version, 'params' => $params, 'signature' => $signature, 'bank_url' => $testurlPago));exit;
+			return json_encode(array('success' => true, 'version' => $version, 'params' => $params, 'signature' => $signature, 'bank_url' => $testurlPago, 'process_type'=>'credit'));exit;
 			/*Sabadell payment end*/
 			
 		} else {
-				echo json_encode(array('success' => false, 'msg' => 'Invalid order data'));exit;
+				return json_encode(array('success' => false, 'msg' => 'Invalid order data'));exit;
 		}
   }
 }
