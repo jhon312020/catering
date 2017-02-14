@@ -14,6 +14,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 			<div class="row">
 				<?php echo $this->layout->load_view('layout/alerts'); ?>
 			</div>
+		<form role="form" action="" method="post" class="login-form">
       <div class="row">
         <h2 class="head_2"><?php echo lang('profile'); ?></h2>
         <div class="col-sm-12">
@@ -24,8 +25,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
               <p><span class="F-bold"><?php echo lang('client_code'); ?>:</span><span> <?php echo $this->mdl_clients->form_value('client_code'); ?></span></p>
             </div>
           </div>
-					<form role="form" action="" method="post" class="login-form">
-						<div class="col-sm-4 pad-R">
+					<div class="col-sm-4 pad-R">
 							<div class="form-bottom ribbon-down">
 								<div id="ribbon-container">
 									<a href="javascript:;" id="ribbon"><?php echo strtoupper(lang('personal_information')); ?></a>
@@ -48,7 +48,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 								</div>
 								<div class="form-group">
 									<label for="form-text"><?php echo lang('intolerances'); ?></label>
-                  <textarea type="text" name="billing_data" id="billing_data" name="form-message" placeholder="" class="form-message form-control" id="intolerances"><?php echo $this->mdl_clients->form_value('intolerances'); ?></textarea>
+                  <textarea rows = 5 type="text" name="intolerances" id="intolerances"  placeholder="" class="form-message form-control" id="intolerances"><?php echo $this->mdl_clients->form_value('intolerances'); ?></textarea>
 									<!-- <input type="text" name="intolerances" placeholder="" class="form-text form-control" id="form-text" value="<?php //echo $this->mdl_clients->form_value('intolerances'); ?>"> -->
 								</div>
 							</div>
@@ -70,11 +70,10 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 								</div>
 								<div class="form-group">
 									<label for="form-message"><?php echo lang('billing_data'); ?>:</label>
-									<textarea type="text" name="billing_data" id="billing_data" name="form-message" <?php echo $this->mdl_clients->form_value('bill') == 0?'disabled':''; ?> placeholder="" class="form-message form-control" id="form-message"><?php echo $this->mdl_clients->form_value('bill') == 1?$this->mdl_clients->form_value('billing_data'):''; ?></textarea>
+									<textarea rows = 5 type="text" name="billing_data" id="billing_data" name="form-message" <?php echo $this->mdl_clients->form_value('bill') == 0?'disabled':''; ?> placeholder="" class="form-message form-control" id="form-message"><?php echo $this->mdl_clients->form_value('bill') == 1?$this->mdl_clients->form_value('billing_data'):''; ?></textarea>
 								</div>
 							</div>
 						</div>
-					</form>
         </div>
       </div>
       <div class= "row">
@@ -88,6 +87,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
         </div>
       </div>
     </div>
+	</form>
   </div>
 </div>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/profile.js"></script>

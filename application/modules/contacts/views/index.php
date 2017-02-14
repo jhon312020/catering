@@ -5,7 +5,7 @@
 </style>
 <div class="headerbar">
 	<div class="clearfix">
-		<h1 class="pull-left"><?php echo lang('Contacts'); ?></h1>
+		<h1 class="pull-left"><?php echo lang('contacts'); ?></h1>
 		</div>
 </div>
 

@@ -1,6 +1,4 @@
-<style type="text/css">
 
-</style>
 <?php
 $readonly = ($readonly)?'readonly':'';
 //$menuDate = $this->mdl_menus->form_value('menu_date')?date('Y-m-d', strtotime($this->mdl_menus->form_value('menu_date'))):date('Y-m-d');
@@ -33,7 +31,7 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 			<div class="form-content">
 				<div class="row">
 					<div class="col-sm-12">
-						<span class="hmargin"><?php echo lang('menu').' '.$menu_type->menu_name; ?></span>
+						<span class="hmargin"><?php echo lang('menu_cms').' '.lang(strtolower($menu_type->menu_name)); ?></span>
 							<div class="checkbox rightCheck" style="float:right;">
 								<label>
 								<?php echo form_checkbox($menu_type->menu_name.'[disabled]', 1, $this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$checkDisabled:false); ?>
@@ -59,38 +57,38 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('primary_plate');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('primary_plate');?> </label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>$menu_type->menu_name . '[primary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[primary_plate]'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('description_primary_plate');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('description_primary_plate');?> </label>
 					<div class="col-sm-10">
 						<textarea name="<?php echo $menu_type->menu_name; ?>[description_primary_plate]" class="form-control"><?php echo $this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[description_primary_plate]'):''; ?></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('image');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('image');?> </label>
 					<div class="col-sm-10">
 						<input name="<?php echo $menu_type->menu_name; ?>[primary_image]" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
 						<span class="file-input-name"><?php echo isset($_FILES[$menu_type->menu_name]['name']['primary_image']) && $_FILES[$menu_type->menu_name]['name']['primary_image'] ? $_FILES[$menu_type->menu_name]['name']['primary_image'] : ''; ?></span>
 					</div>
 				</div>	
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('secondary_plate');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('secondary_plate');?> </label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>$menu_type->menu_name.'[secondary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[secondary_plate]'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('description_secondary_plate');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('description_secondary_plate');?> </label>
 					<div class="col-sm-10">
 						<textarea name="<?php echo $menu_type->menu_name; ?>[description_secondary_plate]" class="form-control"><?php echo $this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[description_secondary_plate]'):''; ?></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('image');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('image');?> </label>
 					<div class="col-sm-10">
 						<input name="<?php echo $menu_type->menu_name; ?>[secondary_image]" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
 						<span class="file-input-name"><?php echo isset($_FILES[$menu_type->menu_name]['name']['secondary_image']) && $_FILES[$menu_type->menu_name]['name']['secondary_image'] ? $_FILES[$menu_type->menu_name]['name']['secondary_image'] : ''; ?></span>
@@ -105,13 +103,13 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('half_price');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('half_price');?> </label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>$menu_type->menu_name.'[half_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[half_price]'):'', $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('full_price');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('full_price');?> </label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>$menu_type->menu_name.'[full_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[full_price]'):'', $readonly=>true)); ?>
 					</div>
@@ -134,7 +132,9 @@ $(document).ready(function(){
 		format:'dd/mm/yyyy',
 		autoclose:true,
 		startDate:new Date(),
-		daysOfWeekDisabled: [0,6]
+		daysOfWeekDisabled: [0,6],
+		weekStart: 1,
+		locale: 'es'
 	}).on('show', function(e) {
 			$('.datepicker-dropdown').css({top:$('.spancal').offset().top + $('.spancal').height(), left:$('.spancal').offset().left})
 	}).on('changeDate', function(e) {

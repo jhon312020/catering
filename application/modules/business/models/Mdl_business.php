@@ -12,10 +12,10 @@ class Mdl_business extends Response_Model {
         return array(
             'name' => array(
                 'field' => 'name',
-                'label' => 'Name',
+                'label' => lang('name'),
                 'rules' => 'required'
             ),
-            'email' => array(
+            /*'email' => array(
                 'field' => 'email',
                 'label' => 'Email',
                 'rules' => 'required|valid_email'
@@ -44,7 +44,7 @@ class Mdl_business extends Response_Model {
                 'field' => 'minutes',
                 'label' => 'Minutes',
                 'rules' => 'required'
-            ),
+            ),*/
         );
     }
 		public function email_exists($email) {

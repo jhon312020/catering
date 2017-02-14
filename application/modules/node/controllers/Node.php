@@ -147,7 +147,7 @@ class Node extends Anonymous_Controller {
         $id = $this->mdl_clients->save(null, $data);
         if ($id) {
           $this->load->library('email');
-          $subject  = 'Registry';
+          $subject  = 'Cuenta pendiente de confirmación';
           $message  = 'Hola <b>' . ucfirst($data['name']) . '</b>,<br/><br/>';
           $message .= 'Hemos recibido tu solicitud de registro y se encuentra en proceso de validación. Muy pronto recibirás noticias nuestras.<br/><br/>';
           $emailBody['body'] = $message;

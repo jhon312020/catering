@@ -53,7 +53,7 @@
 			<li class="<?php echo $this->router->class == 'menus' ? 'opened active' : ''; ?>">
 				<a href="<?php echo site_url('admin/menus/index'); ?>">
 					<i class="entypo-ticket"></i>
-					<span><?php echo lang('menus'); ?></span>
+					<span><?php echo lang('menus_cms'); ?></span>
 				</a>
 			</li>
 			<li class="<?php echo $this->router->class == 'conditions' ? 'opened active' : ''; ?>">

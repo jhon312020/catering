@@ -98,7 +98,7 @@ class Clients extends Admin_Controller {
 				//Need to change admin email dynamically
 				$this->email->from('admin@gumen-catering.com', 'Gumen-Catering');
 				$this->email->to($client->email); 
-				$this->email->subject('Validated');
+				$this->email->subject('Cuenta validada');
 				$body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
 				$this->email->message($body);
 				$this->email->send();

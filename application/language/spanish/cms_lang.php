@@ -2,35 +2,38 @@
 /*----*/
 //Ú É Á
 $lang['exists_username'] = 'Email id alredy exists';
-$lang['business'] = 'Empresa';
+$lang['business'] = 'Empresas';
 $lang['business_error'] = 'El nombre de la empresa es obligatorio';
 $lang['business_title'] = 'Empresa';
-$lang['business_id'] = 'ID empresa';
+$lang['business_id'] = 'ID Empresa';
 $lang['email'] = 'E-mail';
 $lang['direction'] = 'Dirección';
 $lang['telephone'] = 'Teléfono';
 $lang['contact_person'] = 'Persona de contacto';
-$lang['time_limit'] = 'Hora limite';
+$lang['time_limit'] = 'Hora límite';
 $lang['hour'] = 'Hora';
 $lang['minutes'] = 'Minutos';
 $lang['edit'] = 'Edit';
 
 $lang['menus'] = 'MENÚS';
+$lang['menus_cms'] = 'Menús';
+$lang['menus_cms_stat'] = 'menús';
 $lang['menu'] = 'MENÚ';
+$lang['menu_cms'] = 'Menú';
 $lang['basic_menu'] = 'MENÚ BÁSICO';
 $lang['diet_menu'] = 'MENÚ DIET';
 $lang['image'] = 'Imagen';
 $lang['disabled'] = 'Deshabilitar';
-
-$lang['basic'] = 'Básico';
-$lang['diet'] = 'Diet';
+//For CMS
+$lang['basic'] = 'básico';
+$lang['diet'] = 'diet';
 
 $lang['complement'] = 'Complemento';
-$lang['primary_plate'] = 'Primar plato';
-$lang['description_primary_plate'] = 'Descripción primar plato';
-$lang['primary_image'] = 'Primar imagen';
-$lang['secondary_plate'] = 'Segundo plate';
-$lang['description_secondary_plate'] = 'Descripción segundo plate';
+$lang['primary_plate'] = 'Primer plato';
+$lang['description_primary_plate'] = 'Descripción primer plato';
+$lang['primary_image'] = 'Primer imagen';
+$lang['secondary_plate'] = 'Segundo plato';
+$lang['description_secondary_plate'] = 'Descripción segundo plato';
 $lang['secondary_image'] = 'Segundo imagen';
 $lang['postre'] = 'Postre';
 $lang['date'] = 'Fecha';
@@ -42,7 +45,7 @@ $lang['client'] = 'Cliente';
 $lang['clients'] = 'Clientes';
 $lang['clients_list'] = 'Lista clientes';
 $lang['validation_pending'] = 'Pendiente validación';
-$lang['client_code'] = 'Cod. cliente';
+$lang['client_code'] = 'Cod. Cliente';
 $lang['dni'] = 'DNI';
 $lang['intolerances'] = 'Intolerancias';
 $lang['iban'] = 'IBAN';
@@ -59,8 +62,8 @@ $lang['total_business'] = 'Empresas';
 $lang['dashboard'] = 'Tablero';
 $lang['legal_condition'] = 'Condiciones legales';
 
-$lang['menu_reservations'] = 'Menu reservations';
-$lang['statistics'] = 'Estadisticas';
+$lang['menu_reservations'] = 'Pedidos';
+$lang['statistics'] = 'Estadísticas';
 
 $lang['username'] = 'Nombre de Usuario';
 
@@ -95,7 +98,7 @@ $lang['contacts'] = 'Contactos';
 $lang['submit'] = 'Submit';
 $lang['cancel'] = 'Cancelar';
 $lang['save'] = 'Guardar';
-$lang['logout'] = 'Salir del sistema';
+$lang['logout'] = 'Salir';
 $lang['language'] = 'Idioma';
 $lang['new'] = 'Nuevo';
 $lang['surname'] = 'Apellidos';
@@ -124,7 +127,7 @@ $lang['change_password_success_message'] = 'Su contraseña se ha restablecido co
 
 
 $lang['drinks_name'] = 'Drinks name';
-$lang['cool_drinks'] = 'Cool drinks';
+$lang['cool_drinks'] = 'Bebidas';
 $lang['id'] = 'Id';
 
 $lang['add'] = 'Añadir y seguir comprando';
@@ -137,9 +140,10 @@ $lang['order_time_over'] = 'Se ha superado la hora límite para pedir el menú d
 $lang['menu_complete'] = 'Menú Completo';
 $lang['delete_record_warning'] = 'Seguro que quieres eliminar';
 $lang['address'] = 'Address';
-$lang['name'] = 'Name';
-$lang['telephone'] = 'Telephone';
 $lang['options'] = 'Options';
 $lang['login_description'] = 'Dear user, log in to access the admin area!';
+$lang['ticket restaurant'] = 'ticket restaurante';
+$lang['bank draft'] = 'giro bancario';
+$lang['credit/debit'] = 'targeta';
 /*----*/
 ?>

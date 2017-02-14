@@ -23,37 +23,37 @@ $disabled = ($readonly)?'disabled':'';
 		<div class="col-md-12">
 			<div class="form-content">
 			<div class="form-group">
-				<label class="col-sm-2 pull-left"><?php echo lang('name');?>: </label>
+				<label class="col-sm-2 pull-left"><?php echo lang('name');?> </label>
 				<div class="col-sm-10">
 					<?php echo form_input(array('name'=>'name', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('name'), $readonly=>true)); ?>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 pull-left"><?php echo lang('email');?>: </label>
+				<label class="col-sm-2 pull-left"><?php echo lang('email');?> </label>
 				<div class="col-sm-10">
 					<?php echo form_input(array('name'=>'email', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('email'), $readonly=>true)); ?>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 pull-left"><?php echo lang('direction');?>: </label>
+				<label class="col-sm-2 pull-left"><?php echo lang('direction');?> </label>
 				<div class="col-sm-10">
 					<textarea <?php echo $readonly?'disabled':''; ?> name="direction" class="form-control"><?php echo $this->mdl_business->form_value('direction'); ?></textarea>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 pull-left"><?php echo lang('telephone');?>: </label>
+				<label class="col-sm-2 pull-left"><?php echo lang('telephone');?> </label>
 				<div class="col-sm-10">
 					<?php echo form_input(array('name'=>'telephone', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('telephone'), $readonly=>true)); ?>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 pull-left"><?php echo lang('contact_person');?>: </label>
+				<label class="col-sm-2 pull-left"><?php echo lang('contact_person');?> </label>
 				<div class="col-sm-10">
 					<?php echo form_input(array('name'=>'contact_person', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('contact_person'), $readonly=>true)); ?>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 pull-left"><?php echo lang('time_limit');?>: </label>
+				<label class="col-sm-2 pull-left"><?php echo lang('time_limit');?> </label>
 					<div class="col-sm-2">
 						<?php echo form_dropdown('hours', $hours, date('H', strtotime($this->mdl_business->form_value('time_limit') ? $this->mdl_business->form_value('time_limit') : '10:00:00')), 'class="form-control" '.$disabled.''); ?>
 						<div class="text-center">

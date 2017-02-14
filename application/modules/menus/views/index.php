@@ -11,7 +11,7 @@
 	<thead>
 		<tr>
 			<th><?php echo lang('date'); ?></th>
-			<th><?php echo lang('menu'); ?></th>
+			<th><?php echo lang('menu_cms'); ?></th>
 			<th><?php echo lang('complement'); ?></th>
 			<th><?php echo lang('primary_plate'); ?></th>
 			<th><?php echo lang('secondary_plate'); ?></th>
@@ -43,7 +43,7 @@
 		?>
 			<tr class="<?php echo $bgclass.' '.$topClass; ?>">
 				<td class=""><?php echo !$topClass?date('d/m/Y', strtotime($menu->menu_date)):''; ?></td>
-				<td class=""><?php echo $menu->menu_name;; ?></td>
+				<td class=""><?php echo $menu->menu_name; ?></td>
 				<td class=""><?php echo $menu->complement; ?></td>
 				<td class=""><?php echo $menu->primary_plate; ?></td>
 				<td class=""><?php echo $menu->secondary_plate; ?></td>

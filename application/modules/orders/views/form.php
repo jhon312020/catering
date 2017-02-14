@@ -28,12 +28,12 @@ $disabled = ($readonly)?'disabled':'';
 				<form method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 					<div class="form-group">
 						<div class="col-sm-12">
-						<p><span><?php echo lang('menu_type'); ?></span> : <span><?php echo lang('menu').' '.$order->menu_name; ?></span></p>
-						<p><span><?php echo lang('client_code'); ?></span> : <span><?php echo $order->client_code; ?></span></p>
-						<p><span><?php echo lang('name'); ?></span> : <span><?php echo $order->name; ?></span></p>
-						<p><span><?php echo lang('business'); ?></span> : <span><?php echo $order->business; ?></span></p>
-						<p><span><?php echo lang('email'); ?></span> : <span><?php echo $order->email; ?></span></p>
-						<p><span><?php echo lang('telephone'); ?></span> : <span><?php echo $order->telephone; ?></span></p>
+						<p><span><?php echo lang('menu_type'); ?></span> : <span class="highlight"><?php echo lang('menu_cms').' '.$order->menu_name; ?></span></p>
+						<p><span><?php echo lang('client_code'); ?></span> : <span class="highlight"><?php echo $order->client_code; ?></span></p>
+						<p><span><?php echo lang('name'); ?></span> : <span class="highlight"><?php echo $order->name; ?></span></p>
+						<p><span><?php echo lang('business'); ?></span> : <span class="highlight"><?php echo $order->business; ?></span></p>
+						<p><span><?php echo lang('email'); ?></span> : <span class="highlight"><?php echo $order->email; ?></span></p>
+						<p><span><?php echo lang('telephone'); ?></span> : <span class="highlight"><?php echo $order->telephone; ?></span></p>
 						</div>
 					</div>
 					<div class="form-group">

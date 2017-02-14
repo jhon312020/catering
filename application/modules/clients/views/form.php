@@ -29,80 +29,80 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 			<div class="form-content">
 			<form method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('client_code');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('client_code');?> </label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'client_code', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('client_code')? $this->mdl_clients->form_value('client_code') : (isset($client_code) ? $client_code : ''), 'readonly'=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('name');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('name');?></label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'name', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('name'), $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('surname');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('surname');?></label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'surname', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('surname'), $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('client_business_name');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('client_business_name');?></label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'client_business_name', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('client_business_name'), $readonly=>true)); ?>
 					</div>	
 				</div>	
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('business');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('business_title');?></label>
 					<div class="col-sm-10">
 						<?php echo form_dropdown('business_id', $business_list, $this->mdl_clients->form_value('business_id'), 'class="form-control" '.$disabled.''); ?>
 					</div>	
 				</div>	
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('email');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('email');?></label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'email', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('email'), $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('password');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('password');?></label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'password', 'type' => 'password', 'class'=>'form-control', 'value'=>$password, $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('telephone');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('telephone');?></label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'telephone', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('telephone'), $readonly=>true)); ?>
 					</div>
 				</div>	
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('dni');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('dni');?> </label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'dni', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('dni'), $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('intolerances');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('intolerances');?> </label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'intolerances', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('intolerances'), $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('iban');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('iban');?> </label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'iban', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('iban'), $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('bill');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('bill');?> </label>
 					<div class="col-sm-10">
 						<label class="radio-inline"><?php echo form_radio('bill', 1, $this->mdl_clients->form_value('bill') == 1?true:false).' '.lang('yes'); ?></label>
 						<label class="radio-inline"><?php echo form_radio('bill', 0, $this->mdl_clients->form_value('bill') == 0?true:false).' '.lang('no'); ?></label>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('billing_data');?>: </label>
+					<label class="col-sm-2 pull-left"><?php echo lang('billing_data');?> </label>
 					<div class="col-sm-10">
 						<textarea <?php echo $readonly || $this->mdl_clients->form_value('bill') == 0?'disabled':''; ?> name="billing_data" id="billing_data" class="form-control"><?php echo $this->mdl_clients->form_value('bill') == 1?$this->mdl_clients->form_value('billing_data'):'';  ?></textarea>
 					</div>
@@ -132,8 +132,8 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 						<th><?php echo lang('client_code'); ?></th>
 						<th><?php echo lang('date'); ?></th>
 						<th><?php echo lang('name'); ?></th>
-						<th><?php echo lang('business'); ?></th>
-						<th><?php echo lang('menu'); ?></th>
+						<th><?php echo lang('business_title'); ?></th>
+						<th><?php echo lang('menu_cms'); ?></th>
 						<th><?php echo lang('edit'); ?></th>
 					</tr>
 				</thead>

@@ -59,6 +59,8 @@ $cms_lang = $this->session->userdata('cms_lang');
 	<script src="<?php echo base_url(); ?>assets/neon/js/jquery-1.11.0.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/cc/js/bootstrap.js"></script>
 	<link href="<?php echo base_url(); ?>assets/cc/css/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />	
+
 	<script>
 		$(document).ready( 
 			function () {
@@ -190,23 +192,23 @@ $cms_lang = $this->session->userdata('cms_lang');
             echo ucwords(strftime('%A %d %B %Y',strtotime(date('Y-m-d'))));
         
             //echo date('l jS \of F Y ');?></li>
-						<li class="sep"></li>
+						<!-- <li class="sep"></li> -->
 						<!-- Language Selector -->
-						<li class="dropdown language-selector">
+						<!-- <li class="dropdown language-selector">
 						<?php
 							if(!($cms_lang) || $cms_lang == ""){
 								$cms_lang = "spanish";
 							}
 						?>
-						<?php echo lang('language'); ?>: &nbsp;
-							<a href="#" data-close-others="true">
+						<?php //echo lang('language'); ?>: &nbsp;
+							<!-- <a href="#" data-close-others="true">
 								<?php if ($cms_lang == "english"){?>
-								<!-- <img src="<?php //echo base_url(); ?>assets/neon/images/flag-uk.png" /> -->
+								<!-- <img src="<?php //echo base_url(); ?>assets/neon/images/flag-uk.png" /> 
 								<?php }else{?>
 								<img src="<?php echo base_url(); ?>assets/neon/images/flag-es.png" />
 								<?php }?>
-							</a>
-							<ul class="dropdown-menu pull-right">
+							</a> 
+							<!-- <ul class="dropdown-menu pull-right">
 								<li>
 									<a href="<?php echo site_url('admin/dashboard/set_lang/')."/".$cms_lang; ?>">
 										<?php if ($cms_lang == "english"){?>
@@ -215,16 +217,16 @@ $cms_lang = $this->session->userdata('cms_lang');
 										<?php }else{?>
 										
 										<!-- <img src="<?php //echo base_url(); ?>assets/neon/images/flag-uk.png" />
-										<span>English</span> -->
+										<span>English</span> 
 										<?php }?>
 									</a>
 								</li>
 							</ul>
-						</li>
+						</li> -->
 						<li class="sep"></li>
 						<li>
-							<a href="<?php echo site_url('sessions/logout'); ?>"><?php echo lang('logout'); ?> <i class="entypo-logout right"></i></a>
-						</li>
+							<b><a href="<?php echo site_url('sessions/logout'); ?>"><?php echo lang('logout'); ?> <i class="entypo-logout right"></i></a></b>
+							</li>
 					</ul>
 				</div>	
 			</div>
@@ -343,6 +345,8 @@ $cms_lang = $this->session->userdata('cms_lang');
 		
 		<script src="<?php echo base_url(); ?>assets/cc/js/moment-with-locales.js"></script>
 		<script src="<?php echo base_url(); ?>assets/cc/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="<?php echo base_url(); ?>assets/cc/js/locale/es.js" charset="utf-8"></script>
+		<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 		
 
 			
@@ -351,6 +355,9 @@ $cms_lang = $this->session->userdata('cms_lang');
 		<script src="<?php echo base_url(); ?>assets/neon/js/dataTables.bootstrap.js"></script>
 		<script src="<?php echo base_url(); ?>assets/neon/js/datatables/jquery.dataTables.columnFilter.js"></script>
 		<script src="<?php echo base_url(); ?>assets/neon/js/datatables/lodash.min.js"></script>
+		<script src="<?php echo base_url(); ?>assets/neon/js/datatables/buttons.flash.min.js"></script>
+		<script src="<?php echo base_url(); ?>assets/neon/js/datatables/jszip.min.js"></script>
+		<script src="<?php echo base_url(); ?>assets/neon/js/datatables/buttons.html5.min.js"></script>
 		<script src="<?php echo base_url(); ?>assets/neon/js/datatables/responsive/js/datatables.responsive.js"></script>
 		<!-- data table -->
 		<!-- select -->

@@ -11,7 +11,7 @@
 	<thead>
 		<tr>
 			<th><?php echo lang('business_id'); ?></th>
-			<th><?php echo lang('business'); ?></th>
+			<th><?php echo lang('business_title'); ?></th>
 			<th><?php echo lang('email'); ?></th>
 			<th><?php echo lang('direction'); ?></th>
 			<th><?php echo lang('telephone'); ?></th>

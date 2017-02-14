@@ -32,7 +32,7 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 				<form method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 					<div class="row">
 						<div class="col-sm-12">
-							<span class="hmargin"><?php echo lang('menu').' '.$menu_type->menu_name; ?></span>
+							<span class="hmargin"><?php echo lang('menu_cms').' '.lang(strtolower($menu_type->menu_name)); ?></span>
 								<div class="checkbox rightCheck" style="float:right;">
 									<label>
 										<?php 
