@@ -10,10 +10,13 @@ class Orders extends Admin_Controller {
 	}
 
 	public function index() {
-		
 		$order_date = date('Y-m-d');
 		if($this->input->post()) {
 			$order_date = date('Y-m-d', strtotime($this->input->post('order_date')));
+			//Inorder to re-direct to same page on deleting the orders used the below conditiona
+		} else if ($this->session->userdata('last_viewed_order_date')) {
+			$order_date = $this->session->userdata('last_viewed_order_date');
+			$this->session->unset_userdata('last_viewed_order_date');
 		}
 		
 		$orders = $this->mdl_orders->get_orders_by_date($order_date);
@@ -25,11 +28,13 @@ class Orders extends Admin_Controller {
 	public function form($id = NULL) {
 		$error_flg = false;
 		$error = array();
+		$order = $this->mdl_orders->get_orders_list_by_id($id);
 		if ($this->input->post('btn_cancel')) {
+			$this->session->set_userdata(array('last_viewed_order_date'=>$order->order_date));
 			redirect('admin/orders');
 		}
 		
-		$order = $this->mdl_orders->get_orders_list_by_id($id);
+		// $order = $this->mdl_orders->get_orders_list_by_id($id);
 		
 		if($this->input->post('btn_submit')) {
 			$post_params = $this->input->post();
@@ -122,6 +127,10 @@ class Orders extends Admin_Controller {
 		}
 	}
 	public function delete($id) {
+		$order_date = $this->mdl_orders->get_order_date_by_id($id);
+		if ($order_date) {
+			$this->session->set_userdata(array('last_viewed_order_date'=>$order_date));
+		}
 		$this->mdl_orders->delete($id);
 		redirect('admin/orders');
 	}

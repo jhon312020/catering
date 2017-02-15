@@ -259,4 +259,21 @@ class Menus extends Admin_Controller {
   		}
   	}
   }
+	/**
+   * Function duplicate records
+   * for selected date.
+   * @return  Array
+   * 
+  */
+	function clone_records() {
+		
+		if ($this->input->post()) {
+			$clone_of_date = (int) $this->input->post('clone_of_date');
+			$selected_clone_date = date('Y-m-d', $clone_of_date);
+			$update_clone_date = $this->input->post('new_clone_date');
+			$this->mdl_menus->clone_menus($selected_clone_date, $update_clone_date);
+			// exit;
+		}
+		redirect('admin/menus');
+	}
 }

@@ -1,4 +1,4 @@
-<div class="footer-bottom">
+<div class="footer-bottom <?php echo isset($class)? $class:'';?>">
   <div class="container">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="copyright">

@@ -77,7 +77,7 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_list_by_id($order_id) {
 		$order_list = $this->mdl_orders
-											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name, clients.telephone, clients.email, orders.order_type, orders.menu_id, orders.reference_no, orders.payment_method, orders.client_id')
+											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name, clients.telephone, clients.email, orders.order_type, orders.menu_id, orders.reference_no, orders.payment_method, orders.client_id, orders.price')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->join('menus', 'menus.id = orders.menu_id', 'left')
@@ -113,7 +113,7 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_date($order_date) {
 		$orders_list_by_date = $this->mdl_orders
-											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.is_active, menu_types.menu_name')
+											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.price, orders.is_active, menu_types.menu_name')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->join('menus', 'menus.id = orders.menu_id', 'left')
@@ -229,6 +229,24 @@ class Mdl_orders extends Response_Model {
 			$data = $this->mdl_orders->insert_from_temporary($payment_type);
 			return array('success' => true, 'msg' => 'Order successfully placed', 'order_data' => $data);
 		}
+	}
+	
+	/**
+   * Function get_orders_by_client_id
+   *
+   * @return  Array
+   * 
+  */
+	public function get_order_date_by_id($order_id) {
+		$order_date = null; 
+		$order_object = $this->mdl_orders
+											->select('orders.order_date')
+											->where('orders.id', $order_id)
+											->get()->row();
+		if ($order_object) {
+			$order_date = $order_object->order_date;
+		}
+		return $order_date;
 	}
 }
 ?>

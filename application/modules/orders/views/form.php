@@ -1,6 +1,3 @@
-<style type="text/css">
-
-</style>
 <?php
 $readonly = ($readonly)?'readonly':'';
 $order_date = date('d/m/Y', strtotime($order->order_date));
@@ -34,6 +31,7 @@ $disabled = ($readonly)?'disabled':'';
 						<p><span><?php echo lang('business'); ?></span> : <span class="highlight"><?php echo $order->business; ?></span></p>
 						<p><span><?php echo lang('email'); ?></span> : <span class="highlight"><?php echo $order->email; ?></span></p>
 						<p><span><?php echo lang('telephone'); ?></span> : <span class="highlight"><?php echo $order->telephone; ?></span></p>
+						<p><span><?php echo lang('price'); ?></span> : <span class="highlight"><?php echo $order->price; ?></span></p>
 						</div>
 					</div>
 					<div class="form-group">

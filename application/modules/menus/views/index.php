@@ -5,6 +5,10 @@
 			<i class="icon-plus icon-white"></i> <?php echo lang('new'); ?>
 		</a>
 	</div>
+	<form method="post" id="menu_clone" action="<?php echo site_url('admin/menus/clone_records'); ?>">
+		<input type='hidden' name="new_clone_date" class="form-control" value="" id="new_clone_date" />
+		<input type='hidden' name="clone_of_date" class="form-control" value="" id="clone_of_date" />
+	</form>
 </div>
 <?php echo $this->layout->load_view('layout/alerts'); ?>
 <table class="table table-bordered datatable data_table">
@@ -25,6 +29,7 @@
 		$bgclass = '';
 		$topClass = '';
 		foreach ($menus as $menu) {
+			$string_to_time = strtotime($menu->menu_date);
 			if($date != '' && $date == $menu->menu_date) {
 				$topClass = 'topBorder';
 			} else {
@@ -42,7 +47,7 @@
 			}
 		?>
 			<tr class="<?php echo $bgclass.' '.$topClass; ?>">
-				<td class=""><?php echo !$topClass?date('d/m/Y', strtotime($menu->menu_date)):''; ?></td>
+				<td class=""><?php echo !$topClass?date('d/m/Y', $string_to_time):''; ?></td>
 				<td class=""><?php echo $menu->menu_name; ?></td>
 				<td class=""><?php echo $menu->complement; ?></td>
 				<td class=""><?php echo $menu->primary_plate; ?></td>
@@ -55,6 +60,9 @@
 					<a class="btn btn-primary edit btn-sm" href="<?php echo site_url('admin/menus/edit/' . $menu->id); ?>">
 						<i class="entypo-pencil"></i>
 					</a>
+					<button class="btn btn-primary btn-sm clone_record" data-button='<?php echo $string_to_time;?> ' >
+						<i class="entypo-docs"></i>
+					</button>
 					<a class="btn btn-warning btn-sm <?php echo $menu->is_active ? '' : 'inactive'; ?>" href="<?php echo site_url('admin/menus/toggle/' . $menu->id . '/' . $menu->is_active); ?>">
 						<i class="entypo-check" title="<?php echo $menu->is_active ? 'Active' : 'In Active'; ?>"></i>
 					</a>
@@ -72,5 +80,22 @@
 <script>
 $(document).ready(function(){
 	$('.topBorder').prev().addClass('bottomBorder');
+	$('.clone_record').datepicker({
+		format:'dd-mm-yyyy',
+		autoclose:true,
+		startDate:new Date(),
+		daysOfWeekDisabled: [0, 6],
+		weekStart: 1
+	}).on('show', function(e) {
+			$('.datepicker-dropdown').css({top:$(this).offset().top + $(this).height(), left:$(this).offset().left})
+	}).on('changeDate', function(e) {
+			$('#new_clone_date').val(e.format('yyyy-mm-dd'));
+			$('#clone_of_date').val($(this).data('button'));
+			// alert($(this).data('button'));
+			$('#menu_clone').submit();
+	});
+	$(document).on('click', '.clone_record', function(){
+		$('.menu_clone_date').datepicker('show');
+	})
 });
 </script>
