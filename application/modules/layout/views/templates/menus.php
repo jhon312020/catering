@@ -13,7 +13,7 @@ $this->load->view('navigation_menu');
       <div class="row">
         <h3 class="head_2"><?php echo lang('menu'); ?>: <?php 
         setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish'); 
-        echo ucwords(strftime('%A %d %B %Y',strtotime($menu_date)));
+        echo ucwords(utf8_encode(strftime('%A %d %B %Y',strtotime($menu_date))));
         //echo date('l d F Y', strtotime($menu_date)) ?></h3>
         <div class="col-sm-12 menuhead">
           <div class="col-sm-8">
@@ -52,6 +52,11 @@ $this->load->view('navigation_menu');
 								$menu_list_with_id[$menu_list['id']] = $menu_list;
 						?>
             <div class="row doublemenu jsSubMenu">
+              <?php
+                if (isset($show_menus) && $show_menus == false) {
+                  echo '<div class="disable_menus"></div>';
+                }
+              ?>
 						<div class="col-sm-2 col-my-2 smallpad">
               <span class="menu-plus">+</span><span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish1.png"></span>
               <br>
@@ -153,6 +158,7 @@ $this->load->view('navigation_menu');
   var display = $('#time');
 	var $cool_drinks = <?php echo json_encode($cool_drinks); ?>;
 	var $menus = <?php echo json_encode($menu_list_with_id); ?>;
+  var availableDates = <?php echo json_encode($available_dates); ?>;
 </script>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/menus.js"></script>
 <?php $this->load->view('footer'); ?>

@@ -99,5 +99,20 @@ class Mdl_menus extends Response_Model {
     exit;											
     return $today_menus;
   }
+
+  /**
+   * Function get_available_dates
+   *
+   * @return  Array
+   * 
+  */
+    public function get_available_dates() {
+      $menus_by_date = $this->mdl_menus->select('menu_date')->where(array('menu_date >= ' => date('Y-m-d'), 'disabled' => 0))->get()->result_array();
+      $dates = [];
+      foreach ($menus_by_date as $menu_date) {
+        $dates[] = $menu_date['menu_date'];
+      }
+      return $dates;
+    }
 }
 ?>

@@ -199,21 +199,13 @@ class Node extends Anonymous_Controller {
 			$menuDate = date('Y-m-d', strtotime($postParams['menu_date']));
 		}
 		$menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
-		//print_r($menu_list);die;
-    //print_r($businessInfo);die;
     if ($businessInfo && $menuDate == date('Y-m-d') && count($menu_list) > 0) {
       $time1 = strtotime($businessInfo->time_limit);
-      //echo date('d/m/Y H:i', $time1 );
-      //echo '<br/>';
       $time2 = time();
-      //echo date('d/m/Y H:i', $time2 );
-      //echo '<br/>';
 			if($time1 > $time2) {
 				$data_array['left_time'] = ($time1 - $time2);
 			}
-       //echo date('d/m/Y H:M:S', $data_array['left_time'] );
     }
-		//echo $data_array['left_time'];die;
 		
 		$data_array['menu_types'] = $this->mdl_menu_types->get()->result_array();
 		
@@ -223,17 +215,14 @@ class Node extends Anonymous_Controller {
 		if($data_array['left_time'] == 0 && $menuDate == date('Y-m-d')) {
 			$show_menus = false;
 		}
-		//echo $data_array['left_time'];die;
-		if($show_menus) {
-			//Set menu_type_id as key in all menus list.
-			foreach($menu_list as $menus) {
-				$data_menu[$menus['menu_type_id']][] = $menus;
-			}
-		}
-		
-		
+    //Set menu_type_id as key in all menus list.
+    foreach($menu_list as $menus) {
+      $data_menu[$menus['menu_type_id']][] = $menus;
+    }
+
+    $data_array['available_dates'] = $this->mdl_menus->get_available_dates();
+		$data_array['show_menus'] = $show_menus;
 		$data_array['menu_lists'] = $data_menu;
-		//print_r($data_array['menu_lists']);die;
 		$data_array['menu_date'] = date('d-m-Y', strtotime($menuDate));
     $this->load->view('layout/templates/menus', $data_array);
   }
@@ -244,26 +233,26 @@ class Node extends Anonymous_Controller {
    * 
   */
   public function addMenu() {
-		
-		/*echo "<pre>";
-		print_r($this->input->post());die; */
-		
 		$post_params = $this->input->post();
-		
+
 		if($post_params['select_food']) {
 			$this->mdl_temporary_orders->insert_temporary_orders($this->input->post());
 		}
-		//die;
 		if($post_params['is_reload']) {
 			redirect(PAGE_LANGUAGE.'/menus');
 		}
-		
 		redirect(PAGE_LANGUAGE.'/payment');
 	}
+
+
   public function payment() {
 		
 		$data_array = array();
-		
+    $payment_types = $this->mdl_menu_types->get()->result_array();
+    foreach ($payment_types as $type) {
+      $data_array['menu_titles'][$type['id']] = $type['menu_name'];
+    }
+
     $this->load->view('layout/templates/payment', $data_array);
   }
   /**
