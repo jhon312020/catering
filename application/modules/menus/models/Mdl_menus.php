@@ -100,6 +100,7 @@ class Mdl_menus extends Response_Model {
     return $today_menus;
   }
 
+
   /**
    * Function get_available_dates
    *
@@ -114,5 +115,23 @@ class Mdl_menus extends Response_Model {
       }
       return $dates;
     }
+
+	/**
+   * Function getClientOrders
+   * 
+   * 
+   * 
+   */
+  public function clone_menus($selected_menu_date, $update_clone_date) {
+		$today = date('Y-m-d');
+		$where = "menu_date = '$selected_menu_date'";
+		$this->db->query("DROP TABLE IF EXISTS tbl_tmp;");
+    $this->db->query("CREATE TABLE tbl_tmp SELECT * from tbl_menus WHERE ( " . $where . " );");
+    $this->db->query("ALTER TABLE tbl_tmp drop id;");
+    $this->db->query("UPDATE tbl_tmp SET menu_date = '$update_clone_date', created_at='$today';");
+    $this->db->query("INSERT INTO tbl_menus SELECT 0,tbl_tmp.* FROM tbl_tmp; ");
+    $this->db->query("DROP TABLE tbl_tmp;");
+	}
+
 }
 ?>

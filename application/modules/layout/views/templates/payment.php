@@ -31,13 +31,14 @@ $this->load->view('navigation_menu');
              	if($todaySelectedMenus) {
 								$bool = true;
 								foreach($todaySelectedMenus as $menu) {
+                  $price_with_menu_id[$menu['id']] = $menu['price'];
+                  $total_price += $menu['price'];
 							?>
 							<tr class="order_<?php echo $menu['id']; ?>">
                 <td>
-									<p><b> 
+									<p><b>
                     <?php 
                       $order_detail = json_decode($menu['order_detail'],true);
-                      $total_price = $order_detail['totalPrice'];
                       $order_detail = array_values($order_detail);
                       if ($menu['order_title'] == 'combine') {
                         echo lang('combine_menu');
@@ -48,12 +49,9 @@ $this->load->view('navigation_menu');
                   </b></p>
                   <?php
                     $description = array();
-                    //echo '<pre>';
-                    //print_r($order_detail); //exit;
                     foreach ($order_detail as $order_det) {
                       if (!is_array($order_det))
                         continue;
-                      //print_r($order_det);
                       foreach ($order_det as $key=>$orders) {
                         if (!is_integer($key))
                           continue;

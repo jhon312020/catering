@@ -4,7 +4,7 @@ $this->load->view('navigation_menu');
 ?>
 <div class="top-content">
   <div class="inner-bg">
-    <div class="container page-height">
+    <div class="container">
       <div class="row">
         <h3 class="head_2">Pedidos</h3>
         <div class="col-sm-12 fix-left-right">
@@ -44,7 +44,7 @@ $this->load->view('navigation_menu');
       </div>
     </div>
   </div>
-  <?php $this->load->view('footer_nav_bar'); ?>
+  <?php $this->load->view('footer_nav_bar', array('class'=>'footer-fixed')); ?>
 </div>
 <?php
 $this->load->view('footer');

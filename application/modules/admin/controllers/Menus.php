@@ -11,12 +11,17 @@ class Menus extends Admin_Controller {
 	}
 	public function index() {
 		$menus = $this->mdl_menus
-							->select('menus.id, menus.menu_type_id, menus.menu_date, menus.complement, menus.primary_plate, menus.description_primary_plate, menus.secondary_plate, menus.description_secondary_plate, menus.postre, menus.disabled, menus.is_active, menu_types.menu_name')
+							->select('menus.id, menus.menu_type_id, menus.menu_date, menus.complement, menus.primary_plate,  menus.secondary_plate, menus.postre, menus.disabled, menus.is_active, menu_types.menu_name')
 							->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
 							->order_by('menu_date')
 							->get()->result();
+		$plates = $this->db->query("select Id, Plat from  tbl_plats;")->result_array();
+		$allPlates = [];
+		foreach ($plates as $plate) {
+			$allPlates[$plate['Id']] = $plate['Plat'];
+		}
 		unset($_SESSION['files']); // remove session from add page
-		$this->layout->set(array('menus' => $menus));
+		$this->layout->set(array('menus' => $menus, 'allPlates'=>$allPlates));
 		$this->layout->buffer('content', 'menus/index');
 		$this->layout->render();
 	}
@@ -31,120 +36,77 @@ class Menus extends Admin_Controller {
 		}
 		$data = $this->input->post();
 
-		/*echo "<pre>";
-		print_r($data);
-		echo "</pre>";*/
-		/*echo "<pre>";
-		print_r($_FILES);
-		echo "</pre>";*/
-		if ($data){
-			if (!$this->session->userdata('files')){
-				$this->session->set_userdata('files', $_FILES);
+
+		$plates = $this->db->query("select * from  tbl_plats;")->result_array();
+		
+		$plate1 = $plate2 = $plate3 = $plate4= [];
+		foreach ($plates as $plate) {
+			switch ($plate['OrdrePlat']) {
+				case 1:
+					$plate1[$plate['Id']] = $plate['Plat'];
+					break;
+				case 2:
+					$plate2[$plate['Id']] = $plate['Plat'];
+					break;
+				case 3:
+					$plate3[$plate['Id']] = $plate['Plat'];
+					break;
+				case 4:
+					$plate4[$plate['Id']] = $plate['Plat'];
+					break;
 			}
-			
-			foreach ($data['Basic'] as $key => $value) {
+		}
+		if ($data){
+
+			$requiredFields = array('menu_type_id','menu_date','complement','primary_plate','secondary_plate','postre','half_price','full_price');
+
+			$insertData = [];
+			if (isset($data['Basic'])) {
+				foreach ($data['Basic'] as $key=>$record) {
+					if (isset($record['disabled']) && $record['disabled'] == 1)
+						continue;
+					unset($record['disabled']);
+					$insertData[] = $record;
+				}
+			}
+			if (isset($data['Diet'])) {
+				foreach ($data['Diet'] as $record) {
+					if (isset($record['disabled']) && $record['disabled'] == 1)
+						continue;
+					unset($record['disabled']);
+					$insertData[] = $record;
+				}
+			}
+
+			//var_dump($insertData); exit;
+
+			$this->db->insert_batch('tbl_menus',$insertData);
+
+			redirect('admin/menus');
+
+			/*foreach ($data['Basic'] as $key => $value) {
 				$this->mdl_menus->form_values["Basic[$key]"] = $value;
 			}
 			foreach ($data['Diet'] as $key => $value) {
 				$this->mdl_menus->form_values["Diet[$key]"] = $value;
-			}
-			$menuDate = $data['Basic']['menu_date'];
+			}*/
+			//$menuDate = $data['Basic']['menu_date'];
 			
-			if ($data['Basic']['primary_plate'] || $data['Basic']['description_primary_plate'] || $data['Basic']['secondary_plate'] || $data['Basic']['description_secondary_plate']){
-				$isBasicHasRecords = true;
-				$this->form_validation->set_data($data['Basic']);
-				unset($data['Basic']['primary_image'], $data['Basic']['secondary_image']);
-				if ($this->session->userdata('files')){
-					if (!$_FILES['Basic']['name']['primary_image'] && !$_FILES['Basic']['name']['secondary_image']){
-						$_FILES = $this->session->userdata('files');
-					}
-					elseif (!$_FILES['Basic']['name']['primary_image']) {
-						$this->_setFileSessionOnMenuType('Basic', 'primary_image');
-					}
-					elseif (!$_FILES['Basic']['name']['secondary_image']) {
-						$this->_setFileSessionOnMenuType('Basic', 'secondary_image');
-					}
-				}
-				if(!$_FILES['Basic']['name']['primary_image']) {
-					$bool = false;
-					$error[] = 'The primary image field is required.';
-				}
-				if(!$_FILES['Basic']['name']['secondary_image']) {
-					$bool = false;
-					$error[] = 'The secondary image field is required.';
-				}
-			}
-			if ($data['Diet']['primary_plate'] || $data['Diet']['description_primary_plate'] || $data['Diet']['secondary_plate'] || $data['Diet']['description_secondary_plate']){
-				$isDietHasRecords = true;
-				$this->form_validation->set_data($data['Diet']);
-				unset($data['Diet']['primary_image'], $data['Diet']['secondary_image']);
-				if ($this->session->userdata('files')){
-					if (!$_FILES['Diet']['name']['primary_image'] && !$_FILES['Diet']['name']['secondary_image']){
-						$_FILES = $this->session->userdata('files');
-					}
-					elseif (!$_FILES['Diet']['name']['primary_image']) {
-						$this->_setFileSessionOnMenuType('Diet', 'primary_image');
-					}
-					elseif (!$_FILES['Diet']['name']['secondary_image']) {
-						$this->_setFileSessionOnMenuType('Diet', 'secondary_image');
-					}
-				}
-				if(!$_FILES['Diet']['name']['primary_image']) {
-					$bool = false;
-					$error[] = 'The primary image field is required.';
-				}
-				if(!$_FILES['Diet']['name']['secondary_image']) {
-					$bool = false;
-					$error[] = 'The secondary image field is required.';
-				}
-			}
 		}
 		
-		if ($this->mdl_menus->run_validation()) {
+		/*if ($this->mdl_menus->run_validation()) {
 			unset($data['btn_submit']);
-			unset($_SESSION['files']);
-			if($bool) {
-				if ($isBasicHasRecords && $isDietHasRecords){
-					foreach ($data as $key => $record) {
-						$id = $this->mdl_menus->save(null, $record);
-						$this->_resetFilesInputBasedOnMenuType($key);
-						$files = array('primary_image', 'secondary_image');
-						foreach($files as $file) {
-							$this->do_upload($id, $file);
-						}
-					}
-				}
-				elseif ($isBasicHasRecords) {
-					$id = $this->mdl_menus->save(null, $data['Basic']);
-					$this->_resetFilesInputBasedOnMenuType('Basic');
-					$files = array('primary_image', 'secondary_image');
-					foreach($files as $file) {
-						$this->do_upload($id, $file);
-					}
-				}
-				elseif ($isDietHasRecords) {
-					$id = $this->mdl_menus->save(null, $data['Diet']);
-					$this->_resetFilesInputBasedOnMenuType('Diet');
-					$files = array('primary_image', 'secondary_image');
-					foreach($files as $file) {
-						$this->do_upload($id, $file);
-					}
-				}
-				/*$id = $this->mdl_menus->save(null, $data);
-				$files = array('primary_image', 'secondary_image');
-				foreach($files as $file) {
-					$this->do_upload($id, $file);
-				}*/
-				redirect('admin/menus');
-			}
-		}
+			redirect('admin/menus');
+		}*/
 		
 		$menu_types = $this->mdl_menu_types->get()->result();
 		//$this->mdl_menus->prep_form(null);
-		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'menu_types' => $menu_types, 'menuDate'=>$menuDate));
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'menu_types' => $menu_types, 'menuDate'=>$menuDate, 'plate1'=>$plate1, 'plate2'=>$plate2, 'plate3'=>$plate3, 'plate4'=>$plate4));
 		$this->layout->buffer('content', 'menus/form');
 		$this->layout->render();
 	}
+
+
 	public function edit($id) {
 		$error = [];
 		$bool = true;
@@ -259,4 +221,21 @@ class Menus extends Admin_Controller {
   		}
   	}
   }
+	/**
+   * Function duplicate records
+   * for selected date.
+   * @return  Array
+   * 
+  */
+	function clone_records() {
+		
+		if ($this->input->post()) {
+			$clone_of_date = (int) $this->input->post('clone_of_date');
+			$selected_clone_date = date('Y-m-d', $clone_of_date);
+			$update_clone_date = $this->input->post('new_clone_date');
+			$this->mdl_menus->clone_menus($selected_clone_date, $update_clone_date);
+			// exit;
+		}
+		redirect('admin/menus');
+	}
 }

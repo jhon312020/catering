@@ -4,7 +4,7 @@
 	</div>
 </div>
 <?php echo $this->layout->load_view('layout/alerts'); ?>
-<table class="table table-bordered datatable data_table">
+<table class="table table-bordered datatable data_table" id='jsPendingClients'>
 	<thead>
 		<tr>
 			<th><?php echo lang('client_code'); ?></th>
@@ -47,7 +47,7 @@
 		</a>
 	</div>
 </div>
-<table class="table table-bordered datatable data_table">
+<table class="table table-bordered datatable data_table" id='jsValidClients'>
 	<thead>
 		<tr>
 			<th><?php echo lang('client_code'); ?></th>

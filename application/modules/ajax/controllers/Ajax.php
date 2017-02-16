@@ -48,7 +48,7 @@ class Ajax extends Anonymous_Controller {
 			}
 		}
 	}
-  public function bankPaymentProcess() {
+  public function bankPaymentProcess($result) {
 		
 		$orders = $result['order_data'];
 		

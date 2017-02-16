@@ -26,33 +26,44 @@ class Mdl_orders extends Response_Model {
   */
 		public function get_orders_by_client_date() {
 			$client_id = $this->session->userdata('client_id');
+			/*$orders_client_by_date = $this->mdl_orders
+											->select('id, ref_order.total_price, ref_order.reference_no, order_detail, order_type, order_date, payment_method')
+											->join('(SELECT reference_no, SUM(price) as total_price FROM tbl_orders where is_active = 1 and client_id = '.$client_id.' GROUP BY reference_no) as ref_order', 'ref_order.reference_no = tbl_orders.reference_no', 'inner')
+											->where(array('is_active' => 1, 'client_id' => $client_id))
+											->group_by('reference_no')
+											->get()
+											->result_array();*/
 			$orders_client_by_date = $this->mdl_orders
-																	->select('id, ref_order.total_price, ref_order.reference_no, menu_id, order_type, order_date, payment_method')
-																	->join('(SELECT reference_no, SUM(price) as total_price FROM tbl_orders where is_active = 1 and client_id = '.$client_id.' GROUP BY reference_no) as ref_order', 'ref_order.reference_no = tbl_orders.reference_no', 'inner')
-																	->where(array('is_active' => 1, 'client_id' => $client_id))
-																	->group_by('reference_no')
-																	->get()
-																	->result_array();
+											->select('id, price as total_price, reference_no, order_detail, order_type, order_date, payment_method')
+											->where(array('is_active' => 1, 'client_id' => $client_id))
+											->get()
+											->result_array();
 			
 			return $orders_client_by_date;
 		}
-		/**
-   * Function get_orders_by_ref_no
-   *
-   * @return  Array
-   * 
-  */
-		public function get_orders_by_ref_no($reference_no) {
-			$orders_client_by_ref_no = $this->mdl_orders
-																	->select('orders.id, orders.order_date, orders.order_type, orders.menu_id, menus.menu_date, menus.menu_type_id, menus.complement, menus.primary_plate, menus.description_primary_plate, menus.secondary_plate, menus.description_secondary_plate, menus.postre, menus.full_price, menus.half_price, menu_types.menu_name, orders.payment_method, orders.price, (SELECT GROUP_CONCAT(drinks_id) from tbl_order_drinks where order_id = tbl_orders.id) as drinks_id')
-																	->join('menus', 'menus.id = orders.menu_id', 'left')
-																	->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
-																	->where(array('orders.is_active' => 1, 'orders.client_id' => $this->session->userdata('client_id'), 'orders.reference_no' => $reference_no))
-																	->get()
-																	->result_array();
-			return $orders_client_by_ref_no;
-		}
-		/**
+
+	/**
+	* Function get_orders_by_ref_no
+	*
+	* @return  Array
+	* 
+	*/
+	public function get_orders_by_ref_no($reference_no) {
+		/*$orders_client_by_ref_no = $this->mdl_orders
+										->select('orders.id, orders.order_date, orders.order_type, orders.menu_id, menus.menu_date, menus.menu_type_id, menus.complement, menus.primary_plate, menus.description_primary_plate, menus.secondary_plate, menus.description_secondary_plate, menus.postre, menus.full_price, menus.half_price, menu_types.menu_name, orders.payment_method, orders.price, (SELECT GROUP_CONCAT(drinks_id) from tbl_order_drinks where order_id = tbl_orders.id) as drinks_id')
+										->join('menus', 'menus.id = orders.menu_id', 'left')
+										->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
+										->where(array('orders.is_active' => 1, 'orders.client_id' => $this->session->userdata('client_id'), 'orders.reference_no' => $reference_no))
+										->get()
+										->result_array();*/
+		$orders_client_by_ref_no = $this->mdl_orders
+										->where(array('is_active' => 1, 'client_id' => $this->session->userdata('client_id'), 'reference_no' => $reference_no))
+										->get()
+										->result_array();
+		return $orders_client_by_ref_no;
+	}
+	
+	/**
    * Function get_orders_list
    *
    * @return  Array
@@ -77,7 +88,7 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_list_by_id($order_id) {
 		$order_list = $this->mdl_orders
-											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name, clients.telephone, clients.email, orders.order_type, orders.menu_id, orders.reference_no, orders.payment_method, orders.client_id')
+											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, menu_types.menu_name, clients.telephone, clients.email, orders.order_type, orders.menu_id, orders.reference_no, orders.payment_method, orders.client_id, orders.price')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->join('menus', 'menus.id = orders.menu_id', 'left')
@@ -113,7 +124,7 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_date($order_date) {
 		$orders_list_by_date = $this->mdl_orders
-											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.is_active, menu_types.menu_name')
+											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.price, orders.is_active, menu_types.menu_name')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->join('menus', 'menus.id = orders.menu_id', 'left')
@@ -138,12 +149,12 @@ class Mdl_orders extends Response_Model {
 		$temporary_order_ids = [];
 		$reference_no = '';
  		foreach($temporary_orders as $key => $order) {
-			$order_type = $order['order_type'];
+			$order_type = $order['order_title'];
 			$price = $order['price'];
 			
 			$total_price += $price;
 			$client_id = $this->session->userdata('client_id');
-			$data = array('client_id' => $client_id, 'menu_id' => $order['menu_id'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no);
+			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no);
 			if (in_array($payment_type, $this->payment_types)) {
 				$data['is_active'] = 1;
 				$data['payment_method'] = $payment_type;
@@ -155,7 +166,7 @@ class Mdl_orders extends Response_Model {
 				$this->mdl_orders->save($order_id, array('reference_no' => $reference_no));
 			}
 			
-			$cool_drinks = json_decode($order['cool_drinks_array'], true);
+			/*$cool_drinks = json_decode($order['cool_drinks_array'], true);
 			
 			$drinks_data = array();
 			if(count($cool_drinks) > 0) {
@@ -164,7 +175,7 @@ class Mdl_orders extends Response_Model {
 				}
 				
 				$this->db->insert_batch('order_drinks', $drinks_data);
-			}
+			}*/
 			
 			$temporary_order_ids[] = $order['id'];
 		}
@@ -200,15 +211,16 @@ class Mdl_orders extends Response_Model {
 		
 		$left_time = 0;
 		
-    if ($businessInfo) {
-      $time1 = strtotime($businessInfo->time_limit);
-			
-      $time2 = time();
-			
-			if ($time1 > $time2) {
-				$left_time = ($time1 - $time2);
-			}
-    }
+	    if ($businessInfo) {
+	      $time1 = strtotime($businessInfo->time_limit);
+				
+	      $time2 = time();
+				
+				if ($time1 > $time2) {
+					$left_time = ($time1 - $time2);
+				}
+	    }
+
 		if ($left_time == 0) {
 			$menus = $this->mdl_menus->select('id')->where('menu_date', date('Y-m-d'))->get()->result_array();
 			$menus_id = array_column($menus, 'id');
@@ -229,6 +241,24 @@ class Mdl_orders extends Response_Model {
 			$data = $this->mdl_orders->insert_from_temporary($payment_type);
 			return array('success' => true, 'msg' => 'Order successfully placed', 'order_data' => $data);
 		}
+	}
+	
+	/**
+   * Function get_orders_by_client_id
+   *
+   * @return  Array
+   * 
+  */
+	public function get_order_date_by_id($order_id) {
+		$order_date = null; 
+		$order_object = $this->mdl_orders
+											->select('orders.order_date')
+											->where('orders.id', $order_id)
+											->get()->row();
+		if ($order_object) {
+			$order_date = $order_object->order_date;
+		}
+		return $order_date;
 	}
 }
 ?>
