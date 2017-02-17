@@ -151,5 +151,6 @@ $lang['plato'] = 'Plato';
 $lang['add_plato'] = 'Añadir Plato';
 $lang['internal_code'] = 'Código interno';
 $lang['description'] = 'Descripción';
+$lang['name_of_the_plate'] = 'Nombre del plato';
 /*---ó-*/
 ?>
