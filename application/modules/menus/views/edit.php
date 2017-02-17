@@ -4,9 +4,8 @@
 <?php
 $readonly = ($readonly)?'readonly':'';
 $disabled = ($readonly)?'disabled':'';
-$menuDate = date('Y-m-d', strtotime($this->mdl_menus->form_value('menu_date')));
+$menuDate = date('Y-m-d', $strtotime);
 $datePickerDate = date('d/m/Y', strtotime($menuDate));
-$checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 ?>
 <div class="headerbar">
 	<div class="clearfix">
@@ -24,22 +23,23 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 		<?php	} ?>
 	</div>	
 	<div class="row" id="business">
+		<form method="post" id="menu_edit_form" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 		<?php
-		foreach($menu_types as $menu_type) {
+		foreach($menus as $menu) {
+			$menu_id = $menu['id'];
 		?>
-		<div class="col-md-12 martop menuList" id="menuType_<?php echo $menu_type->id; ?>">
+		<div class="col-md-12 martop menuList">
 			<div class="form-content">
-				<form method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 					<div class="row">
 						<div class="col-sm-12">
-							<span class="hmargin"><?php echo lang('menu_cms').' '.lang(strtolower($menu_type->menu_name)); ?></span>
+							<span class="hmargin"><?php echo lang('menu_cms').' '.lang(strtolower($menu_types[$menu['menu_type_id']])); ?></span>
 								<div class="checkbox rightCheck" style="float:right;">
 									<label>
 										<?php 
-											$checkbox = array( 'name'        => 'disabled',
-																				 'id'          => 'disabled', 
-																				 'value'       => '1', 
-																				 'checked'     => $checkDisabled,                                                    
+											$checkbox = array( 'name'=> 'data['.$menu_id.'][disabled]',
+																 'value' => '1', 
+																 'checked' => $menu['disabled'],
+																 'class'=>'checkbox_disabled'
 																			);
 											if($readonly) {
 												$checkbox['disabled'] = 'disabled';
@@ -52,104 +52,117 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 						</div>
 					</div>
 				<div class="form-group">
-					<input type="hidden" name="menu_type_id" value="<?php echo $menu_type->id; ?>">
-					<input type="hidden" name="menu_date" value="<?php echo $menuDate; ?>">
+					<input type="hidden" name="data[<?php echo $menu_id; ?>][id]" value="<?php echo $menu['id']; ?>">
+					<input type="hidden" name="data[<?php echo $menu_id; ?>][menu_type_id]" value="<?php echo $menu['menu_type_id']; ?>">
+					<input type="hidden" name="data[<?php echo $menu_id; ?>][menu_date]" value="<?php echo $menuDate; ?>">
 					<div class="col-sm-2">
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish1.png" class="imgWidth" />
 					</div>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'complement', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('complement'), $readonly=>true)); ?>
+						<?php 
+							echo form_dropdown(array('name'=>'data['.$menu_id.'][Guarnicio]',
+													'options'=>$plates['plate3'],
+													'class'=>'form-control',
+													'selected'=>$menu['Guarnicio']
+												));
+						?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('primary_plate');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'primary_plate', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('primary_plate'), $readonly=>true)); ?>
+						<?php 
+							echo form_dropdown(array('name'=>'data['.$menu_id.'][Primer]',
+													'options'=>$plates['plate1'],
+													'class'=>'form-control',
+													'selected'=>$menu['Primer']
+												));
+						?>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('description_primary_plate');?>: </label>
-					<div class="col-sm-10">
-						<textarea name="description_primary_plate" <?php echo $disabled; ?> class="form-control"><?php echo $this->mdl_menus->form_value('description_primary_plate'); ?></textarea>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('image');?>: </label>
-					<div class="col-sm-10">
-						<input name="primary_image" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
-						<?php if($this->mdl_menus->form_value('primary_image')) { ?>
-						<img src="<?php echo $path . $this->mdl_menus->form_value('primary_image'); ?>" width="150">
-						<?php } ?>
-					</div>
-				</div>	
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('secondary_plate');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'secondary_plate', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('secondary_plate'), $readonly=>true)); ?>
+						<?php 
+							echo form_dropdown(array('name'=>'data['.$menu_id.'][Segon]',
+													'options'=>$plates['plate2'],
+													'class'=>'form-control',
+													'selected'=>$menu['Segon']
+												));
+						?>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('description_secondary_plate');?>: </label>
-					<div class="col-sm-10">
-						<textarea name="description_secondary_plate" <?php echo $disabled; ?> class="form-control"><?php echo $this->mdl_menus->form_value('description_secondary_plate'); ?></textarea>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('image');?>: </label>
-					<div class="col-sm-10">
-						<input name="secondary_image" type="file" class="form-control file2 inline btn btn-primary" data-label="Browse Files" />
-						<?php if($this->mdl_menus->form_value('secondary_image')) { ?>
-						<img src="<?php echo $path . $this->mdl_menus->form_value('secondary_image'); ?>" width="150">
-						<?php } ?>
-					</div>
-				</div>	
 				<div class="form-group">
 					<div class="col-sm-2">
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish2.png" class="imgWidth" />
 					</div>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'postre', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('postre'), $readonly=>true)); ?>
+						<?php 
+							echo form_dropdown(array('name'=>'data['.$menu_id.'][Postre]',
+													'options'=>$plates['plate4'],
+													'class'=>'form-control',
+													'selected'=>$menu['Postre']
+												));
+						?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('half_price');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'half_price', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('half_price'), $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>'data['.$menu_id.'][half_price]', 'class'=>'form-control required_decimal', 'value'=>$menu['half_price'], $readonly=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('full_price');?>: </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'full_price', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value('full_price'), $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>'data['.$menu_id.'][full_price]', 'class'=>'form-control required_decimal', 'value'=>$menu['full_price'], $readonly=>true)); ?>
 					</div>
 				</div>
-				<div class="form-group">
-					<div class="col-sm-12">
-					<?php echo $this->layout->load_view('layout/header_buttons'); ?>
-					</div>
-				</div>
-			</form>
 			</div>
 		</div>
 		<?php } ?>
+			<div class="form-group top-10">
+				<div class="col-sm-12">
+				<?php echo $this->layout->load_view('layout/header_buttons'); ?>
+				</div>
+			</div>
+		</form>
 	</div>
 <script type="text/javascript">
 $(document).ready(function(){
-	$('.datepicker12').datepicker({
-		format:'dd/mm/yyyy',
-		autoclose:true,
-		startDate:new Date(),
-	}).on('show', function(e) {
-			$('.datepicker-dropdown').css({top:$('.spancal').offset().top + $('.spancal').height(), left:$('.spancal').offset().left})
-	}).on('changeDate', function(e) {
-			var val = $(this).val();
-			$('.dateSpan').text(val);
-			var split = val.split('/');
-			var date = split[2]+'-'+split[1]+'-'+split[0];
-			$('input[name="menu_date"]').val(date);
+	$('#menu_edit_form').submit(function(){
+		var allFilled = true;
+		$('.alert-danger').remove();
+		$('input[type=text]').each(function() {
+			if (!$(this).is(":disabled") && $(this).val() == '') {
+				$(this).after('<div class="alert alert-danger top-10 bottom-10 ">Kindly fill the field</div>');
+				allFilled = false;
+			} else if (!$(this).is(":disabled") && $(this).hasClass('required_decimal')) {
+				if (!isDecimal($(this).val())) {
+					$(this).after('<div class="alert alert-danger top-10 bottom-10">Kindly fill with decimal or integer value</div>');
+					allFilled = false;
+				}
+			}
+		});
+		if (allFilled == false) {
+			return false;
+		}
 	});
-	$(document).on('click', '.spancal', function(){
-		$('.datepicker12').datepicker('show');
-	})
+
+	$(document).on('click', '.checkbox_disabled', function(){
+		if ($(this).is(":checked")) {
+			$(this).parents('.form-content').find('select').attr('disabled',true);
+			$(this).parents('.form-content').find('input[type=text]').attr('disabled',true);
+		} else {
+			$(this).parents('.form-content').find('select').attr('disabled',false);
+			$(this).parents('.form-content').find('input[type=text]').attr('disabled',false);
+		}
+	});
+
 });
+
+function isDecimal (s) {
+	var isDecimal_re = /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;
+    return String(s).search (isDecimal_re) != -1
+}
 </script>

@@ -27,38 +27,32 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 		<input type="hidden" id="form_number" name="form_number" value="<?php echo $count; ?>" />
 		<form method="post" class="form-horizontal" id="menu_form" enctype="multipart/form-data" autocomplete="off">
 		<?php
-		foreach($menu_types as $menu_type) {
+		foreach($menu_types as $key=>$menu_type) {
 		?>
 		<div class="col-md-12 martop menuList " data-form="<?php echo $count; ?>">
 			
 			<div class="form-content">
 				<div class="row">
 					<div class="col-sm-12">
-						<span class="hmargin"><?php echo lang('menu_cms').' '.lang(strtolower($menu_type->menu_name)); ?></span>
+						<span class="hmargin"><?php echo lang('menu_cms').' '.lang(strtolower($menu_type)); ?></span>
 							<div class="checkbox rightCheck" style="float:right;">
 								<label>
-								<?php echo form_checkbox(array('name'=>$menu_type->menu_name.'['.$count.'][disabled]','value'=> 1, 'class'=>'checkbox_disabled')); ?>
+								<?php echo form_checkbox(array('name'=>$menu_type.'['.$count.'][disabled]','value'=> 1, 'class'=>'checkbox_disabled')); ?>
 								<?php echo lang('disabled'); ?>
 								</label>
 							</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<input type="hidden" name="<?php echo $menu_type->menu_name; ?>[<?php echo $count; ?>][menu_type_id]" value="<?php echo $menu_type->id; ?>">
-					<input type="hidden" name="<?php echo $menu_type->menu_name; ?>[<?php echo $count; ?>][menu_date]" value="<?php echo $menuDate; ?>" class="menu_date">
+					<input type="hidden" name="<?php echo $menu_type; ?>[<?php echo $count; ?>][menu_type_id]" value="<?php echo $key; ?>">
+					<input type="hidden" name="<?php echo $menu_type; ?>[<?php echo $count; ?>][menu_date]" value="<?php echo $menuDate; ?>" class="menu_date">
 					<div class="col-sm-2">
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish1.png" class="imgWidth" />
 					</div>
 					<div class="col-sm-10">
 						<?php 
-							/*echo form_input(array(
-								'name'=>$menu_type->menu_name .'['.$count.'][complement]', 'class'=>'form-control', 
-								'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[complement]'):'', 
-								$readonly=>true
-							));*/
-
-							echo form_dropdown(array('name'=>$menu_type->menu_name .'['.$count.'][complement]',
-												'options'=>$plate1,
+							echo form_dropdown(array('name'=>$menu_type .'['.$count.'][Guarnicio]',
+												'options'=>$plates['plate3'],
 												'class'=>'form-control'
 												));
 						?>
@@ -67,9 +61,9 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('primary_plate');?> </label>
 					<div class="col-sm-10">
-						<?php /*echo form_input(array('name'=>$menu_type->menu_name .'['.$count.'][primary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[primary_plate]'):'', $readonly=>true));*/ 
-							echo form_dropdown(array('name'=>$menu_type->menu_name .'['.$count.'][primary_plate]',
-												'options'=>$plate2,
+						<?php 
+							echo form_dropdown(array('name'=>$menu_type .'['.$count.'][Primer]',
+												'options'=>$plates['plate1'],
 												'class'=>'form-control'
 												));
 						?>
@@ -78,9 +72,9 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('secondary_plate');?> </label>
 					<div class="col-sm-10">
-						<?php /*echo form_input(array('name'=>$menu_type->menu_name.'['.$count.'][secondary_plate]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[secondary_plate]'):'', $readonly=>true));*/ 
-							echo form_dropdown(array('name'=>$menu_type->menu_name .'['.$count.'][secondary_plate]',
-												'options'=>$plate3,
+						<?php 
+							echo form_dropdown(array('name'=>$menu_type .'['.$count.'][Segon]',
+												'options'=>$plates['plate2'],
 												'class'=>'form-control'
 												));
 						?>
@@ -91,9 +85,9 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish2.png" class="imgWidth" />
 					</div>
 					<div class="col-sm-10">
-						<?php /*echo form_input(array('name'=>$menu_type->menu_name .'['.$count.'][postre]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[postre]'):'', $readonly=>true));*/ 
-							echo form_dropdown(array('name'=>$menu_type->menu_name .'['.$count.'][postre]',
-												'options'=>$plate4,
+						<?php 
+							echo form_dropdown(array('name'=>$menu_type .'['.$count.'][Postre]',
+												'options'=>$plates['plate4'],
 												'class'=>'form-control'
 												));
 						?>
@@ -102,20 +96,24 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('half_price');?> </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>$menu_type->menu_name.'['.$count.'][half_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[half_price]'):'', $readonly=>true)); ?>
+						<?php 
+						echo form_input(array('name'=>$menu_type.'['.$count.'][half_price]', 'class'=>'form-control required_decimal', $readonly=>true)); 
+						?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('full_price');?> </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>$menu_type->menu_name.'['.$count.'][full_price]', 'class'=>'form-control', 'value'=>$this->mdl_menus->form_value($menu_type->menu_name.'[menu_type_id]') == $menu_type->id?$this->mdl_menus->form_value($menu_type->menu_name.'[full_price]'):'', $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>$menu_type.'['.$count.'][full_price]', 'class'=>'form-control required_decimal',  $readonly=>true)); ?>
 					</div>
 				</div>
 			</div>
 		</div>
 		<?php } ?>
+			<div class="form-group new_menu_container">
+				<h3 class="col-sm-6 pull-left"><a href="javascript:;" style="padding-left:18px;color:#91C848;" onclick="duplicateForm()"><u>[+] <?php echo lang('add_new_menu'); ?></u></a></h3>
+			</div>
 			<div class="form-group submit_buttons" style="padding-top:20px;">
-				<div ><a href="javascript:;" onclick="duplicateForm()">Duplicate</a></div>
 				<div class="col-sm-12">
 				<?php echo $this->layout->load_view('layout/header_buttons'); ?>
 				</div>
@@ -164,9 +162,16 @@ $(document).ready(function(){
 
 	$('#menu_form').submit(function(){
 		var allFilled = true;
+		$('.alert-danger').remove();
 		$('input[type=text]').each(function() {
 			if (!$(this).is(":disabled") && $(this).val() == '') {
+				$(this).after('<div class="alert alert-danger top-10 bottom-10">Kindly fill the field</div>');
 				allFilled = false;
+			} else if (!$(this).is(":disabled") && $(this).hasClass('required_decimal')) {
+				if (!isDecimal($(this).val())) {
+					$(this).after('<div class="alert alert-danger top-10 bottom-10">Kindly fill with decimal or integer value</div>');
+					allFilled = false;
+				}
 			}
 		});
 		if (allFilled == false) {
@@ -183,7 +188,6 @@ $(document).ready(function(){
 			$(this).parents('.form-content').find('input[type=text]').attr('disabled',false);
 		}
 	});
-	//duplicateForm();
 
 });
 
@@ -193,6 +197,13 @@ function duplicateForm(){
 	new_html = new_html.replace(/Diet\[1\]/g,'Diet['+new_value+']');
 	$('.submit_buttons').before(new_html);
 	$('.submit_buttons:last').remove();
+	$('.new_menu_container:first').remove();
 	$('#form_number').val(new_value);
+}
+
+
+function isDecimal (s) {
+	var isDecimal_re = /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;
+    return String(s).search (isDecimal_re) != -1
 }
 </script>

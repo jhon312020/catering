@@ -48,16 +48,16 @@
 		?>
 			<tr class="<?php echo $bgclass.' '.$topClass; ?>">
 				<td class=""><?php echo !$topClass?date('d/m/Y', $string_to_time):''; ?></td>
-				<td class=""><?php echo $menu->menu_name; ?></td>
-				<td class=""><?php echo $allPlates[$menu->complement]; ?></td>
-				<td class=""><?php echo $allPlates[$menu->primary_plate]; ?></td>
-				<td class=""><?php echo $allPlates[$menu->secondary_plate]; ?></td>
-				<td class=""><?php echo $allPlates[$menu->postre]; ?></td>
+				<td class=""><?php echo (isset($menu_types[$menu->menu_type_id]))? $menu_types[$menu->menu_type_id]:''; ?></td>
+				<td class=""><?php echo $allPlates[$menu->Guarnicio]; ?></td>
+				<td class=""><?php echo $allPlates[$menu->Primer]; ?></td>
+				<td class=""><?php echo $allPlates[$menu->Segon]; ?></td>
+				<td class=""><?php echo $allPlates[$menu->Postre]; ?></td>
 				<td class="">
 					<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/menus/view/' . $menu->id); ?>">
 						<i class="entypo-eye"></i>
 					</a>
-					<a class="btn btn-primary edit btn-sm" href="<?php echo site_url('admin/menus/edit/' . $menu->id); ?>">
+					<a class="btn btn-primary edit btn-sm" href="<?php echo site_url('admin/menus/edit/' . $string_to_time); ?>">
 						<i class="entypo-pencil"></i>
 					</a>
 					<button class="btn btn-primary btn-sm clone_record" data-button='<?php echo $string_to_time;?> ' >

@@ -23,6 +23,7 @@ $lang['menu_cms'] = 'Menú';
 $lang['basic_menu'] = 'MENÚ BÁSICO';
 $lang['diet_menu'] = 'MENÚ DIET';
 $lang['combine_menu'] = 'MENÚ COMBINADO';
+$lang['add_new_menu'] = 'Añadir otro menú';
 $lang['image'] = 'Imagen';
 $lang['disabled'] = 'Deshabilitar';
 //For CMS
