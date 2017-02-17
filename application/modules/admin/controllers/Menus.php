@@ -3,25 +3,21 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Menus extends Admin_Controller {
+
+	public $menu_types = [1=>'Basic',2=>'Diet'];
+
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('menus/mdl_menus');
 		$this->load->model('menu_types/mdl_menu_types');
+		$this->load->model('plats/mdl_plats');
 		$this->path = base_url().$this->mdl_settings->setting('upload_folder')."images/menus/";
 	}
 	public function index() {
-		$menus = $this->mdl_menus
-							->select('menus.id, menus.menu_type_id, menus.menu_date, menus.complement, menus.primary_plate,  menus.secondary_plate, menus.postre, menus.disabled, menus.is_active, menu_types.menu_name')
-							->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
-							->order_by('menu_date')
-							->get()->result();
-		$plates = $this->db->query("select Id, Plat from  tbl_plats;")->result_array();
-		$allPlates = [];
-		foreach ($plates as $plate) {
-			$allPlates[$plate['Id']] = $plate['Plat'];
-		}
+		$menus = $this->mdl_menus->order_by('menu_date','desc')->get()->result();
+		$allPlates = $this->mdl_plats->get_plat_list();
 		unset($_SESSION['files']); // remove session from add page
-		$this->layout->set(array('menus' => $menus, 'allPlates'=>$allPlates));
+		$this->layout->set(array('menus' => $menus, 'allPlates'=>$allPlates, 'menu_types'=>$this->menu_types));
 		$this->layout->buffer('content', 'menus/index');
 		$this->layout->render();
 	}
@@ -36,29 +32,9 @@ class Menus extends Admin_Controller {
 		}
 		$data = $this->input->post();
 
-
-		$plates = $this->db->query("select * from  tbl_plats;")->result_array();
+		$plates = $this->mdl_plats->get_plats_group_by_platorder();
 		
-		$plate1 = $plate2 = $plate3 = $plate4= [];
-		foreach ($plates as $plate) {
-			switch ($plate['OrdrePlat']) {
-				case 1:
-					$plate1[$plate['Id']] = $plate['Plat'];
-					break;
-				case 2:
-					$plate2[$plate['Id']] = $plate['Plat'];
-					break;
-				case 3:
-					$plate3[$plate['Id']] = $plate['Plat'];
-					break;
-				case 4:
-					$plate4[$plate['Id']] = $plate['Plat'];
-					break;
-			}
-		}
 		if ($data){
-
-			$requiredFields = array('menu_type_id','menu_date','complement','primary_plate','secondary_plate','postre','half_price','full_price');
 
 			$insertData = [];
 			if (isset($data['Basic'])) {
@@ -99,21 +75,41 @@ class Menus extends Admin_Controller {
 			redirect('admin/menus');
 		}*/
 		
-		$menu_types = $this->mdl_menu_types->get()->result();
+		//$menu_types = $this->mdl_menu_types->get()->result();
 		//$this->mdl_menus->prep_form(null);
-		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'menu_types' => $menu_types, 'menuDate'=>$menuDate, 'plate1'=>$plate1, 'plate2'=>$plate2, 'plate3'=>$plate3, 'plate4'=>$plate4));
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'menu_types' => $this->menu_types, 'menuDate'=>$menuDate, 'plates' => $plates));
 		$this->layout->buffer('content', 'menus/form');
 		$this->layout->render();
 	}
 
 
-	public function edit($id) {
+	public function edit($strtotime) {
 		$error = [];
 		$bool = true;
 		if ($this->input->post('btn_cancel')) {
 			redirect('admin/menus');
 		}
-		if ($this->mdl_menus->run_validation()) {
+
+		$data = $this->input->post();
+		$updateRecord = [];
+		if ($data && isset($data['data'])) {
+			foreach ($data['data'] as $record) {
+				if (isset($record['disabled']) && $record['disabled'] == 1) {
+					continue;
+				}
+				$updateRecord[] = $record;
+			}
+
+			if ($updateRecord) {
+				$result = $this->mdl_menus->update_all_records($updateRecord);
+				if ($result == true) {
+					redirect('admin/menus');
+				}
+			}
+		}
+
+		
+		/*if ($this->mdl_menus->run_validation()) {
 			$data = $this->input->post();
 			unset($data['btn_submit'], $data['primary_image'], $data['secondary_image']);
 			if($bool) {
@@ -128,13 +124,16 @@ class Menus extends Admin_Controller {
 			}
 		}
 		
-		$this->mdl_menus->prep_form($id);
+		$this->mdl_menus->prep_form($id);*/
 		
-		$menu_type_id = $this->mdl_menus->form_value('menu_type_id');
-		$menu_types = $this->mdl_menu_types->where('id', $menu_type_id)->get()->result();
+		/*$menu_type_id = $this->mdl_menus->form_value('menu_type_id');
+		$menu_types = $this->mdl_menu_types->where('id', $menu_type_id)->get()->result();*/
+
+
+		$menus = $this->mdl_menus->get_menus_by_date(date('Y-m-d',$strtotime));
+		$plates = $this->mdl_plats->get_plats_group_by_platorder();
 		
-		
-		$this->layout->set(array('readonly'=>false, 'path' => $this->path, 'error'=>$error, 'menu_types' => $menu_types));
+		$this->layout->set(array('readonly'=>false,'strtotime'=>$strtotime, 'path' => $this->path, 'error'=>$error, 'menu_types' => $this->menu_types,'menus'=>$menus,'plates'=>$plates));
 		$this->layout->buffer('content', 'menus/edit');
 		$this->layout->render();
 	}

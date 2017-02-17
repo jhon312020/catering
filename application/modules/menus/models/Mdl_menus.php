@@ -10,13 +10,13 @@ class Mdl_menus extends Response_Model {
     }
     public function validation_rules() {
         return array(
-            'complement' => array(
-                'field' => 'complement',
+            'Guarnicio' => array(
+                'field' => 'Guarnicio',
                 'label' => lang('complement'),
                 'rules' => 'required'
             ),
-            'primary_plate' => array(
-                'field' => 'primary_plate',
+            'Primer' => array(
+                'field' => 'Primer',
                 'label' => lang('primary_plate'),
                 'rules' => 'required'
             ),
@@ -26,8 +26,8 @@ class Mdl_menus extends Response_Model {
                 'label' => lang('primary_image'),
                 'rules' => 'required'
             ), */
-            'secondary_plate' => array(
-                'field' => 'secondary_plate',
+            'Segon' => array(
+                'field' => 'Segon',
                 'label' => lang('secondary_plate'),
                 'rules' => 'required'
             ),
@@ -36,8 +36,8 @@ class Mdl_menus extends Response_Model {
                 'label' => lang('secondary_image'),
                 'rules' => 'required'
             ), */
-						'postre' => array(
-                'field' => 'postre',
+						'Postre' => array(
+                'field' => 'Postre',
                 'label' => lang('postre'),
                 'rules' => 'required'
             ),
@@ -123,6 +123,21 @@ class Mdl_menus extends Response_Model {
     $this->db->query("INSERT INTO tbl_menus SELECT 0,tbl_tmp.* FROM tbl_tmp; ");
     $this->db->query("DROP TABLE tbl_tmp;");
 	}
+
+  /**
+   * Function update_all_records
+   *
+   * @return  Bool
+   * 
+  */
+  public function update_all_records($records) {
+    if ($records) {
+      foreach ($records as $record) {
+        $this->mdl_menus->save($record['id'],$record);
+      }
+    }
+    return true;
+  }
 
 }
 ?>

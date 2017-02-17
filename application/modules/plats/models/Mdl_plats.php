@@ -73,12 +73,41 @@ class Mdl_plats extends Response_Model {
     * 
     */
     public function get_plat_list() {
-        $plates = $this->mdl_plats->select("select Id, Plat")->get()->result_array();
+        $plates = $this->mdl_plats->select("Id, Plat")->get()->result_array();
         $allPlates = [];
         foreach ($plates as $plate) {
             $allPlates[$plate['Id']] = $plate['Plat'];
         }
         return $allPlates;
+    }
+
+    /**
+    * Function get_plats_group_by_platno
+    *
+    * @return  Array
+    * 
+    */
+    public function get_plats_group_by_platorder() {
+        $plates = $this->mdl_plats->select("Id, Plat, OrdrePlat")->get()->result_array();
+        $plate1 = $plate2 = $plate3 = $plate4= [];
+        foreach ($plates as $plate) {
+            switch ($plate['OrdrePlat']) {
+                case 1:
+                    $plate1[$plate['Id']] = $plate['Plat'];
+                    break;
+                case 2:
+                    $plate2[$plate['Id']] = $plate['Plat'];
+                    break;
+                case 3:
+                    $plate3[$plate['Id']] = $plate['Plat'];
+                    break;
+                case 4:
+                    $plate4[$plate['Id']] = $plate['Plat'];
+                    break;
+            }
+        }
+
+        return array('plate1'=>$plate1,'plate2'=>$plate2,'plate3'=>$plate3,'plate4'=>$plate4);
     }
 
 }
