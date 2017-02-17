@@ -16,14 +16,79 @@ class Clients extends Admin_Controller {
 	}
 	public function index() {
 		
-		$pending_clients = $this->mdl_clients->get_pending_clients();
+		//$pending_clients = $this->mdl_clients->get_pending_clients();
 		
-		$clients_list = $this->mdl_clients->get_active_clients();
-
-		$this->layout->set(array('pending_clients' => $pending_clients, 'clients_list' => $clients_list));
+		//$clients_list = $this->mdl_clients->get_active_clients();
+		
+		//$this->layout->set(array('pending_clients' => $pending_clients, 'clients_list' => $clients_list));
+		$this->layout->set(array('pending_clients' => [], 'clients_list' => []));
 		$this->layout->buffer('content', 'clients/index');
 		$this->layout->render();
 	}
+
+	protected function _buildQuery($query, $params){
+		$columns = array( 
+			0 =>'clients.client_code',
+			1 =>'clients.name', 
+			2 => 'clients.surname',
+			3 => 'business.name'
+		);
+		if( !empty($params['search']['value']) ) {
+			$query = $query->group_start()
+				->like('clients.name', $params['search']['value'])
+				->or_like('clients.surname', $params['search']['value'])
+				->or_like('clients.client_code', $params['search']['value'])
+				->or_like('business.name', $params['search']['value'])
+			->group_end();
+		}
+		$query->where('clients.is_active', intval($params['is_active']) ? 1 : 0);
+		if (isset($params['order'][0]['column']) && isset($columns[$params['order'][0]['column']])){
+			$query->order_by($columns[$params['order'][0]['column']], $params['order'][0]['dir']);
+		}
+		return $query;
+	}
+
+	public function datasource(){
+		$params = $this->input->post();
+		$results_in_single_assoc_array = array();
+		$pending_clients_query = $this->mdl_clients->select(
+				'clients.id, clients.client_code, clients.name, clients.surname, clients.is_active, business.name as business'
+			)
+			->join('business', 'business.id = clients.business_id', 'left');
+		$pending_clients_query = $this->_buildQuery($pending_clients_query, $params);
+
+		if ($params['length'] == -1){
+			$pending_clients_query = $pending_clients_query->get();
+		}
+		else{
+			$pending_clients_query = $pending_clients_query->limit($params['length'],$params['start'])->get();
+		}
+
+		foreach ($pending_clients_query->result_array() as $key => $value) {
+			$editFieldHtml = sprintf("<a class='btn btn-info btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-eye'></i></a><a class='btn btn-primary edit btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-pencil'></i></a><a class='btn btn-warning btn-sm%s' style='margin-right:4px;' href='%s'><i class='entypo-check' title='%s'></i></a><a class='btn btn-danger btn-sm' style='margin-right:4px;' href='%s' onclick='return confirm('%s');'><i class='entypo-trash'></i></a>", 
+				site_url('admin/clients/view/' . $value['id']), site_url('admin/clients/form/' . $value['id']),
+				$value['is_active'] ? '' : ' inactive', site_url('admin/clients/toggle/' . $value['id'] . '/' . $value['is_active']),
+				$value['is_active'] ? 'Active' : 'In Active', site_url('admin/clients/delete/' . $value['id']), lang('delete_record_warning')
+			);
+			$results_in_single_assoc_array[$key] = array(
+				$value['client_code'], $value['name'], $value['surname'], $value['business'], $editFieldHtml
+			);
+		}
+		/*if (isset($params['order'])){
+			echo $this->db->last_query();exit;
+		}*/
+
+		$totalRecords = $this->_buildQuery($this->mdl_clients->join('business', 'business.id = clients.business_id', 'left'), $params)->get()->num_rows();
+
+		$json_data = array(
+			"draw"            => intval( $params['draw'] ),   
+			"recordsTotal"    => intval( $totalRecords ),  
+			"recordsFiltered" => intval($totalRecords),
+			"data"            => $results_in_single_assoc_array
+		);
+		echo json_encode($json_data);
+	}
+
 	public function form($id = NULL) {
 		$error_flg = false;
 		$error = array();

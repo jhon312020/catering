@@ -4,7 +4,7 @@
 	</div>
 </div>
 <?php echo $this->layout->load_view('layout/alerts'); ?>
-<table class="table table-bordered datatable data_table" id='jsPendingClients'>
+<!-- <table class="table table-bordered datatable data_table" id='jsPendingClients'>
 	<thead>
 		<tr>
 			<th><?php echo lang('client_code'); ?></th>
@@ -39,6 +39,16 @@
 		<?php } ?>
 	</tbody>
 </table>
+-->
+<table id="jsPendingClients" class="table table-bordered datatable" width="100%" cellspacing="0">
+	<thead>
+		<th><?php echo lang('client_code'); ?></th>
+		<th><?php echo lang('name'); ?></th>
+		<th><?php echo lang('surname'); ?></th>
+		<th><?php echo lang('business_title'); ?></th>
+		<th><?php echo lang('edit'); ?></th>
+	</thead>
+</table>
 <div class="headerbar">
 	<div class="clearfix">
 		<h1 class="pull-left"><?php echo lang('clients_list'); ?></h1>
@@ -47,6 +57,7 @@
 		</a>
 	</div>
 </div>
+<!--
 <table class="table table-bordered datatable data_table" id='jsValidClients'>
 	<thead>
 		<tr>
@@ -82,3 +93,112 @@
 		<?php } ?>
 	</tbody>
 </table>
+-->
+<table id="jsValidClients" class="table table-bordered datatable" width="100%" cellspacing="0">
+	<thead>
+		<th><?php echo lang('client_code'); ?></th>
+		<th><?php echo lang('name'); ?></th>
+		<th><?php echo lang('surname'); ?></th>
+		<th><?php echo lang('business_title'); ?></th>
+		<th><?php echo lang('edit'); ?></th>
+	</thead>
+</table>
+
+<script type="text/javascript">
+var responsiveHelper;
+$( document ).ready(function() {
+	var length = $(".data_table thead tr th").length-1;
+	var array = new Array();
+	for(var i = 0; i < length; i++){
+		array.push(i);
+	}
+	
+	$('#jsPendingClients').DataTable({
+		"sPaginationType": "bootstrap",
+		"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
+		"bStateSave": false,
+		"oLanguage": {
+				"sUrl": "http://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
+		},
+		"dom": 'lBfrtip',
+		"buttons": [
+			{
+				extend: 'excel',
+				text: 'Export Excel',
+				exportOptions: {
+					columns:array
+					/* modifier: {
+						search: 'none'
+					} */
+				}
+			},
+			{
+				extend: 'print',
+				text: 'Print',
+				exportOptions: {
+					columns:array
+					/* modifier: {
+						search: 'none'
+					} */
+				}
+			},
+			//'colvis'
+		],
+		"bProcessing": true,
+        "serverSide": true,
+        "ajax":{
+            url :"<?php echo site_url('admin/clients/datasource');?>", // json datasource
+            type: "post",  // type of method  ,GET/POST/DELETE
+            data: {'is_active':0},
+            error: function(){
+              $("#employee_grid_processing").css("display","none");
+            }
+        },
+        bAutoWidth     : false
+    });
+
+    $('#jsValidClients').DataTable({
+		"sPaginationType": "bootstrap",
+		"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
+		"bStateSave": false,
+		"oLanguage": {
+				"sUrl": "http://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
+		},
+		"dom": 'lBfrtip',
+		"buttons": [
+			{
+				extend: 'excel',
+				text: 'Export Excel',
+				exportOptions: {
+					columns:array
+					/* modifier: {
+						search: 'none'
+					} */
+				}
+			},
+			{
+				extend: 'print',
+				text: 'Print',
+				exportOptions: {
+					columns:array
+					/* modifier: {
+						search: 'none'
+					} */
+				}
+			},
+			//'colvis'
+		],
+		"bProcessing": true,
+        "serverSide": true,
+        "ajax":{
+            url :"<?php echo site_url('admin/clients/datasource');?>", // json datasource
+            type: "post",  // type of method  ,GET/POST/DELETE
+            data: {'is_active':1},
+            error: function(){
+              $("#employee_grid_processing").css("display","none");
+            }
+        },
+        bAutoWidth: false
+    });
+});
+</script>
