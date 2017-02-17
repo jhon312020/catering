@@ -145,5 +145,10 @@ $lang['login_description'] = 'Dear user, log in to access the admin area!';
 $lang['ticket restaurant'] = 'ticket restaurante';
 $lang['bank draft'] = 'giro bancario';
 $lang['credit/debit'] = 'targeta';
-/*----*/
+$lang['platos'] = 'Platos';
+$lang['plato'] = 'Plato';
+$lang['add_plato'] = 'Añadir Plato';
+$lang['internal_code'] = 'Código interno';
+$lang['description'] = 'Descripción';
+/*---ó-*/
 ?>

@@ -35,7 +35,7 @@ class Clients extends Admin_Controller {
 			$this->mdl_clients->form_validation->set_rules('billing_data', lang('billing_data'), 'required');
 			
 		} 
-		if($id) {
+		if($id != NULL) {
 			$this->mdl_clients->form_validation->set_rules('email', lang('email'), 'required|valid_email|edit_unique[clients.email.'.$id.']');
 			$this->mdl_clients->form_validation->set_rules('client_code', lang('client_code'), 'required|min_length[4]|edit_unique[clients.client_code.'.$id.']');
 		}
@@ -65,6 +65,7 @@ class Clients extends Admin_Controller {
 		}
 		
 		$orders_by_client_id = $this->mdl_orders->get_orders_by_client_id($id);
+		print_r($orders_by_client_id);
 		$clientCode = 'GC-CL-' . sprintf("%04s", $this->mdl_clients->getNextIncrementId());
 
 		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'orders_by_client_id' => $orders_by_client_id, 'client_code'=>$clientCode));

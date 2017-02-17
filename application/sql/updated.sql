@@ -62,3 +62,6 @@ ALTER TABLE `tbl_orders` CHANGE `price` `price` FLOAT(10,2) NOT NULL;
 ALTER TABLE `tbl_menus` CHANGE `full_price` `full_price` FLOAT(10,2) NOT NULL;
 ALTER TABLE `tbl_menus` CHANGE `half_price` `half_price` FLOAT(10,2) NOT NULL;
 ALTER TABLE `tbl_cool_drinks` CHANGE `price` `price` FLOAT(10,2) NOT NULL;
+
+/* 16-2-2017 */
+ALTER TABLE `tbl_plats` ADD `image` VARCHAR(50) NOT NULL , ADD `is_active` INT NOT NULL DEFAULT '1' , ADD `created_at` TIMESTAMP NOT NULL , ADD `updated_at` DATETIME NULL ;

@@ -1,6 +1,3 @@
-<style type="text/css">
-
-</style>
 <?php
 $readonly = ($readonly)?'readonly':'';
 $disabled = ($readonly)?'disabled':'';
