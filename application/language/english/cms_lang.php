@@ -18,6 +18,7 @@ $lang['menus'] = 'Menus';
 $lang['menu'] = 'Menu';
 $lang['basic_menu'] = 'Basic menu';
 $lang['diet_menu'] = 'Diet menu';
+$lang['combine_menu'] = 'Combined menu';
 $lang['image'] = 'Image';
 $lang['disabled'] = 'Disabled';
 

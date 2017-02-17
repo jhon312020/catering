@@ -49,10 +49,10 @@
 			<tr class="<?php echo $bgclass.' '.$topClass; ?>">
 				<td class=""><?php echo !$topClass?date('d/m/Y', $string_to_time):''; ?></td>
 				<td class=""><?php echo $menu->menu_name; ?></td>
-				<td class=""><?php echo $menu->complement; ?></td>
-				<td class=""><?php echo $menu->primary_plate; ?></td>
-				<td class=""><?php echo $menu->secondary_plate; ?></td>
-				<td class=""><?php echo $menu->postre; ?></td>
+				<td class=""><?php echo $allPlates[$menu->complement]; ?></td>
+				<td class=""><?php echo $allPlates[$menu->primary_plate]; ?></td>
+				<td class=""><?php echo $allPlates[$menu->secondary_plate]; ?></td>
+				<td class=""><?php echo $allPlates[$menu->postre]; ?></td>
 				<td class="">
 					<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/menus/view/' . $menu->id); ?>">
 						<i class="entypo-eye"></i>
