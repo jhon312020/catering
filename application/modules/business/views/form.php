@@ -1,7 +1,8 @@
 <?php
 $readonly = ($readonly)?'readonly':'';
 $disabled = ($readonly)?'disabled':'';
-$count = 1;
+$count = count($centres);
+//echo'<pre>'; print_r($centres); echo '</pre>';
 ?>
 <div class="headerbar">
 	<div class="clearfix">
@@ -31,7 +32,7 @@ $count = 1;
 							<?php echo lang('code_business');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>'name', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('code_business'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>'CodiEmpresa', 'type'=>'number', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('CodiEmpresa'), $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -39,7 +40,7 @@ $count = 1;
 							<?php echo lang('name');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>'name', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('name'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>'name', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('name'), $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -47,7 +48,7 @@ $count = 1;
 							<?php echo lang('email');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>'email', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('email'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>'email', 'type'=>'email', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('email'), $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -55,7 +56,7 @@ $count = 1;
 							<?php echo lang('telephone');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>'telephone', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('telephone'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>'telephone', 'type'=>'number', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('telephone'), $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -63,30 +64,31 @@ $count = 1;
 							<?php echo lang('contact_person');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>'contact_person', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('contact_person'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>'contact_person', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('contact_person'), $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 				</div>
 				<!-- Center -- starts -->
 				<div id="jscenterForm">
+				<?php if ($centres) { foreach($centres as $centre) { ?>
 				<div class="form-content martop">
 					<h2>
-						<?php echo lang('center'); ?>
+						<?php echo lang('center');  ?>
 					</h2>
 					<div class="form-group">
 						<label class="col-sm-2 pull-left">
 							<?php echo lang('name');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>"center[$count][name]", 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('name'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>"center[$count][Centre]", 'class'=>'form-control', 'value'=>$centre->Centre, $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 pull-left">
 							<?php echo lang('direction');?>
 						</label>
-						<div class="col-sm-10>
-						<?php echo form_textarea(array('name'=>"center[$count][direction]", 'class'=>"form-control"),$this->mdl_business->form_value('direction') ); ?>
+						<div class="col-sm-10">
+						<?php echo form_textarea(array('name'=>"center[$count][Domicili]", 'class'=>"form-control", 'required'=>'required'),$centre->Domicili ); ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -94,7 +96,7 @@ $count = 1;
 							<?php echo lang('cp');?>
 						</label>
 						<div class="col-sm-2">
-							<?php echo form_input(array('name'=>"center[$count][cp]", 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('cp'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>"center[$count][CPostal]", 'class'=>'form-control', 'value'=>$centre->CPostal, $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -102,7 +104,7 @@ $count = 1;
 							<?php echo lang('population');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>"center[$count][population]", 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('population'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>"center[$count][Poblacio]", 'class'=>'form-control', 'value'=>$centre->Poblacio, $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -110,7 +112,7 @@ $count = 1;
 							<?php echo lang('time_limit');?>
 						</label>
 						<div class="col-sm-2">
-							<?php echo form_dropdown("center[$count][hours]", $hours, date('H', strtotime($this->mdl_business->form_value('time_limit') ? $this->mdl_business->form_value('time_limit') : '10:00:00')), 'class="form-control" '.$disabled.''); ?>
+							<?php echo form_dropdown("center[$count][hours]", $hours, date('H', strtotime($centre->time_limit ? $centre->time_limit : '10:00:00')), 'class="form-control" '.$disabled.''); ?>
 							<div class="text-center">
 								<span>
 									<?php echo lang('hour'); ?>
@@ -118,7 +120,7 @@ $count = 1;
 							</div>
 						</div>
 						<div class="col-sm-2">
-							<?php echo form_dropdown("center[$count][minutes]", $minutes, date('i', strtotime($this->mdl_business->form_value('time_limit'))), 'class="form-control" '.$disabled.''); ?>
+							<?php echo form_dropdown("center[$count][minutes]", $minutes, date('i', strtotime($centre->time_limit)), 'class="form-control" '.$disabled.''); ?>
 							<div class="text-center">
 								<span>
 									<?php echo lang('minutes'); ?>
@@ -131,7 +133,7 @@ $count = 1;
 							<?php echo lang('route');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>"center[$count][route]", 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('route'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>"center[$count][Ruta]", 'class'=>'form-control', 'value'=>$centre->Ruta, $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -139,10 +141,11 @@ $count = 1;
 							<?php echo lang('norm_route');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>"center[$count][norm_route]", 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('norm_route'), $readonly=>true)); ?>
+							<?php echo form_input(array('name'=>"center[$count][NomRuta]", 'class'=>'form-control', 'value'=>$centre->NomRuta, $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
 				</div>
+				<?php } } else { $this->layout->load_view('business/center', array('count'=>$count, 'disabled'=>$disabled)); } ?>
 				</div>
 				<div class="martop jsButtonContainer">
 					<div class="form-group new_menu_container">
@@ -168,11 +171,8 @@ $count = 1;
 	form_html = $('#jscenterForm').html();
 	function duplicateForm() {
 	new_value = parseInt($('#form_number').val())+1;
-	new_html = form_html.replace(/Basic\[1\]/g,'Basic['+new_value+']');
-	new_html = new_html.replace(/Diet\[1\]/g,'Diet['+new_value+']');
+	new_html = form_html.replace(/center\[1\]/g,'center['+new_value+']');
 	$('.jsButtonContainer').before(new_html);
-	//$('.submit_buttons:last').remove();
-	//$('.new_menu_container:first').remove();
 	$('#form_number').val(new_value);
 }
 </script>

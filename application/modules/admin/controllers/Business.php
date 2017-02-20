@@ -6,6 +6,7 @@ class Business extends Admin_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('business/mdl_business');
+		$this->load->model('centres/mdl_centres');
 	}
 
 	public function index() {
@@ -17,6 +18,7 @@ class Business extends Admin_Controller {
 	public function form($id = NULL) {
 		$error_flg = false;
 		$error = array();
+		$centres = false;
 		if ($this->input->post('btn_cancel')) {
 			redirect('admin/business');
 		}
@@ -24,39 +26,54 @@ class Business extends Admin_Controller {
 		$business = $this->db->where('id', $id)->get('business')->row();
 		if ($this->mdl_business->run_validation()) {
 			echo'<pre>'; print_r($_POST); echo '</pre>';
-			exit;
-			if($id == null) {
+			//exit;
+			if ($id == null) {
 				$email_exists = $this->mdl_business->email_exists($this->input->post('email'));
-			}
-			else{
-				if($business->email != $this->input->post('email'))
+			} else {
+				if ($business->email != $this->input->post('email'))
 					$email_exists = $this->mdl_business->email_exists($this->input->post('email'));
 				else
 					$email_exists = false;
 			}
-			if(!$email_exists){
+			if (!$email_exists) {
 				$data = $this->input->post();
-				$data['time_limit'] = date('H:i', strtotime($data['hours'].':'.$data['minutes']));
-				unset($data['hours'], $data['minutes'], $data['btn_submit']);
-				if(is_null($id) || $id == ''){
+				
+				$centers = $data['center'];
+				//$centre['time_limit'] = date('H:i', strtotime($centre['hours'].':'.$centre['minutes']));
+				unset($data['hours'], $data['minutes'], $data['btn_submit'], $data['center'], $data['form_number']);
+				if (is_null($id) || $id == '') {
 					$id = $this->mdl_business->save(null, $data);
+					//echo'<pre>'; print_r($data); echo '</pre>';
+					//echo'<pre>'; print_r($centers); echo '</pre>';
+					//exit;
+					if ($id) {
+						foreach ($centers as $key => $center) {
+							 $center['time_limit'] = date('H:i', strtotime($center['hours'].':'.$center['minutes']));
+							 unset($center['hours'], $center['minutes']);
+							 $center['bussiness_id'] = $id;
+							 $center_id = $this->mdl_centres->save(null, $center);
+							 //echo'<pre>'; print_r($center); echo '</pre>';
+						}
+						//echo'<pre>'; print_r($centers); echo '</pre>';
+						//exit;
+					}
+				} else {
+					$this->mdl_business->save($id, $data);
 				}
-				else{
-					$this->mdl_business->save($id,$data);
-				}
-			}
-			else{
+			} else {
 				$error_flg = true;
 				$error[] = lang('exists_username');
 			}
-			if(!$error_flg) {
+			if (!$error_flg) {
 				redirect('admin/business');
 			}
 		}
 		if ($id and !$this->input->post('btn_submit')) {
 			$this->mdl_business->prep_form($id);
+			$centres = $this->mdl_centres->getByBusinessId($id);
+			//echo'<pre>'; print_r($centers); echo '</pre>';
 		}
-		$this->layout->set(array('readonly'=>false, 'error'=>$error));
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'centres'=>$centres));
 		$this->layout->buffer('content', 'business/form');
 		$this->layout->render();
 	}
