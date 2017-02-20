@@ -39,11 +39,17 @@ $this->load->view('navigation_menu');
 									<p><b>
                     <?php 
                       $order_detail = json_decode($menu['order_detail'],true);
+                      unset($order_detail['order_code']);
                       $order_detail = array_values($order_detail);
+
                       if ($menu['order_title'] == 'combine') {
                         echo lang('combine_menu');
                       } else {
-                        echo lang(strtolower($menu_titles[$order_detail[0]['menu_type_id']]).'_menu');
+                        if (count($order_detail[0][0]['order']) == 3) {
+                          echo lang('medio_menu');
+                        } elseif (count($order_detail[0][0]['order']) == 4) {
+                          echo lang(strtolower($menu_titles[$order_detail[0]['menu_type_id']]).'_menu');  
+                        }
                       }
                     ?>
                   </b></p>
@@ -55,7 +61,19 @@ $this->load->view('navigation_menu');
                       foreach ($order_det as $key=>$orders) {
                         if (!is_integer($key))
                           continue;
-                        foreach($orders['order'] as $order) {
+                        $order = $orders['order'];
+                        if (!in_array($order['Guarnicio'], $description))
+                            $description[] = $plates[$order['Guarnicio']];
+                        if (isset($order['Primer'])) {
+                          $description[] = $plates[$order['Primer']];
+                        }
+                        if (isset($order['Segon'])) {
+                          $description[] = $plates[$order['Segon']];
+                        }
+                        if (!in_array($order['Postre'], $description))
+                          $description[] = $plates[$order['Postre']];
+                        
+                        /*foreach($orders['order'] as $order) {
                           if (!in_array($order['complement'], $description))
                             $description[] = $order['complement'];
                           if (isset($order['primary_plate'])) {
@@ -66,11 +84,11 @@ $this->load->view('navigation_menu');
                           }
                           if (!in_array($order['postre'], $description))
                             $description[] = $order['postre'];
-                        }
+                        } */
 
                         if (isset($orders['cool_drink'])) {
                           foreach ($orders['cool_drink'] as $drinks) {
-                            $description[] = $drinks['drinks_name'];
+                            $description[] = $cool_drink_list[$drinks];
                           }  
                         }
                         

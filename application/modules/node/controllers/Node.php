@@ -10,6 +10,8 @@ if (!defined('BASEPATH'))
  */
 class Node extends Anonymous_Controller {
   var $site_contact = '';
+
+  public $menu_types = [1=>'Basic',2=>'Diet'];
 	
 	/**
    * class constructor
@@ -28,6 +30,8 @@ class Node extends Anonymous_Controller {
 		$this->load->model('menu_types/mdl_menu_types');
 		$this->load->model('temporary_orders/mdl_temporary_orders');
     $this->load->model('contacts/mdl_contacts');
+    $this->load->model('plats/mdl_plats');
+    $this->load->model('order_reports/mdl_order_reports');
 		$this->site_contact = $this->mdl_contacts->where(array('is_active' => 1))->get()->row();
 		
 		$todaySelectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
@@ -185,7 +189,6 @@ class Node extends Anonymous_Controller {
    * 
   */
   public function menus() {
-		
 		$menuDate = date('Y-m-d');
     $data_array = array();
 		$business_id = $this->session->userdata('business_id');
@@ -195,7 +198,6 @@ class Node extends Anonymous_Controller {
 		$data_array['left_time'] = 0;
 		if($this->input->post()) {
 			$postParams = $this->input->post();
-			
 			$menuDate = date('Y-m-d', strtotime($postParams['menu_date']));
 		}
 		$menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
@@ -207,7 +209,8 @@ class Node extends Anonymous_Controller {
 			}
     }
 		
-		$data_array['menu_types'] = $this->mdl_menu_types->get()->result_array();
+		//$data_array['menu_types'] = $this->mdl_menu_types->get()->result_array();
+    $data_array['menu_types'] = $this->menu_types;
 		
 		$data_menu = [];
 		
@@ -215,15 +218,29 @@ class Node extends Anonymous_Controller {
 		if($data_array['left_time'] == 0 && $menuDate == date('Y-m-d')) {
 			$show_menus = false;
 		}
+
+    $platesId = [];
+    $plateIdFields = ['Primer','Segon','Guarnicio','Postre'];
     //Set menu_type_id as key in all menus list.
     foreach($menu_list as $menus) {
       $data_menu[$menus['menu_type_id']][] = $menus;
+      foreach ($plateIdFields as $field) {
+        $platesId[$menus[$field]] = $menus[$field];
+      }
     }
 
+    if (!$platesId) {
+      $data_array['plates'] = [];
+    } else {
+      $data_array['plates'] = $this->mdl_plats->get_all_plats_by_ids($platesId);  
+    }
+
+    
     $data_array['available_dates'] = $this->mdl_menus->get_available_dates();
 		$data_array['show_menus'] = $show_menus;
 		$data_array['menu_lists'] = $data_menu;
 		$data_array['menu_date'] = date('d-m-Y', strtotime($menuDate));
+
     $this->load->view('layout/templates/menus', $data_array);
   }
 	/**
@@ -248,10 +265,10 @@ class Node extends Anonymous_Controller {
   public function payment() {
 		
 		$data_array = array();
-    $payment_types = $this->mdl_menu_types->get()->result_array();
-    foreach ($payment_types as $type) {
-      $data_array['menu_titles'][$type['id']] = $type['menu_name'];
-    }
+
+    $data_array['menu_titles'] = $this->menu_types;
+    $data_array['plates'] = $this->mdl_plats->get_plat_list();
+    $data_array['cool_drink_list'] = $this->mdl_drinks->get_cool_drink_list();
 
     $this->load->view('layout/templates/payment', $data_array);
   }

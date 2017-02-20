@@ -68,6 +68,9 @@ class Anonymous_Controller extends MX_Controller {
 			
 			//Template path for local images.
 			define('MENU_IMAGE_PATH', base_url()."assets/cc/images/menus/");
+
+			//Template path for local images.
+			define('PLAT_IMAGE_PATH', base_url()."assets/cc/images/plats/");
 			
       $this->load->helper('language');
       $this->lang->load('cms', $lang);

@@ -64,33 +64,52 @@ class Mdl_temporary_orders extends Response_Model {
 			$menu_ids = array_keys($menu_orders);
 			$menus = $this->mdl_menus->where_in('id',$menu_ids)->get()->result_array();
 			$selectedMenus = [];
+			$order_code = [];
 			
 			$totalPrice = 0;
 			foreach ($menus as $menu) {
 				$data = [];
+				
 				if (count($menu_orders[$menu['id']]) == 2) {
 					$data['price'] = $menu['full_price'];
 					$data['order_type'] = 'full';
+					$data['menu_id'] = $menu['id'];
 				} else {
 					$data['price'] = $menu['half_price'];
 					$data['order_type'] = 'half';
+					$data['menu_id'] = $menu['id'];
 				}
-				$data['complement'] = $menu['complement'];
-				foreach ($menu_orders[$menu['id']] as $order) {
-					$orders = [];
-					$orders['complement'] 					= $menu['complement'];
-					$orders['postre'] 						= $menu['postre'];
-					$orders[$order.'_plate'] 				= $menu[$order.'_plate'];
-					$orders['description_'.$order.'_plate'] = $menu['description_'.$order.'_plate'];
-					$orders[$order.'_image'] 				= $menu[$order.'_image'];
-					$data['order'][] = $orders;
+
+				$orders = [];
+				$orders = $menu_orders[$menu['id']];
+				$orders['Guarnicio'] = $menu['Guarnicio'];
+				$orders['Postre'] = $menu['Postre'];
+				$data['order'] = $orders;
+				if (array_key_exists('Primer', $orders) && !array_key_exists('Segon', $orders)) {
+					if ($menu['menu_type_id'] == 1) {
+						$order_code[] = 	'N1';
+					} else {
+						$order_code[] = 	'R1';
+					}
+				} elseif (!array_key_exists('Primer', $orders) && array_key_exists('Segon', $orders)) {
+					if ($menu['menu_type_id'] == 1) {
+						$order_code[] = 	'N2';
+					} else {
+						$order_code[] = 	'R2';
+					}
+				} elseif (array_key_exists('Primer', $orders) && array_key_exists('Segon', $orders)) {
+					if ($menu['menu_type_id'] == 1) {
+						$order_code[] = 	'N';
+					} else {
+						$order_code[] = 	'R';
+					}					
 				}
 
 				if (isset($post_params['cool_drinks'][$menu['id']])) {
 		          $cool_drinks = json_encode($post_params['cool_drinks'][$menu['id']]);
 					foreach ($post_params['cool_drinks'][$menu['id']] as $cool_drink) {
 						$data['price'] += $cool_drink_list[$cool_drink]['price'];
-						$data['cool_drink'][] = $cool_drink_list[$cool_drink];
+						$data['cool_drink'][] = $cool_drink_list[$cool_drink]['id'];
 					}
 		        }
 
@@ -104,6 +123,7 @@ class Mdl_temporary_orders extends Response_Model {
 				$order_title = 	'single';
 			}
 			$selectedMenus['totalPrice'] = $totalPrice;
+			$selectedMenus['order_code'] = $order_code;
 			$selectedMenus = json_encode($selectedMenus);
 			
 			$insert[] = array( 'order_date' => date('Y-m-d',strtotime($post_params['order_date'])), 'client_id' => $this->session->userdata('client_id'), 'order_title' => $order_title, 'order_detail'=>$selectedMenus, 'price' => $totalPrice);

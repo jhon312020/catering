@@ -38,17 +38,22 @@ $this->load->view('navigation_menu');
 					if($key%2 == 0) {
 						$checkboxClass = '-brown';
 						$headerClass = '';
-					}
+            $plusColor = '';
+            $selectBorderColor = '';
+					}else {
+            $plusColor = 'text-green';
+            $selectBorderColor = 'border-green';
+          }
 				?>
 				<div class="clear-pad" style="clear:both">
 				<div class="col-sm-12 section-down">
 					<div id="ribbon-container<?php echo $headerClass; ?>" class="ribbon-fix">
-            <a href="javascript:;" id="ribbon">MENU <?php echo $menu_type['menu_name'] ?></a>
+            <a href="javascript:;" id="ribbon">MENU <?php echo $menu_type; ?></a>
           </div>
           <div class="menu-bottom jsMenuDiv">
 						<?php 
-						if(isset($menu_lists[$menu_type['id']])) {
-							foreach($menu_lists[$menu_type['id']] as $menu_list) {
+						if(isset($menu_lists[$key])) {
+							foreach($menu_lists[$key] as $menu_list) {
 								$menu_list_with_id[$menu_list['id']] = $menu_list;
 						?>
             <div class="row doublemenu jsSubMenu">
@@ -57,42 +62,35 @@ $this->load->view('navigation_menu');
                   echo '<div class="disable_menus"></div>';
                 }
               ?>
-						<div class="col-sm-2 col-my-2 smallpad">
-              <span class="menu-plus">+</span><span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish1.png"></span>
+						<div class="col-sm-2 col-my-4 dishpad">
+              <span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span><img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Guarnicio']]['image']; ?>">
               <br>
-              <span><?php echo $menu_list['complement']; ?></span>
+              <span><?php echo $plates[$menu_list['Guarnicio']]['Plat']; ?></span>
             </div>
             <div class="col-sm-2 col-my-4 dishpad">
-              <span class="menu-plus img-plus">+</span><span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['primary_image']; ?>">
+              <span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span><img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Primer']]['image']; ?>">
               <br>
-              <span class="title-aligned"><?php echo $menu_list['primary_plate']; ?></span>
-              <p class="menu-desc"><?php echo $menu_list['description_primary_plate']; ?></p>
+              <span class="title-aligned"><?php echo $plates[$menu_list['Primer']]['Plat']; ?></span>
               <span class="custom-checkbox col-sm-offset-5">
-              <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][]" value="primary" />
+              <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Primer]" value="<?php echo $menu_list['Primer']; ?>" />
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
               </span>
             </div>
             <div class="col-sm-2 col-my-4 dishpad">
-              <span class="menu-plus img-plus">+</span><img class="img-responsive menu-img" src="<?php echo MENU_IMAGE_PATH.$menu_list['secondary_image']; ?>">
+              <span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span><img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Segon']]['image']; ?>">
               <br>
-              <span class="title-aligned"><?php echo $menu_list['secondary_plate']; ?></span>
-              <p class="menu-desc"><?php echo $menu_list['description_secondary_plate']; ?></p>
+              <span class="title-aligned"><?php echo $plates[$menu_list['Segon']]['Plat']; ?></span>
               <span class="custom-checkbox col-sm-offset-5">
-              <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][]" value="secondary" />
+              <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Segon]" value="<?php echo $menu_list['Segon']; ?>" />
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
               </span>
             </div>
-            <div class="col-sm-1 col-my-2 smallpad">
-              <span class="menu-plus">+</span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish2.png">
+            <div class="col-sm-2 col-my-4 dishpad">
+              <span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span><img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Postre']]['image']; ?>">
               <br>
-              <span><?php echo $menu_list['postre']; ?></span>
+              <span><?php echo $plates[$menu_list['Postre']]['Plat']; ?></span>
             </div>
-            <div class="col-sm-1 col-my-3 smallpad">
-              <span class="menu-plus">+</span><img class="img-responsive img-marg" src="<?php echo TEMPLATE_PATH; ?>dish6.png">
-              <br>
-              <span>Pa</span>
-            </div>
-						<div class="col-sm-2 col-my-2 smallpad multi-pad">
+						<div class="col-sm-2 col-my-2 smallpad multi-pad <?php echo 'multi-pad-'.$selectBorderColor; ?> " >
               <select class="selectpicker select-menu boostrap-multiselect" name="cool_drinks[<?php echo $menu_list['id']; ?>][]" multiple="multiple">
 								<?php foreach($cool_drinks as $drinks) { ?>
 									<option value="<?php echo $drinks->id; ?>"><?php echo $drinks->drinks_name;//.'---'.$drinks->price; ?></option>

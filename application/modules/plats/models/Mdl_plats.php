@@ -110,5 +110,20 @@ class Mdl_plats extends Response_Model {
         return array('plate1'=>$plate1,'plate2'=>$plate2,'plate3'=>$plate3,'plate4'=>$plate4);
     }
 
+    /**
+    * Function get_all_plats_by_ids
+    * Params ids as Array
+    * @return  Array
+    * 
+    */
+    public function get_all_plats_by_ids($ids) {
+        $plates = $this->mdl_plats->where_in('Id',$ids)->get()->result_array();
+        $allPlates = [];
+        foreach ($plates as $plate) {
+            $allPlates[$plate['Id']] = $plate;
+        }
+        return $allPlates;
+    }
+
 }
 ?>

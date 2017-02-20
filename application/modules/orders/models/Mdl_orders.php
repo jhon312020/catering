@@ -148,22 +148,66 @@ class Mdl_orders extends Response_Model {
 		$temporary_orders = $this->mdl_temporary_orders->get_client_today_menus();
 		$temporary_order_ids = [];
 		$reference_no = '';
+
  		foreach($temporary_orders as $key => $order) {
 			$order_type = $order['order_title'];
 			$price = $order['price'];
+			$order_code = json_decode($order['order_detail'],true);
+			$order_code = $order_code['order_code'];
 			
 			$total_price += $price;
 			$client_id = $this->session->userdata('client_id');
-			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no);
+			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no, 'order_code'=>implode(',',$order_code));
 			if (in_array($payment_type, $this->payment_types)) {
 				$data['is_active'] = 1;
 				$data['payment_method'] = $payment_type;
 			}
+
+
 			$order_id = $this->mdl_orders->save(null, $data);
 			
 			if($key == 0) {
 				$reference_no = $client_id.''.strtotime(date('Y-m-d')).''.$order_id;
 				$this->mdl_orders->save($order_id, array('reference_no' => $reference_no));
+			}
+
+			$order['order_detail'] = json_decode($order['order_detail'],true);
+
+			unset($order['order_detail']['totalPrice']);
+			unset($order['order_detail']['order_code']);
+
+			$insertReportData = [];
+			$drinksData = [];
+			foreach ($order['order_detail'] as $menu_types) {
+				foreach ($menu_types as $report) {
+					if (!is_array($report)) {
+						continue;
+					}
+					$reportData = array('order_id'=>$order_id, 
+							'reference_no'=>$reference_no,
+							'menu_id'=>$report['menu_id'],
+							'is_active'=>$data['is_active']);
+					if (isset($report['menu_id']['order']['Primer'])) {
+						$reportData['Primer'] = $report['menu_id']['order']['Primer'];
+					}
+					if (isset($report['menu_id']['order']['Segon'])) {
+						$reportData['Segon'] = $report['menu_id']['order']['Segon'];
+					}
+					$insertReportData[] = $reportData;
+					if (isset($report['cool_drink'])) {
+						foreach ($report['cool_drink'] as $drink_id) {
+							$drinksData[] = array('order_id'=>$order_id,'drinks_id'=>$drink_id);
+						}
+					}	
+				}
+			}
+
+			if ($drinksData) {
+				$this->db->insert_batch('tbl_order_drinks', $drinksData);
+			}
+
+			if ($insertReportData) {
+				$this->db->insert_batch('tbl_order_reports', $insertReportData);
 			}
 			
 			/*$cool_drinks = json_decode($order['cool_drinks_array'], true);
