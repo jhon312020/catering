@@ -13,7 +13,6 @@
 			<th><?php echo lang('business_id'); ?></th>
 			<th><?php echo lang('business_title'); ?></th>
 			<th><?php echo lang('email'); ?></th>
-			<th><?php echo lang('direction'); ?></th>
 			<th><?php echo lang('telephone'); ?></th>
 			<th><?php echo lang('edit'); ?></th>
 		</tr>
@@ -24,7 +23,6 @@
 			<td><?php echo $business->id; ?></td>
 			<td><?php echo $business->name; ?></td>
 			<td><?php echo $business->email; ?></td>
-			<td><?php echo $business->direction; ?></td>
 			<td><?php echo $business->telephone; ?></td>
 			<td>
 				<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/business/view/' . $business->id); ?>">
