@@ -11,7 +11,7 @@ $count = 1;
 	</div>
 </div>
 <form method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
-	<input type="hidden" id="form_number" name="form_number" value="
+	<input type="text" id="form_number" name="form_number" value="
 		<?php echo $count; ?>" />
 		<div class="row">
 			<?php 
@@ -85,7 +85,7 @@ $count = 1;
 						<label class="col-sm-2 pull-left">
 							<?php echo lang('direction');?>
 						</label>
-						<div class="col-sm-10>
+						<div class="col-sm-10">
 						<?php echo form_textarea(array('name'=>"center[$count][direction]", 'class'=>"form-control"),$this->mdl_business->form_value('direction') ); ?>
 						</div>
 					</div>
@@ -168,8 +168,8 @@ $count = 1;
 	form_html = $('#jscenterForm').html();
 	function duplicateForm() {
 	new_value = parseInt($('#form_number').val())+1;
-	new_html = form_html.replace(/Basic\[1\]/g,'Basic['+new_value+']');
-	new_html = new_html.replace(/Diet\[1\]/g,'Diet['+new_value+']');
+	new_html = form_html.replace(/center\[1\]/g,'center['+new_value+']');
+	//new_html = new_html.replace(/Diet\[1\]/g,'Diet['+new_value+']');
 	$('.jsButtonContainer').before(new_html);
 	//$('.submit_buttons:last').remove();
 	//$('.new_menu_container:first').remove();
