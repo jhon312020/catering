@@ -153,5 +153,11 @@ $lang['add_plato'] = 'Añadir Plato';
 $lang['internal_code'] = 'Código interno';
 $lang['description'] = 'Descripción';
 $lang['name_of_the_plate'] = 'Nombre del plato';
+$lang['code_business'] = 'Cod. empersa';
+$lang['cp'] = 'CP';
+$lang['route'] = 'Ruta';
+$lang['population'] = 'Población';
+$lang['norm_route'] = 'Norn ruta';
+$lang['centre'] = 'Centro';
 /*---ó-*/
 ?>

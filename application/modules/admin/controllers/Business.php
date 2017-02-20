@@ -23,6 +23,8 @@ class Business extends Admin_Controller {
 		$zone_exists = false;
 		$business = $this->db->where('id', $id)->get('business')->row();
 		if ($this->mdl_business->run_validation()) {
+			echo'<pre>'; print_r($_POST); echo '</pre>';
+			exit;
 			if($id == null) {
 				$email_exists = $this->mdl_business->email_exists($this->input->post('email'));
 			}

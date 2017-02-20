@@ -107,7 +107,7 @@
 <script type="text/javascript">
 var responsiveHelper;
 $( document ).ready(function() {
-	var length = $(".data_table thead tr th").length-1;
+	var length = $("#jsPendingClients thead tr th").length-1;
 	var array = new Array();
 	for(var i = 0; i < length; i++){
 		array.push(i);
@@ -125,16 +125,6 @@ $( document ).ready(function() {
 			{
 				extend: 'excel',
 				text: 'Export Excel',
-				exportOptions: {
-					columns:array
-					/* modifier: {
-						search: 'none'
-					} */
-				}
-			},
-			{
-				extend: 'print',
-				text: 'Print',
 				exportOptions: {
 					columns:array
 					/* modifier: {
@@ -169,16 +159,6 @@ $( document ).ready(function() {
 			{
 				extend: 'excel',
 				text: 'Export Excel',
-				exportOptions: {
-					columns:array
-					/* modifier: {
-						search: 'none'
-					} */
-				}
-			},
-			{
-				extend: 'print',
-				text: 'Print',
 				exportOptions: {
 					columns:array
 					/* modifier: {

@@ -27,7 +27,8 @@ class Base_Controller extends MX_Controller {
 
         $this->load->database();
 		$this->load->helper('language');
-		$this->lang->load('cms', $this->session->userdata('cms_lang'));
+		//$this->lang->load('cms', $this->session->userdata('cms_lang'));
+		$this->lang->load('cms', 'spanish');
 		//print_r($this->session->all_userdata());die();
 		
         $this->load->library('form_validation');
