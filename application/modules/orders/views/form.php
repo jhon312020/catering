@@ -25,7 +25,8 @@ $disabled = ($readonly)?'disabled':'';
 				<form method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 					<div class="form-group">
 						<div class="col-sm-12">
-						<p><span><?php echo lang('menu_type'); ?></span> : <span class="highlight"><?php echo lang('menu_cms').' '.$order->menu_name; ?></span></p>
+						<p><span><?php echo lang('menu_type'); ?></span> : <span class="highlight">
+						<?php echo lang('menu_cms'); ?></span></p>
 						<p><span><?php echo lang('client_code'); ?></span> : <span class="highlight"><?php echo $order->client_code; ?></span></p>
 						<p><span><?php echo lang('name'); ?></span> : <span class="highlight"><?php echo $order->name; ?></span></p>
 						<p><span><?php echo lang('business'); ?></span> : <span class="highlight"><?php echo $order->business; ?></span></p>

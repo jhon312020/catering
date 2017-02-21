@@ -130,7 +130,7 @@ class Clients extends Admin_Controller {
 		}
 		
 		$orders_by_client_id = $this->mdl_orders->get_orders_by_client_id($id);
-		print_r($orders_by_client_id);
+		
 		$clientCode = 'GC-CL-' . sprintf("%04s", $this->mdl_clients->getNextIncrementId());
 
 		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'orders_by_client_id' => $orders_by_client_id, 'client_code'=>$clientCode));

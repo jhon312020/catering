@@ -7,6 +7,8 @@ class Orders extends Admin_Controller {
 		parent::__construct();
 		$this->load->model('orders/mdl_orders');
 		$this->load->model('menus/mdl_menus');
+		$this->load->model('plats/mdl_plats');
+		$this->load->model('drinks/mdl_drinks');
 	}
 
 	public function index() {
@@ -104,19 +106,20 @@ class Orders extends Admin_Controller {
 		if ($this->input->post('btn_cancel')) {
 			redirect('admin/orders');
 		}
-		$this->mdl_orders->prep_form($id);
+		//$this->mdl_orders->prep_form($id);
 		
-		$menus_by_date = $this->mdl_menus->get_menus_by_date($order->order_date);
+		/*$menus_by_date = $this->mdl_menus->get_menus_by_date($order->order_date);
 		
 		$primary = array('' => 'Select');
 		$secondary = array('' => 'Select');
 		foreach($menus_by_date as $menu) {
-			$primary[$menu['id']] = $menu['primary_plate'];
-			$secondary[$menu['id']] = $menu['secondary_plate'];
-		}
-		
-		$this->layout->set(array('readonly'=>true, 'error'=>$error, 'order' => $order, 'primary' => $primary, 'secondary' => $secondary));
-		$this->layout->buffer('content', 'orders/form');
+			$primary[$menu['id']] = $menu['Primer'];
+			$secondary[$menu['id']] = $menu['Segon'];
+		}*/
+		$plates = $this->mdl_plats->get_plat_list();
+		$cool_drink_list = $this->mdl_drinks->get_cool_drink_list();
+		$this->layout->set(array('readonly'=>true, 'error'=>$error, 'order' => $order, 'plates'=>$plates, 'cool_drink_list'=>$cool_drink_list));
+		$this->layout->buffer('content', 'orders/view');
 		$this->layout->render();
 	}
 	public function toggle($id, $bool){
