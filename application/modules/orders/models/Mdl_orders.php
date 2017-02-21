@@ -124,11 +124,9 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_date($order_date) {
 		$orders_list_by_date = $this->mdl_orders
-											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.price, orders.is_active, menu_types.menu_name')
+											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.price, orders.is_active,orders.order_code')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
-											->join('menus', 'menus.id = orders.menu_id', 'left')
-											->join('menu_types', 'menus.menu_type_id = menu_types.id', 'left')
 											->where('orders.order_date', $order_date)
 											->get()->result();
 											
@@ -186,25 +184,35 @@ class Mdl_orders extends Response_Model {
 					$reportData = array('order_id'=>$order_id, 
 							'reference_no'=>$reference_no,
 							'menu_id'=>$report['menu_id'],
-							'is_active'=>$data['is_active']);
-					if (isset($report['menu_id']['order']['Primer'])) {
-						$reportData['Primer'] = $report['menu_id']['order']['Primer'];
+							'is_active'=>$data['is_active'],
+							'Primer' => 0,
+							'Segon' => 0,
+							'created_at'=>date('Y:m:d H:i:s'),
+							'updated_at'=>date('Y:m:d H:i:s'));
+					if (isset($report['order']['Primer'])) {
+						$reportData['Primer'] = $report['order']['Primer'];
 					}
-					if (isset($report['menu_id']['order']['Segon'])) {
-						$reportData['Segon'] = $report['menu_id']['order']['Segon'];
+					if (isset($report['order']['Segon'])) {
+						$reportData['Segon'] = $report['order']['Segon'];
 					}
 					$insertReportData[] = $reportData;
 					if (isset($report['cool_drink'])) {
 						foreach ($report['cool_drink'] as $drink_id) {
-							$drinksData[] = array('order_id'=>$order_id,'drinks_id'=>$drink_id);
+							$drinksData[] = array('order_id'=>$order_id,
+												'drinks_id'=>$drink_id,
+												'created_at'=>date('Y:m:d H:i:s'),
+												'updated_at'=>date('Y:m:d H:i:s'));
 						}
-					}	
+					}
 				}
 			}
 
 			if ($drinksData) {
 				$this->db->insert_batch('tbl_order_drinks', $drinksData);
 			}
+
+			/*echo '<pre>';
+			print_r($insertReportData);*/
 
 			if ($insertReportData) {
 				$this->db->insert_batch('tbl_order_reports', $insertReportData);

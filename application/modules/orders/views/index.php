@@ -26,8 +26,6 @@
 			<th><?php echo lang('name'); ?></th>
 			<th><?php echo lang('business_title'); ?></th>
 			<th><?php echo lang('menu_cms'); ?></th>
-			<th><?php echo lang('payment_details'); ?></th>
-			<th><?php echo lang('price'); ?></th>
 			<th><?php echo lang('edit'); ?></th>
 		</tr>
 	</thead>
@@ -38,9 +36,7 @@
 				<td class=""><?php echo date('d/m/Y', strtotime($order->order_date)); ?></td>
 				<td class=""><?php echo $order->name . ' ' . $order->surname; ?></td>
 				<td class=""><?php echo $order->business; ?></td>
-				<td class=""><?php echo lang('menu_cms').' '.$order->menu_name; ?></td>
-				<td class=""><?php echo $order->payment_method; ?></td>
-				<td class=""><?php echo $order->price; ?></td>
+				<td class=""><?php echo str_replace(',','',$order->order_code); ?></td>
 				<td class="">
 					<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/orders/view/' . $order->id); ?>">
 						<i class="entypo-eye"></i>

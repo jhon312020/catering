@@ -27,9 +27,25 @@ $this->load->view('navigation_menu');
 							?>
 							<tr>
                 <td>
-									<p><b>Menu <?php echo $order['menu_name']; ?></b></p>
+									<p><b>
+                    <?php 
+                      $order_detail = json_decode($order['order_detail'],true);
+                      unset($order_detail['order_code']);
+                      $order_detail = array_values($order_detail);
+
+                      if ($order['order_type'] == 'combine') {
+                        echo lang('combine_menu');
+                      } else {
+                        if (count($order_detail[0][0]['order']) == 3) {
+                          echo lang('medio_menu');
+                        } elseif (count($order_detail[0][0]['order']) == 4) {
+                          echo lang(strtolower($menu_titles[$order_detail[0]['menu_type_id']]).'_menu');  
+                        }
+                      }
+                    ?>
+                  </b></p>
                   <?php 
-										$description = array();
+										/*$description = array();
 										$description[] =  $order['complement'];
 										
 										switch($order['order_type']) {
@@ -53,12 +69,40 @@ $this->load->view('navigation_menu');
 													}
 												}
 											}
-										}
+										}*/
+
+                    $description = array();
+                    foreach ($order_detail as $order_det) {
+                      if (!is_array($order_det))
+                        continue;
+                      foreach ($order_det as $key=>$orders) {
+                        if (!is_integer($key))
+                          continue;
+                        $order_array = $orders['order'];
+                        if (!in_array($order_array['Guarnicio'], $description))
+                            $description[] = $plates[$order_array['Guarnicio']];
+                        if (isset($order_array['Primer'])) {
+                          $description[] = $plates[$order_array['Primer']];
+                        }
+                        if (isset($order_array['Segon'])) {
+                          $description[] = $plates[$order_array['Segon']];
+                        }
+                        if (!in_array($order_array['Postre'], $description))
+                          $description[] = $plates[$order_array['Postre']];
+
+                        if (isset($orders['cool_drink'])) {
+                          foreach ($orders['cool_drink'] as $drinks) {
+                            $description[] = $cool_drink_list[$drinks];
+                          }  
+                        }
+                        
+                      }
+                    }
 										echo implode(', ', $description);
 									?>
 									, pan, aceite, vinagre y cubietros
                 </td>
-                <td><?php echo date('d/m/Y', strtotime($order['menu_date'])); ?></td>
+                <td><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
                 <td><?php echo $order['price']; ?> &euro;</td>
                 <td><?php echo $order['payment_method']; ?></td>
               </tr>

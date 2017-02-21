@@ -376,11 +376,14 @@ class Node extends Anonymous_Controller {
    * 
    */
   public function orderDetails($reference_no) {
+    $data_array = array();
 
 		$data_array['orders'] = $this->mdl_orders->get_orders_by_ref_no($reference_no);
-		
-		//print_r($data_array['orders']);die;
-		
+
+    $data_array['menu_titles'] = $this->menu_types;
+    $data_array['plates'] = $this->mdl_plats->get_plat_list();
+    $data_array['cool_drink_list'] = $this->mdl_drinks->get_cool_drink_list();
+    
 		$data_array['reference_no'] = $reference_no;
 		
 		$this->load->view('layout/templates/order-details', $data_array);
