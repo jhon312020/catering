@@ -25,7 +25,7 @@ class Business extends Admin_Controller {
 		$zone_exists = false;
 		$business = $this->db->where('id', $id)->get('business')->row();
 		if ($this->mdl_business->run_validation()) {
-			echo'<pre>'; print_r($_POST); echo '</pre>';
+			//echo'<pre>'; print_r($_POST); echo '</pre>';
 			//exit;
 			if ($id == null) {
 				$email_exists = $this->mdl_business->email_exists($this->input->post('email'));
@@ -37,31 +37,20 @@ class Business extends Admin_Controller {
 			}
 			if (!$email_exists) {
 				$data = $this->input->post();
-				
 				$centers = $data['center'];
-				//$centre['time_limit'] = date('H:i', strtotime($centre['hours'].':'.$centre['minutes']));
 				unset($data['hours'], $data['minutes'], $data['btn_submit'], $data['center'], $data['form_number']);
 				if (is_null($id) || $id == '') {
+					$data['created_at'] = date('Y-m-d H:i:s');
 					$id = $this->mdl_business->save(null, $data);
-					//echo'<pre>'; print_r($data); echo '</pre>';
-					//echo'<pre>'; print_r($centers); echo '</pre>';
-					//exit;
 					if ($id) {
-						foreach ($centers as $key => $center) {
-							 $center['time_limit'] = date('H:i', strtotime($center['hours'].':'.$center['minutes']));
-							 unset($center['hours'], $center['minutes']);
-							 $center['bussiness_id'] = $id;
-							 $center_id = $this->mdl_centres->save(null, $center);
-							 //echo'<pre>'; print_r($center); echo '</pre>';
-						}
-						//echo'<pre>'; print_r($centers); echo '</pre>';
-						//exit;
+						$this->save_centres($id, $centers);
 					}
 				} else {
+					$data['updated_at'] = date('Y-m-d H:i:s');
 					$this->mdl_business->save($id, $data);
+					$this->save_centres($id, $centers);
 				}
 			} else {
-				$error_flg = true;
 				$error[] = lang('exists_username');
 			}
 			if (!$error_flg) {
@@ -71,7 +60,6 @@ class Business extends Admin_Controller {
 		if ($id and !$this->input->post('btn_submit')) {
 			$this->mdl_business->prep_form($id);
 			$centres = $this->mdl_centres->getByBusinessId($id);
-			//echo'<pre>'; print_r($centers); echo '</pre>';
 		}
 		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'centres'=>$centres));
 		$this->layout->buffer('content', 'business/form');
@@ -84,19 +72,40 @@ class Business extends Admin_Controller {
 			redirect('admin/business');
 		}
 		$this->mdl_business->prep_form($id);
-		$this->layout->set(array('readonly'=>true, 'error'=>$error));
+		$centres = $this->mdl_centres->getByBusinessId($id);
+		$this->layout->set(array('readonly'=>true, 'error'=>$error, 'centres'=>$centres));
 		$this->layout->buffer('content', 'business/form');
 		$this->layout->render();
 	}
-	public function toggle($id, $bool){
-		if ($id){
+	public function toggle($id, $bool) {
+		if ($id) {
 			$bool = ($bool) ? false : true;
-			$this->mdl_business->save($id, array('is_active'=>$bool));
+			$this->mdl_business->save($id, array('is_active'=>$bool, 'updated_at'=>date('Y-m-d H:i:s')));
+			$this->mdl_centres->update('centres', array('is_active'=>$bool, 'updated_at'=>date('Y-m-d H:i:s')), array('bussiness_id'=>$id));
 			redirect('admin/business');
 		}
 	}
 	public function delete($id) {
 		$this->mdl_business->delete($id);
+		$this->mdl_centres->delete('centres', array('bussiness_id'=>$id));
 		redirect('admin/business');
+	}
+	/***
+	 * Function save_centres
+	 * used to save all the centres
+	 */
+	public function save_centres($bussiness_id, $centers) {
+		foreach ($centers as $key => $center) {
+			$center['time_limit'] = date('H:i', strtotime($center['hours'].':'.$center['minutes']));
+			 unset($center['hours'], $center['minutes']);
+			 if (isset($center['id'])) {
+			 	$center['updated_at'] = date('Y-m-d H:i:s');
+			 	$this->mdl_centres->save($center['id'], $center);
+			 } else {
+				 $center['bussiness_id'] = $bussiness_id;
+				 $center['created_at'] = date('Y-m-d H:i:s');
+				 $center_id = $this->mdl_centres->save(null, $center);
+			}
+		}
 	}
 }

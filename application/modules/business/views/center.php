@@ -1,6 +1,6 @@
 <div class="form-content martop">
 					<h2>
-						<?php echo lang('center'); ?>
+						<?php echo lang('centre'); ?>
 					</h2>
 					<div class="form-group">
 						<label class="col-sm-2 pull-left">

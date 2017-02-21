@@ -52,7 +52,24 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('business_title');?></label>
 					<div class="col-sm-10">
-						<?php echo form_dropdown('business_id', $business_list, $this->mdl_clients->form_value('business_id'), 'class="form-control" '.$disabled.''); ?>
+						<?php echo form_dropdown('business_id', $business_list, $this->mdl_clients->form_value('business_id'), 'required = "required" id="jsBusiness" class="form-control" '.$disabled.''); ?>
+					</div>	
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 pull-left"><?php echo lang('center_title');?></label>
+					<div class="col-sm-10">
+						<select name='centre_id' id='centre_id' class="form-control" required="required">
+							<option value=''>Select</option>
+						<?php 
+							//echo form_dropdown('business_id', $business_list, $this->mdl_clients->form_value('business_id'), 'class="form-control" '.$disabled.''); 
+							foreach($centre_list as $key=>$centre) {
+								if ( $this->mdl_clients->form_value('centre_id') == $centre->Id)
+									echo '<option selected="selected" class="centres business_'.$centre->bussiness_id.'" value="'.$centre->Id.'">'.$centre->Centre.'</option>';
+								else
+									echo '<option class="centres business_'.$centre->bussiness_id.'" value="'.$centre->Id.'">'.$centre->Centre.'</option>';
+							}
+						?>
+					</select>
 					</div>	
 				</div>	
 				<div class="form-group">
@@ -171,6 +188,16 @@ $(document).ready(function(){
 			$('#billing_data').prop('disabled', true);
 			$('#billing_data').val('');
 		}
-	})
+	});
+	var conditionalSelect = $("#centre_id"),
+	// Save possible options
+	options = conditionalSelect.children(".centres").clone();
+	$("#jsBusiness").change(function(){
+			var value = $(this).val();
+			// Remove all "submarket" options               
+			conditionalSelect.children(".centres").remove();
+			// Attach options that needs to be displayed for the selected value.
+			options.clone().filter(".business_"+value).appendTo(conditionalSelect);
+	}).trigger("change");
 })
 </script>

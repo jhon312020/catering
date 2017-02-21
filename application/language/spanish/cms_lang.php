@@ -160,5 +160,7 @@ $lang['route'] = 'Ruta';
 $lang['population'] = 'Población';
 $lang['norm_route'] = 'Norn ruta';
 $lang['centre'] = 'Centro';
+$lang['add_center'] = 'Añadir Centro';
+$lang['center_title'] = 'Centres';
 /*---ó-*/
 ?>

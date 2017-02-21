@@ -70,16 +70,17 @@ $count = count($centres);
 				</div>
 				<!-- Center -- starts -->
 				<div id="jscenterForm">
-				<?php if ($centres) { foreach($centres as $centre) { ?>
+				<?php if ($centres) { $count = 0; foreach($centres as $centre) { $count++; ?>
 				<div class="form-content martop">
 					<h2>
-						<?php echo lang('center');  ?>
+						<?php echo lang('centre');  ?>
 					</h2>
 					<div class="form-group">
 						<label class="col-sm-2 pull-left">
 							<?php echo lang('name');?>
 						</label>
 						<div class="col-sm-10">
+							<?php echo form_input(array('name'=>"center[$count][id]", 'type'=>'hidden','class'=>'form-control', 'value'=>$centre->id)); ?>
 							<?php echo form_input(array('name'=>"center[$count][Centre]", 'class'=>'form-control', 'value'=>$centre->Centre, $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
@@ -88,7 +89,13 @@ $count = count($centres);
 							<?php echo lang('direction');?>
 						</label>
 						<div class="col-sm-10">
-						<?php echo form_textarea(array('name'=>"center[$count][Domicili]", 'class'=>"form-control", 'required'=>'required'),$centre->Domicili ); ?>
+						<?php 
+							if ($disabled != '') {
+								echo form_textarea(array('name'=>"center[$count][Domicili]", 'class'=>"form-control", 'required'=>'required', 'disabled'=>$disabled),$centre->Domicili );
+							} else {
+								echo form_textarea(array('name'=>"center[$count][Domicili]", 'class'=>"form-control", 'required'=>'required'),$centre->Domicili );
+							}
+						?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -152,7 +159,7 @@ $count = count($centres);
 						<h3 class="col-sm-6 pull-left">
 							<a href="javascript:;" style="padding-left:18px;color:#91C848;" onclick="duplicateForm()">
 								<u>[+] 
-									<?php echo lang('add_new_menu'); ?>
+									<?php echo lang('add_center'); ?>
 								</u>
 							</a>
 						</h3>
@@ -167,8 +174,9 @@ $count = count($centres);
 		</div>
 	</div>
 </form>
+<?php $this->layout->load_view('business/clone_center');?>
 <script type="text/javascript">
-	form_html = $('#jscenterForm').html();
+	form_html = $('#jsCloneCenterForm').html();
 	function duplicateForm() {
 	new_value = parseInt($('#form_number').val())+1;
 	new_html = form_html.replace(/center\[1\]/g,'center['+new_value+']');
