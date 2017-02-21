@@ -32,6 +32,8 @@ class Node extends Anonymous_Controller {
     $this->load->model('contacts/mdl_contacts');
     $this->load->model('plats/mdl_plats');
     $this->load->model('order_reports/mdl_order_reports');
+    $this->load->model('centres/mdl_centres');
+    
 		$this->site_contact = $this->mdl_contacts->where(array('is_active' => 1))->get()->row();
 		
 		$todaySelectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
@@ -58,14 +60,15 @@ class Node extends Anonymous_Controller {
 		$this->today_menus_removed = [];
 		
 		/*Check and remove the expired data from the temperory order table*/
-		$business_id = $this->session->userdata('business_id');
+		$centre_id = $this->session->userdata('centre_id');
 		
-		$businessInfo = $this->mdl_business->businessInfo($business_id);
+		$centreInfo = $this->mdl_centres->centreInfo($centre_id);
+    
 		
 		$left_time = 0;
 		
-    if ($businessInfo) {
-      $time1 = strtotime($businessInfo->time_limit);
+    if ($centreInfo) {
+      $time1 = strtotime($centreInfo->time_limit);
 			
       $time2 = time();
 
@@ -191,18 +194,21 @@ class Node extends Anonymous_Controller {
   public function menus() {
 		$menuDate = date('Y-m-d');
     $data_array = array();
-		$business_id = $this->session->userdata('business_id');
-    $businessInfo = $this->mdl_business->businessInfo($business_id);
-		//echo $businessInfo->time_limit;die;
-		//echo time();die;
+
+		
 		$data_array['left_time'] = 0;
 		if($this->input->post()) {
 			$postParams = $this->input->post();
 			$menuDate = date('Y-m-d', strtotime($postParams['menu_date']));
 		}
+
 		$menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
-    if ($businessInfo && $menuDate == date('Y-m-d') && count($menu_list) > 0) {
-      $time1 = strtotime($businessInfo->time_limit);
+
+    $centre_id = $this->session->userdata('centre_id');
+    $centreInfo = $this->mdl_centres->centreInfo($centre_id);
+    
+    if ($centreInfo && $menuDate == date('Y-m-d') && count($menu_list) > 0) {
+      $time1 = strtotime($centreInfo->time_limit);
       $time2 = time();
 			if($time1 > $time2) {
 				$data_array['left_time'] = ($time1 - $time2);

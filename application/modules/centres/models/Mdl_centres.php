@@ -52,12 +52,21 @@ class Mdl_centres extends Response_Model {
     
     public function getByBusinessId($businessId = null) {
         $centres = $this->mdl_centres
-                                ->select('centres.id, centres.Centre, centres.Ruta, centres.NomRuta, centres.Domicili, centres.CPostal, centres.Poblacio, centres.time_limit')
+                                ->select('centres.Id, centres.Centre, centres.Ruta, centres.NomRuta, centres.Domicili, centres.CPostal, centres.Poblacio, centres.time_limit')
                                 ->where('centres.bussiness_id', $businessId)->get()->result();
         if($centres)
         	return $centres;
         else
         	return false;
+    }
+
+    public function centreInfo($centreId) {
+//        echo $centreId; exit;
+        $qry = $this->db->where('Id', $centreId)->get('tbl_centres');
+        if($qry->num_rows())
+            return $qry->row();
+        else
+            return false;
     }
 }
 ?>
