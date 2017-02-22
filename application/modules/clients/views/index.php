@@ -45,7 +45,7 @@
 		<th><?php echo lang('client_code'); ?></th>
 		<th><?php echo lang('name'); ?></th>
 		<th><?php echo lang('surname'); ?></th>
-		<th><?php echo lang('business_title'); ?></th>
+		<th><?php echo lang('business_title').' - '.lang('centre'); ?></th>
 		<th><?php echo lang('edit'); ?></th>
 	</thead>
 </table>
@@ -99,7 +99,7 @@
 		<th><?php echo lang('client_code'); ?></th>
 		<th><?php echo lang('name'); ?></th>
 		<th><?php echo lang('surname'); ?></th>
-		<th><?php echo lang('business_title'); ?></th>
+		<th><?php echo lang('business_title').' - '.lang('centre'); ?></th>
 		<th><?php echo lang('edit'); ?></th>
 	</thead>
 </table>

@@ -13,15 +13,21 @@ class Orders extends Admin_Controller {
 
 	public function index() {
 		$order_date = date('Y-m-d');
+		$past = 0;
 		if($this->input->post()) {
 			$order_date = date('Y-m-d', strtotime($this->input->post('order_date')));
+			$past = $this->input->post('past');
 			//Inorder to re-direct to same page on deleting the orders used the below conditiona
 		} else if ($this->session->userdata('last_viewed_order_date')) {
 			$order_date = $this->session->userdata('last_viewed_order_date');
 			$this->session->unset_userdata('last_viewed_order_date');
 		}
 		
-		$orders = $this->mdl_orders->get_orders_by_date($order_date);
+		if ($past) {
+			$orders = $this->mdl_orders->get_orders_by_date($order_date,'<=');
+		} else {
+			$orders = $this->mdl_orders->get_orders_by_date($order_date,'>=');
+		}
 		
 		$this->layout->set(array('orders' => $orders, 'order_date' => $order_date));
 		$this->layout->buffer('content', 'orders/index');

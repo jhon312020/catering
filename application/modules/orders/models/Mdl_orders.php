@@ -116,12 +116,13 @@ class Mdl_orders extends Response_Model {
    * @return  Array
    * 
   */
-	public function get_orders_by_date($order_date) {
+	public function get_orders_by_date($order_date, $operator = '=') {
 		$orders_list_by_date = $this->mdl_orders
 											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.price, orders.is_active,orders.order_code')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
-											->where('orders.order_date', $order_date)
+											->where('orders.order_date '.$operator, $order_date)
+											->order_by('orders.order_date','desc')
 											->get()->result();
 											
 		return $orders_list_by_date;
@@ -306,5 +307,7 @@ class Mdl_orders extends Response_Model {
 		}
 		return $order_date;
 	}
+
+
 }
 ?>

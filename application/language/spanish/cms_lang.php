@@ -162,5 +162,7 @@ $lang['norm_route'] = 'Norn ruta';
 $lang['centre'] = 'Centro';
 $lang['add_center'] = 'Añadir Centro';
 $lang['center_title'] = 'Centres';
+$lang['past'] = 'Pasto';
+$lang['past_menus'] = 'Menús anteriores';
 /*---ó-*/
 ?>

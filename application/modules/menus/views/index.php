@@ -4,6 +4,19 @@
 		<a class="btn btn-primary pull-right" href="<?php echo site_url('admin/menus/form'); ?>">
 			<i class="icon-plus icon-white"></i> <?php echo lang('new'); ?>
 		</a>
+		<?php
+			$segments = $this->uri->segment_array();
+			$end_segment = end($segments);
+			if ($end_segment == 'past_menus') {
+		?>
+			<a class="btn btn-primary pull-right" href="<?php echo site_url('admin/menus/index'); ?>" style="margin-right:10px;">
+				<i class="icon-plus icon-white"></i> <?php echo lang('today_menus'); ?>
+			</a>
+		<?php } else { ?>
+			<a class="btn btn-primary pull-right" href="<?php echo site_url('admin/menus/past_menus'); ?>" style="margin-right:10px;">
+				<i class="icon-plus icon-white"></i> <?php echo lang('past_menus'); ?>
+			</a>
+		<?php } ?>
 	</div>
 	<form method="post" id="menu_clone" action="<?php echo site_url('admin/menus/clone_records'); ?>">
 		<input type='hidden' name="new_clone_date" class="form-control" value="" id="new_clone_date" />

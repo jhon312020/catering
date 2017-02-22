@@ -150,7 +150,7 @@ class Node extends Anonymous_Controller {
         $data['is_active'] = 0;
         $data['created_at'] = date('Y-m-d H:i:s');
         $data['updated_at'] = date('Y-m-d H:i:s');
-        $data['client_code'] = 'GC-CL-' . sprintf("%04s", $this->mdl_clients->getNextIncrementId());
+        $data['client_code'] = $this->mdl_clients->getNextIncrementCode()+1;
         $id = $this->mdl_clients->save(null, $data);
         if ($id) {
           $this->load->library('email');

@@ -8,10 +8,14 @@
 			<div class="col-sm-4">
 				<form method="post" class="order-form">
 					<input type='hidden' class="form-control datepicker12" name="order_date" value="<?php echo $order_date; ?>" />
+					<input type="hidden" id="past" name="past" value="0" />
 				</form>
 				<h1><span class="spancal glyphicon glyphicon-calendar" ></span></h1>
 			</div>
-		</div>		
+			<div class="col-sm-2 btn btn-primary pull-right" id="jPastButton" style="margin-right:15px;">
+				<i class="icon-plus icon-white"></i> <?php echo lang('past'); ?>
+			</div>
+		</div>
 		<?php /* <a class="btn btn-primary pull-right" href="<?php echo site_url('admin/orders/form'); ?>">
 			<i class="icon-plus icon-white"></i> <?php echo lang('new'); ?>
 		</a> */ ?>
@@ -65,8 +69,12 @@ $(document).ready(function(){
 	}).on('changeDate', function(e) {
 		$('form.order-form').submit();
 	});
+	$(document).on('click', '#jPastButton', function(){
+		$('#past').val('1');
+		$('form.order-form').submit();
+	});
 	$(document).on('click', '.spancal', function(){
 		$('.datepicker12').datepicker('show');
-	})
+	});
 });
 </script>

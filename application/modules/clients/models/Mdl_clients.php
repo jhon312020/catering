@@ -345,12 +345,13 @@ class Mdl_clients extends Response_Model {
       $this->db->update('clients');
   }
 
-  public function getNextIncrementId(){
-    $status = $this->db->query("SHOW TABLE STATUS LIKE '{$this->db->dbprefix}{$this->table}'")->result_array();
-    if ($status){
-      return $status[0]['Auto_increment'];
+  public function getNextIncrementCode(){
+    $result = $this->db->select('max(client_code) as client_code')->from('clients')->get()->result_array();
+    if ($result) {
+      return $result[0]['client_code'];
     }
-    return 1;
+    return 0;
   }
+
 }
 ?>

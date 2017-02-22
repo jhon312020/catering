@@ -189,7 +189,7 @@ $cms_lang = $this->session->userdata('cms_lang');
 					<ul class="list-inline links-list pull-right">
 						<li><?php 
             setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish'); 
-            echo ucwords(strftime('%A %d %B %Y',strtotime(date('Y-m-d'))));
+            echo utf8_encode(ucwords(strftime('%A %d %B %Y',strtotime(date('Y-m-d')))));
         
             //echo date('l jS \of F Y ');?></li>
 						<!-- <li class="sep"></li> -->
