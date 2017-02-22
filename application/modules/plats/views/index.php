@@ -7,7 +7,7 @@
 	</div>
 </div>
 <?php echo $this->layout->load_view('layout/alerts'); ?>
-<table class="table table-bordered datatable" id="example">
+<table class="table table-bordered datatable data_table">
 	<thead>
 		<tr>
 			<th><?php echo lang('name_of_the_plate'); ?></th>
@@ -53,12 +53,3 @@
 		?>
 	</tbody>
 </table>
-<script type='text/javascript'>
-$(document).ready(function() {
-    $('#example').DataTable( {
-        "processing": true,
-        "serverSide": true,
-        "ajax": "<?php echo base_url(); ?>assets/pagination.php"
-    } );
-} );
-</script>

@@ -14,7 +14,15 @@ class Menus extends Admin_Controller {
 		$this->path = base_url().$this->mdl_settings->setting('upload_folder')."images/menus/";
 	}
 	public function index() {
-		$menus = $this->mdl_menus->order_by('menu_date','desc')->get()->result();
+		$menus = $this->mdl_menus->where('menu_date >=', date('Y-m-d'))->order_by('menu_date','desc')->get()->result();
+		$allPlates = $this->mdl_plats->get_plat_list();
+		unset($_SESSION['files']); // remove session from add page
+		$this->layout->set(array('menus' => $menus, 'allPlates'=>$allPlates, 'menu_types'=>$this->menu_types));
+		$this->layout->buffer('content', 'menus/index');
+		$this->layout->render();
+	}
+	public function past_menus() {
+		$menus = $this->mdl_menus->where('menu_date <=', date('Y-m-d'))->order_by('menu_date','desc')->get()->result();
 		$allPlates = $this->mdl_plats->get_plat_list();
 		unset($_SESSION['files']); // remove session from add page
 		$this->layout->set(array('menus' => $menus, 'allPlates'=>$allPlates, 'menu_types'=>$this->menu_types));
