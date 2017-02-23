@@ -80,7 +80,7 @@ $count = count($centres);
 							<?php echo lang('name');?>
 						</label>
 						<div class="col-sm-10">
-							<?php echo form_input(array('name'=>"center[$count][id]", 'type'=>'hidden','class'=>'form-control', 'value'=>$centre->id)); ?>
+							<?php echo form_input(array('name'=>"center[$count][Id]", 'type'=>'hidden','class'=>'form-control', 'value'=>$centre->Id)); ?>
 							<?php echo form_input(array('name'=>"center[$count][Centre]", 'class'=>'form-control', 'value'=>$centre->Centre, $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
