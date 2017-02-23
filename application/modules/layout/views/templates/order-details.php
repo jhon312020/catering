@@ -30,18 +30,36 @@ $this->load->view('navigation_menu');
 									<p><b>
                     <?php 
                       $order_detail = json_decode($order['order_detail'],true);
+                      $order_code = $order_detail['order_code'];
                       unset($order_detail['order_code']);
                       $order_detail = array_values($order_detail);
-
-                      if ($order['order_type'] == 'combine') {
-                        echo lang('combine_menu');
-                      } else {
-                        if (count($order_detail[0][0]['order']) == 3) {
-                          echo lang('medio_menu');
-                        } elseif (count($order_detail[0][0]['order']) == 4) {
-                          echo lang(strtolower($menu_titles[$order_detail[0]['menu_type_id']]).'_menu');  
-                        }
+                      $menu_type = '';
+                      switch (count($order_code)) {
+                        case 0:
+                          break;
+                        case 1:
+                          switch ($order_code[0]) {
+                            case 'N':
+                              $menu_type = lang('basic_menu');
+                              break;
+                            case 'R':
+                              $menu_type = lang('diet_menu');
+                              break;
+                            default:
+                              $menu_type = lang('medio_menu');
+                          }
+                          break;
+                        default:
+                          $order_code = array_unique($order_code);
+                          if (!in_array('N1', $order_code) && !in_array('N2', $order_code)) {
+                            $menu_type = lang('diet_menu');
+                          } elseif (!in_array('R1', $order_code) && !in_array('R2', $order_code)) {
+                            $menu_type = lang('basic_menu');
+                          } else {
+                            $menu_type = lang('combine_menu');
+                          }
                       }
+                      echo $menu_type;
                     ?>
                   </b></p>
                   <?php 
