@@ -7,48 +7,53 @@
 			<span></span> <b class="caret"></b>
 		</div>
 		</span>
+		<form method="POST" id="jStatisticsForm">
+			<input type="hidden" name="from_date" >
+			<input type="hidden" name="to_date" >
+		</form>
 	</div>
 </div>
 <br/>
 <?php 
-echo $this->layout->load_view('layout/alerts'); 
+echo $this->layout->load_view('layout/alerts');
+
+$menu_income_html = '';
+foreach($menu_income as $menu=>$income) {
+	$menu_income_html .= '<p class="totalSpan">'.$income.' - '.$menu.'</p>';
+}
+$payment_income_html = '';
+foreach($payment_income as $payment_method=>$income) {
+	$payment_income_html .= '<p class="totalSpan">'.$income.' - '.lang(strtolower($payment_method)).'</p>';
+}
 ?>
 <div class="row">
-	<div class="col-sm-3">	
+	<div class="col-sm-4">	
 		<div class="tile-stats tile-purple-dark" style="background-color:#8EC63F;">
-			<div class="num statSpan" data-start="0" data-end="<?php echo $overall_total_menus; ?>" data-postfix="&nbsp;<?php echo lang('menus_cms'); ?>" data-duration="1400" data-delay="0">0</div>
+			<div class="num"><?php echo array_sum($menu_income).' '.lang('menus_cms'); ?></div>
 			<div class="priceDiv">
-			<?php 
-			foreach($menus as $menu) {
-			?>
-			<p class="totalSpan"><?php echo $menu['total'].' '.lang('menus_cms_stat').' '.$menu['name']; ?></p>
-			<?php } ?>
+			<?php echo $menu_income_html; ?>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-3">	
 		<div class="tile-stats tile-purple-dark" style="background-color:#BA9551;">
-			<div class="num" ><?php echo $total_income; ?> &euro;</div>
-			
+			<div class="num" ><?php echo array_sum($payment_income); ?> &euro;</div>
 			<div class="priceDiv">
-			<?php 
-			foreach($total_income_by_payments as $payment) {
-			?>
-			<p class="totalSpan"><?php echo $payment['total_income'].' - '.lang(strtolower($payment['payment_method'])); ?></p>
-			<?php } ?>
+				<?php echo $payment_income_html; ?>
 			</div>
 		</div>
-		
 	</div>
 </div>
 <script type="text/javascript">
 $(function() {
 
-    var start = moment().subtract(29, 'days');
-    var end = moment();
+    var start = moment('<?php echo $from_date; ?>','YYYY-MM-DD');
+    var end = moment('<?php echo $to_date; ?>','YYYY-MM-DD');
 
     function cb(start, end) {
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('input[name=from_date]').val(start.format('YYYY-MM-DD'));
+        $('input[name=to_date]').val(end.format('YYYY-MM-DD'));
     }
 
     $('#reportrange').daterangepicker({
@@ -62,7 +67,12 @@ $(function() {
            'This Month': [moment().startOf('month'), moment().endOf('month')],
            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         }
-    }, cb);
+    }, submit_form);
+
+    function submit_form(start, end) {
+    	cb(start,end);
+    	$('#jStatisticsForm').submit();
+    }
 
     cb(start, end);
     

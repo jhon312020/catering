@@ -244,28 +244,25 @@ class Mdl_orders extends Response_Model {
 	public function check_today_menus_insert($payment_type = null) {
 		
 		$this->load->model('temporary_orders/mdl_temporary_orders');
-		$this->load->model('business/mdl_business');
 		$this->load->model('menus/mdl_menus');
+		$this->load->model('centres/mdl_centres');
+		
 		
 		$selectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
 
 		$today_menus_removed = [];
 		
 		/*Check and remove the expired data from the temporary order table*/
-		$business_id = $this->session->userdata('business_id');
-		
-		$businessInfo = $this->mdl_business->businessInfo($business_id);
-		
 		$left_time = 0;
-		
-	    if ($businessInfo) {
-	      $time1 = strtotime($businessInfo->time_limit);
-				
+		$centre_id = $this->session->userdata('centre_id');
+	    $centreInfo = $this->mdl_centres->centreInfo($centre_id);
+	    
+	    if ($centreInfo) {
+	      $time1 = strtotime($centreInfo->time_limit);
 	      $time2 = time();
-				
-				if ($time1 > $time2) {
-					$left_time = ($time1 - $time2);
-				}
+			if($time1 > $time2) {
+				$left_time = ($time1 - $time2);
+			}
 	    }
 
 		if ($left_time == 0) {
@@ -306,6 +303,65 @@ class Mdl_orders extends Response_Model {
 			$order_date = $order_object->order_date;
 		}
 		return $order_date;
+	}
+
+	public function _findMenuType($order_code) {
+		$order_code = explode(',',$order_code);
+		$menu_type = '';
+		switch (count($order_code)) {
+			case 0:
+				break;
+			case 1:
+				switch ($order_code[0]) {
+					case 'N':
+						$menu_type = lang('basic_menu');
+						break;
+					case 'R':
+						$menu_type = lang('diet_menu');
+						break;
+					default:
+						$menu_type = lang('medio_menu');
+				}
+				break;
+			default:
+				$order_code = array_unique($order_code);
+				if (!in_array('N1', $order_code) && !in_array('N2', $order_code)) {
+					$menu_type = lang('diet_menu');
+				} elseif (!in_array('R1', $order_code) && !in_array('R2', $order_code)) {
+					$menu_type = lang('basic_menu');
+				} else {
+					$menu_type = lang('combine_menu');
+				}
+		}
+		return $menu_type;
+	}
+
+	public function get_payment_statistics_by_date($from_date, $to_date) {
+		$total_income_by_payments = $this->mdl_orders->select('SUM(price) as total_income, payment_method')
+										->where('order_date >=', $from_date)
+										->where('order_date <=', $to_date)
+										->where('is_active', 1)
+										->group_by('payment_method')->get()->result();
+
+		$payment_income = [];
+		foreach ($total_income_by_payments as $payment) {
+			$payment_income[$payment->payment_method] = $payment->total_income;
+		}
+		return $payment_income;
+	}
+
+	public function get_menu_statistics_by_date($from_date, $to_date) {
+		$total_income = $this->mdl_orders->select('SUM(price) as total_income, order_code')
+							->where('order_date >=', $from_date)
+							->where('order_date <=', $to_date)
+							->where('is_active', 1)
+							->group_by('order_code')->get()->result();
+		
+		$menu_income = [lang('basic_menu')=>0,lang('diet_menu')=>0,lang('combine_menu')=>0,lang('medio_menu')=>0];
+		foreach ($total_income as $income){
+			$menu_income[$this->_findMenuType($income->order_code)] += $income->total_income;
+		}
+		return $menu_income;
 	}
 
 
