@@ -48,9 +48,18 @@ class Ajax extends Anonymous_Controller {
 			}
 		}
 	}
+
+
   public function bankPaymentProcess($result) {
 		
 		$orders = $result['order_data'];
+
+		/*
+		Test card information
+		4548 8120 4940 0004
+		12/12
+		123
+		*/
 		
 		if($orders['total_price'] > 0) {
 			
@@ -60,10 +69,10 @@ class Ajax extends Anonymous_Controller {
 			$miObj = new apiRedsys;
 			
 			//$merchantCode = "336472105";
-			$merchantCode = "p336472105";
+			$merchantCode = "336472105";
 			$terminal = "001";
-			//$amount = str_replace('.', '', number_format($amount, 2));
-			$amount = '2';
+			$amount = str_replace('.', '', number_format($amount, 2));
+			//$amount = '2';
 			$currency = "978";
 			$transactionType = "0";
 			$merchantURL = "";
@@ -71,6 +80,7 @@ class Ajax extends Anonymous_Controller {
 			$reference_no = $orders['reference_no'];
 			$urlOK = site_url('es/success/?cm='.$reference_no);
 			$urlKO = site_url('es/error/?cm='.$reference_no);
+
 			$order = time();
 			$testurlPago = 'https://sis-t.redsys.es:25443/sis/realizarPago';
 			//$realurlPago = 'https://sis.redsys.es/sis/realizarPago';

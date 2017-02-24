@@ -23,8 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = preg_replace('/\/index.php.*/', '', $_SERVER['PHP_SELF']);
+//$config['base_url'] = preg_replace('/\/index.php.*/', '', $_SERVER['PHP_SELF']);
 
+$config['base_url'] = 'http://localhost/catering/';
 /*
 |--------------------------------------------------------------------------
 | Index File

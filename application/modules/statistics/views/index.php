@@ -51,6 +51,8 @@ $(function() {
     var end = moment('<?php echo $to_date; ?>','YYYY-MM-DD');
 
     function cb(start, end) {
+    	/*start.locale('es');
+    	end.locale('es');*/
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         $('input[name=from_date]').val(start.format('YYYY-MM-DD'));
         $('input[name=to_date]').val(end.format('YYYY-MM-DD'));

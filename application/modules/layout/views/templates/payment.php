@@ -6,7 +6,7 @@ $this->load->view('navigation_menu');
   <div class="inner-bg">
     <div class="container">
       <!-- form action when set via javascript is not working so directly given -->
-      <form id="bank_form" name="bank_form" action="" method="POST" style="display:none;" enctype="multipart/form-data">
+      <form id="bank_form" name="bank_form" action="" method="POST" style="display:none;" enctype="application/json">
         <input type="hidden" name="Ds_SignatureVersion" id="Ds_SignatureVersion" value=""/>
         <input type="hidden" name="Ds_MerchantParameters" id="Ds_MerchantParameters" value=""/>
         <input type="hidden" name="Ds_Signature" id="Ds_Signature" value="" />

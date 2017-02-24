@@ -544,6 +544,8 @@ class Node extends Anonymous_Controller {
     //~ $this->email->message('rejected');
     //~ $this->email->send();
     /*return journey end*/
+    $reference_no = $this->input->get('cm');
+    $this->mdl_orders->setActive($reference_no);
     $this->load->view('layout/templates/success');
   }
   

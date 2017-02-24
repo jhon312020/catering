@@ -151,6 +151,7 @@ class Mdl_orders extends Response_Model {
 			$total_price += $price;
 			$client_id = $this->session->userdata('client_id');
 			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no, 'order_code'=>implode(',',$order_code));
+			$data['is_active'] = 0;
 			if (in_array($payment_type, $this->payment_types)) {
 				$data['is_active'] = 1;
 				$data['payment_method'] = $payment_type;
@@ -362,6 +363,15 @@ class Mdl_orders extends Response_Model {
 			$menu_income[$this->_findMenuType($income->order_code)] += $income->total_income;
 		}
 		return $menu_income;
+	}
+
+	public function setActive($reference_no) {
+		//$this->db->query("UPDATE tbl_ SET menu_date = '$update_clone_date', created_at='$today';");
+		$data = array('is_active'=>1);
+		$this->db->where('reference_no',$reference_no);
+		$this->db->update('orders', $data);
+		$this->db->where('reference_no',$reference_no);
+		$this->db->update('order_reports', $data);
 	}
 
 
