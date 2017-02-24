@@ -98,9 +98,9 @@ class Business extends Admin_Controller {
 		foreach ($centers as $key => $center) {
 			$center['time_limit'] = date('H:i', strtotime($center['hours'].':'.$center['minutes']));
 			 unset($center['hours'], $center['minutes']);
-			 if (isset($center['id'])) {
+			 if (isset($center['Id'])) {
 			 	$center['updated_at'] = date('Y-m-d H:i:s');
-			 	$this->mdl_centres->save($center['id'], $center);
+			 	$this->mdl_centres->save($center['Id'], $center);
 			 } else {
 				 $center['bussiness_id'] = $bussiness_id;
 				 $center['created_at'] = date('Y-m-d H:i:s');
