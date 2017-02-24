@@ -225,7 +225,8 @@ class Mdl_clients extends Response_Model {
                         'client_id'	=> $result->id,
                         'client_name' => ucfirst($result->name)." ".ucfirst($result->surname),
                         'business_id' => $result->business_id,
-                        'centre_id' => $result->centre_id
+                        'centre_id' => $result->centre_id,
+                        'email'=>$result->email
                     );
                     $this->session->set_userdata($session_data);
                 }

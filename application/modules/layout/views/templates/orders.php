@@ -12,7 +12,7 @@ $this->load->view('navigation_menu');
             <thead>
               <tr>
                 <th><?php echo lang('reference_no'); ?></th>
-                <th><?php echo lang('order_date'); ?></th>
+                <th><?php echo lang('date'); ?></th>
                 <th><?php echo lang('price'); ?></th>
                 <th><?php echo lang('payment_method'); ?></th>
 								<th><?php echo lang('action'); ?></th>
@@ -44,7 +44,7 @@ $this->load->view('navigation_menu');
       </div>
     </div>
   </div>
-  <?php $this->load->view('footer_nav_bar', array('class'=>'footer-fixed')); ?>
+  <?php $this->load->view('footer_nav_bar'); ?>
 </div>
 <?php
 $this->load->view('footer');

@@ -536,17 +536,29 @@ class Node extends Anonymous_Controller {
 	 * @return	void
 	 */
   public function paymentSuccess() {
-    //~ $this->load->library('email');
-    //~ //$this->email->set_mailtype("html");
-    //~ $this->email->from($this->set['site_email'], $this->set['site_title']);
-    //~ $this->email->to('bright@proisc.com'); 
-    //~ $this->email->subject('Order Confirmation: '.$book_id.' has been rejected');
-    //~ $this->email->message('rejected');
-    //~ $this->email->send();
-    /*return journey end*/
     $reference_no = $this->input->get('cm');
     $this->mdl_orders->setActive($reference_no);
+
+    $data_array['orders'] = $this->mdl_orders->get_orders_by_ref_no($reference_no);
+    $data_array['menu_titles'] = $this->menu_types;
+    $data_array['plates'] = $this->mdl_plats->get_plat_list();
+    $data_array['cool_drink_list'] = $this->mdl_drinks->get_cool_drink_list();
+    $data_array['reference_no'] = $reference_no;
+    $data_array['user_name'] = $this->session->userdata('client_name');
+    $this->load->library('email');
+    $subject  = 'Pedido Online - '.$reference_no;
+    
+    $this->email->set_mailtype("html");
+    //Need to change admin email dynamically
+    $this->email->from($this->site_contact->email, 'Gumen-Catering');
+    $this->email->to($this->session->userdata('email'));
+    //$this->email->to('jeeva@proisc.com');
+    $this->email->subject($subject);
+    $body = $this->load->view('layout/emails/payment_success.php',$data_array, TRUE);
+    $this->email->message($body);
+    $this->email->send();
     $this->load->view('layout/templates/success');
+    //$this->load->view('layout/emails/payment_success.php',$data_array);
   }
   
   /**
