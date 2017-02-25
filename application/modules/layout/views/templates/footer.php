@@ -12,5 +12,6 @@
 <!--[if lt IE 10]>
 <script src="assets/js/placeholder.js"></script>
 <![endif]-->
+</div>
 </body>
 </html>

@@ -1,0 +1,312 @@
+
+input[type="text"], 
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="checkbox1"],
+input[type="message"], 
+textarea, 
+textarea.form-control {
+	height: 51px;
+    margin: 0;
+    padding: 0 20px;
+    vertical-align: middle;
+    background: #f8f8f8;
+   /* border: 3px solid #ddd;*/
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 50px;
+    color: #888;
+   /* -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;*/
+    -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+    -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
+}
+
+textarea, 
+textarea.form-control {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	line-height: 20px;
+	height: 100px;
+}
+
+input[type="text"]:focus, 
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="message"]:focus,
+textarea:focus, 
+textarea.form-control:focus {
+	outline: 0;
+	background: #fff;
+    border: 3px solid #ccc;
+    -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+}
+
+input[type="text"]:-moz-placeholder, input[type="password"]:-moz-placeholder, input[type="email"]:-moz-placeholder, input[type="number"]:-moz-placeholder, input[type="message"]:-moz-placeholder,
+textarea:-moz-placeholder, textarea.form-control:-moz-placeholder { color: #888; }
+
+input[type="text"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="message"]:-ms-input-placeholder,
+textarea:-ms-input-placeholder, textarea.form-control:-ms-input-placeholder { color: #888; }
+
+input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="email"]:-webkit-input-placeholder, input[type="number"]:-webkit-input-placeholder, input[type="message"]:-webkit-input-placeholder,
+textarea::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder { color: #888; }
+
+
+button.btn {
+	height: 40px;
+    /*margin: 0;*/
+    padding: 0% 25%;
+    vertical-align: middle;
+    background: #8DC73F;
+    border: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 40pxpx;
+    color: #fff;
+    /*-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;*/
+    text-shadow: none;
+    -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+    -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
+}
+
+button.btn:hover { opacity: 0.6; color: #fff; }
+
+button.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+
+button.btn:focus { outline: 0; opacity: 0.6; background: #4aaf51; color: #fff; }
+
+button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #4aaf51; color: #fff; }
+.form-control{
+    border-radius: 0px;
+}
+.btn{
+    border-radius: 0px;
+}
+input[type="checkbox1"]{
+    vertical-align: middle;
+    margin:0px;
+    border-radius: 0px;
+}
+.form-group label{
+    font-weight: 400;
+}
+#ribbon-container, #ribbon-container-green {
+    position: absolute;
+    top: 0px;
+    left: -30px;
+    overflow: visible; /* so we can see the pseudo-elements we're going to add to the anchor */
+    font-size: 18px; /* font-size and line-height must be equal so we can account for the height of the banner */
+    line-height: 18px;
+	width: 70%;
+}
+
+/*#ribbon-container:before {
+    content:"";
+    height: 0;
+    width: 0;
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 0;
+    border-top: 29px solid rgba(0,0,0,.3);
+    border-bottom: 29px solid rgba(0,0,0,.3); 
+    border-right: 29px solid rgba(0,0,0,.3);
+    border-left: 29px solid transparent;
+}
+
+#ribbon-container:after { 
+    content:"";
+    height: 3px;
+    background: rgba(0,0,0,.3);
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 58px;
+    right:3px;
+}*/
+
+#ribbon-container a, #ribbon-container-green a {
+    display:block;
+    padding:10px 40px;
+    position:relative; /* allows us to position our pseudo-elements properly */
+    background:#BA9551;
+    overflow:visible;
+    height:40px;
+    margin-left:29px;
+    color:#fff;
+    text-decoration:none;
+	text-align:left;
+}
+
+#ribbon-container a:after, #ribbon-container-green a:after { /* this creates the "folded" part of our ribbon */
+    content:""; 
+    height: 0;
+    width: 0;
+    display:block;
+    position:absolute;
+    bottom:-15px;
+    left:0;
+    border-top: 15px solid #7B6334; 
+    border-left: 15px solid transparent;
+}
+
+/*  #ribbon-container a:before { 
+    content:"";
+    height: 0;
+    width: 0;
+    display:block;
+    position:absolute;
+    top:0;
+    left:-29px;
+    border-top: 29px solid #0089d0; 
+    border-bottom: 29px solid #0089d0; 
+    border-right: 29px solid transparent;
+    border-left: 29px solid transparent;
+}
+*/
+/*#ribbon-container a:hover {
+    background:#009ff1;
+}
+
+#ribbon-container a:hover:before { 
+    border-top: 29px solid #009ff1; 
+    border-bottom: 29px solid #009ff1;
+}*/
+#ribbon-container-green a{
+    background: #8DC73F !important;
+}
+#ribbon-container-green a:after{
+    border-top: 15px solid #5C7C2C;    
+}
+.ribbon-down{
+    margin-top: 20px;
+	padding: 50px 25px 20px 25px !important;
+}
+.custom-checkbox {
+  position: relative;
+  display: block;
+}
+
+.custom-checkbox > .box {
+  position: relative;
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #8DC73F;
+  background-color: #fff;
+  border-radius: 0px;
+}
+
+.custom-checkbox > .box-brown{
+  position: relative;
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #BD9453;
+  background-color: #fff;
+  border-radius: 0px;
+}
+
+.custom-checkbox > .box > .tick {
+  position: absolute;
+  left: 1px;
+  top: 3px;
+  width: 11px;
+  height: 5px;
+  border-bottom: 2px solid #8DC73F;
+  border-left: 2px solid #8DC73F;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  display: none;
+}
+
+.custom-checkbox > .box-brown > .tick{
+    position: absolute;
+  left: 1px;
+  top: 3px;
+  width: 11px;
+  height: 5px;
+  border-bottom: 2px solid #BD9453;
+  border-left: 2px solid #BD9453;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  display: none;
+}
+
+.custom-checkbox > input:checked + .box > .tick {
+  display: block;
+}
+
+.custom-checkbox > input:checked + .box-brown > .tick {
+  display: block;
+}
+
+.custom-checkbox > input {
+  position: absolute;
+  outline: none;
+  left: 0;
+  top: 0;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  border: none;
+  margin: 0;
+  opacity: 0;
+  z-index: 1;
+}
+
+.custom-checkbox > input:active + .box {
+  border-color: #aaa;
+  background-color: #ddd;
+}
+
+.custom-checkbox > input:active + .box-brown {
+  border-color: #aaa;
+  background-color: #ddd;
+}
+
+.custom-checkbox.checked > .box > .tick {
+  display: block;
+}
+
+.custom-checkbox.checked > .box-brown > .tick {
+  display: block;
+}
+.payrow{
+    padding-bottom: 15px;
+}
+button.multiselect{
+	padding:8px;
+	background-color: #fff;
+    color: #787878;
+    border: 1px solid #ba9551;
+}
+button.multiselect:hover{
+	background-color: #fff;
+    border-color:#ba9551;
+	color: #787878;
+}
+button.multiselect:active{
+	background-color: #fff;
+    border-color:#ba9551;
+	color: #787878;
+}
+button.multiselect:focus{
+	background-color: #fff;
+    border-color:#ba9551;
+	color: #787878;
+}
+button.multiselect:active:focus, button.multiselect.active:focus{
+	background-color: #fff;
+    border-color:#ba9551;
+	color: #787878;
+}

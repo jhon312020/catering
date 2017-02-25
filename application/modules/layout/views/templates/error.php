@@ -20,7 +20,7 @@ $this->load->view('navigation_menu');
       </div>
     </div>
   </div>
-<?php $this->load->view('footer_nav_bar',['class'=>'footer-fixed']); ?>
+<?php $this->load->view('footer_nav_bar'); ?>
 </div>
 <?php
 $this->load->view('footer');

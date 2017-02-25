@@ -59,6 +59,7 @@ class Ajax extends Anonymous_Controller {
 		4548 8120 4940 0004
 		12/12
 		123
+		http://localhost/~megamind-mac/catering/es/success/?cm=312314879610003357
 		*/
 		
 		if($orders['total_price'] > 0) {

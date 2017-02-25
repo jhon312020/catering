@@ -7,7 +7,7 @@ class Mdl_orders extends Response_Model {
     public $table               = 'orders';
     public $primary_key         = 'orders.id';
     public function default_order_by() {
-        $this->db->order_by('orders.id');
+        //$this->db->order_by('orders.id');
     }
     public function validation_rules() {
         return array(

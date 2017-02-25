@@ -1,4 +1,4 @@
-<div class="headerbar">
+<div class="headerbar clearfix">
 	<div class="clearfix">
 		<h1 class="pull-left"><?php echo lang('statistics'); ?></h1>
 		<span class="pull-right">
@@ -13,6 +13,7 @@
 		</form>
 	</div>
 </div>
+<div class="clearfix-header"></div>
 <br/>
 <?php 
 echo $this->layout->load_view('layout/alerts');
