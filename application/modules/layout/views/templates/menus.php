@@ -35,7 +35,7 @@ $this->load->view('navigation_menu');
 				foreach($menu_types as $key => $menu_type) {
 					$checkboxClass = '';
 					$headerClass = '-green';
-					if($key%2 == 0) {
+					if($key%2 != 0) {
 						$checkboxClass = '-brown';
 						$headerClass = '';
             $plusColor = '';
@@ -48,7 +48,7 @@ $this->load->view('navigation_menu');
 				<div class="clear-pad" style="clear:both">
 				<div class="col-sm-12 section-down">
 					<div id="ribbon-container<?php echo $headerClass; ?>" class="ribbon-fix">
-            <a href="javascript:;" id="ribbon">MENU <?php echo $menu_type; ?></a>
+            <a href="javascript:;" id="ribbon"> <?php echo lang(strtolower($menu_type)); ?></a>
           </div>
           <div class="menu-bottom jsMenuDiv">
 						<?php 

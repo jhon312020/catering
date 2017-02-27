@@ -167,5 +167,7 @@ $lang['past_menus'] = 'Menús anteriores';
 $lang['orders_list'] = 'Lista de pedidos';
 $lang['order_date'] = 'Día pedido';
 $lang['order_day'] = 'Día';
+$lang['basic'] = 'MENU BÁSICO';
+$lang['diet'] = 'MENU DIET';
 /*---ó-*/
 ?>

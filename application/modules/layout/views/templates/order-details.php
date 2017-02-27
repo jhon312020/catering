@@ -7,7 +7,7 @@ $this->load->view('navigation_menu');
     <div class="container page-height">
       <div class="row">
         <h3 class="head_2">Pedido ref. <?php echo $reference_no; ?></h3>
-        <div class="col-sm-912fix-left-right">
+        <div class="col-sm-12 fix-left-right">
           <table class="table table-striped paymentTable">
             <thead>
               <tr>

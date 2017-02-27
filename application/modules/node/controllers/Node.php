@@ -572,7 +572,7 @@ class Node extends Anonymous_Controller {
     $this->email->subject($subject);
     $body = $this->load->view('layout/emails/payment_success.php',$data_array, TRUE);
     $this->email->message($body);
-    //$this->email->send();
+    $this->email->send();
     $this->load->view('layout/templates/success');
     //$this->load->view('layout/emails/payment_success.php',$data_array);
   }
