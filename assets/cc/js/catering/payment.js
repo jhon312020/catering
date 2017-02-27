@@ -32,7 +32,7 @@ $(document).ready(function() {
 						$('#bank_form').attr('action', result.bank_url);
 						$('#bank_form').submit();
 					} else {
-						location.href = SITE_URL + '/es/success';
+						location.href = result.redirectUrl;
 					}
 				} else {
 					if(result.msg) {

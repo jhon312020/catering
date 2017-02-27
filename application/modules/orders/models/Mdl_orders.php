@@ -26,13 +26,6 @@ class Mdl_orders extends Response_Model {
   */
 		public function get_orders_by_client_date() {
 			$client_id = $this->session->userdata('client_id');
-			/*$orders_client_by_date = $this->mdl_orders
-											->select('id, ref_order.total_price, ref_order.reference_no, order_detail, order_type, order_date, payment_method')
-											->join('(SELECT reference_no, SUM(price) as total_price FROM tbl_orders where is_active = 1 and client_id = '.$client_id.' GROUP BY reference_no) as ref_order', 'ref_order.reference_no = tbl_orders.reference_no', 'inner')
-											->where(array('is_active' => 1, 'client_id' => $client_id))
-											->group_by('reference_no')
-											->get()
-											->result_array();*/
 			$orders_client_by_date = $this->mdl_orders
 											->select('id, price as total_price, reference_no, order_detail, order_type, order_date, payment_method')
 											->where(array('is_active' => 1, 'client_id' => $client_id))
@@ -49,13 +42,6 @@ class Mdl_orders extends Response_Model {
 	* 
 	*/
 	public function get_orders_by_ref_no($reference_no) {
-		/*$orders_client_by_ref_no = $this->mdl_orders
-										->select('orders.id, orders.order_date, orders.order_type, orders.menu_id, menus.menu_date, menus.menu_type_id, menus.complement, menus.primary_plate, menus.description_primary_plate, menus.secondary_plate, menus.description_secondary_plate, menus.postre, menus.full_price, menus.half_price, menu_types.menu_name, orders.payment_method, orders.price, (SELECT GROUP_CONCAT(drinks_id) from tbl_order_drinks where order_id = tbl_orders.id) as drinks_id')
-										->join('menus', 'menus.id = orders.menu_id', 'left')
-										->join('menu_types', 'menu_types.id = menus.menu_type_id', 'left')
-										->where(array('orders.is_active' => 1, 'orders.client_id' => $this->session->userdata('client_id'), 'orders.reference_no' => $reference_no))
-										->get()
-										->result_array();*/
 		$orders_client_by_ref_no = $this->mdl_orders
 										->where(array('is_active' => 1, 'client_id' => $this->session->userdata('client_id'), 'reference_no' => $reference_no))
 										->get()
@@ -372,6 +358,45 @@ class Mdl_orders extends Response_Model {
 		$this->db->update('orders', $data);
 		$this->db->where('reference_no',$reference_no);
 		$this->db->update('order_reports', $data);
+	}
+
+	/**
+    * Function get_orders_by_pagination
+   	*
+   	* @return  Array
+   	* 
+  	*/
+	public function get_orders_by_pagination($page=1, $limit=10, $condition = NULL) {
+		$page = $page-1;
+		if ($page < 0) {
+			$page = 0;
+		}
+		$from = $page * $limit;
+		$client_id = $this->session->userdata('client_id');
+		if ($condition) {
+			$this->mdl_orders = $this->mdl_orders->where($condition);	
+		}
+		$orders = $this->mdl_orders
+							->select('id, price as total_price, reference_no, order_detail, order_type, order_date, payment_method')
+							->limit($limit, $from)
+							->order_by('order_date','desc')
+							->get()
+							->result_array();
+		return $orders;
+	}
+
+	/**
+    * Function get_count_of_orders
+   	*
+   	* @return  Integer
+   	* 
+  	*/
+	function get_count_of_orders($condition = NULL) {
+		if ($condition) {
+			$this->mdl_orders = $this->mdl_orders->where($condition);	
+		}
+		$row = $this->mdl_orders->select('count(*) as count')->get()->row_array();
+		return $row['count'];
 	}
 
 

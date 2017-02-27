@@ -81,8 +81,11 @@ $route['es/profile'] = 'node/profile';
 $route['en/contact'] = 'node/contact';
 $route['es/contact'] = 'node/contact';
 
+$route['en/orders/(:num)'] = 'node/orders/$1';
+$route['es/orders/(:num)'] = 'node/orders/$1';
 $route['en/orders'] = 'node/orders';
 $route['es/orders'] = 'node/orders';
+
 
 $route['en/error'] = 'node/paymentError';
 $route['es/error'] = 'node/paymentError';

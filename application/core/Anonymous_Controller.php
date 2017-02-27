@@ -76,5 +76,27 @@ class Anonymous_Controller extends MX_Controller {
       $this->lang->load('cms', $lang);
       $this->load->module('layout');
     }
+
+    function _setAndGetPaginationLinks($config) {
+    	$this->load->library('pagination');
+    	$paginate_config = array(
+                        'use_page_numbers' => true,
+                        'cur_tag_open'=>'<li class="active"><a href="javascript:;">',
+                        'cur_tag_close' =>'</a></li>',
+                        'full_tag_open' => '<ul class="pagination">',
+                        'full_tag_close' => '</ul>',
+                        'num_tag_open' => '<li class="page">',
+                        'num_tag_close' => '</li>',
+                        'prev_tag_open' => '<li class="prev page">',
+                        'prev_tag_close' => '</li>',
+                        'next_tag_open' => '<li class="next page">',
+                        'next_tag_close' => '</li>'
+                        );
+    	$paginate_config = $paginate_config+$config;
+    	$choice = $paginate_config["total_rows"] / $paginate_config["per_page"];
+    	$paginate_config["num_links"] = round($choice);
+    	$this->pagination->initialize($paginate_config);
+    	return $this->pagination->create_links();
+    }
 }
 ?>

@@ -44,7 +44,7 @@ class Ajax extends Anonymous_Controller {
 			if ($payment_type == 'Credit/Debit') {
 				echo $this->bankPaymentProcess($result);
 			} else {
-				echo json_encode(array('success' => true, 'process_type'=>'others'));
+				echo json_encode(array('success' => true, 'process_type'=>'others', 'redirectUrl' => site_url('es/success/?cm='.$result['order_data']['reference_no'])));
 			}
 		}
 	}

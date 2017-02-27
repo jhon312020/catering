@@ -27,3 +27,11 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
+
+
+assets/*
+!assets/cc/css/style.css
+!assets/cc/css/form-element.css
+!assets/cc/css/form-element.css
+!assets/cc/js/catering/*
+!assets/neon/css/custom.css

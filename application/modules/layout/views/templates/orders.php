@@ -42,8 +42,25 @@ $this->load->view('navigation_menu');
           </table>
         </div>
       </div>
+        <div style="display:block;text-align:right;padding-right:15px;">
+        <style>
+          ul.pagination li.active a{
+            background:#8DC73F;
+            color:white;
+            border-color:#ddd;
+          }
+          ul.pagination li:hover a{
+            background:#8DC73F !important;
+            color:white !important;
+            border-color:#ddd !important;
+          }
+        </style>
+        <?php echo $pagination; ?>
+        </div>
+
     </div>
   </div>
+  
   <?php $this->load->view('footer_nav_bar'); ?>
 </div>
 <?php

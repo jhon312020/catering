@@ -33,6 +33,8 @@ class Node extends Anonymous_Controller {
     $this->load->model('plats/mdl_plats');
     $this->load->model('order_reports/mdl_order_reports');
     $this->load->model('centres/mdl_centres');
+
+    $this->load->helper("order_helper");
     
 		$this->site_contact = $this->mdl_contacts->where(array('is_active' => 1))->get()->row();
 		
@@ -356,8 +358,22 @@ class Node extends Anonymous_Controller {
    * 
    */
   public function orders() {
-		$data_array['orders'] = $this->mdl_orders->get_orders_by_client_date();
-		//print_r($data_array['orders']);die;
+    $condition = array('is_active' => 1, 'client_id' => $this->session->userdata('client_id'));
+    $config = array(
+              'base_url'=>site_url($this->uri->segment(1).'/'.$this->uri->segment(2)),
+              'total_rows'=>$this->mdl_orders->get_count_of_orders($condition),
+              'uri_segment'=>3,
+              'per_page' => 10
+            );
+    $data_array["pagination"] = $this->_setAndGetPaginationLinks($config);
+
+    if ($this->uri->segment(3)) {
+      $page = $this->uri->segment(3);
+    } else {
+      $page = 1;
+    }
+
+		$data_array['orders'] = $this->mdl_orders->get_orders_by_pagination($page,10,$condition);
 		$this->load->view('layout/templates/orders', $data_array);
   }
 	/**
@@ -556,7 +572,7 @@ class Node extends Anonymous_Controller {
     $this->email->subject($subject);
     $body = $this->load->view('layout/emails/payment_success.php',$data_array, TRUE);
     $this->email->message($body);
-    $this->email->send();
+    //$this->email->send();
     $this->load->view('layout/templates/success');
     //$this->load->view('layout/emails/payment_success.php',$data_array);
   }
