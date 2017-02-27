@@ -673,3 +673,8 @@ overflow-x: hidden;
 div.top-content {
 	padding-bottom: 30px
 }
+#order_total h3 {
+	color: #8DC73F !important;
+	font-size: 25px;
+	text-align: right;
+}

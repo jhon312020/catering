@@ -6,15 +6,15 @@ $this->load->view('navigation_menu');
   <div class="inner-bg">
     <div class="container page-height">
       <div class="row">
-        <h3 class="head_2">Pedidos ref. <?php echo $reference_no; ?></h3>
+        <h3 class="head_2">Pedido ref. <?php echo $reference_no; ?></h3>
         <div class="col-sm-912fix-left-right">
           <table class="table table-striped paymentTable">
             <thead>
               <tr>
-                <th><?php echo lang('menu'); ?></th>
-                <th><?php echo lang('date'); ?></th>
-                <th><?php echo lang('price'); ?></th>
-								<th><?php echo lang('payment_method'); ?></th>
+                <th><?php echo strtoupper(lang('menu')); ?></th>
+                <th><?php echo strtoupper(lang('order_day')); ?></th>
+                <th><?php echo strtoupper(lang('price')); ?></th>
+								<th><?php echo strtoupper(lang('payment_method')); ?></th>
               </tr>
             </thead>
             <tbody>
@@ -125,11 +125,16 @@ $this->load->view('navigation_menu');
                 <td><?php echo $order['payment_method']; ?></td>
               </tr>
 							<?php
-								}
+								$total_price += $order['price'];
+                }
 							}
 							?>
             </tbody>
           </table>
+          <div id="order_total">
+               <h3>Total : <span><?php echo number_format($total_price,2); ?> &euro;</span><br/>
+                </h3>
+        </div>
         </div>
       </div>
     </div>

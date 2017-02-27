@@ -6,16 +6,16 @@ $this->load->view('navigation_menu');
   <div class="inner-bg">
     <div class="container">
       <div class="row">
-        <h3 class="head_2">Pedidos</h3>
+        <h3 class="head_2"><?php echo lang('orders_list'); ?></h3>
         <div class="col-sm-12 fix-left-right">
           <table class="table table-striped datatable">
             <thead>
               <tr>
-                <th><?php echo lang('reference_no'); ?></th>
-                <th><?php echo lang('date'); ?></th>
-                <th><?php echo lang('price'); ?></th>
-                <th><?php echo lang('payment_method'); ?></th>
-								<th><?php echo lang('action'); ?></th>
+                <th><?php echo strtoupper(lang('reference_no')); ?></th>
+                <th><?php echo strtoupper(lang('order_date')); ?></th>
+                <th><?php echo strtoupper(lang('price')); ?></th>
+                <th><?php echo strtoupper(lang('payment_method')); ?></th>
+								<th></th>
               </tr>
             </thead>
             <tbody>
