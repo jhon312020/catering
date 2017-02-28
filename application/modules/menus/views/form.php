@@ -154,28 +154,36 @@ $(document).ready(function(){
 				}
 			}); */
 	});
+	
+	var is_cancel = false;
 	$(document).on('click', '.spancal', function(){
 		$('.datepicker123').datepicker('show');
 	});
 
 	form_html = $('#menu_form').html();
-
+	$('.jsBtnCancel').click(function(e) {
+		
+		is_cancel = true;
+	}) 
 	$('#menu_form').submit(function(){
-		var allFilled = true;
-		$('.alert-danger').remove();
-		$('input[type=text]').each(function() {
-			if (!$(this).is(":disabled") && $(this).val() == '') {
-				$(this).after('<div class="alert alert-danger top-10 bottom-10">Kindly fill the field</div>');
-				allFilled = false;
-			} else if (!$(this).is(":disabled") && $(this).hasClass('required_decimal')) {
-				if (!isDecimal($(this).val())) {
-					$(this).after('<div class="alert alert-danger top-10 bottom-10">Kindly fill with decimal or integer value</div>');
+		
+		if(!is_cancel) {
+			var allFilled = true;
+			$('.alert-danger').remove();
+			$('input[type=text]').each(function() {
+				if (!$(this).is(":disabled") && $(this).val() == '') {
+					$(this).after('<div class="alert alert-danger top-10 bottom-10">Kindly fill the field</div>');
 					allFilled = false;
+				} else if (!$(this).is(":disabled") && $(this).hasClass('required_decimal')) {
+					if (!isDecimal($(this).val())) {
+						$(this).after('<div class="alert alert-danger top-10 bottom-10">Kindly fill with decimal or integer value</div>');
+						allFilled = false;
+					}
 				}
+			});
+			if (allFilled == false) {
+				return false;
 			}
-		});
-		if (allFilled == false) {
-			return false;
 		}
 	});
 
