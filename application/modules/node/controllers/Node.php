@@ -204,12 +204,12 @@ class Node extends Anonymous_Controller {
 			$menuDate = date('Y-m-d', strtotime($postParams['menu_date']));
 		}
 
-		$menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
-
+		
     $centre_id = $this->session->userdata('centre_id');
     $centreInfo = $this->mdl_centres->centreInfo($centre_id);
     
-    if ($centreInfo && $menuDate == date('Y-m-d') && count($menu_list) > 0) {
+    //if ($centreInfo && $menuDate == date('Y-m-d') && count($menu_list) > 0) {
+    if ($centreInfo && $menuDate == date('Y-m-d')) {
       $time1 = strtotime($centreInfo->time_limit);
       $time2 = time();
 			if($time1 > $time2) {
@@ -222,10 +222,17 @@ class Node extends Anonymous_Controller {
 		
 		$data_menu = [];
 		
-		$show_menus = true;
+    $show_menus = true;
+		$data_array['today_menu_expired'] = false;
 		if($data_array['left_time'] == 0 && $menuDate == date('Y-m-d')) {
-			$show_menus = false;
+      //$menuDate == date('Y-m-d')
+      //changing to tomorrow day
+      $menuDate = date("Y-m-d", strtotime("+ 1 day"));
+			$data_array['today_menu_expired'] = true;
 		}
+    $menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
+
+    //No es posible solicitar un menú para el día de hoy debido a haber expirado la hora límite
 
     $platesId = [];
     $plateIdFields = ['Primer','Segon','Guarnicio','Postre'];
@@ -290,10 +297,12 @@ class Node extends Anonymous_Controller {
 		
 		$client_id = $this->login_client_profile->id;
 		if($this->input->post()) {
+      $this->load->helper('security');
 			if($this->input->post('bill') == 1) {
 				$this->mdl_clients->form_validation->set_rules('billing_data', lang('billing_data'), 'required');
 			} 
-			$this->mdl_clients->form_validation->set_rules('email', lang('email'), 'required|valid_email|edit_unique[clients.email.'.$client_id.']');
+			$this->mdl_clients->form_validation->set_rules('dni', lang('dni'), 'dni_check');
+      $this->mdl_clients->form_validation->set_rules('email', lang('email'), 'required|valid_email|edit_unique[clients.email.'.$client_id.']');
 			if ($this->mdl_clients->run_validation('validation_rules_clients_profile_update')) {
 				$data = $this->input->post();
 				$password = $this->input->post('password');
@@ -306,8 +315,10 @@ class Node extends Anonymous_Controller {
 				redirect(PAGE_LANGUAGE.'/profile');
 			}
 		}
+    $data_array['client'] = $this->mdl_clients->get_client_details_by_id($client_id);
+    //print_r($client_details);
 		$this->mdl_clients->prep_form($client_id);
-    $data_array = '';
+    //$data_array = '';
     $this->load->view('layout/templates/profile', $data_array);
 		
   }
@@ -588,6 +599,17 @@ class Node extends Anonymous_Controller {
     $this->load->model('conditions/mdl_conditions');
     $template_vars['conditions'] = $this->mdl_conditions->get_terms_and_condtions();
     $this->load->view('layout/templates/terms', $template_vars);
+  }
+
+  public function dni_check($str) {
+    echo 'comes in';
+    exit;
+    if ($str == 'test') {
+      $this->mdl_clients->form_validation->set_message('dni_check', 'The {field} field can not be the word "test"');
+      return FALSE;
+    } else {
+      return TRUE;
+    }
   }
 }
 ?>

@@ -21,7 +21,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
           <div class="col-sm-4 pad-R">
             <div class="form-bottom">
               <p><span class="F-bold"><?php echo lang('name').' y '.lang('surname'); ?>:</span><span> <?php echo $this->mdl_clients->form_value('name').' '.$this->mdl_clients->form_value('surname'); ?></span></p>
-              <p><span class="F-bold"><?php echo lang('business'); ?></span>:<span> <?php echo $this->mdl_clients->form_value('business_name'); ?></span></p>
+              <p><span class="F-bold"><?php echo lang('reg_business'); ?></span>:<span> <?php echo $client->business_name .' - '.$client->centre_name; ?></span></p>
               <p><span class="F-bold"><?php echo lang('client_code'); ?>:</span><span> <?php echo $this->mdl_clients->form_value('client_code'); ?></span></p>
             </div>
           </div>
@@ -35,7 +35,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 									<input type="email" name="email" placeholder="" class="form-email form-control" id="form-email" value="<?php echo $this->mdl_clients->form_value('email'); ?>">
 								</div>
 								<div class="form-group">
-									<label for="form-password"><?php echo lang('password'); ?>(cambiar contrasena)</label>
+									<label for="form-password"><?php echo lang('password'); ?> (cambiar contraseña)</label>
 									<input type="password" name="password" value="<?php echo $password; ?>" placeholder="" class="form-password form-control" id="form-password">
 								</div>
 								<div class="form-group">

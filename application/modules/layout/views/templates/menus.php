@@ -18,6 +18,9 @@ $this->load->view('navigation_menu');
         <div class="col-sm-12 menuhead">
           <div class="col-sm-8">
             <P>Selecciona tu menú. Puedes elegir un menú completo, medio menú o un menú combinado.<br/> También puedes seleccionar bebidas.</p>
+            <?php if ($today_menu_expired) { ?>
+            <p class='today_menu_expired'>No es posible solicitar un menú para el día de hoy debido a haber expirado la hora límite</p>
+            <?php } ?>
           </div>
           <div class="col-sm-4">
             <button type="button" class="btn btn-menu button-datepicker"><i class="fa fa-calendar" aria-hidden="true"></i>SELECCIONA OTRO DIA</button>
@@ -44,6 +47,7 @@ $this->load->view('navigation_menu');
             $plusColor = 'text-green';
             $selectBorderColor = 'border-green';
           }
+          if(isset($menu_lists[$key])) {
 				?>
 				<div class="clear-pad" style="clear:both">
 				<div class="col-sm-12 section-down">
@@ -52,7 +56,7 @@ $this->load->view('navigation_menu');
           </div>
           <div class="menu-bottom jsMenuDiv">
 						<?php 
-						if(isset($menu_lists[$key])) {
+						//if(isset($menu_lists[$key])) {
 							foreach($menu_lists[$key] as $menu_list) {
 								$menu_list_with_id[$menu_list['id']] = $menu_list;
 						?>
@@ -109,13 +113,13 @@ $this->load->view('navigation_menu');
             </div>
 						<?php
 								}
-							}
+							//}
 						?>		
           </div>
 		  </div>
     </div>
 				<?php
-				}
+				} }
 				if($left_time > 0 || count($menu_lists) > 0) {
 				?>
 				<div class="col-sm-12 menubottom add_menu">

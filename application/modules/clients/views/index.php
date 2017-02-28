@@ -117,6 +117,7 @@ $( document ).ready(function() {
 		"sPaginationType": "bootstrap",
 		"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
 		"bStateSave": false,
+		"order": [[0,"desc"]],
 		"oLanguage": {
 				"sUrl": "http://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
 		},
@@ -151,6 +152,7 @@ $( document ).ready(function() {
 		"sPaginationType": "bootstrap",
 		"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
 		"bStateSave": false,
+		"order": [[0,"desc"]],
 		"oLanguage": {
 				"sUrl": "http://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
 		},

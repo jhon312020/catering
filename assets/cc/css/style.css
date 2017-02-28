@@ -678,3 +678,13 @@ div.top-content {
 	font-size: 25px;
 	text-align: right;
 }
+p.today_menu_expired {
+	color: red;
+}
+td.new.day.menuAvailable, td.old.day.menuAvailable, td.day.menuAvailable {
+	color: #8DC73F;
+	font-weight: bold;
+}
+td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
+	color: white;
+}

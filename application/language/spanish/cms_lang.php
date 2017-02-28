@@ -109,7 +109,7 @@ $lang['name'] = 'Nombre';
 $lang['password'] = 'Contraseña';
 $lang['enter'] = 'Entrar';
 $lang['payment_error'] = 'Payment Error';
-$lang['payment_success'] = 'Payment Success';
+$lang['order_placed'] = 'Pedido Realizado';
 $lang['forgot_password'] = 'He olvidado mi Contraseña';
 $lang['forgot_password_page_heading'] = 'Recuperar contraseña';
 
@@ -138,8 +138,10 @@ $lang['add_checkout'] = 'Añadir y finalizar';
 $lang['registry_header_text'] = 'Rellene esta solicitud de alta y muy pronto nos pondremos en contacto con usted!​';
 $lang['terms_and_conditions'] = 'Rellene esta solicitud de alta y muy pronto nos pondremos en contacto con usted!​';
 $lang['update'] = 'GUARDAR';
-$lang['order_time_over'] = 'Selecciona tu menú. Puedes elegir un menú completo, medio menú o un menú combinado. También puedes seleccionar bebidas.';
-$lang['order_time_over'] = 'Se ha superado la hora límite para pedir el menú de hoy.<br/> Tu hora límite es a las 10:00h.';
+//$lang['order_time_over'] = 'Selecciona tu menú. Puedes elegir un menú completo, medio menú o un menú combinado. También puedes seleccionar bebidas.';
+$lang['order_time_over'] = 'No es posible solicitar un menú para el día de hoy debido a haber expirado la hora límite.';
+
+//$lang['order_time_over'] = 'Se ha superado la hora límite para pedir el menú de hoy.<br/> Tu hora límite es a las 10:00h.';
 $lang['menu_complete'] = 'Menú Completo';
 $lang['delete_record_warning'] = 'Seguro que quieres eliminar';
 $lang['address'] = 'Address';
@@ -169,5 +171,7 @@ $lang['order_date'] = 'Día pedido';
 $lang['order_day'] = 'Día';
 $lang['basic'] = 'MENU BÁSICO';
 $lang['diet'] = 'MENU DIET';
+$lang['recover'] = 'RECUPERAR';
+$lang['reg_business'] = 'Empresa';
 /*---ó-*/
 ?>

@@ -167,7 +167,8 @@ function isAvailableDates(date) {
 	if (typeof availableDates != 'undefined') {
 		ymd = date.getFullYear()+'-'+ ('0'+(date.getMonth()+1)).slice(-2) + "-" + ('0'+date.getDate()).slice(-2);
 		if ($.inArray(ymd, availableDates) != -1) {
-			return true;
+			//return true;
+			return {classes: 'menuAvailable'}
 		} else {
 			return false;
 		}

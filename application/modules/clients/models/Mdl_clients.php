@@ -96,7 +96,7 @@ class Mdl_clients extends Response_Model {
                 'label' => lang('password'),
                 'rules' => 'required'
             ),
-            'telephone' => array(
+            /*'telephone' => array(
                 'field' => 'telephone',
                 'label' => lang('telephone'),
                 'rules' => 'required|numeric'
@@ -120,7 +120,7 @@ class Mdl_clients extends Response_Model {
                 'field' => 'bill',
                 'label' => lang('bill'),
                 'rules' => 'required'
-            ),
+            ),*/
         );
     }
   /**
@@ -261,8 +261,9 @@ class Mdl_clients extends Response_Model {
     public function get_client_details_by_id($id) {
 			
 			$client_details_by_id = $this->mdl_clients
-																		->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, business.name as business_name, clients.password_key, clients.bill')
-																		->join('business', 'business.id = clients.business_id', 'left')
+																		->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, business.name as business_name, centres.Centre as centre_name,clients.password_key, clients.bill')
+                                    ->join('business', 'business.id = clients.business_id', 'left')
+																		->join('centres', 'centres.Id = clients.centre_id', 'left')
 																		->where('clients.id', $id)->get()->row();
 			
 			return $client_details_by_id;
@@ -353,6 +354,13 @@ class Mdl_clients extends Response_Model {
     }
     return 0;
   }
-
+  public function validate_dni($str) {
+    if ($str == 'test') {
+      $this->form_validation->set_message('dni_callable', 'Testing');
+      return FALSE;
+    } else {
+      return TRUE;
+    }
+  }
 }
 ?>

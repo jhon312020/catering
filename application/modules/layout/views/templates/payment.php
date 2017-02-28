@@ -196,7 +196,7 @@ $this->load->view('navigation_menu');
               </div>
               <div class="row payrow">
                 <div class="col-sm-10">
-                  <span class="paytext">Ticket restaurante</span>
+                  <span class="paytext">Efectivo / Ticket restaurante</span>
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">

@@ -17,4 +17,14 @@ class MY_Form_validation extends CI_Form_validation {
 					: FALSE;
     }
 
+    public function dni_check($str) {
+    	echo strlen($str);
+	    if ($str == 'test') {
+	      $this->CI->form_validation->set_message('dni_check', 'The {field} field can not be the word "test"');
+	      return FALSE;
+	    } else {
+	      return TRUE;
+	    }
+  }
+
 }

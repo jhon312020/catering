@@ -12,7 +12,7 @@ $this->load->view('header');
               <img src="<?php echo TEMPLATE_PATH; ?>gumen-logo.png" class="img-responsive center-block" alt="" />
             </div>
             <div class="logo-para">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+              <p>Rellene sus datos de acceso o regístrese para solicitar acceso a nuestro servicio de catering a empresas.</p>
             </div>
           </div>
           <div class="form-bottom">

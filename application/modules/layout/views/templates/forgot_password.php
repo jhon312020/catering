@@ -23,7 +23,7 @@ $this->load->view('header');
                 <input type="email" required name="email" placeholder="<?php echo lang('username'); ?>" class="form-username form-control" id="email" data-error="<?php echo lang('invalid_email'); ?>">
                 <div class="help-block with-errors"></div>
               </div>
-              <button type="submit" class="btn center-block"><?php echo strtoupper(lang('enter')); ?></button>
+              <button type="submit" class="btn center-block"><?php echo strtoupper(lang('recover')); ?></button>
             </form>
             <div class="register">
               <P><?php echo lang('already_have_acc');?></p>
