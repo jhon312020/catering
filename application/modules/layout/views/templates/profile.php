@@ -40,7 +40,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 								</div>
 								<div class="form-group">
 									<label for="form-number"><?php echo lang('dni'); ?></label>
-									<input type="text" name="dni" placeholder="" class="form-number form-control" id="form-number" value="<?php echo $this->mdl_clients->form_value('dni'); ?>">
+									<input type="text" name="dni" placeholder="" class="form-number form-control" id="form-number" value="<?php echo $this->mdl_clients->form_value('dni'); ?>" maxlength="9" size="9">
 								</div>
 								<div class="form-group">
 									<label for="form-number"><?php echo lang('telephone'); ?></label>
@@ -60,7 +60,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 							<div class="form-bottom ribbon-down">
 								<div class="form-group">
 									<label for="form-username"><?php echo lang('iban'); ?></label>
-									<input type="text" name="iban" placeholder="" class="form-username form-control" id="form-username" value="<?php echo $this->mdl_clients->form_value('iban'); ?>">
+									<input type="text" name="iban" placeholder="" class="form-username form-control" id="form-username" value="<?php echo $this->mdl_clients->form_value('iban'); ?>" maxlength="25" size="25">
 								</div>
 								<div class="form-group">
 									<label for="form-username"><?php echo lang('is_invoice'); ?></label>

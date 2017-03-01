@@ -104,9 +104,10 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_date($order_date, $operator = '=') {
 		$orders_list_by_date = $this->mdl_orders
-											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.price, orders.is_active,orders.order_code')
+											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.price, orders.is_active,orders.order_code, orders.order_detail, centres.Centre')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
+											->join('centres', 'centres.Id = clients.centre_id', 'left')
 											->where('orders.order_date '.$operator, $order_date)
 											->order_by('orders.order_date','desc')
 											->get()->result();

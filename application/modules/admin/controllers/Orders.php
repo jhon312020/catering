@@ -12,9 +12,12 @@ class Orders extends Admin_Controller {
 	}
 
 	public function index() {
+		$this->load->helper("order_helper");
 		$order_date = date('Y-m-d');
 		$past = 0;
+		$export_title = "GC_Pedidos_";
 		if($this->input->post()) {
+
 			$order_date = date('Y-m-d', strtotime($this->input->post('order_date')));
 			$past = $this->input->post('past');
 			//Inorder to re-direct to same page on deleting the orders used the below conditiona
@@ -26,10 +29,13 @@ class Orders extends Admin_Controller {
 		if ($past) {
 			$orders = $this->mdl_orders->get_orders_by_date($order_date,'<=');
 		} else {
-			$orders = $this->mdl_orders->get_orders_by_date($order_date,'>=');
+			$orders = $this->mdl_orders->get_orders_by_date($order_date,'=');
 		}
-		
-		$this->layout->set(array('orders' => $orders, 'order_date' => $order_date));
+		$drinks_list = $this->mdl_drinks->get_cool_drink_list();
+		//echo '<pre>'; print_r($orders); print_r($drinks_list); echo '</pre>';
+		$export_title .= date('d-m-Y' , strtotime($order_date));
+
+		$this->layout->set(array('orders' => $orders, 'order_date' => $order_date, 'export_title'=>$export_title, 'drinks_list'=>$drinks_list));
 		$this->layout->buffer('content', 'orders/index');
 		$this->layout->render();
 	}

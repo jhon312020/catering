@@ -41,7 +41,7 @@ $this->load->view('navigation_menu');
                         ?>
                       </b></p>
                       <?php
-                        $description = getOrderDiscription($order_detail, $plates);
+                        $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
                         echo implode(', ', $description);
                       ?>
                       , pan, aceite, vinagre y cubietros
@@ -58,7 +58,7 @@ $this->load->view('navigation_menu');
               </table>
               <div style="padding-top:10px;text-align:right;width:100%;">
                <strong>Total : <span style="color:#8DC73F;"><?php echo number_format($total_price,2); ?> &euro;</span><br/>
-                <?php echo lang('payment_method'); ?> : <span style="color:#8DC73F;"><?php echo $orders[0]['payment_method']; ?></span></strong>
+                <?php echo lang('payment_method'); ?> : <span style="color:#8DC73F;"><?php echo lang($orders[0]['payment_method']); ?></span></strong>
               </div>
               <a href="<?php echo base_url() . '/es/menus' ?>" >Return to menus</a>
             </div>

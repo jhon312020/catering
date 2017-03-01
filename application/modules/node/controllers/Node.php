@@ -301,7 +301,8 @@ class Node extends Anonymous_Controller {
 			if($this->input->post('bill') == 1) {
 				$this->mdl_clients->form_validation->set_rules('billing_data', lang('billing_data'), 'required');
 			} 
-			$this->mdl_clients->form_validation->set_rules('dni', lang('dni'), 'dni_check');
+      $this->mdl_clients->form_validation->set_rules('dni', lang('dni'), 'dni_check');
+			$this->mdl_clients->form_validation->set_rules('iban', lang('iban'), 'iban_check');
       $this->mdl_clients->form_validation->set_rules('email', lang('email'), 'required|valid_email|edit_unique[clients.email.'.$client_id.']');
 			if ($this->mdl_clients->run_validation('validation_rules_clients_profile_update')) {
 				$data = $this->input->post();

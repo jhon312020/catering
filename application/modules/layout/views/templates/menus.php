@@ -120,7 +120,7 @@ $this->load->view('navigation_menu');
     </div>
 				<?php
 				} }
-				if($left_time > 0 || count($menu_lists) > 0) {
+				if(count($menu_lists) > 0) {
 				?>
 				<div class="col-sm-12 menubottom add_menu">
           <div class="col-sm-4">

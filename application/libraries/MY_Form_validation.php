@@ -18,9 +18,24 @@ class MY_Form_validation extends CI_Form_validation {
     }
 
     public function dni_check($str) {
-    	echo strlen($str);
-	    if ($str == 'test') {
-	      $this->CI->form_validation->set_message('dni_check', 'The {field} field can not be the word "test"');
+    	$dniLength = strlen($str);
+    	$lastCharacter = $str[$dniLength -1];
+    	$numericCharacter = substr($str, 0, -1);
+    	//return false;
+    	//exit;
+	    if ($dniLength != 9 || !(is_numeric($numericCharacter)) || !(is_string($lastCharacter))) {
+	      $this->CI->form_validation->set_message('dni_check', 'The {field} field is in wrong format eg 12345677M');
+	      return FALSE;
+	    } else {
+	      return TRUE;
+	    }
+  }
+  public function iban_check($str) {
+    	$ibanLength = strlen($str);
+    	$ibanArray = explode(' ', $str);
+    	$ibanCount = count($ibanArray);
+	    if ($ibanLength != 24 || $ibanCount != 5) {
+	      $this->CI->form_validation->set_message('iban_check', 'The {field} field is in wrong format eg ES33 0000 0000 0000 0000');
 	      return FALSE;
 	    } else {
 	      return TRUE;

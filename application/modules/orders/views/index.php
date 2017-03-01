@@ -22,25 +22,29 @@
 	</div>
 </div>
 <?php echo $this->layout->load_view('layout/alerts'); ?>
-<table class="table table-bordered datatable data_table">
+<table class="table table-bordered datatable" id ="jsOrders">
 	<thead>
 		<tr>
 			<th><?php echo lang('client_code'); ?></th>
 			<th><?php echo lang('date'); ?></th>
 			<th><?php echo lang('name'); ?></th>
 			<th><?php echo lang('business_title'); ?></th>
+			<th><?php echo lang('payment_method'); ?></th>
 			<th><?php echo lang('menu_cms'); ?></th>
+			<th><?php echo lang('cool_drinks'); ?></th>
 			<th><?php echo lang('edit'); ?></th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($orders as $order) { ?>
+		<?php foreach ($orders as $order) { $order_details = json_decode($order->order_detail); ?>
 			<tr>
 				<td class=""><?php echo $order->client_code . '<br/>Order Ref : '. $order->reference_no; ?></td>
 				<td class=""><?php echo date('d/m/Y', strtotime($order->order_date)); ?></td>
 				<td class=""><?php echo $order->name . ' ' . $order->surname; ?></td>
-				<td class=""><?php echo $order->business; ?></td>
+				<td class=""><?php echo $order->business.' - '.$order->Centre; ?></td>
+				<td class=""><?php echo lang($order->payment_method); ?></td>
 				<td class=""><?php echo str_replace(',','',$order->order_code); ?></td>
+				<td class=""><?php echo getDrinksInformation($order->id, $drinks_list); ?></td>
 				<td class="">
 					<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/orders/view/' . $order->id); ?>">
 						<i class="entypo-eye"></i>
@@ -60,7 +64,8 @@
 	</tbody>
 </table>
 <script type="text/javascript">
-$(document).ready(function(){
+var excel_title = '<?php echo $export_title; ?>';
+$(document).ready(function() {
 	$('.datepicker12').datepicker({
 		format:'yyyy-mm-dd',
 		autoclose:true,
@@ -76,5 +81,35 @@ $(document).ready(function(){
 	$(document).on('click', '.spancal', function(){
 		$('.datepicker12').datepicker('show');
 	});
+	var length = $("#jsOrders thead tr th").length-1;
+	var array = new Array();
+	for(var i = 0; i < length; i++){
+		array.push(i);
+	}
+	
+	$('#jsOrders').DataTable({
+		"sPaginationType": "bootstrap",
+		"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
+		"bStateSave": false,
+		"order": [[0,"desc"]],
+		"oLanguage": {
+				"sUrl": "http://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
+		},
+		"dom": 'lBfrtip',
+		"buttons": [
+			{
+				extend: 'excel',
+				text: 'Export Excel',
+				title: excel_title,
+				exportOptions: {
+					columns:array
+					/* modifier: {
+						search: 'none'
+					} */
+				}
+			}
+			//'colvis'
+		],
+    });
 });
 </script>

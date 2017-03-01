@@ -34,7 +34,7 @@ function findOrderMenuType($order_code) {
     return $menu_type;
 }
 
-function getOrderDiscription($order_detail, $plates) {
+function getOrderDescription($order_detail, $plates, $cool_drink_list) {
     $description = array();
     foreach ($order_detail as $order_det) {
       if (!is_array($order_det))
@@ -62,6 +62,22 @@ function getOrderDiscription($order_detail, $plates) {
       }
     }
     return $description;
+}
+
+function getDrinksInformation($order_id, $drinks_list) {
+  $drink_name_list = array();
+  $CI =& get_instance();
+  $drinks = $CI->db->select('count(*) as quantity, drinks_id')->from('order_drinks')->where('order_id', $order_id)->group_by('drinks_id')->get()->result();
+  //echo '<pre>'; print_r($drinks); echo'</pre>';
+  //return;
+  if ($drinks) {
+    foreach ($drinks as $drink) {
+      $drink_name_list[] = $drinks_list[$drink->drinks_id].' - '.$drink->quantity;
+    }
+    $drink_name_list = implode(', ', $drink_name_list);
+  }
+  return $drink_name_list;
+  
 }
 
 

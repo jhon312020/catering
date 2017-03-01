@@ -23,7 +23,7 @@ class Mdl_drinks extends Response_Model {
    * 
   */
 		public function get_cool_drinks() {
-			$cool_drinks = $this->mdl_drinks->where(array('is_active' => 1))->get()->result();
+			$cool_drinks = $this->mdl_drinks->select('id, drinks_name, price')->where(array('is_active' => 1))->get()->result();
 			
 			return $cool_drinks;
 		}
@@ -35,7 +35,7 @@ class Mdl_drinks extends Response_Model {
    * 
   */
 		public function get_cool_drink_list_price() {
-			$cool_drinks = $this->mdl_drinks->where(array('is_active' => 1))->get()->result();
+			$cool_drinks = $this->mdl_drinks->select('id, price')->where(array('is_active' => 1))->get()->result();
 			$cool_drinks_list = array();
 			if ($cool_drinks) {
 				foreach ($cool_drinks as $cool_drink) {
@@ -53,7 +53,7 @@ class Mdl_drinks extends Response_Model {
    * 
    */
 	public function get_cool_drink_list() {
-		$cool_drinks = $this->mdl_drinks->where(array('is_active' => 1))->get()->result();
+		$cool_drinks = $this->mdl_drinks->select('id, drinks_name')->where(array('is_active' => 1))->get()->result();
 		$cool_drinks_list = array();
 		if ($cool_drinks) {
 			foreach ($cool_drinks as $cool_drink) {
