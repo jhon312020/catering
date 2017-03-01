@@ -52,9 +52,16 @@ $(document).ready(function() {
 	});
 	
 	$(document).on('change', '.jsSelectOrder', function() {
+		$('.jsSelectMenu').prop('disabled',false);
+		$('.jsSelectOrder').prop('disabled',false);
 		var $mainDiv = $(this).closest('.jsSubMenu');
 		if($(this).is(':checked')) {
+			$('.jsSelectMenu').prop('checked',false);
+			$('.jsSelectMenu').prop('disabled',true);
+			$('.jsSelectOrder').prop('disabled',true);
+			$(this).prop('disabled',false);
 			$mainDiv.find('.jsSelectMenu').prop('checked', true);
+			$mainDiv.find('.jsSelectMenu').prop('disabled', false);
 		} else {
 			$mainDiv.find('.jsSelectMenu').prop('checked', false);
 		}
@@ -65,12 +72,28 @@ $(document).ready(function() {
 		var $mainDiv = $(this).closest('.jsSubMenu');
 		var $checkedLength = $mainDiv.find('.jsSelectMenu:checked').length;
 		if($checkedLength == 2) {
+			$('.jsSelectMenu').prop('checked',false);
+			$('.jsSelectMenu').prop('disabled',true);
+			$('.jsSelectOrder').prop('disabled',true);
+			$mainDiv.find('.jsSelectMenu').prop('checked', true);
 			$mainDiv.find('.jsSelectOrder').prop('checked', true);
+			$mainDiv.find('.jsSelectMenu').prop('disabled', false);
+			$mainDiv.find('.jsSelectOrder').prop('disabled', false);
 		} else {
 			$mainDiv.find('.jsSelectOrder').prop('checked', false);
 		}
 		addPrice();
-	})
+	});
+
+	$(document).on('change', '.jSelectDrinks', function(){
+		if ($('.jSelectDrinks:checked').length == 2) {
+			$('.jSelectDrinks').find('input[type=checkbox]').attr('disabled',true);
+			$('.jSelectDrinks').find('input[type=checkbox]:checked').attr('disabled',false);
+		} else {
+			$('.jSelectDrinks').find('input[type=checkbox]').attr('disabled',false);
+		}
+	});
+		
 	
 	function addPrice() {
 		var $main_total = 0;

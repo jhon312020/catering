@@ -73,3 +73,7 @@ ALTER TABLE `tbl_business` DROP `direction`;
 ALTER TABLE `tbl_centres` ADD `time_limit` TIME NULL DEFAULT NULL AFTER `Poblacio`;
 ALTER TABLE `tbl_centres` ADD `is_active` INT NOT NULL DEFAULT '1' , ADD `created_at` TIMESTAMP NOT NULL , ADD `updated_at` DATETIME NULL ;
 ALTER TABLE `tbl_business` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+
+/* 01-Mar-2017 */
+
+ALTER TABLE `tbl_temporary_orders` ADD `Total` FLOAT(10,2) NOT NULL AFTER `price`, ADD `drink1_id` INT NOT NULL AFTER `Total`, ADD `drink2_id` INT NOT NULL AFTER `drink1_id`, ADD `priced1` FLOAT(10,2) NOT NULL AFTER `drink2_id`, ADD `priced2` FLOAT(10,2) NOT NULL AFTER `priced1`;

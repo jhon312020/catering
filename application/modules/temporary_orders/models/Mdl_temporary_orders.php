@@ -60,10 +60,14 @@ class Mdl_temporary_orders extends Response_Model {
 					$cool_drink_list[$list['id']] = $list;
 				}
 			}
-			
+
 			$menu_ids = array_keys($menu_orders);
 			$menus = $this->mdl_menus->where_in('id',$menu_ids)->get()->result_array();
 			$selectedMenus = [];
+			$drink1_id = 0;
+			$drink2_id = 0;
+			$priced1 = 0.00;
+			$priced2 = 0.00;
 			$order_code = [];
 			
 			$totalPrice = 0;
@@ -110,6 +114,13 @@ class Mdl_temporary_orders extends Response_Model {
 					foreach ($post_params['cool_drinks'][$menu['id']] as $cool_drink) {
 						$data['price'] += $cool_drink_list[$cool_drink]['price'];
 						$data['cool_drink'][] = $cool_drink_list[$cool_drink]['id'];
+						if ($drink1_id == 0) {
+							$drink1_id = $cool_drink;
+							$priced1 = $cool_drink_list[$cool_drink]['price'];
+						} else if ($drink2_id == 0){
+							$drink2_id = $cool_drink;
+							$priced2 = $cool_drink_list[$cool_drink]['price'];
+						}
 					}
 		        }
 
@@ -126,37 +137,8 @@ class Mdl_temporary_orders extends Response_Model {
 			$selectedMenus['order_code'] = $order_code;
 			$selectedMenus = json_encode($selectedMenus);
 			
-			$insert[] = array( 'order_date' => date('Y-m-d',strtotime($post_params['order_date'])), 'client_id' => $this->session->userdata('client_id'), 'order_title' => $order_title, 'order_detail'=>$selectedMenus, 'price' => $totalPrice);
+			$insert[] = array( 'order_date' => date('Y-m-d',strtotime($post_params['order_date'])), 'client_id' => $this->session->userdata('client_id'), 'order_title' => $order_title, 'order_detail'=>$selectedMenus, 'price' => $totalPrice-($priced1+$priced2), 'Total'=>$totalPrice, 'drink1_id'=>$drink1_id, 'drink2_id'=>$drink2_id, 'priced1'=>$priced1, 'priced2'=>$priced2);
 
-
-
-			//$price_orders = $post_params['select_order'];
-			//$cool_drink_list = $this->mdl_drinks->get_cool_drink_list();
-			/*foreach($menu_orders as $menu_id => $order) {
-				$price = 0;
-				$menuObject = $this->mdl_menus->get_menu_by_id($menu_id);
-				$typeCount = count($order);
-				
-				if($typeCount == 2) {
-					$order_type = 'both';
-					$price = $menuObject->full_price;
-				} else {
-					$order_type = $order[0];
-					$price = $menuObject->half_price;
-				}
-				
-		        if (isset($post_params['cool_drinks'][$menu_id])) {
-		          $cool_drinks = json_encode($post_params['cool_drinks'][$menu_id]);
-							foreach ($post_params['cool_drinks'][$menu_id] as $cool_drink) {
-								$price += $cool_drink_list[$cool_drink];
-							}
-		        } else {
-		          $cool_drinks = '';
-		        }
-				
-				$data[] = array('menu_id' => $menu_id, 'order_date' => $menuObject->menu_date, 'client_id' => $this->session->userdata('client_id'), 'order_type' => $order_type, 'cool_drinks_array' => $cool_drinks, 'price' => $price);
-			}*/
-			
 			if(count($data) > 0) {
 				$this->db->insert_batch('temporary_orders', $insert);
 			}

@@ -135,9 +135,9 @@ class Mdl_orders extends Response_Model {
 			$order_code = json_decode($order['order_detail'],true);
 			$order_code = $order_code['order_code'];
 			
-			$total_price += $price;
+			$total_price += $order['Total'];
 			$client_id = $this->session->userdata('client_id');
-			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no, 'order_code'=>implode(',',$order_code));
+			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no, 'order_code'=>implode(',',$order_code), 'Total'=>$order['Total'], 'drink1_id'=>$order['drink1_id'],'drink2_id'=>$order['drink2_id'],'priced1'=>$order['priced1'],'priced2'=>$order['priced2']);
 			$data['is_active'] = 0;
 			if (in_array($payment_type, $this->payment_types)) {
 				$data['is_active'] = 1;
@@ -194,23 +194,9 @@ class Mdl_orders extends Response_Model {
 				$this->db->insert_batch('tbl_order_drinks', $drinksData);
 			}
 
-			/*echo '<pre>';
-			print_r($insertReportData);*/
-
 			if ($insertReportData) {
 				$this->db->insert_batch('tbl_order_reports', $insertReportData);
 			}
-			
-			/*$cool_drinks = json_decode($order['cool_drinks_array'], true);
-			
-			$drinks_data = array();
-			if(count($cool_drinks) > 0) {
-				foreach($cool_drinks as $drinks) {
-					$drinks_data[] = array('order_id' => $order_id, 'drinks_id' => $drinks);
-				}
-				
-				$this->db->insert_batch('order_drinks', $drinks_data);
-			}*/
 			
 			$temporary_order_ids[] = $order['id'];
 		}

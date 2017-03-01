@@ -47,10 +47,10 @@ $this->load->view('navigation_menu');
                       , pan, aceite, vinagre y cubietros
                     </td>
                     <td><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
-                    <td><?php echo $order['price']; ?> &euro;</td>
+                    <td><?php echo $order['Total']; ?> &euro;</td>
                   </tr>
                   <?php
-                      $total_price += $order['price'];
+                      $total_price += $order['Total'];
                     }
                   }
                   ?>

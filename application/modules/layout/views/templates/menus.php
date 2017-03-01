@@ -97,7 +97,7 @@ $this->load->view('navigation_menu');
 						<div class="col-sm-2 col-my-2 smallpad multi-pad <?php echo 'multi-pad-'.$selectBorderColor; ?> " >
               <select class="selectpicker select-menu boostrap-multiselect" name="cool_drinks[<?php echo $menu_list['id']; ?>][]" multiple="multiple">
 								<?php foreach($cool_drinks as $drinks) { ?>
-									<option value="<?php echo $drinks->id; ?>"><?php echo $drinks->drinks_name;//.'---'.$drinks->price; ?></option>
+									<option class="jSelectDrinks" value="<?php echo $drinks->id; ?>"><?php echo $drinks->drinks_name;//.'---'.$drinks->price; ?></option>
 								<?php } ?>
 							</select>
             </div>

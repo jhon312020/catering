@@ -39,7 +39,7 @@ class Ajax extends Anonymous_Controller {
 			}
 			$result = $this->mdl_orders->check_today_menus_insert($payment_type);
 			if(!$result['success']) {
-				echo json_encode($result);exit;
+				echo json_encode($result); exit;
 			}
 			if ($payment_type == 'Credit/Debit') {
 				echo $this->bankPaymentProcess($result);

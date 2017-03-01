@@ -32,7 +32,7 @@ $this->load->view('navigation_menu');
 								$bool = true;
 								foreach($todaySelectedMenus as $menu) {
                   $price_with_menu_id[$menu['id']] = $menu['price'];
-                  $total_price += $menu['price'];
+                  $total_price += $menu['Total'];
 							?>
 							<tr class="order_<?php echo $menu['id']; ?>">
                 <td>
@@ -91,19 +91,7 @@ $this->load->view('navigation_menu');
                         if (!in_array($order['Postre'], $description))
                           $description[] = $plates[$order['Postre']];
                         
-                        /*foreach($orders['order'] as $order) {
-                          if (!in_array($order['complement'], $description))
-                            $description[] = $order['complement'];
-                          if (isset($order['primary_plate'])) {
-                            $description[] = $order['primary_plate'];
-                          }
-                          if (isset($order['secondary_plate'])) {
-                            $description[] = $order['secondary_plate'];
-                          }
-                          if (!in_array($order['postre'], $description))
-                            $description[] = $order['postre'];
-                        } */
-
+                        
                         if (isset($orders['cool_drink'])) {
                           foreach ($orders['cool_drink'] as $drinks) {
                             $description[] = $cool_drink_list[$drinks];
@@ -112,43 +100,12 @@ $this->load->view('navigation_menu');
                         
                       }
                     }
-
 										
-										/*$description[] =  $menu['complement'];
-										
-										$price = $menu['price'];
-										$price_with_menu_id[$menu['id']] = $price;
-										switch($menu['order_type']) {
-											case 'primary':
-												$description[] = $menu['primary_plate'];
-                      break;
-											case 'secondary':
-												$description[] = $menu['secondary_plate'];
-                      break;
-											case 'both':
-												$description[] = $menu['primary_plate'];
-												$description[] = $menu['secondary_plate'];
-                      break;
-										}
-										
-										$description[] = $menu['postre'];
-										if($menu['cool_drinks_array']) {
-											$cool_drinks_data = json_decode($menu['cool_drinks_array'], true);
-											if($cool_drinks_data) {
-												foreach($cool_drinks_data as $drinks) {
-													if($cool_drinks[$drinks]) {
-														$description[] = $cool_drinks[$drinks]->drinks_name;
-													}
-												}
-											}
-										}
-										
-										$total_price += $price;*/
 										echo implode(', ', $description);
 									?>, pan, aceite, vinagre y cubietros
                 </td>
                 <td><?php echo date('d/m/Y', strtotime($menu['order_date'])); ?></td>
-                <td><?php echo number_format($menu['price'], 2); ?> &euro;</td>
+                <td><?php echo number_format($menu['Total'], 2); ?> &euro;</td>
                 <td>
 									<a href="javascript:;" class="removeOrder" data-id="<?php echo $menu['id']; ?>">
 										<i class="fa fa-trash fa-2x eyecon"></i>
