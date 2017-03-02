@@ -80,6 +80,8 @@ $(document).ready(function() {
 			$mainDiv.find('.jsSelectMenu').prop('disabled', false);
 			$mainDiv.find('.jsSelectOrder').prop('disabled', false);
 		} else {
+			$('.jsSelectMenu').prop('disabled',false);
+			$('.jsSelectOrder').prop('disabled',false);
 			$mainDiv.find('.jsSelectOrder').prop('checked', false);
 		}
 		addPrice();
