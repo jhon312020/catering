@@ -42,66 +42,13 @@ $this->load->view('navigation_menu');
                       $order_code = $order_detail['order_code'];
                       unset($order_detail['order_code']);
                       $order_detail = array_values($order_detail);
-                      $menu_type = '';
-                      switch (count($order_code)) {
-                        case 0:
-                          break;
-                        case 1:
-                          switch ($order_code[0]) {
-                            case 'N':
-                              $menu_type = lang('basic_menu');
-                              break;
-                            case 'R':
-                              $menu_type = lang('diet_menu');
-                              break;
-                            default:
-                              $menu_type = lang('medio_menu');
-                          }
-                          break;
-                        default:
-                          $order_code = array_unique($order_code);
-                          if (!in_array('N1', $order_code) && !in_array('N2', $order_code)) {
-                            $menu_type = lang('diet_menu');
-                          } elseif (!in_array('R1', $order_code) && !in_array('R2', $order_code)) {
-                            $menu_type = lang('basic_menu');
-                          } else {
-                            $menu_type = lang('combine_menu');
-                          }
-                      }
+                      $menu_type = findOrderMenuType($order_code);
                       echo $menu_type;
                     ?>
                   </b></p>
                   <?php
-                    $description = array();
-                    foreach ($order_detail as $order_det) {
-                      if (!is_array($order_det))
-                        continue;
-                      foreach ($order_det as $key=>$orders) {
-                        if (!is_integer($key))
-                          continue;
-                        $order = $orders['order'];
-                        if (!in_array($order['Guarnicio'], $description))
-                            $description[] = $plates[$order['Guarnicio']];
-                        if (isset($order['Primer'])) {
-                          $description[] = $plates[$order['Primer']];
-                        }
-                        if (isset($order['Segon'])) {
-                          $description[] = $plates[$order['Segon']];
-                        }
-                        if (!in_array($order['Postre'], $description))
-                          $description[] = $plates[$order['Postre']];
-                        
-                        
-                        if (isset($orders['cool_drink'])) {
-                          foreach ($orders['cool_drink'] as $drinks) {
-                            $description[] = $cool_drink_list[$drinks];
-                          }  
-                        }
-                        
-                      }
-                    }
-										
-										echo implode(', ', $description);
+                    $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
+                    echo implode(', ', $description);
 									?>, pan, aceite, vinagre y cubietros
                 </td>
                 <td><?php echo date('d/m/Y', strtotime($menu['order_date'])); ?></td>

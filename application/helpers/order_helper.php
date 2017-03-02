@@ -64,20 +64,20 @@ function getOrderDescription($order_detail, $plates, $cool_drink_list) {
     return $description;
 }
 
-function getDrinksInformation($order_id, $drinks_list) {
-  $drink_name_list = array();
-  $CI =& get_instance();
-  $drinks = $CI->db->select('count(*) as quantity, drinks_id')->from('order_drinks')->where('order_id', $order_id)->group_by('drinks_id')->get()->result();
-  //echo '<pre>'; print_r($drinks); echo'</pre>';
-  //return;
-  if ($drinks) {
-    foreach ($drinks as $drink) {
-      $drink_name_list[] = $drinks_list[$drink->drinks_id].' - '.$drink->quantity;
+function getDrinksInformation($order, $drinks_list) {
+  $fields = array('drink1_id','drink2_id');
+  $drink_name_list = [];
+  foreach ($fields as $field) {
+    if ($order->{$field} != 0) {
+      if (array_key_exists($drinks_list[$order->{$field}], $drink_name_list)) {
+        $drink_name_list[$drinks_list[$order->{$field}]] = $drinks_list[$order->{$field}]. ' - 2';
+      } else {
+        $drink_name_list[$drinks_list[$order->{$field}]] = $drinks_list[$order->{$field}]. ' - 1';
+      }
     }
-    $drink_name_list = implode(', ', $drink_name_list);
   }
+  $drink_name_list = implode(', ', $drink_name_list);
   return $drink_name_list;
-  
 }
 
 

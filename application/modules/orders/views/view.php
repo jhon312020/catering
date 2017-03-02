@@ -67,7 +67,7 @@ $disabled = ($readonly)?'disabled':'';
 						<label class="col-sm-2 pull-left"><?php echo lang('price'); ?>:</label>
 						<div class="col-sm-10">
 							<span class="highlight">
-								<?php echo str_replace(',','',$order->price); ?>
+								<?php echo str_replace(',','',$order->Total); ?>
 							</span>
 						</div>
 					</div>

@@ -44,7 +44,7 @@
 				<td class=""><?php echo $order->business.' - '.$order->Centre; ?></td>
 				<td class=""><?php echo lang($order->payment_method); ?></td>
 				<td class=""><?php echo str_replace(',','',$order->order_code); ?></td>
-				<td class=""><?php echo getDrinksInformation($order->id, $drinks_list); ?></td>
+				<td class=""><?php echo getDrinksInformation($order, $drinks_list); ?></td>
 				<td class="">
 					<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/orders/view/' . $order->id); ?>">
 						<i class="entypo-eye"></i>

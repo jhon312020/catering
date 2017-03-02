@@ -33,99 +33,22 @@ $this->load->view('navigation_menu');
                       $order_code = $order_detail['order_code'];
                       unset($order_detail['order_code']);
                       $order_detail = array_values($order_detail);
-                      $menu_type = '';
-                      switch (count($order_code)) {
-                        case 0:
-                          break;
-                        case 1:
-                          switch ($order_code[0]) {
-                            case 'N':
-                              $menu_type = lang('basic_menu');
-                              break;
-                            case 'R':
-                              $menu_type = lang('diet_menu');
-                              break;
-                            default:
-                              $menu_type = lang('medio_menu');
-                          }
-                          break;
-                        default:
-                          $order_code = array_unique($order_code);
-                          if (!in_array('N1', $order_code) && !in_array('N2', $order_code)) {
-                            $menu_type = lang('diet_menu');
-                          } elseif (!in_array('R1', $order_code) && !in_array('R2', $order_code)) {
-                            $menu_type = lang('basic_menu');
-                          } else {
-                            $menu_type = lang('combine_menu');
-                          }
-                      }
+                      $menu_type = findOrderMenuType($order_code);
                       echo $menu_type;
                     ?>
                   </b></p>
-                  <?php 
-										/*$description = array();
-										$description[] =  $order['complement'];
-										
-										switch($order['order_type']) {
-											case 'primary':
-												$description[] = $order['primary_plate'];
-											case 'secondary':
-												$description[] = $order['secondary_plate'];
-											case 'both':
-												$description[] = $order['primary_plate'];
-												$description[] = $order['secondary_plate'];
-										}
-										
-										$description[] = $order['postre'];
-										
-										if($order['drinks_id']) {
-											$drinks_array = explode(',', $order['drinks_id']);
-											if($drinks_array) {
-												foreach($drinks_array as $drinks) {
-													if($cool_drinks[$drinks]) {
-														$description[] = $cool_drinks[$drinks]->drinks_name;
-													}
-												}
-											}
-										}*/
-
-                    $description = array();
-                    foreach ($order_detail as $order_det) {
-                      if (!is_array($order_det))
-                        continue;
-                      foreach ($order_det as $key=>$orders) {
-                        if (!is_integer($key))
-                          continue;
-                        $order_array = $orders['order'];
-                        if (!in_array($order_array['Guarnicio'], $description))
-                            $description[] = $plates[$order_array['Guarnicio']];
-                        if (isset($order_array['Primer'])) {
-                          $description[] = $plates[$order_array['Primer']];
-                        }
-                        if (isset($order_array['Segon'])) {
-                          $description[] = $plates[$order_array['Segon']];
-                        }
-                        if (!in_array($order_array['Postre'], $description))
-                          $description[] = $plates[$order_array['Postre']];
-
-                        if (isset($orders['cool_drink'])) {
-                          foreach ($orders['cool_drink'] as $drinks) {
-                            $description[] = $cool_drink_list[$drinks];
-                          }  
-                        }
-                        
-                      }
-                    }
+                  <?php
+                    $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
 										echo implode(', ', $description);
 									?>
 									, pan, aceite, vinagre y cubietros
                 </td>
                 <td><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
-                <td><?php echo $order['price']; ?> &euro;</td>
+                <td><?php echo $order['Total']; ?> &euro;</td>
                 <td><?php echo $order['payment_method']; ?></td>
               </tr>
 							<?php
-								$total_price += $order['price'];
+								$total_price += $order['Total'];
                 }
 							}
 							?>
