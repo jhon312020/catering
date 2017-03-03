@@ -69,17 +69,18 @@ class Mdl_temporary_orders extends Response_Model {
 			$priced1 = 0.00;
 			$priced2 = 0.00;
 			$order_code = [];
+
+			$this->load->model('preus/mdl_preus');
+			$price_list = $this->mdl_preus->get_price_list($this->session->userdata('Tarifa_id'));
 			
-			$totalPrice = 0;
+			$totalPrice = $price_list[$post_params['order_code']];
 			foreach ($menus as $menu) {
 				$data = [];
 				
 				if (count($menu_orders[$menu['id']]) == 2) {
-					$data['price'] = $menu['full_price'];
 					$data['order_type'] = 'full';
 					$data['menu_id'] = $menu['id'];
 				} else {
-					$data['price'] = $menu['half_price'];
 					$data['order_type'] = 'half';
 					$data['menu_id'] = $menu['id'];
 				}
@@ -89,30 +90,31 @@ class Mdl_temporary_orders extends Response_Model {
 				$orders['Guarnicio'] = $menu['Guarnicio'];
 				$orders['Postre'] = $menu['Postre'];
 				$data['order'] = $orders;
-				if (array_key_exists('Primer', $orders) && !array_key_exists('Segon', $orders)) {
-					if ($menu['menu_type_id'] == 1) {
+				/*if (array_key_exists('Primer', $orders) && !array_key_exists('Segon', $orders)) {
+					if ($menu['menu_type_id'] == '0') {
 						$order_code[] = 	'N1';
 					} else {
 						$order_code[] = 	'R1';
 					}
 				} elseif (!array_key_exists('Primer', $orders) && array_key_exists('Segon', $orders)) {
-					if ($menu['menu_type_id'] == 1) {
+					if ($menu['menu_type_id'] == '0') {
 						$order_code[] = 	'N2';
 					} else {
 						$order_code[] = 	'R2';
 					}
 				} elseif (array_key_exists('Primer', $orders) && array_key_exists('Segon', $orders)) {
-					if ($menu['menu_type_id'] == 1) {
+					if ($menu['menu_type_id'] == '0') {
 						$order_code[] = 	'N';
 					} else {
 						$order_code[] = 	'R';
 					}					
-				}
+				}*/
+
 
 				if (isset($post_params['cool_drinks'][$menu['id']])) {
 		          $cool_drinks = json_encode($post_params['cool_drinks'][$menu['id']]);
 					foreach ($post_params['cool_drinks'][$menu['id']] as $cool_drink) {
-						$data['price'] += $cool_drink_list[$cool_drink]['price'];
+						$totalPrice += $cool_drink_list[$cool_drink]['price'];
 						$data['cool_drink'][] = $cool_drink_list[$cool_drink]['id'];
 						if ($drink1_id == 0) {
 							$drink1_id = $cool_drink;
@@ -123,17 +125,23 @@ class Mdl_temporary_orders extends Response_Model {
 						}
 					}
 		        }
-
-				$totalPrice += $data['price'];
 				$selectedMenus[$menu['menu_type_id']]['menu_type_id'] = $menu['menu_type_id'];
 				$selectedMenus[$menu['menu_type_id']][] = $data;
 			}
+			//print_r($order_code); exit;
 			if (count($selectedMenus) > 1) {
 				$order_title = 	'combine';
 			} else {
 				$order_title = 	'single';
 			}
 			$selectedMenus['totalPrice'] = $totalPrice;
+			$order_code = [];
+			if (strlen($post_params['order_code']) == 1 || strlen($post_params['order_code']) == 2) {
+				$order_code[] = $post_params['order_code'];
+			} {
+				$order_code[] = substr($post_params['order_code'],0,2);
+				$order_code[] = substr($post_params['order_code'],2,2);
+			}
 			$selectedMenus['order_code'] = $order_code;
 			$selectedMenus = json_encode($selectedMenus);
 			

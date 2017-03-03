@@ -27,7 +27,7 @@ class Mdl_orders extends Response_Model {
 		public function get_orders_by_client_date() {
 			$client_id = $this->session->userdata('client_id');
 			$orders_client_by_date = $this->mdl_orders
-											->select('id, price as total_price, reference_no, order_detail, order_type, order_date, payment_method')
+											->select('id, Total as total_price, reference_no, order_detail, order_type, order_date, payment_method')
 											->where(array('is_active' => 1, 'client_id' => $client_id))
 											->get()
 											->result_array();

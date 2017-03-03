@@ -98,8 +98,25 @@ $(document).ready(function() {
 		
 	
 	function addPrice() {
-		var $main_total = 0;
-		$('.jsSelectOrder').each(function() {
+		var main_total = 0;
+		order_code = findOrderCode();
+		if (order_code != '') {
+			main_total = parseFloat(price_list[order_code]);
+			$('.jsSelectOrder').each(function() {
+				var $mainDiv = $(this).closest('.jsSubMenu');
+				var $checkedLength = $mainDiv.find('.jsSelectMenu:checked').length;
+				var $menu_id = $mainDiv.find('.jsSelectMenu').attr('name').replace ( /[^\d.]/g, '' );
+				if($cool_drinks_selected[$menu_id]) {
+					main_total = parseFloat(main_total)+parseFloat($cool_drinks_selected[$menu_id]);
+				}
+				$menus_total = main_total;
+				$('#jsTotalPrice').html(main_total.toFixed(2)+'&euro;');
+			});
+		} else {
+			$menus_total = main_total;
+			$('#jsTotalPrice').html(main_total.toFixed(2)+'&euro;');
+		}
+		/*$('.jsSelectOrder').each(function() {
 			var $mainDiv = $(this).closest('.jsSubMenu');
 			var $checkedLength = $mainDiv.find('.jsSelectMenu:checked').length;
 			var $menu_id = $mainDiv.find('.jsSelectMenu').attr('name').replace ( /[^\d.]/g, '' );
@@ -127,7 +144,7 @@ $(document).ready(function() {
 		});
 		$menus_total = $main_total;
 		console.log($menus_total, $main_total)
-		$('#jsTotalPrice').html($main_total.toFixed(2)+'&euro;');
+		$('#jsTotalPrice').html($main_total.toFixed(2)+'&euro;');*/
 	}
 	
 	$(document).on('click', '.jsAddMenuButton', function(e) {
@@ -153,6 +170,7 @@ $(document).ready(function() {
 		}).promise().done(function(){
 			if (menu_completed_with_others == false) {
 				$form.append('<input type="hidden" name="is_reload" value="'+reloadValue+'">');
+				$form.append('<input type="hidden" name="order_code" value="'+findOrderCode()+'">');
 				$form.submit();	
 			}
 		});
@@ -199,4 +217,16 @@ function isAvailableDates(date) {
 		}
 	}
 	return true;
+}
+
+function findOrderCode() {
+	order_code = '';
+	if ($('.jsSelectOrder:checked').length) {
+		order_code = $('.jsSelectOrder:checked').attr('data-order-key');
+	} else {
+		$('.jsSelectMenu:checked').each(function(){
+			order_code += $(this).attr('data-order-key');
+		});
+	}
+	return order_code;
 }

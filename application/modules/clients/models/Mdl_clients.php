@@ -221,12 +221,14 @@ class Mdl_clients extends Response_Model {
                 	$this->session->set_flashdata('alert_error', lang('in_active_user'));
                 	return false;
                 } else {
+                    $Tarifa_id = ($result->Tarifa_id)?$result->Tarifa_id:1;
                     $session_data = array(
                         'client_id'	=> $result->id,
                         'client_name' => ucfirst($result->name)." ".ucfirst($result->surname),
                         'business_id' => $result->business_id,
                         'centre_id' => $result->centre_id,
-                        'email'=>$result->email
+                        'email'=>$result->email,
+                        'Tarifa_id' => $Tarifa_id
                     );
                     $this->session->set_userdata($session_data);
                 }

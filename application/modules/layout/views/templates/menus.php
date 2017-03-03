@@ -47,6 +47,7 @@ $this->load->view('navigation_menu');
             $plusColor = 'text-green';
             $selectBorderColor = 'border-green';
           }
+          //print_r($menu_lists[$key]); exit;
           if(isset($menu_lists[$key])) {
 				?>
 				<div class="clear-pad" style="clear:both">
@@ -59,6 +60,11 @@ $this->load->view('navigation_menu');
 						//if(isset($menu_lists[$key])) {
 							foreach($menu_lists[$key] as $menu_list) {
 								$menu_list_with_id[$menu_list['id']] = $menu_list;
+                if ($key == -1) {
+                  $order_key = 'R';
+                } else {
+                  $order_key = 'N';
+                }
 						?>
             <div class="row doublemenu jsSubMenu">
               <?php
@@ -76,7 +82,7 @@ $this->load->view('navigation_menu');
               <br>
               <span class="title-aligned"><?php echo $plates[$menu_list['Primer']]['Plat']; ?></span>
               <span class="custom-checkbox col-sm-offset-5">
-              <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Primer]" value="<?php echo $menu_list['Primer']; ?>" />
+              <input type="checkbox" data-order-key="<?php echo $order_key.'1'; ?>" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Primer]" value="<?php echo $menu_list['Primer']; ?>" />
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
               </span>
             </div>
@@ -85,7 +91,7 @@ $this->load->view('navigation_menu');
               <br>
               <span class="title-aligned"><?php echo $plates[$menu_list['Segon']]['Plat']; ?></span>
               <span class="custom-checkbox col-sm-offset-5">
-              <input type="checkbox" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Segon]" value="<?php echo $menu_list['Segon']; ?>" />
+              <input type="checkbox" data-order-key="<?php echo $order_key.'2'; ?>" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Segon]" value="<?php echo $menu_list['Segon']; ?>" />
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
               </span>
             </div>
@@ -106,7 +112,7 @@ $this->load->view('navigation_menu');
 							<?php /* <p><?php echo $menu_list['half_price']; ?></p>
 							<p><?php echo $menu_list['full_price']; ?></p> */ ?>
               <span class="custom-checkbox col-sm-offset-5">
-              <input type="checkbox" class="jsSelectOrder" name="select_order[<?php echo $menu_list['id']; ?>]" />
+              <input type="checkbox" data-order-key="<?php echo $order_key; ?>" class="jsSelectOrder" name="select_order[<?php echo $menu_list['id']; ?>]" />
               <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
               </span>
             </div>
@@ -160,9 +166,9 @@ $this->load->view('navigation_menu');
   var display = $('#time');
 	var $cool_drinks = <?php echo json_encode($cool_drinks); ?>;
 	var $menus = <?php echo json_encode($menu_list_with_id); ?>;
-  var $price_list = <?php echo json_encode($price_list); ?> 
+  var price_list = <?php echo json_encode($price_list); ?> 
   var availableDates = <?php echo json_encode($available_dates); ?>;
-  console.log($price_list);
+  console.log(price_list);
 </script>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/menus.js"></script>
 <?php $this->load->view('footer'); ?>

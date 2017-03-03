@@ -195,7 +195,7 @@ class Node extends Anonymous_Controller {
   */
   public function menus() {
     $this->load->model('preus/mdl_preus');
-		$price_list = $this->mdl_preus->get_price_list(1);
+		$price_list = $this->mdl_preus->get_price_list($this->session->userdata('Tarifa_id'));
     $menuDate = date('Y-m-d');
     $data_array = array();
 
@@ -245,7 +245,7 @@ class Node extends Anonymous_Controller {
         $platesId[$menus[$field]] = $menus[$field];
       }
     }
-    echo '<pre>';print_r($menu_list);echo '</pre>';
+    //echo '<pre>';print_r($menu_list);echo '</pre>';
     if (!$platesId) {
       $data_array['plates'] = [];
     } else {
@@ -258,6 +258,7 @@ class Node extends Anonymous_Controller {
     $data_array['menu_lists'] = $data_menu;
 		$data_array['price_list'] = $price_list;
 		$data_array['menu_date'] = date('d-m-Y', strtotime($menuDate));
+
 
     $this->load->view('layout/templates/menus', $data_array);
   }
