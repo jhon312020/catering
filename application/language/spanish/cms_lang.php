@@ -176,5 +176,6 @@ $lang['reg_business'] = 'Empresa';
 $lang['Bank Draft'] = 'Giro bancario';
 $lang['Bank'] = 'Credito/Debito';
 $lang['Ticket Restaurant'] = 'Efectivo / Ticket restaurante';
+$lang['tarifa'] = 'Tarifa';
 /*---ó-*/
 ?>

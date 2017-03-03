@@ -11,7 +11,7 @@ if (!defined('BASEPATH'))
 class Node extends Anonymous_Controller {
   var $site_contact = '';
 
-  public $menu_types = [1=>'Basic',2=>'Diet'];
+  public $menu_types = [0=>'Basic',-1=>'Diet'];
 	
 	/**
    * class constructor
@@ -194,7 +194,9 @@ class Node extends Anonymous_Controller {
    * 
   */
   public function menus() {
-		$menuDate = date('Y-m-d');
+    $this->load->model('preus/mdl_preus');
+		$price_list = $this->mdl_preus->get_price_list(1);
+    $menuDate = date('Y-m-d');
     $data_array = array();
 
 		
@@ -236,14 +238,14 @@ class Node extends Anonymous_Controller {
 
     $platesId = [];
     $plateIdFields = ['Primer','Segon','Guarnicio','Postre'];
-    //Set menu_type_id as key in all menus list.
+    //Set Regim as key in all menus list.
     foreach($menu_list as $menus) {
-      $data_menu[$menus['menu_type_id']][] = $menus;
+      $data_menu[$menus['Regim']][] = $menus;
       foreach ($plateIdFields as $field) {
         $platesId[$menus[$field]] = $menus[$field];
       }
     }
-
+    echo '<pre>';print_r($menu_list);echo '</pre>';
     if (!$platesId) {
       $data_array['plates'] = [];
     } else {
@@ -253,7 +255,8 @@ class Node extends Anonymous_Controller {
     
     $data_array['available_dates'] = $this->mdl_menus->get_available_dates();
 		$data_array['show_menus'] = $show_menus;
-		$data_array['menu_lists'] = $data_menu;
+    $data_array['menu_lists'] = $data_menu;
+		$data_array['price_list'] = $price_list;
 		$data_array['menu_date'] = date('d-m-Y', strtotime($menuDate));
 
     $this->load->view('layout/templates/menus', $data_array);

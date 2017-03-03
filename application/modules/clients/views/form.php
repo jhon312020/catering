@@ -103,6 +103,14 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-sm-2 pull-left"><?php echo lang('tarifa');?> </label>
+					<div class="col-sm-10">
+						<?php 
+							echo form_dropdown('Tarifa_id', $tarifa_list, $this->mdl_clients->form_value('Tarifa_id'), 'class="form-control" '.$disabled.''); 
+						?>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('iban');?> </label>
 					<div class="col-sm-10">
 						<?php echo form_input(array('name'=>'iban', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('iban'), $readonly=>true)); ?>

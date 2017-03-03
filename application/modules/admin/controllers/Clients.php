@@ -128,12 +128,14 @@ class Clients extends Admin_Controller {
 		if ($id and !$this->input->post('btn_submit')) {
 			$this->mdl_clients->prep_form($id);
 		}
-		
+		$this->load->model('tarifes/mdl_tarifes');
+		$data = array();
+		$tarifa_list = $this->mdl_tarifes->get_tarifa_list();
 		$orders_by_client_id = $this->mdl_orders->get_orders_by_client_id($id);
 		
 		//$clientCode = 'GC-CL-' . sprintf("%04s", $this->mdl_clients->getNextIncrementId());
 
-		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'orders_by_client_id' => $orders_by_client_id));
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'orders_by_client_id' => $orders_by_client_id, 'tarifa_list'=>$tarifa_list));
 		$this->layout->buffer('content', 'clients/form');
 		$this->layout->render();
 	}

@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
 
 class Menus extends Admin_Controller {
 
-	public $menu_types = [1=>'Basic',2=>'Diet'];
+	public $menu_types = [0=>'Basic',-1=>'Diet'];
 
 	public function __construct() {
 		parent::__construct();
@@ -43,7 +43,8 @@ class Menus extends Admin_Controller {
 		$plates = $this->mdl_plats->get_plats_group_by_platorder();
 		
 		if ($data){
-
+			//print_r($data);
+		//exit;
 			$insertData = [];
 			if (isset($data['Basic'])) {
 				foreach ($data['Basic'] as $key=>$record) {

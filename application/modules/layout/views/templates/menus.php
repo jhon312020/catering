@@ -160,7 +160,9 @@ $this->load->view('navigation_menu');
   var display = $('#time');
 	var $cool_drinks = <?php echo json_encode($cool_drinks); ?>;
 	var $menus = <?php echo json_encode($menu_list_with_id); ?>;
+  var $price_list = <?php echo json_encode($price_list); ?> 
   var availableDates = <?php echo json_encode($available_dates); ?>;
+  console.log($price_list);
 </script>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/menus.js"></script>
 <?php $this->load->view('footer'); ?>

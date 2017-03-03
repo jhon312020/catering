@@ -44,7 +44,7 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 					</div>
 				</div>
 				<div class="form-group">
-					<input type="hidden" name="<?php echo $menu_type; ?>[<?php echo $count; ?>][menu_type_id]" value="<?php echo $key; ?>">
+					<input type="hidden" name="<?php echo $menu_type; ?>[<?php echo $count; ?>][Regim]" value="<?php echo $key; ?>">
 					<input type="hidden" name="<?php echo $menu_type; ?>[<?php echo $count; ?>][menu_date]" value="<?php echo $menuDate; ?>" class="menu_date">
 					<div class="col-sm-2">
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish1.png" class="imgWidth" />
