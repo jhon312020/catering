@@ -32,10 +32,9 @@ class MY_Form_validation extends CI_Form_validation {
   }
   public function iban_check($str) {
     	$ibanLength = strlen($str);
-    	$ibanArray = explode(' ', $str);
-    	$ibanCount = count($ibanArray);
-	    if ($ibanLength != 24 || $ibanCount != 5) {
-	      $this->CI->form_validation->set_message('iban_check', 'The {field} field is in wrong format eg ES33 0000 0000 0000 0000');
+    	$stringCharacter = substr($str, 0, 2);
+    	if ($ibanLength != 24 || !(is_string($stringCharacter)) ) {
+	      $this->CI->form_validation->set_message('iban_check', 'The {field} field is in wrong format eg ES1300810398810001630000');
 	      return FALSE;
 	    } else {
 	      return TRUE;

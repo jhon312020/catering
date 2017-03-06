@@ -13,6 +13,7 @@ class Ajax extends Anonymous_Controller {
   public function __construct() {
     parent::__construct();
 		$this->load->model('orders/mdl_orders');
+		$this->load->model('clients/mdl_clients');
   }
   /**
    * Function bankPaymentProcess
@@ -29,6 +30,10 @@ class Ajax extends Anonymous_Controller {
 					$payment_type = 'Credit/Debit';
 				break;
 				case 'draft':;
+					if (!$this->mdl_clients->validateIBAN($this->session->userdata('client_id'))) {
+						echo json_encode(array('success' => false, 'msg' => 'Invalid IBAN number.  Kindly check your profile page to update it!'));
+						exit;
+					}
 					$payment_type = 'Bank Draft';
 				break;
 				case 'ticket':;

@@ -605,16 +605,5 @@ class Node extends Anonymous_Controller {
     $template_vars['conditions'] = $this->mdl_conditions->get_terms_and_condtions();
     $this->load->view('layout/templates/terms', $template_vars);
   }
-
-  public function dni_check($str) {
-    echo 'comes in';
-    exit;
-    if ($str == 'test') {
-      $this->mdl_clients->form_validation->set_message('dni_check', 'The {field} field can not be the word "test"');
-      return FALSE;
-    } else {
-      return TRUE;
-    }
-  }
 }
 ?>

@@ -356,13 +356,17 @@ class Mdl_clients extends Response_Model {
     }
     return 0;
   }
-  public function validate_dni($str) {
-    if ($str == 'test') {
-      $this->form_validation->set_message('dni_callable', 'Testing');
-      return FALSE;
-    } else {
-      return TRUE;
+
+  public function validateIBAN($client_id) {
+    if ($client_id) {
+      $result = $this->db->select('iban')->from('clients')->where(array('id'=>$client_id))->get()->row();
+      if($result) {
+        $ibanLength = strlen($result->iban);
+        $stringCharacter = substr($result->iban, 0, 2);
+        if ($ibanLength == 24 && (is_string($stringCharacter)) ) { return true;     }
+      }
     }
+    return false;
   }
 }
 ?>
