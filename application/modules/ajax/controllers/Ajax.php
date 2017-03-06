@@ -27,17 +27,20 @@ class Ajax extends Anonymous_Controller {
 		if ($this->input->post('payment_type')) {
 			switch ($this->input->post('payment_type')) {
 				case 'card':
-					$payment_type = 'Credit/Debit';
+					$payment_type = 'TPV Online';
 				break;
 				case 'draft':;
 					if (!$this->mdl_clients->validateIBAN($this->session->userdata('client_id'))) {
 						echo json_encode(array('success' => false, 'msg' => 'Invalid IBAN number.  Kindly check your profile page to update it!'));
 						exit;
 					}
-					$payment_type = 'Bank Draft';
+					$payment_type = 'Gir bancari';
 				break;
 				case 'ticket':;
 					$payment_type = 'Ticket Restaurant';
+				break;
+				case 'cash':;
+					$payment_type = 'Efectiu Dia';
 				break;
 				default:
 					echo json_encode(array('success' => false, 'msg' => 'Invalid order data'));
@@ -46,7 +49,7 @@ class Ajax extends Anonymous_Controller {
 			if(!$result['success']) {
 				echo json_encode($result); exit;
 			}
-			if ($payment_type == 'Credit/Debit') {
+			if ($payment_type == 'TPV Online') {
 				echo $this->bankPaymentProcess($result);
 			} else {
 				echo json_encode(array('success' => true, 'process_type'=>'others', 'redirectUrl' => site_url('es/success/?cm='.$result['order_data']['reference_no'])));

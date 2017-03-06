@@ -42,7 +42,7 @@
 				<td class=""><?php echo date('d/m/Y', strtotime($order->order_date)); ?></td>
 				<td class=""><?php echo $order->name . ' ' . $order->surname; ?></td>
 				<td class=""><?php echo $order->business.' - '.$order->Centre; ?></td>
-				<td class=""><?php echo lang($order->payment_method); ?></td>
+				<td class=""><?php echo $order->payment_method; ?></td>
 				<td class=""><?php echo str_replace(',','',$order->order_code); ?></td>
 				<td class=""><?php echo getDrinksInformation($order, $drinks_list); ?></td>
 				<td class="">

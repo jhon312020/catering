@@ -114,7 +114,7 @@
     </div>
     <div style="padding-top:10px;text-align:right;width:100%;">
       <strong>Total : <span style="color:#8DC73F;"><?php echo number_format($total_price,2); ?> &euro;</span><br/>
-      <?php echo lang('payment_method'); ?> : <span style="color:#8DC73F;"><?php echo lang($orders[0]['payment_method']); ?></span></strong>
+      <?php echo lang('payment_method'); ?> : <span style="color:#8DC73F;"><?php echo $orders[0]['payment_method']; ?></span></strong>
     </div>
   <div style="margin-top:30px;color:#999999;line-height:20px;font-size:13px;">
     <p>Un saludo y gracias <br/><b>Gumen Catering</b><br/><a href="http://www.gumen-catering.com">www.gumen-catering.com</a></p>

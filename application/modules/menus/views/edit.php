@@ -1,7 +1,6 @@
-<style type="text/css">
-
-</style>
 <?php
+//echo '<pre>'; print_r($menu_types); echo '</pre>';
+//echo '<pre>'; print_r($menus); echo '</pre>';
 $readonly = ($readonly)?'readonly':'';
 $disabled = ($readonly)?'disabled':'';
 $menuDate = date('Y-m-d', $strtotime);
@@ -32,7 +31,7 @@ $datePickerDate = date('d/m/Y', strtotime($menuDate));
 			<div class="form-content">
 					<div class="row">
 						<div class="col-sm-12">
-							<span class="hmargin"><?php echo lang('menu_cms').' '.lang(strtolower($menu_types[$menu['menu_type_id']])); ?></span>
+							<span class="hmargin"><?php echo lang(strtolower($menu_types[$menu['Regim']])); ?></span>
 								<div class="checkbox rightCheck" style="float:right;">
 									<label>
 										<?php 
@@ -53,7 +52,7 @@ $datePickerDate = date('d/m/Y', strtotime($menuDate));
 					</div>
 				<div class="form-group">
 					<input type="hidden" name="data[<?php echo $menu_id; ?>][id]" value="<?php echo $menu['id']; ?>">
-					<input type="hidden" name="data[<?php echo $menu_id; ?>][menu_type_id]" value="<?php echo $menu['menu_type_id']; ?>">
+					<input type="hidden" name="data[<?php echo $menu_id; ?>][Regim]" value="<?php echo $menu['menu_type_id']; ?>">
 					<input type="hidden" name="data[<?php echo $menu_id; ?>][menu_date]" value="<?php echo $menuDate; ?>">
 					<div class="col-sm-2">
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish1.png" class="imgWidth" />
@@ -104,18 +103,6 @@ $datePickerDate = date('d/m/Y', strtotime($menuDate));
 													'selected'=>$menu['Postre']
 												));
 						?>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('half_price');?>: </label>
-					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'data['.$menu_id.'][half_price]', 'class'=>'form-control required_decimal', 'value'=>$menu['half_price'], $readonly=>true)); ?>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('full_price');?>: </label>
-					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'data['.$menu_id.'][full_price]', 'class'=>'form-control required_decimal', 'value'=>$menu['full_price'], $readonly=>true)); ?>
 					</div>
 				</div>
 			</div>

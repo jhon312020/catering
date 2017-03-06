@@ -69,14 +69,12 @@ class Mdl_temporary_orders extends Response_Model {
 			$priced1 = 0.00;
 			$priced2 = 0.00;
 			$order_code = [];
-
 			$this->load->model('preus/mdl_preus');
 			$price_list = $this->mdl_preus->get_price_list($this->session->userdata('Tarifa_id'));
 			
 			$totalPrice = $price_list[$post_params['order_code']];
 			foreach ($menus as $menu) {
 				$data = [];
-				
 				if (count($menu_orders[$menu['id']]) == 2) {
 					$data['order_type'] = 'full';
 					$data['menu_id'] = $menu['id'];
@@ -84,33 +82,11 @@ class Mdl_temporary_orders extends Response_Model {
 					$data['order_type'] = 'half';
 					$data['menu_id'] = $menu['id'];
 				}
-
 				$orders = [];
 				$orders = $menu_orders[$menu['id']];
 				$orders['Guarnicio'] = $menu['Guarnicio'];
 				$orders['Postre'] = $menu['Postre'];
 				$data['order'] = $orders;
-				/*if (array_key_exists('Primer', $orders) && !array_key_exists('Segon', $orders)) {
-					if ($menu['menu_type_id'] == '0') {
-						$order_code[] = 	'N1';
-					} else {
-						$order_code[] = 	'R1';
-					}
-				} elseif (!array_key_exists('Primer', $orders) && array_key_exists('Segon', $orders)) {
-					if ($menu['menu_type_id'] == '0') {
-						$order_code[] = 	'N2';
-					} else {
-						$order_code[] = 	'R2';
-					}
-				} elseif (array_key_exists('Primer', $orders) && array_key_exists('Segon', $orders)) {
-					if ($menu['menu_type_id'] == '0') {
-						$order_code[] = 	'N';
-					} else {
-						$order_code[] = 	'R';
-					}					
-				}*/
-
-
 				if (isset($post_params['cool_drinks'][$menu['id']])) {
 		          $cool_drinks = json_encode($post_params['cool_drinks'][$menu['id']]);
 					foreach ($post_params['cool_drinks'][$menu['id']] as $cool_drink) {
@@ -128,7 +104,7 @@ class Mdl_temporary_orders extends Response_Model {
 				$selectedMenus[$menu['menu_type_id']]['menu_type_id'] = $menu['menu_type_id'];
 				$selectedMenus[$menu['menu_type_id']][] = $data;
 			}
-			//print_r($order_code); exit;
+			//print_r($post_params['order_code']); 
 			if (count($selectedMenus) > 1) {
 				$order_title = 	'combine';
 			} else {
@@ -138,10 +114,11 @@ class Mdl_temporary_orders extends Response_Model {
 			$order_code = [];
 			if (strlen($post_params['order_code']) == 1 || strlen($post_params['order_code']) == 2) {
 				$order_code[] = $post_params['order_code'];
-			} {
+			} else {
 				$order_code[] = substr($post_params['order_code'],0,2);
 				$order_code[] = substr($post_params['order_code'],2,2);
 			}
+			//print_r($order_code); exit;
 			$selectedMenus['order_code'] = $order_code;
 			$selectedMenus = json_encode($selectedMenus);
 			

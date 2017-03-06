@@ -61,7 +61,7 @@
 		?>
 			<tr class="<?php echo $bgclass.' '.$topClass; ?>">
 				<td class=""><?php echo !$topClass?date('d/m/Y', $string_to_time):''; ?></td>
-				<td class=""><?php echo (isset($menu_types[$menu->menu_type_id]))? $menu_types[$menu->menu_type_id]:''; ?></td>
+				<td class=""><?php echo (isset($menu_types[$menu->Regim]))? $menu_types[$menu->Regim]:''; ?></td>
 				<td class=""><?php echo $allPlates[$menu->Guarnicio]; ?></td>
 				<td class=""><?php echo $allPlates[$menu->Primer]; ?></td>
 				<td class=""><?php echo $allPlates[$menu->Segon]; ?></td>

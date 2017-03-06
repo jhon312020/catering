@@ -1,5 +1,5 @@
-
 <?php
+//echo '<pre>'; print_r($menu_types); echo '</pre>';
 $readonly = ($readonly)?'readonly':'';
 //$menuDate = $this->mdl_menus->form_value('menu_date')?date('Y-m-d', strtotime($this->mdl_menus->form_value('menu_date'))):date('Y-m-d');
 $datePickerDate = date('d/m/Y', strtotime($menuDate));
@@ -34,7 +34,7 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 			<div class="form-content">
 				<div class="row">
 					<div class="col-sm-12">
-						<span class="hmargin"><?php echo lang('menu_cms').' '.lang(strtolower($menu_type)); ?></span>
+						<span class="hmargin"><?php echo lang(strtolower($menu_type)); ?></span>
 							<div class="checkbox rightCheck" style="float:right;">
 								<label>
 								<?php echo form_checkbox(array('name'=>$menu_type.'['.$count.'][disabled]','value'=> 1, 'class'=>'checkbox_disabled')); ?>
@@ -91,20 +91,6 @@ $checkDisabled = $this->mdl_menus->form_value('disabled')?true:false;
 												'class'=>'form-control'
 												));
 						?>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('half_price');?> </label>
-					<div class="col-sm-10">
-						<?php 
-						echo form_input(array('name'=>$menu_type.'['.$count.'][half_price]', 'class'=>'form-control required_decimal', $readonly=>true)); 
-						?>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 pull-left"><?php echo lang('full_price');?> </label>
-					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>$menu_type.'['.$count.'][full_price]', 'class'=>'form-control required_decimal',  $readonly=>true)); ?>
 					</div>
 				</div>
 			</div>

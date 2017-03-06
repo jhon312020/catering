@@ -17,7 +17,7 @@ $(document).ready(function() {
 			return false;
 		}
     $('.error').hide();
-		if (!$('#card').is(':checked') && !$('#draft').is(':checked') && !$('#ticket').is(':checked')) {
+		if (!$('#card').is(':checked') && !$('#draft').is(':checked') && !$('#ticket').is(':checked') && !$('#cash').is(':checked')) {
       $('#jsPaymentType').show();
     } else if(!$('#accept').is(':checked')) {
 			$('#jsAcceptTerms').show();

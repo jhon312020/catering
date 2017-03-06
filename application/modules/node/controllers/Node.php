@@ -270,7 +270,8 @@ class Node extends Anonymous_Controller {
   */
   public function addMenu() {
 		$post_params = $this->input->post();
-
+    //echo '<pre>'; print_r($post_params); echo '</pre>';
+    //exit;
 		if($post_params['select_food']) {
 			$this->mdl_temporary_orders->insert_temporary_orders($this->input->post());
 		}

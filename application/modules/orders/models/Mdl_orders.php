@@ -3,7 +3,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Mdl_orders extends Response_Model {
-		public $payment_types = array('Bank Draft', 'Ticket Restaurant');
+		public $payment_types = array('Gir bancari', 'Ticket Restaurant', 'Efectiu Dia', 'TPV Online');
     public $table               = 'orders';
     public $primary_key         = 'orders.id';
     public function default_order_by() {
@@ -123,6 +123,7 @@ class Mdl_orders extends Response_Model {
 	public function insert_from_temporary($payment_type = null) {
 		
 		$this->load->model('order_drinks/mdl_order_drinks');
+		$this->load->model('formapago/mdl_formapago');
 		
 		$total_price = 0;
 		$temporary_orders = $this->mdl_temporary_orders->get_client_today_menus();
@@ -139,9 +140,12 @@ class Mdl_orders extends Response_Model {
 			$client_id = $this->session->userdata('client_id');
 			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no, 'order_code'=>implode(',',$order_code), 'Total'=>$order['Total'], 'drink1_id'=>$order['drink1_id'],'drink2_id'=>$order['drink2_id'],'priced1'=>$order['priced1'],'priced2'=>$order['priced2']);
 			$data['is_active'] = 0;
-			if (in_array($payment_type, $this->payment_types)) {
+			$this->payment_types = $this->mdl_formapago->get_pay_list();
+			$payment_id = array_search($payment_type, $this->payment_types);
+			if ($payment_id) {
 				$data['is_active'] = 1;
 				$data['payment_method'] = $payment_type;
+				$data['FormaPago_id'] = $payment_id;
 			}
 
 

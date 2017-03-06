@@ -100,7 +100,7 @@ $this->load->view('navigation_menu');
               </div>
               <div class="row payrow">
                 <div class="col-sm-10">
-                  <span class="paytext">Efectivo / Ticket restaurante</span>
+                  <span class="paytext">Ticket restaurante</span>
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">
@@ -109,6 +109,18 @@ $this->load->view('navigation_menu');
                   </span>
                 </div>
               </div>
+              <div class="row payrow">
+                <div class="col-sm-10">
+                  <span class="paytext">Efectivo</span>
+                </div>
+                <div class="col-sm-2">
+                  <span class="custom-checkbox">
+                  <input type="checkbox" id="cash" class="jsPaymentType" value="Efectivo" name="paymenttype[]"/>
+                  <span class="box"><span class="tick"></span></span>
+                  </span>
+                </div>
+              </div>
+
               <div class="row payrow">
                 <div class="col-sm-12">
                   <span class="error" id="jsPaymentType">Kindly select credito/debito</span>
