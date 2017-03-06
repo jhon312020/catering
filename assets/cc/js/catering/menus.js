@@ -30,6 +30,14 @@ $(document).ready(function() {
 			var $menu_id = $mainDiv.find('.jsSelectMenu').attr('name').replace ( /[^\d.]/g, '' );
 			var opselected = $(option).val();
 			var $cool_drinks_price = $cool_drinks[opselected].price;
+
+			if($mainDiv.find('.jSelectDrinks').is(':checked')) {
+				$(".boostrap-multiselect").multiselect('disable');
+				$mainDiv.find(".boostrap-multiselect").multiselect('enable');
+			} else {
+				$(".boostrap-multiselect").multiselect('enable');
+			}
+			
 			if($mainDiv.find('.jsSelectMenu').is(':checked')) {
 				if(checked) {
 					$menus_total += parseFloat($cool_drinks_price);
