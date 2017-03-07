@@ -68,16 +68,17 @@ $this->load->view('navigation_menu');
         </div>
         <div class="col-sm-3">
           <div class="form-bottom">
-            <p>Lorem ipsum
-              <br> loremipsum@gmail.com
-              <br> consectur
+            <p id='server_error_response' class="error">
+              <br> 
+              <br> 
               <br>
+            </p>
             <div class="paysection-2">
               <h4>COMO QUIERE PAGAR?</h4>
               <br>
               <div class="row payrow">
                 <div class="col-sm-10">
-                  <span class="paytext">Targeta da credito/debito</span> <br> Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet,
+                  <span class="paytext">Tarjeta crédito o débito</span>
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">
@@ -89,7 +90,7 @@ $this->load->view('navigation_menu');
               </div>
               <div class="row payrow">
                 <div class="col-sm-10">
-                  <span class="paytext">Giro bancario</span>
+                  <span class="paytext">Giro Bancario</span>
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">
@@ -100,7 +101,7 @@ $this->load->view('navigation_menu');
               </div>
               <div class="row payrow">
                 <div class="col-sm-10">
-                  <span class="paytext">Ticket restaurante</span>
+                  <span class="paytext">Ticket Restaurante</span>
                 </div>
                 <div class="col-sm-2">
                   <span class="custom-checkbox">

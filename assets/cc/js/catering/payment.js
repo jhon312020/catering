@@ -43,10 +43,11 @@ $(document).ready(function() {
 							});
 							var $count = $('.paymentTable tbody tr').length;
 							$('.jsTotalCart').text($count);
-							$('#order_count').text($count)
+							$('#order_count').text($count);
 							$('span#total_price').text($total_price.toFixed(2));
 						}
-						alert(result.msg);
+						$('#server_error_response').html(result.msg);
+						$('#server_error_response').show();
 					}
 				}
 			});

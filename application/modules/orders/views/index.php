@@ -1,19 +1,19 @@
 <div class="headerbar">
 	<div class="clearfix">
 		<div class="row">
-			<div class="col-sm-4">
-				<h1 class="pull-left"><?php echo lang('orders'); ?></h1> 
-				<h1>&nbsp;<span class="dateSpan"><?php echo date('d/m/Y', strtotime($order_date)); ?> </span></h1>
-			</div>
-			<div class="col-sm-4">
+			<div class="col-sm-5">
+				<h1 class="pull-left"><?php echo lang('orders'); ?>
+				&nbsp;<span class="dateSpan"><?php echo date('d/m/Y', strtotime($order_date)); ?> </span> <span class="spancal glyphicon glyphicon-calendar" ></span></h1>
 				<form method="post" class="order-form">
 					<input type='hidden' class="form-control datepicker12" name="order_date" value="<?php echo $order_date; ?>" />
 					<input type="hidden" id="past" name="past" value="0" />
 				</form>
-				<h1><span class="spancal glyphicon glyphicon-calendar" ></span></h1>
+			
 			</div>
-			<div class="col-sm-2 btn btn-primary pull-right" id="jPastButton" style="margin-right:15px;">
-				<i class="icon-plus icon-white"></i> <?php echo lang('past'); ?>
+			<div class="col-sm-7">
+			<button class="btn btn-primary pull-right" id="jPastButton" style="float:right;">
+			 <?php echo lang('past'); ?></button>
+		</a> 
 			</div>
 		</div>
 		<?php /* <a class="btn btn-primary pull-right" href="<?php echo site_url('admin/orders/form'); ?>">
@@ -49,9 +49,9 @@
 					<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/orders/view/' . $order->id); ?>">
 						<i class="entypo-eye"></i>
 					</a>
-					<a class="btn btn-primary edit btn-sm" href="<?php echo site_url('admin/orders/form/' . $order->id); ?>">
+					<!-- <a class="btn btn-primary edit btn-sm" href="<?php //echo site_url('admin/orders/form/' . $order->id); ?>">
 						<i class="entypo-pencil"></i>
-					</a>
+					</a> -->
 					<!-- <a class="btn btn-warning btn-sm <?php echo $order->is_active ? '' : 'inactive'; ?>" href="<?php echo site_url('admin/orders/toggle/' . $order->id . '/' . $order->is_active); ?>">
 						<i class="entypo-check" title="<?php echo $order->is_active ? 'Active' : 'In Active'; ?>"></i>
 					</a> -->

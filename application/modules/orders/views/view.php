@@ -113,8 +113,8 @@ $disabled = ($readonly)?'disabled':'';
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-12">
-						<?php echo $this->layout->load_view('layout/header_buttons'); ?>
+						<div class="col-sm-12 text-center">
+						<button formnovalidate class="btn btn-danger jsBtnCancel" name="btn_cancel" value="1"><i class="icon-remove icon-white"></i> <?php echo lang('back'); ?></button>
 						</div>
 					</div>
 			</form>

@@ -24,7 +24,7 @@ class MY_Form_validation extends CI_Form_validation {
     	//return false;
     	//exit;
 	    if ($dniLength != 9 || !(is_numeric($numericCharacter)) || !(is_string($lastCharacter))) {
-	      $this->CI->form_validation->set_message('dni_check', 'The {field} field is in wrong format eg 12345677M');
+	      $this->CI->form_validation->set_message('dni_check', 'Formato de DNI incorrecto.');
 	      return FALSE;
 	    } else {
 	      return TRUE;
@@ -34,7 +34,7 @@ class MY_Form_validation extends CI_Form_validation {
     	$ibanLength = strlen($str);
     	$stringCharacter = substr($str, 0, 2);
     	if ($ibanLength != 24 || !(is_string($stringCharacter)) ) {
-	      $this->CI->form_validation->set_message('iban_check', 'The {field} field is in wrong format eg ES1300810398810001630000');
+	      $this->CI->form_validation->set_message('iban_check', ' El formato de IBAn debe ser ES1300810398810001630000');
 	      return FALSE;
 	    } else {
 	      return TRUE;

@@ -3,10 +3,10 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Mdl_formapago extends Response_Model {
-    public $table               = 'formapago';
-    public $primary_key         = 'formapago.id';
+    public $table               = 'FormaPago';
+    public $primary_key         = 'FormaPago.id';
     public function default_order_by() {
-        $this->db->order_by('formapago.id');
+        $this->db->order_by('FormaPago.id');
     }
     
     public function get_pay_list() {

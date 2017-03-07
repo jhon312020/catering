@@ -16,9 +16,10 @@ $this->load->view('navigation_menu');
               <table class="table table-striped paymentTable">
                 <thead>
                   <tr>
+                    <th><?php echo strtoupper(lang('reference_no')); ?></th>
                     <th><?php echo lang('menu'); ?></th>
-                    <th><?php echo lang('date'); ?></th>
-                    <th><?php echo lang('price'); ?></th>
+                    <th><?php echo strtoupper(lang('date')); ?></th>
+                    <th><?php echo strtoupper(lang('price')); ?></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -30,6 +31,7 @@ $this->load->view('navigation_menu');
                     foreach($orders as $order) {
                   ?>
                   <tr>
+                  <td><?php echo $order['reference_no']; ?></td>
                     <td>
                       <p><b>
                         <?php 

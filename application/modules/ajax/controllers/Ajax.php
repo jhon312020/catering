@@ -31,7 +31,7 @@ class Ajax extends Anonymous_Controller {
 				break;
 				case 'draft':;
 					if (!$this->mdl_clients->validateIBAN($this->session->userdata('client_id'))) {
-						echo json_encode(array('success' => false, 'msg' => 'Invalid IBAN number.  Kindly check your profile page to update it!'));
+						echo json_encode(array('success' => false, 'msg' => 'Para poder continuar, por favor, introduzca su número IBAN en su perfil de cuenta.'));
 						exit;
 					}
 					$payment_type = 'Gir bancari';
