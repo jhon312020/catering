@@ -29,6 +29,8 @@ $this->load->view('navigation_menu');
 						</form>
           </div>
         </div>
+        </div>
+        <div class="row">
 				<form action="<?php echo site_url('node/addMenu'); ?>" method="post" id="jsMenuForm">
         <input type='hidden' name="order_date" class="form-control" value="<?php echo $menu_date; ?>" />
 				<input type="hidden" name="language" value="<?php echo PAGE_LANGUAGE; ?>">
@@ -129,7 +131,7 @@ $this->load->view('navigation_menu');
 				if(count($menu_lists) > 0) {
 				?>
 				<div class="col-sm-12 menubottom add_menu">
-          <div class="col-sm-4">
+          <div class="col-xscol-sm-12 col-md-12 col-lg-4">
 						<?php if($left_time > 0) { ?>
             <h4 id="timer_span">Tienes <span id="time"></span> para pedir este menu</h4>
 						<?php } else {
@@ -139,15 +141,15 @@ $this->load->view('navigation_menu');
              } ?>
             
           </div>
-          <div class="col-sm-8">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="row">
-              <div class="col-sm-7 pull-left">
+              <div class="col-xs-12 col-sm-4 pull-left">
                 <span class="menuitemfont">Total: <span id="jsTotalPrice">0.00 &euro;</span></span>
               </div>
-							<div class="col-sm-2">
+							<div class="col-xs-12 col-sm-2 col-sm-offset-2 res-button-spacing">
                 <button type="button" class="btn btn-menu jsAddMenuButton" data-value="1"><?php echo lang('add'); ?></button>
               </div>
-							<div class="col-sm-2 pull-right">
+							<div class=" col-xs-12 col-sm-4 pull-right">
                 <button type="button" class="btn btn-menu jsAddMenuButton" data-value="0"><?php echo lang('add_checkout'); ?></button>
               </div>
             </div>

@@ -57,7 +57,7 @@ textarea::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeh
 button.btn {
 	height: 40px;
     /*margin: 0;*/
-    padding: 0% 25%;
+    padding: 0% 20%;
     vertical-align: middle;
     background: #8DC73F;
     border: 0;
@@ -100,7 +100,7 @@ input[type="checkbox1"]{
     overflow: visible; /* so we can see the pseudo-elements we're going to add to the anchor */
     font-size: 18px; /* font-size and line-height must be equal so we can account for the height of the banner */
     line-height: 18px;
-	width: 70%;
+	  width: auto;
 }
 
 /*#ribbon-container:before {

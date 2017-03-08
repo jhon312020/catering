@@ -100,10 +100,11 @@ class Mdl_temporary_orders extends Response_Model {
 							$priced2 = $cool_drink_list[$cool_drink]['price'];
 						}
 					}
-		        }
-				$selectedMenus[$menu['menu_type_id']]['menu_type_id'] = $menu['menu_type_id'];
-				$selectedMenus[$menu['menu_type_id']][] = $data;
+		    }
+				//$selectedMenus[$menu['menu_type_id']]['menu_type_id'] = $menu['menu_type_id'];
+				$selectedMenus[$menu['Regim']][] = $data;
 			}
+			//exit;
 			//print_r($post_params['order_code']); 
 			if (count($selectedMenus) > 1) {
 				$order_title = 	'combine';
