@@ -178,5 +178,8 @@ $lang['Bank'] = 'Credito/Debito';
 $lang['Ticket Restaurant'] = 'Efectivo / Ticket restaurante';
 $lang['tarifa'] = 'Tarifa';
 $lang['back'] = 'Espalda';
+$lang['hello'] = 'Hola';
+$lang['archive'] = 'ARCHIVO';
+$lang['close'] = 'CERRAR';
 /*---ó-*/
 ?>

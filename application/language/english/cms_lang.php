@@ -141,4 +141,7 @@ $lang['address'] = 'Address';
 $lang['name'] = 'Name';
 $lang['telephone'] = 'Telephone';
 $lang['options'] = 'Options';
+$lang['hello'] = 'Hello';
+$lang['archive'] = 'ARCHIVE';
+
 ?>

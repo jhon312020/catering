@@ -3,7 +3,7 @@
   <img src="http://www.gumen-catering.com/Delivery/assets/cc/img/gumen-logo.png" style="display:block;margin-left:auto;width:180px;"/>
   </div>
   <div style="background-color:#FFFFFF;color:#5a5b5f;padding:25px;line-height:30px;font-size:16px;">
-    Hello <?php echo $user_name; ?>
+    <?php echo lang("hello"); ?> <?php echo $user_name; ?>
     <div class="top-content">
       <div class="inner-bg">
         <div class="container page-height">

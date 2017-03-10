@@ -12,7 +12,7 @@
 			</div>
 			<div class="col-sm-7">
 			<button class="btn btn-primary pull-right" id="jPastButton" style="float:right;">
-			 <?php echo lang('past'); ?></button>
+			 <?php echo lang('archive'); ?></button>
 		</a> 
 			</div>
 		</div>
@@ -69,6 +69,7 @@ $(document).ready(function() {
 	$('.datepicker12').datepicker({
 		format:'yyyy-mm-dd',
 		autoclose:true,
+		weekStart: 1
 	}).on('show', function(e) {
 			$('.datepicker-dropdown').css({top:$('.spancal').offset().top + $('.spancal').height(), left:$('.spancal').offset().left})
 	}).on('changeDate', function(e) {
@@ -90,7 +91,7 @@ $(document).ready(function() {
 	$('#jsOrders').DataTable({
 		"sPaginationType": "bootstrap",
 		"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-		"bStateSave": false,
+		"bStateSave": true,
 		"order": [[0,"desc"]],
 		"oLanguage": {
 				"sUrl": "http://cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
