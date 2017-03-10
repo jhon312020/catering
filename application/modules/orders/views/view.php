@@ -114,7 +114,10 @@ $disabled = ($readonly)?'disabled':'';
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12 text-center">
-						<button formnovalidate class="btn btn-danger jsBtnCancel" name="btn_cancel" value="1"><i class="icon-remove icon-white"></i> <?php echo lang('close'); ?></button>
+						<a href="<?php echo $_SERVER['HTTP_REFERER']; ?>">
+						<button type="button" formnovalidate class="btn btn-danger jsBtnCancel" name="btn_cancel" value="1"><i class="icon-remove icon-white"></i> <?php echo lang('close'); ?></button>
+						</a>
+						
 						</div>
 					</div>
 			</form>

@@ -15,6 +15,15 @@ class Orders extends Admin_Controller {
 		$this->load->helper("order_helper");
 		$order_date = date('Y-m-d');
 		$past = 0;
+		$params = $this->input->post();
+		if (isset($params['order_date'])) {
+			$order_date = $params['order_date'];
+			$this->session->set_userdata('order_date',$order_date);
+		} else {
+			if ($this->session->userdata('order_date')) {
+				$order_date = $this->session->userdata('order_date');
+			}
+		}
 		$export_title = "GC_Pedidos_";
 		$export_title .= date('d-m-Y' , strtotime($order_date));
 
@@ -25,7 +34,15 @@ class Orders extends Admin_Controller {
 
 	public function past() {
 		$this->load->helper("order_helper");
-		$order_date = date('Y-m-d');		
+		$order_date = date('Y-m-d');
+		if (isset($params['order_date'])) {
+			$order_date = $params['order_date'];
+			$this->session->set_userdata('order_date',$order_date);
+		} else {
+			if ($this->session->userdata('order_date')) {
+				$order_date = $this->session->userdata('order_date');
+			}
+		}
 		$export_title = "GC_Pedidos_".date('d-m-Y' , strtotime($order_date));
 		$this->layout->set(array('orders' => [], 'order_date' => $order_date, 'export_title'=>$export_title,'past'=>1));
 		$this->layout->buffer('content', 'orders/index');
