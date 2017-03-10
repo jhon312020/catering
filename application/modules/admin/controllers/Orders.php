@@ -16,29 +16,22 @@ class Orders extends Admin_Controller {
 		$order_date = date('Y-m-d');
 		$past = 0;
 		$export_title = "GC_Pedidos_";
-		if($this->input->post()) {
-
-			$order_date = date('Y-m-d', strtotime($this->input->post('order_date')));
-			$past = $this->input->post('past');
-			//Inorder to re-direct to same page on deleting the orders used the below conditiona
-		} else if ($this->session->userdata('last_viewed_order_date')) {
-			$order_date = $this->session->userdata('last_viewed_order_date');
-			$this->session->unset_userdata('last_viewed_order_date');
-		}
-		
-		if ($past) {
-			$orders = $this->mdl_orders->get_orders_by_date($order_date,'<=');
-		} else {
-			$orders = $this->mdl_orders->get_orders_by_date($order_date,'=');
-		}
-		$drinks_list = $this->mdl_drinks->get_cool_drink_list();
-		//echo '<pre>'; print_r($orders); print_r($drinks_list); echo '</pre>';
 		$export_title .= date('d-m-Y' , strtotime($order_date));
 
-		$this->layout->set(array('orders' => $orders, 'order_date' => $order_date, 'export_title'=>$export_title, 'drinks_list'=>$drinks_list));
+		$this->layout->set(array('orders' => [], 'order_date' => $order_date, 'export_title'=>$export_title,'past'=>0));
 		$this->layout->buffer('content', 'orders/index');
 		$this->layout->render();
 	}
+
+	public function past() {
+		$this->load->helper("order_helper");
+		$order_date = date('Y-m-d');		
+		$export_title = "GC_Pedidos_".date('d-m-Y' , strtotime($order_date));
+		$this->layout->set(array('orders' => [], 'order_date' => $order_date, 'export_title'=>$export_title,'past'=>1));
+		$this->layout->buffer('content', 'orders/index');
+		$this->layout->render();
+	}
+
 	public function form($id = NULL) {
 		$error_flg = false;
 		$error = array();
@@ -149,4 +142,48 @@ class Orders extends Admin_Controller {
 		$this->mdl_orders->delete($id);
 		redirect('admin/orders');
 	}
+
+	public function datasource() {
+		$this->load->helper("order_helper");
+		$params = $this->input->post();
+		$drinks_list = $this->mdl_drinks->get_cool_drink_list();
+
+		$order_date = $params['order_date'];
+		$past = $params['past'];
+
+		if ($past) {
+			$orders = $this->mdl_orders->get_orders_by_date($order_date,'<', $params['length'],$params['start']);
+			$condition = array('order_date <'=>$order_date, 'is_active'=>1);
+			$totalRecords = $this->mdl_orders->get_count_of_orders($condition);
+		} else {
+			$orders = $this->mdl_orders->get_orders_by_date($order_date,'=', $params['length'],$params['start']);
+			$condition = array('order_date'=>$order_date, 'is_active'=>1);
+			$totalRecords = $this->mdl_orders->get_count_of_orders($condition);
+		}
+
+		$datas = [];
+		foreach ($orders as $order) {
+			$data = [];
+			$data[] = $order->client_code . '<br/>Order Ref : '. $order->reference_no;
+			$data[] = date('d/m/Y', strtotime($order->order_date));
+			$data[] = $order->name . ' ' . $order->surname;
+			$data[] = $order->business.' - '.$order->Centre;
+			$data[] = $order->payment_method;
+			$data[] = str_replace(',','',$order->order_code);
+			$data[] = getDrinksInformation($order, $drinks_list);
+			$actionHtml = sprintf('<a class="btn btn-info btn-sm" href="%s"><i class="entypo-eye"></i></a>',site_url('admin/orders/view/' . $order->id));
+			$actionHtml .= sprintf('<a class="btn btn-danger btn-sm" href="%s" onclick="return confirm('.lang("delete_record_warning").');" ><i class="entypo-trash"></i></a>',site_url('admin/orders/delete/' . $order->id));
+			$data[] = $actionHtml;
+			$datas[] = $data;
+		}
+
+		$json_data = array(
+			"draw"            => intval( $params['draw'] ),   
+			"recordsTotal"    => intval( $totalRecords ),  
+			"recordsFiltered" => intval($totalRecords),
+			"data"            => $datas
+		);
+		echo json_encode($json_data);
+	}
+
 }

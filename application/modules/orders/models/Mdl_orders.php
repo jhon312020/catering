@@ -102,18 +102,24 @@ class Mdl_orders extends Response_Model {
    * @return  Array
    * 
   */
-	public function get_orders_by_date($order_date, $operator = '=') {
+	public function get_orders_by_date($order_date, $operator = '=', $limit = 25, $offset = 0) {
 		$orders_list_by_date = $this->mdl_orders
 											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.price, orders.is_active,orders.order_code, orders.order_detail, centres.Centre, orders.drink1_id, orders.drink2_id')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->join('centres', 'centres.Id = clients.centre_id', 'left')
 											->where('orders.order_date '.$operator, $order_date)
-											->order_by('orders.order_date','desc')
-											->get()->result();
+											->where('orders.is_active', 1)
+											->order_by('orders.order_date','desc');
+		if ($limit != -1) {
+			$orders_list_by_date->limit($limit, $offset);
+		}
+		
+		$orders_list_by_date = $orders_list_by_date->get()->result();
 											
 		return $orders_list_by_date;
 	}
+
 	/**
    * Function insert_from_temporary
    *
