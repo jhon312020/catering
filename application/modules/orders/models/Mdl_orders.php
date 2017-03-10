@@ -110,13 +110,13 @@ class Mdl_orders extends Response_Model {
 											->join('centres', 'centres.Id = clients.centre_id', 'left')
 											->where('orders.order_date '.$operator, $order_date)
 											->where('orders.is_active', 1)
-											->order_by('orders.order_date','desc');
+											->order_by('orders.id','desc');
 		if ($limit != -1) {
 			$orders_list_by_date->limit($limit, $offset);
 		}
 		
 		$orders_list_by_date = $orders_list_by_date->get()->result();
-											
+
 		return $orders_list_by_date;
 	}
 
