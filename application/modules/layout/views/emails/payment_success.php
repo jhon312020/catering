@@ -1,8 +1,19 @@
-<div style="background-color:#FAFAFA;padding:50px;">
-  <div style="background-color:#8DC73F;padding:50px;">
+<html>
+<head>
+  <style type='text/css'>
+   @media only screen and (max-width:480px){
+        .class="nopadding"{
+            padding:0px;
+        }
+    }
+  </style>
+</head>
+<body>
+<div style="background-color:#FAFAFA;padding:5px;" class="nopadding">
+  <div style="background-color:#8DC73F;padding:5px;" class="nopadding">
   <img src="http://www.gumen-catering.com/Delivery/assets/cc/img/gumen-logo.png" style="display:block;margin-left:auto;width:180px;"/>
   </div>
-  <div style="background-color:#FFFFFF;color:#5a5b5f;padding:25px;line-height:30px;font-size:16px;">
+  <div style="background-color:#FFFFFF;color:#5a5b5f;padding:5px;line-height:30px;font-size:16px;">
     <?php echo lang("hello"); ?> <?php echo $user_name; ?>
     <div class="top-content">
       <div class="inner-bg">
@@ -10,10 +21,10 @@
           <div class="row">
             <h3 class="head_2">Pedidos ref. <?php echo $reference_no; ?></h3>
             <div class="col-sm-912fix-left-right" style="text-align:center;width:100%;background-color:#eee;margin-right:25px;">
-              <table class="table table-striped paymentTable" style="width:100%;margin:auto;padding:10px;line-height:1.2;">
+              <table class="table table-striped paymentTable" style="width:100%;margin:auto;padding:10px;line-height:1.2; overflow: scroll;">
                 <thead>
                   <tr>
-                    <th><?php echo lang('menu'); ?></th>
+                    <th style="text-align:left;"><?php echo lang('menu'); ?></th>
                     <th><?php echo lang('date'); ?></th>
                     <th><?php echo lang('price'); ?></th>
                   </tr>
@@ -29,7 +40,7 @@
                     foreach($orders as $order) {
                   ?>
                   <tr>
-                    <td width="50%" style="padding:5px;text-align:left">
+                    <td width="40%" style="padding:5px;text-align:left">
                       <p><b>
                         <?php 
                           $order_detail = json_decode($order['order_detail'],true);
@@ -121,3 +132,5 @@
   </div>
   </div>
 </div>
+</body>
+</html>

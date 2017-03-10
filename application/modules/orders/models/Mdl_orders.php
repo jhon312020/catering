@@ -43,7 +43,7 @@ class Mdl_orders extends Response_Model {
 	*/
 	public function get_orders_by_ref_no($reference_no) {
 		$orders_client_by_ref_no = $this->mdl_orders
-										->where(array('is_active' => 1, 'client_id' => $this->session->userdata('client_id'), 'reference_no' => $reference_no))
+										->where(array('is_active' => 1, 'client_id' => $this->session->userdata('client_id'), 'id' => $reference_no))
 										->get()
 										->result_array();
 		return $orders_client_by_ref_no;
@@ -72,7 +72,7 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_list_by_id($order_id) {
 		$order_list = $this->mdl_orders
-											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active,  clients.telephone, clients.email, orders.order_type, orders.reference_no, orders.payment_method, orders.client_id, orders.price,orders.order_code, orders.order_detail, orders.Total')
+											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active,  clients.telephone, clients.email, orders.order_type, orders.id as reference_no, orders.payment_method, orders.client_id, orders.price,orders.menu_type_id as order_code, orders.order_detail, orders.Total')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->where('orders.id', $order_id)
@@ -88,7 +88,7 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_client_id($client_id) {
 		$orders_by_client_id = $this->mdl_orders
-											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, orders.order_code, orders.order_detail')
+											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, orders.menu_type_id as order_code, orders.order_detail')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->where('orders.client_id', $client_id)
@@ -104,7 +104,7 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_date($order_date, $operator = '=') {
 		$orders_list_by_date = $this->mdl_orders
-											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no,orders.price, orders.is_active,orders.order_code, orders.order_detail, centres.Centre, orders.drink1_id, orders.drink2_id')
+											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.id as reference_no,orders.price, orders.is_active,orders.menu_type_id as order_code, orders.order_detail, centres.Centre, orders.drink1_id, orders.drink2_id')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->join('centres', 'centres.Id = clients.centre_id', 'left')
@@ -138,7 +138,7 @@ class Mdl_orders extends Response_Model {
 			
 			$total_price += $order['Total'];
 			$client_id = $this->session->userdata('client_id');
-			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no, 'order_code'=>implode(',',$order_code), 'menu_type_id'=>implode('',$order_code),'Total'=>$order['Total'], 'drink1_id'=>$order['drink1_id'],'drink2_id'=>$order['drink2_id'],'priced1'=>$order['priced1'],'priced2'=>$order['priced2']);
+			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'menu_type_id'=>implode(',',$order_code),'Total'=>$order['Total'], 'drink1_id'=>$order['drink1_id'],'drink2_id'=>$order['drink2_id'],'priced1'=>$order['priced1'],'priced2'=>$order['priced2']);
 			$data['is_active'] = 0;
 			$this->payment_types = $this->mdl_formapago->get_pay_list();
 			$payment_id = array_search($payment_type, $this->payment_types);
@@ -152,8 +152,10 @@ class Mdl_orders extends Response_Model {
 			$order_id = $this->mdl_orders->save(null, $data);
 			
 			if($key == 0) {
-				$reference_no = $client_id.''.strtotime(date('Y-m-d')).''.$order_id;
-				$this->mdl_orders->save($order_id, array('reference_no' => $reference_no));
+				
+				//$reference_no = $client_id.''.strtotime(date('Y-m-d')).''.$order_id;
+				$reference_no = $order_id;
+				//$this->mdl_orders->save($order_id, array('reference_no' => $reference_no));
 			}
 
 			$order['order_detail'] = json_decode($order['order_detail'],true);
@@ -225,7 +227,6 @@ class Mdl_orders extends Response_Model {
 		$this->load->model('menus/mdl_menus');
 		$this->load->model('centres/mdl_centres');
 		
-		
 		$selectedMenus = $this->mdl_temporary_orders->get_client_today_menus();
 
 		$today_menus_removed = [];
@@ -233,15 +234,15 @@ class Mdl_orders extends Response_Model {
 		/*Check and remove the expired data from the temporary order table*/
 		$left_time = 0;
 		$centre_id = $this->session->userdata('centre_id');
-	    $centreInfo = $this->mdl_centres->centreInfo($centre_id);
+	  $centreInfo = $this->mdl_centres->centreInfo($centre_id);
 	    
-	    if ($centreInfo) {
-	      $time1 = strtotime($centreInfo->time_limit);
-	      $time2 = time();
+		if ($centreInfo) {
+		  $time1 = strtotime($centreInfo->time_limit);
+		  $time2 = time();
 			if($time1 > $time2) {
 				$left_time = ($time1 - $time2);
 			}
-	    }
+		}
 
 		if ($left_time == 0) {
 			$menus = $this->mdl_menus->select('id')->where('menu_date', date('Y-m-d'))->get()->result_array();
@@ -345,7 +346,7 @@ class Mdl_orders extends Response_Model {
 	public function setActive($reference_no) {
 		//$this->db->query("UPDATE tbl_ SET menu_date = '$update_clone_date', created_at='$today';");
 		$data = array('is_active'=>1);
-		$this->db->where('reference_no',$reference_no);
+		$this->db->where('id',$reference_no);
 		$this->db->update('orders', $data);
 		$this->db->where('reference_no',$reference_no);
 		$this->db->update('order_reports', $data);
@@ -368,7 +369,7 @@ class Mdl_orders extends Response_Model {
 			$this->mdl_orders = $this->mdl_orders->where($condition);	
 		}
 		$orders = $this->mdl_orders
-							->select('id, Total as total_price, reference_no, order_detail, order_type, order_date, payment_method')
+							->select('id as reference_no, Total as total_price, order_detail, order_type, order_date, payment_method')
 							->limit($limit, $from)
 							->order_by('order_date','desc')
 							->get()
