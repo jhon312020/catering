@@ -35,6 +35,7 @@ class Orders extends Admin_Controller {
 	public function past() {
 		$this->load->helper("order_helper");
 		$order_date = date('Y-m-d');
+		$params = $this->input->post();
 		if (isset($params['order_date'])) {
 			$order_date = $params['order_date'];
 			$this->session->set_userdata('order_date',$order_date);
