@@ -605,6 +605,26 @@ div.top-content {
 }
 
 @media (max-width: 768px) {
+    
+    .menuhead p {
+        text-align: center;
+    }
+    
+    .head_2 {
+        margin: auto;
+    }
+    
+    .dishpad {
+        margin: auto;
+        padding: 0;
+        text-align: center;
+    }
+    
+    .dishpad span {
+        margin: auto;
+        text-align: center;
+    }
+    
 	#ribbon-container, #ribbon-container-green {
 		top: -20px;
 	}
