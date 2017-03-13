@@ -84,8 +84,8 @@ $this->load->view('navigation_menu');
               <br>
               <span class="title-aligned"><?php echo $plates[$menu_list['Primer']]['Plat']; ?></span>
               <span class="custom-checkbox col-sm-offset-5">
-              <input type="checkbox" data-order-key="<?php echo $order_key.'1'; ?>" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Primer]" value="<?php echo $menu_list['Primer']; ?>" />
-              <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
+              
+              <span class="box<?php echo $checkboxClass; ?>"><input type="checkbox" data-order-key="<?php echo $order_key.'1'; ?>" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Primer]" value="<?php echo $menu_list['Primer']; ?>" /><span class="tick"></span></span>
               </span>
             </div>
             <div class="col-sm-2 col-my-4 dishpad">
@@ -93,8 +93,8 @@ $this->load->view('navigation_menu');
               <br>
               <span class="title-aligned"><?php echo $plates[$menu_list['Segon']]['Plat']; ?></span>
               <span class="custom-checkbox col-sm-offset-5">
-              <input type="checkbox" data-order-key="<?php echo $order_key.'2'; ?>" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Segon]" value="<?php echo $menu_list['Segon']; ?>" />
-              <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
+              
+              <span class="box<?php echo $checkboxClass; ?>"><input type="checkbox" data-order-key="<?php echo $order_key.'2'; ?>" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Segon]" value="<?php echo $menu_list['Segon']; ?>" /><span class="tick"></span></span>
               </span>
             </div>
             <div class="col-sm-2 col-my-4 dishpad">
@@ -114,8 +114,10 @@ $this->load->view('navigation_menu');
 							<?php /* <p><?php echo $menu_list['half_price']; ?></p>
 							<p><?php echo $menu_list['full_price']; ?></p> */ ?>
               <span class="custom-checkbox col-sm-offset-5">
+              
+              <span class="box<?php echo $checkboxClass; ?>">
               <input type="checkbox" data-order-key="<?php echo $order_key; ?>" class="jsSelectOrder" name="select_order[<?php echo $menu_list['id']; ?>]" />
-              <span class="box<?php echo $checkboxClass; ?>"><span class="tick"></span></span>
+              <span class="tick"></span></span>
               </span>
             </div>
             </div>

@@ -242,15 +242,15 @@ input[type="checkbox1"]{
   display: none;
 }
 
-.custom-checkbox > input:checked + .box > .tick {
+.box > input:checked +  .tick {
   display: block;
 }
 
-.custom-checkbox > input:checked + .box-brown > .tick {
+.box-brown > input:checked +  .tick {
   display: block;
 }
 
-.custom-checkbox > input {
+.custom-checkbox input {
   position: absolute;
   outline: none;
   left: 0;
