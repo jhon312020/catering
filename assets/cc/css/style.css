@@ -766,10 +766,19 @@ div.top-content {
 		padding-bottom: 220px !important;
 	}
 }
-@media (min-width: 315px) and (max-width: 400px) {	
+@media (max-width: 400px) {	
 	h1, h2 { font-size: 32px; }
 	div.top-content {
 		padding-bottom: 280px !important;
+	}
+	.container {
+		padding: 0 !imporant;
+	}
+	.fix-left-right {
+		padding: 0 !important;
+	}
+	.navbar-header {
+		width: 100%;
 	}
 }
 
