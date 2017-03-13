@@ -333,6 +333,7 @@ td:nth-child(2), th:nth-child(2) {
 }
 .smallpad{
 	margin-top: 30px;
+	padding-left: 0px;
 }
 .img-marg{
 	margin:0 auto;
@@ -553,11 +554,25 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 .col-my-offset-4{
 	margin-left: 30%;
 }
+	
+	.dishName {
+		position: relative;
+		right: 15px;
+	}
+	.dishCheckbox {
+		position: relative;
+		right: 25px;
+	}
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {}
 
-@media (min-width: 768px) and (max-width: 991px) {}
+@media (min-width: 768px) and (max-width: 991px) {
+	.sencer_fix {
+		padding-left: 40px !important;
+		text-align: center;
+	}
+}
 
 @media (min-width: 768px) and (max-width: 1199px) {
 	.menu-plus{
@@ -575,6 +590,7 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 	.respo_cart{
 	display: none;
 }
+	
 .ribbon-fix{
   margin-top: -20px;
 	/*width: 30% !important;*/
@@ -605,8 +621,23 @@ div.top-content {
 }
 
 @media (max-width: 768px) {
+	
+	.col-sm-2 {
+		padding-right: 0 !important;
+	}
     
     .menuhead p {
+        text-align: center;
+    }
+	
+	.smallpad {
+		margin: auto;
+        padding: 0;
+        text-align: center;
+	}
+	
+	.smallpad span {
+        margin: auto;
         text-align: center;
     }
     
@@ -690,6 +721,7 @@ div.top-content {
 		color:#ba9551;
 		position: absolute;
 		bottom: -35px;
+		left: calc(50% - 7px);
 	}
 	.smallpad{
 		margin-bottom: 40px;
