@@ -678,10 +678,10 @@ div.top-content {
 		margin-bottom: 40px;
 	}
 	.custom-checkbox > .box-brown{
-		margin: 0 auto;
+		/*margin: 0 auto;*/
 	}
 	.custom-checkbox >  .box{
-		margin: 0 auto;
+		/*margin: 0 auto;*/
 	}
 	.menu-img{
 		display: block;
@@ -719,4 +719,8 @@ div.top-content {
 	div.top-content {
 		padding-bottom: 280px !important;
 	}
+}
+
+.custom-checkbox {
+	margin-left: 49.667%
 }
