@@ -149,7 +149,10 @@ class Mdl_orders extends Response_Model {
 			$this->payment_types = $this->mdl_formapago->get_pay_list();
 			$payment_id = array_search($payment_type, $this->payment_types);
 			if ($payment_id) {
-				$data['is_active'] = 1;
+				//$data['is_active'] = 1;
+				if ($payment_type !=  'TPV Online') {
+					$data['is_active'] = 1;
+				}
 				$data['payment_method'] = $payment_type;
 				$data['FormaPago_id'] = $payment_id;
 			}
