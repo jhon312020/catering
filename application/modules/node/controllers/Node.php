@@ -169,8 +169,8 @@ class Node extends Anonymous_Controller {
           $this->email->message($body);
           $this->email->send();
         }
-        $this->session->set_flashdata('alert_success', lang('record_successfully_created'));
-        redirect(PAGE_LANGUAGE);
+        $this->session->set_flashdata('alert_success', lang('register_success'));
+        //redirect(PAGE_LANGUAGE);
       } else {
         $this->session->set_flashdata('alert_error', validation_errors());
         redirect(PAGE_LANGUAGE.'/register');

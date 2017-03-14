@@ -23,6 +23,16 @@ $this->load->view('navigation_menu');
 						<?php } ?>
 					</div>
 					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 mob-show">
+						<?php if($left_time > 0) { ?>
+			<h4 id="timer_span" style="color:#8DC73F;">Tienes <span id="time_top"></span> para pedir este menu</h4>
+						<?php } else {
+							if ($menu_date == date('Y-m-d')) {
+								echo lang('order_time_over');
+							}
+			 } ?>
+			
+		  </div>
 						<button type="button" class="btn btn-menu button-datepicker"><i class="fa fa-calendar" aria-hidden="true"></i>SELECCIONA OTRO DIA</button>
 						<form method="post" id="menuListform">
 							<input type='hidden' name="menu_date" class="form-control datepicker12" value="<?php echo $menu_date; ?>" />
@@ -134,9 +144,9 @@ $this->load->view('navigation_menu');
 				if(count($menu_lists) > 0) {
 				?>
 				<div class="col-sm-12 menubottom add_menu">
-		  <div class="col-xscol-sm-12 col-md-12 col-lg-4">
+		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 mob-hide">
 						<?php if($left_time > 0) { ?>
-			<h4 id="timer_span">Tienes <span id="time"></span> para pedir este menu</h4>
+			<h4 id="timer_span">Tienes <span id="time_bottom"></span> para pedir este menu</h4>
 						<?php } else {
 							if ($menu_date == date('Y-m-d')) {
 								echo lang('order_time_over');
@@ -168,7 +178,8 @@ $this->load->view('navigation_menu');
 </div>
 <script type='text/javascript'>
   var timeLeft = parseInt(<?php echo $left_time; ?>);
-  var display = $('#time');
+  var display_top = $('#time_top');
+  var display_bottom = $('#time_bottom');
 	var $cool_drinks = <?php echo json_encode($cool_drinks); ?>;
 	var $menus = <?php echo json_encode($menu_list_with_id); ?>;
   var price_list = <?php echo json_encode($price_list); ?> 

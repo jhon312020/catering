@@ -77,47 +77,55 @@ $this->load->view('navigation_menu');
               <h4>COMO QUIERE PAGAR?</h4>
               <br>
               <div class="row payrow">
-                <div class="col-sm-10">
+                <div class="col-xs-10 col-sm-10">
                   <span class="paytext">Tarjeta crédito o débito</span>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-xs-2 col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox" id="card" class="jsPaymentType" value="Credit/Debit" name="paymenttype[]"/>
-                  <span class="box"><span class="tick"></span></span>
+                    <span class="box">
+                      <input type="checkbox" id="card" class="jsPaymentType" value="Credit/Debit" name="paymenttype[]"/>
+                      <span class="tick"></span>
+                    </span>
                   </span>
                 </div>
                 <img class="img-responsive payment-img" src="<?php echo TEMPLATE_PATH; ?>payment.png">
               </div>
               <div class="row payrow">
-                <div class="col-sm-10">
+                <div class="col-xs-10 col-sm-10">
                   <span class="paytext">Giro Bancario</span>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-xs-2 col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox" id="draft" class="jsPaymentType" value="Bank Draft" name="paymenttype[]"/>
-                  <span class="box"><span class="tick"></span></span>
+                    <span class="box">
+                      <input type="checkbox" id="draft" class="jsPaymentType" value="Bank Draft" name="paymenttype[]"/>
+                      <span class="tick"></span>
+                    </span>
                   </span>
                 </div>
               </div>
               <div class="row payrow">
-                <div class="col-sm-10">
+                <div class="col-xs-10 col-sm-10">
                   <span class="paytext">Ticket Restaurante</span>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-xs-2 col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox" id="ticket" class="jsPaymentType" value="Ticket Restaurant" name="paymenttype[]"/>
-                  <span class="box"><span class="tick"></span></span>
+                    <span class="box">
+                      <input type="checkbox" id="ticket" class="jsPaymentType" value="Ticket Restaurant" name="paymenttype[]"/>
+                      <span class="tick"></span>
+                    </span>
                   </span>
                 </div>
               </div>
               <div class="row payrow">
-                <div class="col-sm-10">
+                <div class="col-xs-10 col-sm-10">
                   <span class="paytext">Efectivo</span>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-xs-2 col-sm-2">
                   <span class="custom-checkbox">
-                  <input type="checkbox" id="cash" class="jsPaymentType" value="Efectivo" name="paymenttype[]"/>
-                  <span class="box"><span class="tick"></span></span>
+                    <span class="box">
+                      <input type="checkbox" id="cash" class="jsPaymentType" value="Efectivo" name="paymenttype[]"/>
+                      <span class="tick"></span>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -130,7 +138,7 @@ $this->load->view('navigation_menu');
             </div>
             <div class="paysection-3">
               <div class="row">
-                <div class="paysection3text">
+                <div class="col-xs-12 col-xs-offset-2 col-sm-12 col-sm-offset-0 paysection3text">
                   <input type="checkbox" name="accept" id="accept" value="1"> <a href="<?php echo site_url(PAGE_LANGUAGE); ?>/terms" class="btn-link" target="_blank"> Accepto los terminos y condiciones</a>
                     <span class="error" id="jsAcceptTerms">Kindly select terminos y condiciones</span>
                 </div>

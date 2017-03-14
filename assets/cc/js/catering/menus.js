@@ -203,7 +203,8 @@ $(document).ready(function() {
 		minutes = minutes < 10 ? "0" + minutes : minutes;
 		seconds = seconds < 10 ? "0" + seconds : seconds;
 
-		display.text(hours+":"+minutes + ":" + seconds);
+		display_top.text(hours+":"+minutes + ":" + seconds);
+		display_bottom.text(hours+":"+minutes + ":" + seconds);
 
 		if (--timeLeft < 0) {
 			$('.add_menu').remove();

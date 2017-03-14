@@ -144,7 +144,7 @@ class Mdl_orders extends Response_Model {
 			
 			$total_price += $order['Total'];
 			$client_id = $this->session->userdata('client_id');
-			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'menu_type_id'=>implode(',',$order_code),'Total'=>$order['Total'], 'drink1_id'=>$order['drink1_id'],'drink2_id'=>$order['drink2_id'],'priced1'=>$order['priced1'],'priced2'=>$order['priced2']);
+			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'menu_type_id'=>implode('', $order_code),'Total'=>$order['Total'], 'drink1_id'=>$order['drink1_id'],'drink2_id'=>$order['drink2_id'],'priced1'=>$order['priced1'],'priced2'=>$order['priced2']);
 			$data['is_active'] = 0;
 			$this->payment_types = $this->mdl_formapago->get_pay_list();
 			$payment_id = array_search($payment_type, $this->payment_types);

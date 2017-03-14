@@ -181,5 +181,7 @@ $lang['back'] = 'Espalda';
 $lang['hello'] = 'Hola';
 $lang['archive'] = 'ARCHIVO';
 $lang['close'] = 'CERRAR';
+$lang['datos'] = 'Datos';
+$lang['register_success'] = 'Gracias por registrarte. Nos pondremos en contacto contigo muy pronto.';
 /*---ó-*/
 ?>
