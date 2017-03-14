@@ -10,7 +10,7 @@ $this->load->view('navigation_menu');
         <div class="col-sm-12">
           <div class="col-md-12">
             <div class="form-bottom ribbon-down">
-              <div id="ribbon-container-green" style="width:30%">
+              <div id="ribbon-container-green">
                 <a href="javascript:;" id="ribbon"><?php echo strtoupper(lang('order_placed')); ?></a>
               </div>
               <table class="table table-striped paymentTable">
