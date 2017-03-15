@@ -130,6 +130,9 @@ class Mdl_orders extends Response_Model {
 		
 		$this->load->model('order_drinks/mdl_order_drinks');
 		$this->load->model('formapago/mdl_formapago');
+		$this->load->model('menu_types/mdl_menu_types');
+    $menu_type_list = $this->mdl_menu_types->get_menu_type_id_list();
+    
 		
 		$total_price = 0;
 		$temporary_orders = $this->mdl_temporary_orders->get_client_today_menus();
@@ -141,11 +144,12 @@ class Mdl_orders extends Response_Model {
 			$price = $order['price'];
 			$order_code = json_decode($order['order_detail'],true);
 			$order_code = $order_code['order_code'];
-			
+			$menu_type = implode('',$order_code);
+			$menu_type_id = $menu_type_list[$menu_type];
 			$total_price += $order['Total'];
 			$client_id = $this->session->userdata('client_id');
 			//$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'menu_type_id'=>implode('', $order_code),'Total'=>$order['Total'], 'drink1_id'=>$order['drink1_id'],'drink2_id'=>$order['drink2_id'],'priced1'=>$order['priced1'],'priced2'=>$order['priced2']);
-			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no, 'order_code'=>implode(',',$order_code), 'menu_type_id'=>implode('',$order_code),'Total'=>$order['Total'], 'drink1_id'=>$order['drink1_id'],'drink2_id'=>$order['drink2_id'],'priced1'=>$order['priced1'],'priced2'=>$order['priced2']);
+			$data = array('client_id' => $client_id, 'order_detail' => $order['order_detail'], 'order_type' => $order_type, 'order_date' => $order['order_date'], 'price' => $price, 'payment_method' => 'Bank', 'reference_no' => $reference_no, 'order_code'=>implode(',',$order_code), 'menu_type_id'=>$menu_type_id,'Total'=>$order['Total'], 'drink1_id'=>$order['drink1_id'],'drink2_id'=>$order['drink2_id'],'priced1'=>$order['priced1'],'priced2'=>$order['priced2']);
 			$data['is_active'] = 0;
 			$this->payment_types = $this->mdl_formapago->get_pay_list();
 			$payment_id = array_search($payment_type, $this->payment_types);
