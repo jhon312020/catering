@@ -54,7 +54,7 @@ $lang['intolerances'] = 'Intolerancias';
 $lang['iban'] = 'IBAN';
 $lang['bill'] = 'Factura';
 $lang['is_invoice'] = '¿Quieres factura?';
-$lang['billing_data'] = 'Datos de facturation';
+$lang['billing_data'] = 'Datos de Facturación';
 $lang['yes'] = 'Sí';
 $lang['no'] = 'No';
 

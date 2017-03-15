@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+     <title>Gumen Catering - Comida sana en tu oficina</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gumen Catering</title>
+    <meta name="description" content="Gumen Catering ofrece comida sana, preparada en el mismo dia y al mejor precio, en tu oficina." />
+    <meta name="keywords" content="Comida, sano, gumen, catering, barcelona, sabadell, entrega, diario, menu, dieta." />
+    <meta name="author" content="Grupo Visualiza - www.grupovisualiza.com"
+    <meta name="robots" content="index, follow" />
     <!-- CSS -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>

@@ -31,7 +31,7 @@ $this->load->view('navigation_menu');
                     foreach($orders as $order) {
                   ?>
                   <tr>
-                  <td><?php echo $order['id']; ?></td>
+                  <td><?php echo $order['reference_no']; ?></td>
                     <td>
                       <p><b>
                         <?php 
