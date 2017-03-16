@@ -664,7 +664,6 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 }
 
 .custom-checkbox {
-  margin-left: 49.667%;
 }
 .mob-hide {
 	display:show;
@@ -696,11 +695,6 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
   .dishName {
     position: relative;
     right: 15px;
-  }
-
-  .dishCheckbox {
-    position: relative;
-    right: 25px;
   }
 }
 
@@ -763,6 +757,14 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
   div.top-content {
     padding-bottom: 60px !important;
   }
+	.dishpad {
+		padding-bottom: 20px;
+	}
+	.dishCheckbox {
+		position: absolute !important;
+		bottom: 0px !important;
+		padding-left: 35%;
+	}
 }
 
 @media (max-width: 768px) {

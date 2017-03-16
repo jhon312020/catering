@@ -94,7 +94,7 @@ $this->load->view('navigation_menu');
 					<span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span><img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Primer']]['image']; ?>">
 					<br/>
 			  <span class="title-aligned dishName"><?php echo $plates[$menu_list['Primer']]['Plat']; ?></span>
-			  <span class="custom-checkbox col-sm-offset-5 dishCheckbox">
+			  <span class="custom-checkbox dishCheckbox">
 			  
 			  <span class="box<?php echo $checkboxClass; ?>"><input type="checkbox" data-order-key="<?php echo $order_key.'1'; ?>" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Primer]" value="<?php echo $menu_list['Primer']; ?>" /><span class="tick"></span></span>
 			  </span>
@@ -103,7 +103,7 @@ $this->load->view('navigation_menu');
 			  <span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span><img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Segon']]['image']; ?>">
 			  <br>
 			  <span class="title-aligned dishName"><?php echo $plates[$menu_list['Segon']]['Plat']; ?></span>
-			  <span class="custom-checkbox col-sm-offset-5 dishCheckbox">
+			  <span class="custom-checkbox dishCheckbox">
 			  
 			  <span class="box<?php echo $checkboxClass; ?>"><input type="checkbox" data-order-key="<?php echo $order_key.'2'; ?>" class="jsSelectMenu" name="select_food[<?php echo $menu_list['id']; ?>][Segon]" value="<?php echo $menu_list['Segon']; ?>" /><span class="tick"></span></span>
 			  </span>
@@ -185,6 +185,15 @@ $this->load->view('navigation_menu');
   var price_list = <?php echo json_encode($price_list); ?> 
   var availableDates = <?php echo json_encode($available_dates); ?>;
   console.log(price_list);
+	
+	var maxHeight = 0;
+	$(".dishpad").each(function(){
+		if ($(this).height() > maxHeight) { maxHeight = $(this).height(); }
+	});
+	
+	$(".dishpad").height(maxHeight);
+
+	
 </script>
 <script src="<?php echo base_url(); ?>assets/cc/js/catering/menus.js"></script>
 <?php $this->load->view('footer'); ?>
