@@ -40,7 +40,8 @@ class Mdl_plats extends Response_Model {
     * 
     */
     public function get_all_plats() {
-        $plates = $this->mdl_plats->limit(10, 1)->get()->result();
+        //$plates = $this->mdl_plats->limit(10, 1)->get()->result();
+        $plates = $this->mdl_plats->get()->result();
         return $plates;
     }
     

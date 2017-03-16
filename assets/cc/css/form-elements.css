@@ -59,7 +59,7 @@ button.btn {
     /*margin: 0;*/
     padding: 0% 20%;
     vertical-align: middle;
-    background: #8DC73F;
+    background: #c49e56;
     border: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
@@ -76,9 +76,9 @@ button.btn:hover { opacity: 0.6; color: #fff; }
 
 button.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 
-button.btn:focus { outline: 0; opacity: 0.6; background: #4aaf51; color: #fff; }
+button.btn:focus { outline: 0; opacity: 0.6; background: #c49e56; color: #fff; }
 
-button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #4aaf51; color: #fff; }
+button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #c49e56; color: #fff; }
 .form-control{
     border-radius: 0px;
 }
@@ -132,7 +132,7 @@ input[type="checkbox1"]{
     display:block;
     padding:10px 40px;
     position:relative; /* allows us to position our pseudo-elements properly */
-    background:#BA9551;
+    background:#414042;
     overflow:visible;
     height:40px;
     margin-left:29px;
@@ -149,7 +149,7 @@ input[type="checkbox1"]{
     position:absolute;
     bottom:-15px;
     left:0;
-    border-top: 15px solid #7B6334; 
+    border-top: 15px solid #000000; 
     border-left: 15px solid transparent;
 }
 
@@ -176,10 +176,10 @@ input[type="checkbox1"]{
     border-bottom: 29px solid #009ff1;
 }*/
 #ribbon-container-green a{
-    background: #8DC73F !important;
+    background: #414042 !important;
 }
 #ribbon-container-green a:after{
-    border-top: 15px solid #5C7C2C;    
+    border-top: 15px solid #000000;    
 }
 .ribbon-down{
     margin-top: 20px;
@@ -195,7 +195,7 @@ input[type="checkbox1"]{
   display: block;
   width: 17px;
   height: 17px;
-  border: 2px solid #8DC73F;
+  border: 2px solid #c49e56;
   background-color: #fff;
   border-radius: 0px;
 }
@@ -216,8 +216,8 @@ input[type="checkbox1"]{
   top: 3px;
   width: 11px;
   height: 5px;
-  border-bottom: 2px solid #8DC73F;
-  border-left: 2px solid #8DC73F;
+  border-bottom: 2px solid #c49e56;
+  border-left: 2px solid #c49e56;
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
@@ -232,8 +232,8 @@ input[type="checkbox1"]{
   top: 3px;
   width: 11px;
   height: 5px;
-  border-bottom: 2px solid #BD9453;
-  border-left: 2px solid #BD9453;
+  border-bottom: 2px solid #c49e56;
+  border-left: 2px solid #c49e56;
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
