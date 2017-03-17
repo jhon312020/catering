@@ -378,6 +378,8 @@ class Mdl_orders extends Response_Model {
 		if ($condition) {
 			$this->mdl_orders = $this->mdl_orders->where($condition);	
 		}
+		//only full_group_by_error
+		$this->db->query("SET sql_mode =''");
 		$orders = $this->mdl_orders
 							->select('reference_no as reference_no, sum(Total) as total_price, order_detail, order_type, DATE(created_at) as ordered_date, payment_method')
 							->limit($limit, $from)
