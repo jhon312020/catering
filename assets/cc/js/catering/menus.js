@@ -67,11 +67,14 @@ $(document).ready(function() {
 			$('.jsSelectMenu').prop('checked',false);
 			$('.jsSelectMenu').prop('disabled',true);
 			$('.jsSelectOrder').prop('disabled',true);
+			$(".boostrap-multiselect").multiselect('disable');
 			$(this).prop('disabled',false);
 			$mainDiv.find('.jsSelectMenu').prop('checked', true);
 			$mainDiv.find('.jsSelectMenu').prop('disabled', false);
+			$mainDiv.find(".boostrap-multiselect").multiselect('enable');
 		} else {
 			$mainDiv.find('.jsSelectMenu').prop('checked', false);
+			$(".boostrap-multiselect").multiselect('enable');
 		}
 		addPrice();
 	});
@@ -83,14 +86,17 @@ $(document).ready(function() {
 			$('.jsSelectMenu').prop('checked',false);
 			$('.jsSelectMenu').prop('disabled',true);
 			$('.jsSelectOrder').prop('disabled',true);
+			$(".boostrap-multiselect").multiselect('disable');
 			$mainDiv.find('.jsSelectMenu').prop('checked', true);
 			$mainDiv.find('.jsSelectOrder').prop('checked', true);
 			$mainDiv.find('.jsSelectMenu').prop('disabled', false);
 			$mainDiv.find('.jsSelectOrder').prop('disabled', false);
+			$mainDiv.find(".boostrap-multiselect").multiselect('enable');
 		} else {
 			$('.jsSelectMenu').prop('disabled',false);
 			$('.jsSelectOrder').prop('disabled',false);
 			$mainDiv.find('.jsSelectOrder').prop('checked', false);
+			$(".boostrap-multiselect").multiselect('enable');
 		}
 		addPrice();
 	});

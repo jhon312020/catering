@@ -25,7 +25,7 @@ $this->load->view('navigation_menu');
 							?>
 							<tr>
                 <td><?php echo $order['reference_no']; ?></td>
-                <td><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
+                <td><?php echo date('d/m/Y', strtotime($order['ordered_date'])); ?></td>
                 <td><?php echo $order['total_price']; ?> &euro;</td>
 								<td><?php echo $order['payment_method']; ?></td>
                 <td>

@@ -379,9 +379,10 @@ class Mdl_orders extends Response_Model {
 			$this->mdl_orders = $this->mdl_orders->where($condition);	
 		}
 		$orders = $this->mdl_orders
-							->select('reference_no as reference_no, Total as total_price, order_detail, order_type, order_date, payment_method')
+							->select('reference_no as reference_no, sum(Total) as total_price, order_detail, order_type, DATE(created_at) as ordered_date, payment_method')
 							->limit($limit, $from)
-							->order_by('order_date','desc')
+							->order_by('created_at','desc')
+							->group_by('reference_no')
 							->get()
 							->result_array();
 		return $orders;
@@ -397,7 +398,7 @@ class Mdl_orders extends Response_Model {
 		if ($condition) {
 			$this->mdl_orders = $this->mdl_orders->where($condition);	
 		}
-		$row = $this->mdl_orders->select('count(*) as count')->get()->row_array();
+		$row = $this->mdl_orders->select('count(*) as count')->group_by('reference_no')->get()->row_array();
 		return $row['count'];
 	}
 
