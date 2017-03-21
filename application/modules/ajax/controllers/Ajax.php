@@ -91,8 +91,8 @@ class Ajax extends Anonymous_Controller {
 			$urlKO = site_url('es/error/?cm='.$reference_no);
 
 			$order = time();
-			$testurlPago = 'https://sis-t.redsys.es:25443/sis/realizarPago';
-			//$realurlPago = 'https://sis.redsys.es/sis/realizarPago';
+			//$testurlPago = 'https://sis-t.redsys.es:25443/sis/realizarPago';
+			$prodUrlPago = 'https://sis.redsys.es/sis/realizarPago';
 			
 			$miObj->setParameter("DS_MERCHANT_AMOUNT", $amount);
 			$miObj->setParameter("DS_MERCHANT_ORDER", strval($order));
@@ -105,14 +105,15 @@ class Ajax extends Anonymous_Controller {
 			$miObj->setParameter("DS_MERCHANT_URLKO", $urlKO);
 			
 			$version="HMAC_SHA256_V1";
-			$testKey = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
+			//$testKey = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
+      $prodKey = "gMEM0dJin2K4JNpF9UjjncUKVS34FHWA";
 			//$key = 'MIwogh31NprCbvsoQY0fvVkHRt8Wcvia';
 			
 			$request = "";
 			$params = $miObj->createMerchantParameters();
-			$signature = $miObj->createMerchantSignature($testKey);
+			$signature = $miObj->createMerchantSignature($prodKey);
 			
-			return json_encode(array('success' => true, 'version' => $version, 'params' => $params, 'signature' => $signature, 'bank_url' => $testurlPago, 'process_type'=>'credit'));exit;
+			return json_encode(array('success' => true, 'version' => $version, 'params' => $params, 'signature' => $signature, 'bank_url' => $prodUrlPago, 'process_type'=>'credit'));exit;
 			/*Sabadell payment end*/
 			
 		} else {
