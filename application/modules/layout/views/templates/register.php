@@ -76,11 +76,5 @@ $this->load->view('header');
   </div>
 </div>
 <?php
-$this->load->view('footer');
+$this->load->view('footer', array('backstretch'=>true));
 ?>
-<script>
-/*
-		Fullscreen background
-*/
-$.backstretch("<?php echo TEMPLATE_PATH; ?>backgrounds/1.jpg");
-</script>
