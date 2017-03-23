@@ -10,8 +10,9 @@ $this->load->view('header');
 h2 {
   color: white !important; 
   line-height: normal; 
-  font-size: 35px; 
+  font-size: 25px; 
   text-align: center;
+  padding-bottom: 20px;
 }
 .form-top, .form-bottom {
   background: none !important;
@@ -29,13 +30,13 @@ p {
   <div class="inner-bg">
     <div class="container">
       <div class="row">
-        <div class="col-sm-5 col-sm-offset-4 col-my-offset-4 form-box">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4 form-box">
           <div class="form-top">
             <div class="logo-heading">
               <img src="<?php echo TEMPLATE_PATH; ?>gumen-logo.png" class="img-responsive center-block" alt="" />
             </div>
             <div class="logo-para">
-            <h2>Hoyo como en la oficina como en casa</h2>
+            <h2>Hoy como en la oficina<br/> como en casa</h2>
               <p>Rellene sus datos de acceso o regístrese para solicitar acceso a nuestro servicio de catering a empresas.</p>
             </div>
           </div>
