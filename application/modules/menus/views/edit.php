@@ -52,7 +52,7 @@ $datePickerDate = date('d/m/Y', strtotime($menuDate));
 					</div>
 				<div class="form-group">
 					<input type="hidden" name="data[<?php echo $menu_id; ?>][id]" value="<?php echo $menu['id']; ?>">
-					<input type="hidden" name="data[<?php echo $menu_id; ?>][Regim]" value="<?php echo $menu['menu_type_id']; ?>">
+					<input type="hidden" name="data[<?php echo $menu_id; ?>][Regim]" value="<?php echo $menu['Regim']; ?>">
 					<input type="hidden" name="data[<?php echo $menu_id; ?>][menu_date]" value="<?php echo $menuDate; ?>">
 					<div class="col-sm-2">
 						<img src="<?php echo base_url(); ?>assets/cc/img/dish1.png" class="imgWidth" />

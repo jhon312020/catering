@@ -146,6 +146,8 @@ class Node extends Anonymous_Controller {
         if (isset($data['terms'])){
           unset($data['terms']);
         }
+        $data['name'] = strtoupper($data['name']);
+        $data['surname'] = strtoupper($data['surname']);
 				$password = $data['password'];
         $data['password'] = md5($password);
 				$data['password_key'] = base64_encode($password.'_catering');
@@ -209,9 +211,10 @@ class Node extends Anonymous_Controller {
 		
     $centre_id = $this->session->userdata('centre_id');
     $centreInfo = $this->mdl_centres->centreInfo($centre_id);
-    
-    //if ($centreInfo && $menuDate == date('Y-m-d') && count($menu_list) > 0) {
-    if ($centreInfo && $menuDate == date('Y-m-d')) {
+    $menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
+
+    if ($centreInfo && $menuDate == date('Y-m-d') && count($menu_list) > 0) {
+    //if ($centreInfo && $menuDate == date('Y-m-d')) {
       $time1 = strtotime($centreInfo->time_limit);
       $time2 = time();
 			if($time1 > $time2) {
@@ -229,10 +232,11 @@ class Node extends Anonymous_Controller {
 		if($data_array['left_time'] == 0 && $menuDate == date('Y-m-d')) {
       //$menuDate == date('Y-m-d')
       //changing to tomorrow day
-      $menuDate = date("Y-m-d", strtotime("+ 1 day"));
+      //$menuDate = date("Y-m-d", strtotime("+ 1 day"));
+      $show_menus = false;
 			$data_array['today_menu_expired'] = true;
 		}
-    $menu_list = $this->mdl_menus->get_menus_by_date($menuDate);
+    
 
     //No es posible solicitar un menú para el día de hoy debido a haber expirado la hora límite
 
@@ -306,7 +310,7 @@ class Node extends Anonymous_Controller {
 			if($this->input->post('bill') == 1) {
 				$this->mdl_clients->form_validation->set_rules('billing_data', lang('billing_data'), 'required');
 			} 
-      $this->mdl_clients->form_validation->set_rules('dni', lang('dni'), 'dni_check');
+      $this->mdl_clients->form_validation->set_rules('dni', lang('dni'), 'required|dni_check');
 			$this->mdl_clients->form_validation->set_rules('iban', lang('iban'), 'iban_check');
       $this->mdl_clients->form_validation->set_rules('email', lang('email'), 'required|valid_email|edit_unique[clients.email.'.$client_id.']');
 			if ($this->mdl_clients->run_validation('validation_rules_clients_profile_update')) {

@@ -60,7 +60,7 @@ class Mdl_menus extends Response_Model {
    * 
   */
 		public function get_menus_by_date($date) {
-			$menus_by_date = $this->mdl_menus->where(array('menu_date' => $date, 'disabled' => 0))->get()->result_array();
+			$menus_by_date = $this->mdl_menus->where(array('menu_date' => $date, 'disabled' => 0))->order_by("id", "desc")->get()->result_array();
 			
 			return $menus_by_date;
 		}

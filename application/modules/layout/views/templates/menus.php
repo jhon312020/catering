@@ -1,6 +1,7 @@
 <?php
 $this->load->view('header');
 $this->load->view('navigation_menu');
+$buttonDisabled = '';
 ?>
 <style>
 .datepicker-days tr {
@@ -82,7 +83,8 @@ $this->load->view('navigation_menu');
 			  <?php
 				if (isset($show_menus) && $show_menus == false) {
 				  echo '<div class="disable_menus"></div>';
-				}
+				  $buttonDisabled ='disabled';
+				} 
 			  ?>
 				<div class="col-sm-2 col-my-4 dishpad">
 					<span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span><img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Guarnicio']]['image']; ?>">
@@ -160,10 +162,11 @@ $this->load->view('navigation_menu');
 				<span class="menuitemfont">Total: <span id="jsTotalPrice">0.00 &euro;</span></span>
 			  </div>
 							<div class="col-xs-12 col-sm-2 col-sm-offset-2 res-button-spacing">
-				<button type="button" class="btn btn-menu jsAddMenuButton" data-value="1"><?php echo lang('add'); ?></button>
+
+				<button type="button" class="<?php echo $buttonDisabled; ?> btn btn-menu jsAddMenuButton" data-value="1"><?php echo lang('add'); ?></button>
 			  </div>
 							<div class=" col-xs-12 col-sm-4 pull-right">
-				<button type="button" class="btn btn-menu jsAddMenuButton" data-value="0"><?php echo lang('add_checkout'); ?></button>
+				<button type="button" class="<?php echo $buttonDisabled; ?> btn btn-menu jsAddMenuButton" data-value="0"><?php echo lang('add_checkout'); ?></button>
 			  </div>
 			</div>
 		  </div>

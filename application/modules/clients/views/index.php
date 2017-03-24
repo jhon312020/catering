@@ -21,12 +21,15 @@
 				<td class=""><?php echo $client->name; ?></td>
 				<td class=""><?php echo $client->surname; ?></td>
 				<td class=""><?php echo $client->business; ?></td>
-				<td class="">
+				<td class=""> test
 					<a class="btn btn-info btn-sm" href="<?php echo site_url('admin/clients/view/' . $client->id); ?>">
 						<i class="entypo-eye"></i>
 					</a>
 					<a class="btn btn-primary edit btn-sm" href="<?php echo site_url('admin/clients/form/' . $client->id); ?>">
 						<i class="entypo-pencil"></i>
+					</a>
+					<a class="btn btn-warning btn-sm <?php echo $client->is_active ? '' : 'inactive'; ?>" href="<?php echo site_url('admin/clients/toggle/' . $client->id . '/' . $client->is_active); ?>">
+						<i class="entypo-check" title="<?php echo $client->is_active ? 'Active' : 'In Active'; ?>"></i>
 					</a>
 					<a class="btn btn-warning btn-sm <?php echo $client->is_active ? '' : 'inactive'; ?>" href="<?php echo site_url('admin/clients/toggle/' . $client->id . '/' . $client->is_active); ?>">
 						<i class="entypo-check" title="<?php echo $client->is_active ? 'Active' : 'In Active'; ?>"></i>

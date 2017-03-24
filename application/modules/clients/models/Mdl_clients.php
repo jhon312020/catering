@@ -96,17 +96,17 @@ class Mdl_clients extends Response_Model {
                 'label' => lang('password'),
                 'rules' => 'required'
             ),
-            /*'telephone' => array(
+            'telephone' => array(
                 'field' => 'telephone',
                 'label' => lang('telephone'),
                 'rules' => 'required|numeric'
             ),
-            'dni' => array(
+            /*'dni' => array(
                 'field' => 'dni',
                 'label' => lang('dni'),
                 'rules' => 'required'
             ),
-            'intolerances' => array(
+            /*'intolerances' => array(
                 'field' => 'intolerances',
                 'label' => lang('intolerances'),
                 'rules' => 'required'
