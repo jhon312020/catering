@@ -64,15 +64,42 @@ class Clients extends Admin_Controller {
 			$pending_clients_query = $pending_clients_query->limit($params['length'],$params['start'])->get();
 		}
 
-		foreach ($pending_clients_query->result_array() as $key => $value) {
-			$editFieldHtml = sprintf("<a class='btn btn-info btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-eye'></i></a><a class='btn btn-primary edit btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-pencil'></i></a><a class='btn btn-warning btn-sm%s' style='margin-right:4px;' href='%s'><i class='entypo-check' title='%s'></i></a><a class='btn btn-danger btn-sm' style='margin-right:4px;' href='%s' onclick='return confirm('%s');'><i class='entypo-trash'></i></a>", 
-				site_url('admin/clients/view/' . $value['id']), site_url('admin/clients/form/' . $value['id']),
-				$value['is_active'] ? '' : ' inactive', site_url('admin/clients/toggle/' . $value['id'] . '/' . $value['is_active']),
-				$value['is_active'] ? 'Active' : 'In Active', site_url('admin/clients/delete/' . $value['id']), lang('delete_record_warning')
-			);
-			$results_in_single_assoc_array[$key] = array(
-				$value['client_code'], $value['name'], $value['surname'], $value['business'].' - '.$value['centre'], $editFieldHtml
-			);
+		if ($params['is_active'] == 0) {
+			foreach ($pending_clients_query->result_array() as $key => $value) {
+				$editFieldHtml = sprintf("<a class='btn btn-info btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-eye'></i></a>
+					<a class='btn btn-primary edit btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-pencil'></i></a>
+					<a class='btn btn-warning btn-sm%s' style='margin-right:4px;' href='%s'><i class='entypo-check' title='%s'></i></a>
+					<a class='btn btn-warning btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-cancel' title=''></i></a>
+					<a class='btn btn-danger btn-sm' style='margin-right:4px;' href='%s' onclick='return confirm('%s');'><i class='entypo-trash'></i></a>", 
+					site_url('admin/clients/view/' . $value['id']), 
+					site_url('admin/clients/form/' . $value['id']),
+					$value['is_active'] ? '' : ' inactive', 
+					site_url('admin/clients/toggle/' . $value['id'] . '/' . $value['is_active']),
+					$value['is_active'] ? 'Active' : 'In Active', 
+					site_url('admin/clients/cancel/' . $value['id']),
+					site_url('admin/clients/delete/' . $value['id']), lang('delete_record_warning')
+				);
+				$results_in_single_assoc_array[$key] = array(
+					$value['client_code'], $value['name'], $value['surname'], $value['business'].' - '.$value['centre'], $editFieldHtml
+				);
+			}
+		} else {
+			foreach ($pending_clients_query->result_array() as $key => $value) {
+				$editFieldHtml = sprintf("<a class='btn btn-info btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-eye'></i></a>
+					<a class='btn btn-primary edit btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-pencil'></i></a>
+					<a class='btn btn-warning btn-sm%s' style='margin-right:4px;' href='%s'><i class='entypo-check' title='%s'></i></a>
+					<a class='btn btn-danger btn-sm' style='margin-right:4px;' href='%s' onclick='return confirm('%s');'><i class='entypo-trash'></i></a>", 
+					site_url('admin/clients/view/' . $value['id']), 
+					site_url('admin/clients/form/' . $value['id']),
+					$value['is_active'] ? '' : ' inactive', 
+					site_url('admin/clients/toggle/' . $value['id'] . '/' . $value['is_active']),
+					$value['is_active'] ? 'Active' : 'In Active', 
+					site_url('admin/clients/delete/' . $value['id']), lang('delete_record_warning')
+				);
+				$results_in_single_assoc_array[$key] = array(
+					$value['client_code'], $value['name'], $value['surname'], $value['business'].' - '.$value['centre'], $editFieldHtml
+				);
+			}
 		}
 		/*if (isset($params['order'])){
 			echo $this->db->last_query();exit;
@@ -202,4 +229,22 @@ class Clients extends Admin_Controller {
 		}
 		return $data;
   }
+  public function cancel($id){
+		if ($id){
+				$client = $this->mdl_clients->get_by_id($id);
+				$this->load->library('email');
+				$message  = "Hola ".$client->name. " " .$client->surname;
+				$message .=",<br/>Upps!  Por el momento no servimos en tu zona o empresa. Por favor envíanos tu email y te avisaremos en cuanto podamos enviarte nuestros menús!";
+				$emailBody['body'] = $message;
+				$this->email->set_mailtype("html");
+				//Need to change admin email dynamically
+				$this->email->from('admin@gumen-catering.com', 'Gumen-Catering');
+				$this->email->to($client->email); 
+				$this->email->subject('Cuenta validada');
+				$body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
+				$this->email->message($body);
+				$this->email->send();
+				redirect('admin/clients');
+		}
+	}
 }
