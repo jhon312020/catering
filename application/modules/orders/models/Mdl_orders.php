@@ -72,9 +72,10 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_list_by_id($order_id) {
 		$order_list = $this->mdl_orders
-											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active,  clients.telephone, clients.email, orders.order_type, orders.reference_no as reference_no, orders.payment_method, orders.client_id, orders.price,orders.menu_type_id as order_code, orders.order_detail, orders.Total')
+											->select('clients.name, clients.client_code, business.name as business, centres.Centre, orders.id, orders.order_date, orders.is_active,  clients.telephone, clients.email, orders.order_type, orders.reference_no as reference_no, orders.payment_method, orders.client_id, orders.price,orders.menu_type_id as order_code, orders.order_detail, orders.Total')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
+											->join('centres', 'centres.Id = clients.centre_id', 'left')
 											->where('orders.id', $order_id)
 											->get()->row();
 											
@@ -88,9 +89,10 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_client_id($client_id) {
 		$orders_by_client_id = $this->mdl_orders
-											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, orders.menu_type_id as order_code, orders.order_detail')
+											->select('clients.name, clients.client_code, business.name as business, orders.id, orders.order_date, orders.is_active, orders.menu_type_id as order_code, orders.order_detail, centres.Centre')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
+											->join('centres', 'centres.Id = clients.centre_id', 'left')
 											->where('orders.client_id', $client_id)
 											->get()->result();
 											

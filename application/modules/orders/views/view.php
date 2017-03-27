@@ -51,7 +51,9 @@ $disabled = ($readonly)?'disabled':'';
 						<label class="col-sm-2 pull-left"><?php echo lang('business'); ?>:</label>
 						<div class="col-sm-10">
 							<span class="highlight">
-								<?php echo str_replace(',','',$order->business); ?>
+								<?php //echo str_replace(',','',$order->business); 
+									echo $order->business.' - '.$order->Centre;
+								?>
 							</span>
 						</div>
 					</div>
