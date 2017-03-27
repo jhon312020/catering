@@ -116,7 +116,8 @@ $lang['forgot_password_page_heading'] = 'Recuperar contraseña';
 $lang['success_profile_update'] = 'Profile has been updated successfully';
 
 $lang['personal_information'] = 'Datos Personales';
-$lang['payment_details'] = 'Datos de pago';
+//$lang['payment_details'] = 'Datos de pago';
+$lang['payment_details'] = 'DATOS FACTURACIÓN';
 
 $lang['form_validation_edit_unique']= 'The {field} already exists.';
 

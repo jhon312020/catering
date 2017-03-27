@@ -132,7 +132,7 @@ $this->load->view('navigation_menu');
 
               <div class="row payrow">
                 <div class="col-sm-12">
-                  <span class="error" id="jsPaymentType">Kindly select credito/debito</span>
+                  <span class="error" id="jsPaymentType">Por favor, seleccionar un tipo pagar</span>
                 </div>
               </div>
             </div>
@@ -140,7 +140,7 @@ $this->load->view('navigation_menu');
               <div class="row">
                 <div class="col-xs-12 col-xs-offset-2 col-sm-12 col-sm-offset-0 paysection3text">
                   <input type="checkbox" name="accept" id="accept" value="1"> <a href="<?php echo site_url(PAGE_LANGUAGE); ?>/terms" class="btn-link" target="_blank"> Accepto los terminos y condiciones</a>
-                    <span class="error" id="jsAcceptTerms">Kindly select terminos y condiciones</span>
+                    <span class="error" id="jsAcceptTerms">Por favor, acepte para poder continuar.</span>
                 </div>
                 <div class="row">
                   <h3 class="paytotalh2">Total: <span id="total_price"><?php echo number_format($total_price, 2); ?></span> &euro;</h3>

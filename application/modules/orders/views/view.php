@@ -1,7 +1,6 @@
 <?php
 $readonly = ($readonly)?'readonly':'';
 $order_date = date('d/m/Y', strtotime($order->order_date));
-
 $disabled = ($readonly)?'disabled':'';
 ?>
 <div class="headerbar">

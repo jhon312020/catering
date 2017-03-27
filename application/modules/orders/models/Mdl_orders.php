@@ -94,6 +94,7 @@ class Mdl_orders extends Response_Model {
 											->join('business', 'business.id = clients.business_id', 'left')
 											->join('centres', 'centres.Id = clients.centre_id', 'left')
 											->where('orders.client_id', $client_id)
+											->where('orders.is_active', 1)
 											->get()->result();
 											
 		return $orders_by_client_id;

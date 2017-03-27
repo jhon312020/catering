@@ -56,8 +56,8 @@ class Node extends Anonymous_Controller {
 		}
 		//print_r($login_client_profile);die;
 		
-		/* echo "<pre>";
-		print_r($cool_drinks);die; */
+		//echo "<pre>";
+		//print_r($cool_drinks);//die; 
 		
 		$this->today_menus_removed = [];
 		

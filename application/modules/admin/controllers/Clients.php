@@ -10,9 +10,9 @@ class Clients extends Admin_Controller {
 		$this->load->model('orders/mdl_orders');
 		$this->load->model('centres/mdl_centres');
 		$data = array();
-		$business_list = $this->mdl_business->select('id, name')->where('is_active', 1)->get()->result_array();
-		$data['centre_list'] = $this->mdl_centres->select('Id, Centre, bussiness_id')->where('is_active', 1)->get()->result();
-		// echo '<pre>';print_r($data['centre_list']); echo'</pre>';
+		$business_list = $this->mdl_business->select('id, name')->where('is_active', 1)->order_by('name', 'asc')->get()->result_array();
+		$data['centre_list'] = $this->mdl_centres->select('Id, Centre, bussiness_id')->where('is_active', 1)->order_by('Centre', 'asc')->get()->result();
+		//echo '<pre>';print_r($data['business_list']); echo'</pre>';
 		$data['business_list'] = array(''=>'Select') + array_combine(array_column($business_list, 'id'), array_column($business_list, 'name'));
 		$this->load->vars($data);
 		$this->path = $this->mdl_settings->setting('site_url').$this->mdl_settings->setting('upload_folder')."images/clients/";

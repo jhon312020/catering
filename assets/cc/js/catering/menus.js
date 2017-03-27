@@ -24,7 +24,7 @@ $(document).ready(function() {
 		includeSelectAllOption: false,
 		enableFiltering: false,
 		// numberDisplayed: 0,
-		nonSelectedText: 'Select drinks',
+		nonSelectedText: 'Seleccionar Bebida',
 		onChange: function(option, checked, select) {
 			var $mainDiv = $(option).closest('.jsSubMenu');
 			var $menu_id = $mainDiv.find('.jsSelectMenu').attr('name').replace ( /[^\d.]/g, '' );
