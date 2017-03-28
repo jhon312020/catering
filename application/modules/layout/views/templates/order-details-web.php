@@ -1,8 +1,14 @@
+<style>
+  td:nth-child(2), th:nth-child(2) {
+    text-align:center !important;
+    width: auto;
+  }
+</style>
 <div class="col-sm-12 fix-left-right mob-hide">
   <table class="table table-striped paymentTable">
     <thead>
       <tr>
-        <th><?php echo strtoupper(lang('menu')); ?></th>
+        <th width="50%"><?php echo strtoupper(lang('menu')); ?></th>
         <th><?php echo strtoupper(lang('order_day')); ?></th>
         <th><?php echo strtoupper(lang('price')); ?></th>
         <th><?php echo strtoupper(lang('payment_method')); ?></th>
@@ -17,7 +23,7 @@
         	foreach($orders as $order) {
         ?>
       <tr>
-        <td>
+        <td style="text-align:left">
           <p><b>
             <?php 
               $order_detail = json_decode($order['order_detail'],true);
@@ -31,11 +37,12 @@
           </p>
           <?php
             $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
-            echo implode(', ', $description);
+            echo '- '.implode('<br/> - ', $description);
             ?>
-          , pan, aceite, vinagre y Cubiertos
+            <br/>
+          - pan, aceite, vinagre y Cubiertos
         </td>
-        <td><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
+        <td style="text-align:center;"><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
         <td><?php echo $order['Total']; ?> &euro;</td>
         <td><?php echo $order['payment_method']; ?></td>
       </tr>

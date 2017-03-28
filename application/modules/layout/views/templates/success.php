@@ -31,8 +31,8 @@ $this->load->view('navigation_menu');
                     foreach($orders as $order) {
                   ?>
                   <tr>
-                  <td><?php echo $order['reference_no']; ?></td>
-                    <td>
+                  <td ><?php echo $order['reference_no']; ?></td>
+                    <td style="text-align:left;">
                       <p><b>
                         <?php 
                           $order_detail = json_decode($order['order_detail'],true);
@@ -45,9 +45,9 @@ $this->load->view('navigation_menu');
                       </b></p>
                       <?php
                         $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
-                        echo implode(', ', $description);
-                      ?>
-                      , pan, aceite, vinagre y Cubiertos
+                        echo '- '.implode('<br/> - ', $description);
+                      ?><br/>
+                      - pan, aceite, vinagre y Cubiertos
                     </td>
                     <td><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
                     <td><?php echo $order['Total']; ?> &euro;</td>

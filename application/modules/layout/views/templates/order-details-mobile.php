@@ -1,3 +1,9 @@
+<style>
+  td:nth-child(2), th:nth-child(2) {
+    text-align:center !important;
+    width: auto;
+  }
+</style>
 <div class="col-sm-12 fix-left-right mob-show">
   <table class="table table-striped paymentTable">
     <thead>
@@ -29,9 +35,9 @@
           </p>
           <?php
             $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
-            echo implode(', ', $description);
+            echo '- '.implode('<br/> - ', $description);
             ?>
-          , pan, aceite, vinagre y Cubiertos
+          <br/>- pan, aceite, vinagre y Cubiertos
         </td>
         <td style="text-align: center !important; vertical-align: middle; font-size: 17px;"><b><?php echo date('d/m/Y', strtotime($order['order_date'])); ?><br/><?php echo $order['Total']; ?> &euro; <br/><?php echo $order['payment_method']; ?></b></td>
       </tr>

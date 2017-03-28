@@ -36,6 +36,11 @@ function findOrderMenuType($order_code) {
 
 function getOrderDescription($order_detail, $plates, $cool_drink_list) {
     $description = array();
+    $guarnicio = array();
+    $primer = array();
+    $segon = array();
+    $cool_drink = array();
+    $postre = array();
     foreach ($order_detail as $order_det) {
       if (!is_array($order_det))
         continue;
@@ -43,23 +48,36 @@ function getOrderDescription($order_detail, $plates, $cool_drink_list) {
         if (!is_integer($key))
           continue;
         $order_array = $sub_orders['order'];
-        if (!in_array($order_array['Guarnicio'], $description))
-            $description[] = $plates[$order_array['Guarnicio']];
+        if (!in_array($plates[$order_array['Guarnicio']], $guarnicio))
+            $guarnicio[] = $plates[$order_array['Guarnicio']];
         if (isset($order_array['Primer'])) {
-          $description[] = $plates[$order_array['Primer']];
+          $primer[] = $plates[$order_array['Primer']];
         }
         if (isset($order_array['Segon'])) {
-          $description[] = $plates[$order_array['Segon']];
+          $segon[] = $plates[$order_array['Segon']];
         }
-        if (!in_array($order_array['Postre'], $description))
-          $description[] = $plates[$order_array['Postre']];
+        if (!in_array($plates[$order_array['Postre']], $postre))
+          $postre[] = $plates[$order_array['Postre']];
 
         if (isset($sub_orders['cool_drink'])) {
           foreach ($sub_orders['cool_drink'] as $drinks) {
-            $description[] = $cool_drink_list[$drinks];
+            $cool_drink[] = $cool_drink_list[$drinks];
           }  
         }
       }
+    }
+    $description = $guarnicio;
+    foreach($primer as $value) {
+      $description[] = $value;
+    }
+    foreach($segon as $value) {
+      $description[] = $value;
+    }
+    foreach($postre as $value) {
+      $description[] = $value;
+    }
+    foreach($cool_drink as $value) {
+      $description[] = $value;
     }
     return $description;
 }

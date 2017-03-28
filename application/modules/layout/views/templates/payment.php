@@ -2,6 +2,12 @@
 $this->load->view('header');
 $this->load->view('navigation_menu');
 ?>
+<style>
+  td:nth-child(2), th:nth-child(2) {
+    text-align:center !important;
+    width: auto;
+  }
+</style>
 <div class="top-content">
   <div class="inner-bg">
     <div class="container">
@@ -35,7 +41,7 @@ $this->load->view('navigation_menu');
                   $total_price += $menu['Total'];
 							?>
 							<tr class="order_<?php echo $menu['id']; ?>">
-                <td>
+                <td style="text-align:left">
 									<p><b>
                     <?php 
                       $order_detail = json_decode($menu['order_detail'],true);
@@ -48,8 +54,8 @@ $this->load->view('navigation_menu');
                   </b></p>
                   <?php
                     $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
-                    echo implode(', ', $description);
-									?>, pan, aceite, vinagre y Cubiertos
+                    echo '- '.implode('<br/> - ', $description);
+									?><br/>- pan, aceite, vinagre y Cubiertos
                 </td>
                 <td><?php echo date('d/m/Y', strtotime($menu['order_date'])); ?></td>
                 <td><?php echo number_format($menu['Total'], 2); ?> &euro;</td>
