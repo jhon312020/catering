@@ -65,14 +65,13 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 									<input class="checkbox-inline" name="bill" <?php echo $this->mdl_clients->form_value('bill') == 0?'checked':''; ?> type="checkbox" value="0"> <?php echo lang('no'); ?>
 								</div>
 								<div class="form-group">
-									<h5 class="text-info"><b>Gumen Catering</b> le permite pagar su pedido con Tarjeta de Crédito, en Efectivo, con Ticket Restaurante o vía Recibo Domiciliado. Para hacerlo vía recibo, por favor introduzca su IBAN.</h5>
-									<label for="form-username"><?php echo lang('iban'); ?></label>
-									<input type="text" name="iban" placeholder="" class="form-username form-control" id="form-username" value="<?php echo $this->mdl_clients->form_value('iban'); ?>" maxlength="25" size="25">
-								</div>
-								
-								<div class="form-group">
 									<label for="form-message"><?php echo lang('billing_data'); ?>:</label>
 									<textarea rows = 5 type="text" name="billing_data" id="billing_data" name="form-message" <?php echo $this->mdl_clients->form_value('bill') == 0?'disabled':''; ?> placeholder="" class="form-message form-control" id="form-message"><?php echo $this->mdl_clients->form_value('bill') == 1?$this->mdl_clients->form_value('billing_data'):''; ?></textarea>
+								</div>
+								<div class="form-group">
+									<h5 style="color:#414042"><b>Gumen Catering</b> le permite pagar su pedido con Tarjeta de Crédito, en Efectivo, con Ticket Restaurante o vía Recibo Domiciliado. Para hacerlo vía recibo, por favor introduzca su IBAN.</h5>
+									<label for="form-username"><?php echo lang('iban'); ?></label>
+									<input type="text" name="iban" placeholder="" class="form-username form-control" id="form-username" value="<?php echo $this->mdl_clients->form_value('iban'); ?>" maxlength="25" size="25">
 								</div>
 							</div>
 						</div>
