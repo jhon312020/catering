@@ -8,23 +8,25 @@ class Cron extends Anonymous_Controller {
     }
 
 	/**
-     * Function check_order_status()
+     * Function clean_incomplete_orders()
      * Used to remove orded exists 5 mins booking.
-     * @return array of booking id
+     * @return array of orders id
      */
-	public function check_order_status() {
-		$newTime = strtotime('-5 minutes');
-		$time = date('Y-m-d H:i:s', $newTime);
+	public function clean_incomplete_orders() {
+		/*$newTime = strtotime('-5 minutes');
+		$time = date('Y-m-d H:i:s', $newTime);*/
 
-		$qry = $this->db->from('booking')->where(array('book_status'=>'pending', 'is_active'=>1))
-									->where("created < '$time'")->get();
+		$qry = $this->db->from('orders')->where(array('order_code !='=>'', 'is_active'=>0))
+									->where("created_at < date_sub(now(),INTERVAL 5 MINUTE)")->get();
 		if ($qry->num_rows()) {
 			$result = $qry->result_array();
 			$id = array_map(function ($value) {return  $value['id'];}, $result);
-			$this->db->set(array('is_active'=>0))->where_in('id',$id)->update('booking');
-			$this->db->set(array('is_active'=>0))->where_in('book_id',$id)->update('seats');
+			$this->db->where(array('order_code !='=>'', 'is_active'=>0))->where("created_at < date_sub(now(),INTERVAL 5 MINUTE)");
+			$this->db->delete('orders');
+			$this->db->where_in('order_id',$id);
+			$this->db->delete(array('order_drinks','order_reports'));
 			echo "Total no of records removed ".count($id);
-			echo "The following book id has been removed";
+			echo "<br/>The following ids has been removed";
 			echo "<pre>";
 			print_r($id);
 		}

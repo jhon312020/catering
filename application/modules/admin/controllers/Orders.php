@@ -13,6 +13,7 @@ class Orders extends Admin_Controller {
 
 	public function index() {
 		$this->load->helper("order_helper");
+		$this->mdl_orders->updateBusinessIds();
 		$order_date = date('Y-m-d');
 		$past = 0;
 		$params = $this->input->post();
@@ -170,13 +171,13 @@ class Orders extends Admin_Controller {
 		$past = $params['past'];
 
 		if ($past) {
-			$orders = $this->mdl_orders->get_orders_by_date($order_date,'<', $params['length'],$params['start']);
-			$condition = array('order_date <'=>$order_date, 'is_active'=>1);
-			$totalRecords = $this->mdl_orders->get_count_of_orders($condition);
+			$orders = $this->mdl_orders->get_orders_by_date($order_date,'<', $params['length'],$params['start'],$params['search']['value']);
+			$condition = array('orders.order_date <'=>$order_date, 'orders.is_active'=>1);
+			$totalRecords = $this->mdl_orders->get_count_of_orders($condition, $params['search']['value']);
 		} else {
-			$orders = $this->mdl_orders->get_orders_by_date($order_date,'=', $params['length'],$params['start']);
-			$condition = array('order_date'=>$order_date, 'is_active'=>1);
-			$totalRecords = $this->mdl_orders->get_count_of_orders($condition);
+			$orders = $this->mdl_orders->get_orders_by_date($order_date,'=', $params['length'],$params['start'],$params['search']['value']);
+			$condition = array('orders.order_date'=>$order_date, 'orders.is_active'=>1);
+			$totalRecords = $this->mdl_orders->get_count_of_orders($condition, $params['search']['value']);
 		}
 
 		$datas = [];

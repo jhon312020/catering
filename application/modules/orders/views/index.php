@@ -1,8 +1,3 @@
-<style>
-#jsOrders_filter label {
-	display: none;
-}
-</style>
 <div class="headerbar">
 	<div class="clearfix">
 		<div class="row">

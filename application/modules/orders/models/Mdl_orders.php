@@ -105,7 +105,7 @@ class Mdl_orders extends Response_Model {
    * @return  Array
    * 
   */
-	public function get_orders_by_date($order_date, $operator = '=', $limit = 25, $offset = 0) {
+	public function get_orders_by_date($order_date, $operator = '=', $limit = 25, $offset = 0, $search) {
 		$orders_list_by_date = $this->mdl_orders
 											->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no as reference_no,orders.price, orders.is_active,orders.menu_type_id as order_code, orders.order_detail, centres.Centre, orders.drink1_id, orders.drink2_id')
 											->join('clients', 'clients.id = orders.client_id', 'left')
@@ -116,6 +116,13 @@ class Mdl_orders extends Response_Model {
 											->order_by('orders.id','desc');
 		if ($limit != -1) {
 			$orders_list_by_date->limit($limit, $offset);
+		}
+
+		if ($search) {
+			$orders_list_by_date = $orders_list_by_date->group_start()
+										->or_like('clients.client_code', $search)
+										->or_like('orders.reference_no',$search)
+										->group_end();
 		}
 		
 		$orders_list_by_date = $orders_list_by_date->get()->result();
@@ -399,12 +406,24 @@ class Mdl_orders extends Response_Model {
    	* @return  Integer
    	* 
   	*/
-	function get_count_of_orders($condition = NULL) {
+	function get_count_of_orders($condition = NULL, $search = NULL) {
 		if ($condition) {
 			$this->mdl_orders = $this->mdl_orders->where($condition);	
 		}
+		if ($search) {
+			$this->mdl_orders = $this->mdl_orders->join('clients', 'clients.id = orders.client_id', 'left');
+			$this->mdl_orders = $this->mdl_orders->group_start()
+										->or_like('clients.client_code', $search)
+										->or_like('orders.reference_no',$search)
+										->group_end();
+		}
 		$row = $this->mdl_orders->select('count(*) as count')->group_by('reference_no')->get()->row_array();
 		return $row['count'];
+	}
+
+
+	function updateBusinessIds() {
+		$this->db->query("UPDATE tbl_clients t1 INNER JOIN tbl_centres t2 ON t1.centre_id = t2.id SET t1.business_id = t2.bussiness_id");
 	}
 
 

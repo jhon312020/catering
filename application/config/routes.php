@@ -57,6 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['default_controller']  = "node";
 $route['login']         = "sessions/login";
 $route['admin/(:any)']      = 'admin/$1';
+$route['cron/(:any)']      = 'cron/$1';
 
 
 $route['en/list'] = 'node/list';

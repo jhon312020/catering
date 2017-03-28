@@ -31,7 +31,7 @@
             $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
             echo implode(', ', $description);
             ?>
-          , pan, aceite, vinagre y cubietros
+          , pan, aceite, vinagre y Cubiertos
         </td>
         <td style="text-align: center !important; vertical-align: middle; font-size: 17px;"><b><?php echo date('d/m/Y', strtotime($order['order_date'])); ?><br/><?php echo $order['Total']; ?> &euro; <br/><?php echo $order['payment_method']; ?></b></td>
       </tr>

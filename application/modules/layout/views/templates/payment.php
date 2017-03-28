@@ -49,7 +49,7 @@ $this->load->view('navigation_menu');
                   <?php
                     $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
                     echo implode(', ', $description);
-									?>, pan, aceite, vinagre y cubietros
+									?>, pan, aceite, vinagre y Cubiertos
                 </td>
                 <td><?php echo date('d/m/Y', strtotime($menu['order_date'])); ?></td>
                 <td><?php echo number_format($menu['Total'], 2); ?> &euro;</td>
