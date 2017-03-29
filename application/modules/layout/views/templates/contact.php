@@ -6,7 +6,7 @@
         <div class="inner-bg">
             <div class="container">
                 <div class="row">
-                    <h2 class="head_2">Contacto</h2>
+                    <h2 class="head_2">Formulario de contacto</h2>
                     <div class="col-sm-12">
                         <div class="col-sm-3">
                             <div class="form-bottom">

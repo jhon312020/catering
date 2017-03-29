@@ -18,7 +18,7 @@ class Clients extends Admin_Controller {
 		$this->path = $this->mdl_settings->setting('site_url').$this->mdl_settings->setting('upload_folder')."images/clients/";
 	}
 	public function index() {
-		
+		$this->mdl_orders->updateBusinessIds();
 		$this->layout->set(array('pending_clients' => [], 'clients_list' => []));
 		$this->layout->buffer('content', 'clients/index');
 		$this->layout->render();

@@ -24,7 +24,7 @@ foreach($menu_income as $menu=>$income) {
 }
 $payment_income_html = '';
 foreach($payment_income as $payment_method=>$income) {
-	$payment_income_html .= '<p class="totalSpan">'.$income.' - '.lang(strtolower($payment_method)).'</p>';
+	$payment_income_html .= '<p class="totalSpan">'.$income.' - '.$payment_method.'</p>';
 }
 ?>
 <div class="row">

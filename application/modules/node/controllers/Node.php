@@ -339,16 +339,20 @@ class Node extends Anonymous_Controller {
    * 
    */
   public function contact() {
-    
     $method = strtolower($this->input->method(TRUE));
     if ($method == 'post') {
         $this->load->library('email');
+        $this->email->set_mailtype("html");
         $this->email->from($this->input->post('email'), $this->input->post('name'));
-        $this->email->to($this->settings['site_email']); 
+        $this->email->to($this->site_contact->email);
         $this->email->subject('Enquiry');
-        $this->email->message($this->input->post('description'));
+        $data['name'] = $this->input->post('name');
+        $data['email'] = $this->input->post('email');
+        $data['message'] = $this->input->post('message');
+        $body = $this->load->view('layout/emails/mail.php',$data, TRUE);
+        $this->email->message($body);
         if ($this->email->send()) {
-          $this->session->set_flashdata('alert_success', lang('email_send'));
+          $this->session->set_flashdata('alert_success', lang('contact_success'));
         } else {
           $this->session->set_flashdata('alert_fail', lang('server_error'));
         }
