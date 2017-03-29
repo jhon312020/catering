@@ -34,7 +34,7 @@ class Dashboard extends Admin_Controller {
 		$this->load->model('clients/mdl_clients');
 		$this->load->model('menus/mdl_menus');
 
-		$today_menus = $this->mdl_menus->where('created_at', date('Y-m-d'))->get()->num_rows();
+		$today_menus = $this->mdl_menus->where('DATE(created_at)', date('Y-m-d'))->get()->num_rows();
 		$total_clients = $this->mdl_clients->get()->num_rows();
 		$total_business = $this->mdl_business->get()->num_rows();
 		$data = array(

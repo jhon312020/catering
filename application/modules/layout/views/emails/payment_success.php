@@ -40,7 +40,7 @@
                     foreach($orders as $order) {
                   ?>
                   <tr>
-                    <td width="40%" style="padding:5px;text-align:left">
+                    <td width="70%" style="padding:5px;text-align:left">
                       <p><b>
                         <?php 
                           $order_detail = json_decode($order['order_detail'],true);
@@ -76,37 +76,11 @@
                           echo $menu_type;
                         ?>
                       </b></p>
-                      <?php 
-                        $description = array();
-                        foreach ($order_detail as $order_det) {
-                          if (!is_array($order_det))
-                            continue;
-                          foreach ($order_det as $key=>$sub_orders) {
-                            if (!is_integer($key))
-                              continue;
-                            $order_array = $sub_orders['order'];
-                            if (!in_array($order_array['Guarnicio'], $description))
-                                $description[] = $plates[$order_array['Guarnicio']];
-                            if (isset($order_array['Primer'])) {
-                              $description[] = $plates[$order_array['Primer']];
-                            }
-                            if (isset($order_array['Segon'])) {
-                              $description[] = $plates[$order_array['Segon']];
-                            }
-                            if (!in_array($order_array['Postre'], $description))
-                              $description[] = $plates[$order_array['Postre']];
-
-                            if (isset($sub_orders['cool_drink'])) {
-                              foreach ($sub_orders['cool_drink'] as $drinks) {
-                                $description[] = $cool_drink_list[$drinks];
-                              }  
-                            }
-                            
-                          }
-                        }
-                        echo implode(', ', $description);
+                      <?php
+                        $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
+                        echo '- '.implode('<br/> - ', $description);
                       ?>
-                      , pan, aceite, vinagre y cubietros
+                      <br/>- pan, aceite, vinagre y Cubiertos
                     </td>
                     <td style="text-align:center"><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
                     <td style="text-align:center"><?php echo $order['price']; ?> &euro;</td>
