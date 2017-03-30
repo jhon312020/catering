@@ -26,8 +26,8 @@
             <?php 
               $order_detail = json_decode($order['order_detail'],true);
               $order_code = $order_detail['order_code'];
-              unset($order_detail['order_code']);
-              $order_detail = array_values($order_detail);
+              /*unset($order_detail['order_code']);
+              $order_detail = array_values($order_detail);*/
               $menu_type = findOrderMenuType($order_code);
               echo $menu_type;
               ?>

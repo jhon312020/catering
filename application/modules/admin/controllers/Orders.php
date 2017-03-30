@@ -124,6 +124,7 @@ class Orders extends Admin_Controller {
 		$this->layout->render();
 	}
 	public function view($id) {
+		$this->load->helper("order_helper");
 		$error_flg = false;
 		$error = array();
 		$order = $this->mdl_orders->get_orders_list_by_id($id);

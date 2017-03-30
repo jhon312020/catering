@@ -10,7 +10,7 @@
 </head>
 <body>
 <div style="background-color:#FAFAFA;padding:5px;" class="nopadding">
-  <div style="background-color:#8DC73F;padding:5px;" class="nopadding">
+  <div style="background-color:#414042;padding:5px;" class="nopadding">
   <img src="http://www.gumen-catering.com/Delivery/assets/cc/img/gumen-logo.png" style="display:block;margin-left:auto;width:180px;"/>
   </div>
   <div style="background-color:#FFFFFF;color:#5a5b5f;padding:5px;line-height:30px;font-size:16px;">

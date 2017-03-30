@@ -167,7 +167,7 @@ class Node extends Anonymous_Controller {
           $this->email->from($this->site_contact->email, 'Gumen-Catering');
           $this->email->to($data['email']); 
           $this->email->subject($subject);
-          $body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
+          $body = $this->load->view('layout/emails/password_functions.php',$emailBody, TRUE);
           $this->email->message($body);
           $this->email->send();
         }
@@ -349,7 +349,7 @@ class Node extends Anonymous_Controller {
         $data['name'] = $this->input->post('name');
         $data['email'] = $this->input->post('email');
         $data['message'] = $this->input->post('message');
-        $body = $this->load->view('layout/emails/mail.php',$data, TRUE);
+        $body = $this->load->view('layout/emails/contact_us.php',$data, TRUE);
         $this->email->message($body);
         if ($this->email->send()) {
           $this->session->set_flashdata('alert_success', lang('contact_success'));
@@ -386,7 +386,7 @@ class Node extends Anonymous_Controller {
     $condition = array('is_active' => 1, 'client_id' => $this->session->userdata('client_id'));
     $config = array(
               'base_url'=>site_url($this->uri->segment(1).'/'.$this->uri->segment(2)),
-              'total_rows'=>$this->mdl_orders->get_count_of_orders($condition),
+              'total_rows'=>$this->mdl_orders->get_count_of_orders_pagination($condition),
               'uri_segment'=>3,
               'per_page' => 10
             );
@@ -485,11 +485,11 @@ class Node extends Anonymous_Controller {
           $this->email->from($this->site_contact->email, 'Gumen-Catering');
           $this->email->to($data['email']); 
           $this->email->subject($subject);
-          $body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
+          $body = $this->load->view('layout/emails/password_functions.php',$emailBody, TRUE);
           $this->email->message($body);
           $this->email->send();
           $this->session->set_flashdata('alert_success', lang('recover_email_success_message'));
-          //redirect($this->uri->uri_string());
+          redirect($this->uri->uri_string());
         } else {
           $this->session->set_flashdata('alert_error', lang('invalid_username'));
           redirect($this->uri->uri_string());
@@ -534,7 +534,7 @@ class Node extends Anonymous_Controller {
             $this->email->from($this->site_contact->email, 'Gumen-Catering');
             $this->email->to($userEmail); 
             $this->email->subject($subject);
-            $body = $this->load->view('layout/emails/mail.php',$emailBody, TRUE);
+            $body = $this->load->view('layout/emails/password_functions.php',$emailBody, TRUE);
             $this->email->message($body);
             $this->email->send();
             //redirect($this->uri->segment(1));

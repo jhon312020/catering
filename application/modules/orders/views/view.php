@@ -75,41 +75,20 @@ $disabled = ($readonly)?'disabled':'';
 					<div class="form-group">
 						<label class="col-sm-2 pull-left"><?php echo lang('platos');?>: </label>
 						<div class="col-sm-10">
-						<p><span class="highlight">
-							<?php 
-								$order_detail = json_decode($order->order_detail,true);
-		                      	unset($order_detail['order_code']);
-		                      	$order_detail = array_values($order_detail); 
-		                      	$description = array();
-			                    foreach ($order_detail as $order_det) {
-			                      if (!is_array($order_det))
-			                        continue;
-			                      foreach ($order_det as $key=>$orders) {
-			                        if (!is_integer($key))
-			                          continue;
-			                        $order_array = $orders['order'];
-			                        if (!in_array($order_array['Guarnicio'], $description))
-			                            $description[] = $plates[$order_array['Guarnicio']];
-			                        if (isset($order_array['Primer'])) {
-			                          $description[] = $plates[$order_array['Primer']];
-			                        }
-			                        if (isset($order_array['Segon'])) {
-			                          $description[] = $plates[$order_array['Segon']];
-			                        }
-			                        if (!in_array($order_array['Postre'], $description))
-			                          $description[] = $plates[$order_array['Postre']];
+								<p><span class="highlight">
 
-			                        if (isset($orders['cool_drink'])) {
-			                          foreach ($orders['cool_drink'] as $drinks) {
-			                            $description[] = $cool_drink_list[$drinks];
-			                          }  
-			                        }
-			                        
-			                      }
-			                    }
-									echo implode(', ', $description);
-								?>
-								, pan, aceite, vinagre y cubietros
+									<?php
+										if ($order->order_detail != '') {
+											$order_detail = json_decode($order->order_detail,true);
+					                      	/*unset($order_detail['order_code']);
+					                      	$order_detail = array_values($order_detail);*/
+								            $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
+								            echo '- '.implode('<br/> - ', $description);
+								            echo '<br/>- pan, aceite, vinagre y Cubiertos';
+							        	} else {
+							        		echo 'Imported via MS-Access';
+							        	}
+						            ?>
 								</span></p>
 						</div>
 					</div>

@@ -6,7 +6,7 @@
         <div class="inner-bg">
             <div class="container">
                 <div class="row">
-                    <h2 class="head_2">Formulario de contacto</h2>
+                    <h2 class="head_2">Contacto</h2>
                     <div class="col-sm-12">
                         <div class="col-sm-3">
                             <div class="form-bottom">
@@ -35,7 +35,7 @@
                                     <button type="submit" class="btn log_in center-block">ENVIAR</button>
                                 </form>
                                 <div id="ribbon-container-green">
-                                    <a href="#" id="ribbon" target="_blank">FORMULARIO DE CONACTO</a>
+                                    <a href="#" id="ribbon" target="_blank">FORMULARIO DE CONTACTO</a>
                                 </div>
                             </div>
                         </div>

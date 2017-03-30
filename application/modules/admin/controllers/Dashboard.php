@@ -32,13 +32,12 @@ class Dashboard extends Admin_Controller {
 	public function index() {
 		$this->load->model('business/mdl_business');
 		$this->load->model('clients/mdl_clients');
-		$this->load->model('menus/mdl_menus');
 		$this->load->model('orders/mdl_orders');
 
-		$today_menus = $this->mdl_menus->where('DATE(created_at)', date('Y-m-d'))->get()->num_rows();
 		$total_clients = $this->mdl_clients->get()->num_rows();
 		$total_business = $this->mdl_business->get()->num_rows();
-		$total_orders =  $this->mdl_menus->where(array('DATE(created_at)' => date('Y-m-d'), 'is_active'=>1))->get()->num_rows();
+		$today_menus =  $this->mdl_orders->where(array('order_date' => date('Y-m-d'), 'is_active'=>1))->get()->num_rows();
+		$total_orders =  $this->mdl_orders->where(array('is_active'=>1))->get()->num_rows();
 
 		$data = array(
 			'today_menus' => $today_menus,

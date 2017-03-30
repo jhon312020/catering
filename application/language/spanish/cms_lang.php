@@ -122,7 +122,7 @@ $lang['payment_details'] = 'DATOS FACTURACIÓN';
 $lang['form_validation_edit_unique']= 'The {field} already exists.';
 
 $lang['menu_type'] = 'Tipo de menú';
-$lang['recover_email_success_message'] = 'Kindly check your email to reset your password!';
+$lang['recover_email_success_message'] = 'Por favor, revise su email para cambiar su contraseña!';
 $lang['confirm_password'] = 'Confirma Password';
 $lang['reset_password_page_heading'] = 'Restablecer la contraseña';
 $lang['password_error'] = 'Password necesario';
@@ -184,6 +184,6 @@ $lang['archive'] = 'ARCHIVO';
 $lang['close'] = 'CERRAR';
 $lang['datos'] = 'Datos';
 $lang['register_success'] = 'Gracias por registrarte. Nos pondremos en contacto contigo muy pronto.';
-$lang['contact_success'] = 'Thanks for contact us';
+$lang['contact_success'] = 'Gracias!';
 /*---ó-*/
 ?>

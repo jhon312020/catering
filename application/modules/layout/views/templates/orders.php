@@ -15,7 +15,7 @@ $this->load->view('navigation_menu');
                 <th><?php echo strtoupper(lang('order_date')); ?></th>
                 <th><?php echo strtoupper(lang('price')); ?></th>
                 <th><?php echo strtoupper(lang('payment_method')); ?></th>
-								<th></th>
+								<th>DETALLE</th>
               </tr>
             </thead>
             <tbody>
@@ -45,12 +45,12 @@ $this->load->view('navigation_menu');
         <div style="display:block;text-align:right;padding-right:15px;">
         <style>
           ul.pagination li.active a{
-            background:#8DC73F;
+            background:#c49e56;
             color:white;
             border-color:#ddd;
           }
           ul.pagination li:hover a{
-            background:#8DC73F !important;
+            background:#c49e56 !important;
             color:white !important;
             border-color:#ddd !important;
           }

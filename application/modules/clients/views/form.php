@@ -75,13 +75,14 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('email');?></label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'email', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('email'), $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>'email', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('email'), $readonly=>true, 'autocomplete'=>false)); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('password');?></label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'password', 'type' => 'password', 'class'=>'form-control', 'value'=>$password, $readonly=>true)); ?>
+						<?php echo form_input(array('name'=>'password', 'type' => 'password', 'class'=>'form-control', 'value'=>$password, $readonly=>true, 'autocomplete'=>false )); ?>
+						<span style="position: relative; cursor: pointer; float: right; top: -22px; left: -5px;" class="glyphicon showpassword glyphicon-eye-open"></span>
 					</div>
 				</div>
 				<div class="form-group">
@@ -207,5 +208,16 @@ $(document).ready(function(){
 			// Attach options that needs to be displayed for the selected value.
 			options.clone().filter(".business_"+value).appendTo(conditionalSelect);
 	}).trigger("change");
+	$('.showpassword').click(function(){
+		if ($(this).hasClass('glyphicon-eye-open')){
+			$(this).parent().find('input').attr('type','text');
+			$(this).removeClass('glyphicon-eye-open');
+			$(this).addClass('glyphicon-eye-close');
+		} else {
+			$(this).parent().find('input').attr('type','password');
+			$(this).removeClass('glyphicon-eye-close');
+			$(this).addClass('glyphicon-eye-open');
+		}
+	});
 })
 </script>

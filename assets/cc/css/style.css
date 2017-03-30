@@ -328,15 +328,18 @@ button.btn a {
 }
 
 thead {
-  background-color: #fff;
+  background-color: #414042;
+  color:#fff;
 }
 
 .table-striped>tbody>tr:nth-of-type(odd) {
-  background-color: #F9F4EE;
+  /*background-color: #F9F4EE;*/
+  background-color: #F8F8F8;
 }
 
 .table-striped>tbody>tr:nth-of-type(even) {
-  background-color: #FCF8F5;
+  /*background-color: #FCF8F5;*/
+  background-color: #F0F0F0;
 }
 
 tr {

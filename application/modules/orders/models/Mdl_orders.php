@@ -417,8 +417,16 @@ class Mdl_orders extends Response_Model {
 										->or_like('orders.reference_no',$search)
 										->group_end();
 		}
-		$row = $this->mdl_orders->select('count(*) as count')->group_by('reference_no')->get()->row_array();
+		$row = $this->mdl_orders->select('count(*) as count')->get()->row_array();
 		return $row['count'];
+	}
+
+	function get_count_of_orders_pagination($condition){
+		if ($condition) {
+			$this->mdl_orders = $this->mdl_orders->where($condition);	
+		}
+		$count = $this->mdl_orders->select('count(*) as count')->group_by('reference_no')->get()->num_rows();
+		return $count;
 	}
 
 
