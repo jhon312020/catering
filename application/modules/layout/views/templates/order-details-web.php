@@ -54,6 +54,7 @@
     </tbody>
   </table>
   <div id="order_total">
+  <a href="<?php echo site_url(PAGE_LANGUAGE.'/orders/'); ?>" class="btn btn-menu pull-left" role="button"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> VOLVER</a>
     <h3>Total : <span><?php echo number_format($total_price,2); ?> &euro;</span><br/>
     </h3>
   </div>

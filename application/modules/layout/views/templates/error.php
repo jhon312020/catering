@@ -12,7 +12,7 @@ $this->load->view('navigation_menu');
               <div id="ribbon-container">
                 <a href="javascript:;" id="ribbon"><?php echo strtoupper(lang('payment_error')); ?></a>
               </div>
-              <div class="alert alert-danger">Your Payment transaction has been canceled.</div>
+              <div class="alert alert-danger">Debido a un problema con el pago del banco, su pedido no ha sido procesado correctamente. Por favor inténtelo de nuevo en unos minutos.</div>
                   <a href="<?php echo base_url() . '/es/menus' ?>" >Return to menus</a>
             </div>
           </div>

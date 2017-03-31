@@ -326,8 +326,12 @@ button.btn a {
   position: absolute;
   top: 9px;
 }
-
 thead {
+  background-color: #fff;
+}
+
+
+.table-striped thead {
   background-color: #414042;
   color:#fff;
 }
