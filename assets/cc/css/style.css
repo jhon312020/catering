@@ -382,6 +382,70 @@ td:nth-child(2), th:nth-child(2) {
   text-align: right;
 }
 
+.menuItemsRow {
+	padding: 2%;
+}
+
+.menuFooterRow {
+	height: 50px;
+	background-color: #f0f0f0;
+	margin-top: 4%;
+	line-height: 50px;
+}
+
+.footerNote {
+	float: left;
+	padding-left: 2%;
+}
+
+.footerCompletion {
+	float: right;
+	padding-right: 2%;
+	font-size: 20px;
+	height: 50px;
+}
+.footerCompletion>.custom-checkbox {
+	margin-top: 16.5px;
+	float:right;
+}
+
+.plusSignDiv {
+	width: 4.1666667%;
+}
+
+.menuItemDiv {
+	padding: 0 !important;
+	background-color: #ffffff;
+}
+
+.menuItemDiv .menuItemCategoryName {
+	text-align: left;
+	padding-left: 10px;
+	padding-top: 10px;
+	font-size: 14px;
+	width: 80%;
+	float: left;
+}
+
+.menuItemDiv .menuItemName {
+	text-align: left;
+	font-style: normal;
+	padding-left: 10px;
+	font-size: 18px;
+	padding-bottom: 10px;
+	width: 80%;
+	float: left;
+}
+
+.noCheck>.menuItemCategoryName, .noCheck>.menuItemName {
+	width: 100%;
+}
+
+.checkboxDiv {
+	float: right;
+	width: 20%;
+}
+
 .menuhead p {
   text-align: left;
 }
@@ -544,8 +608,8 @@ div.top-content {
 }
 
 .menu-img {
-  width: 150px;
-  height: 100px;
+  width: 200px;
+  height: 80px;
 }
 
 .img-plus {
@@ -711,27 +775,90 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 @media (min-width: 992px) and (max-width: 1199px) {
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
-  .sencer_fix {
-    padding-left: 40px !important;
-    text-align: center;
-  }
-}
+@media (max-width: 992px) {
+	.sencer_fix {
+		padding-left: 40px !important;
+		text-align: center;
+	}
+	
+	.menu-img {
+		width: 100%;
+		height: 200px;
+	}
+	.plusSignDiv {
+		display: none;
+	}
+	
+	.menuItemsRow {
+		padding: 0;
+	}
+	
+	.menuItemDiv {
+		border-bottom: 2px #303030 solid;
+		background-color: #f0f0f0;
+		height: 300px;
+	}
+	
+	.sectionForMobile {
+		background-color: #f0f0f0;
+	}
+	
+	.menuItemDiv .menuItemCategoryName {
+		height: 50px;
+		line-height: 50px;
+	}
+	.menuItemDiv .menuItemName {
+		height: 50px;
+	}
+	.checkboxDiv {
+		
+	}
+	.checkboxDiv .box {
+		width: 34px;
+		height: 34px;
+		background-color: #f0f0f0;
+	}
+	.custom-checkbox input {
+		width: 32px;
+		height: 32px;
+	}
+	.custom-checkbox>.box>.tick {
+		left: 4px;
+		top: 8px;
+		width: 22px;
+		height: 10px;
+	}
+	
+	.menuFooterRow {
+		height: 50px;
+		background-color: #f0f0f0;
+		margin-top: 4%;
+		line-height: 50px;
+		text-align: center;
+	}
 
-@media (min-width: 768px) and (max-width: 1199px) {
-  .menu-plus {
-    right: 0px !important;
-  }
-}
+	.footerNote {
+		float: none !important;
+		text-align: center;
+	}
 
-@media (min-width: 920px) and (max-width: 992px) {
-  .container {
-    width: 900px;
-  }
-}
-
-@media (min-width: 768px) {
-  .respo_cart {
+	.footerCompletion {
+		float: none;
+		padding-right: 2%;
+		font-size: 20px;
+		height: 50px;
+		margin: auto;
+	}
+	
+	.footerCompletion span {
+		float: none;
+	}
+	.footerCompletion>.custom-checkbox {
+		margin-top: 16.5px;
+		float:right;
+	}
+	
+	.respo_cart {
     display: none;
   }
 
@@ -775,7 +902,9 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 		bottom: 0px !important;
 		/*padding-left: 35%;*/
 	}
+	
 }
+
 
 @media (max-width: 768px) {
 	
