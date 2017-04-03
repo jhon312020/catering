@@ -70,6 +70,9 @@ $buttonDisabled = '';
 						   <a href="javascript:;" id="ribbon"> <?php echo lang(strtolower($menu_type)); ?></a>
 						</div>
 						<!--Old code cut out here-->
+						<div class="mobile-ribbon col-md-2" id="ribbon-container<?php echo $headerClass; ?>">
+							<a href="javascript:;" id="ribbon"> <?php echo lang(strtolower($menu_type)); ?></a>		
+						</div>
 						<div class="menuItemsRow">
 							<div class="col-md-2 menuItemDiv noCheck">
 								<img class="img-responsive menu-img" src="http://localhost:8888/assets/cc/images/plats/imagen-ensalada2.jpg" />
@@ -143,16 +146,16 @@ $buttonDisabled = '';
 							</div>
 						</div>
 						
-						<div class="menuFooterRow">
+						<div class="col-md-6 footerNote">
 							<span class="footerNote">*Aceite, vinagre, pan y cubiertos incluidos en todos los menús</span>
-							<span class="footerCompletion">
+						</div>
+						<div class="col-md-6 footerCompletion">
 								<span>MENÚ COMPLETO &nbsp;</span>
 								<span class="custom-checkbox">
 									<span class="box">
 										<input type="checkbox" data-order-key="N" class="jsSelectOrder" name="select_order[755]"><span class="tick"></span>
 									</span>
 								</span>
-							</span>
 						</div>
 						
 						

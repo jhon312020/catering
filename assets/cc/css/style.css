@@ -387,8 +387,8 @@ td:nth-child(2), th:nth-child(2) {
 }
 
 .menuFooterRow {
-	height: 50px;
 	background-color: #f0f0f0;
+	height: 50px;
 	margin-top: 4%;
 	line-height: 50px;
 }
@@ -396,6 +396,7 @@ td:nth-child(2), th:nth-child(2) {
 .footerNote {
 	float: left;
 	padding-left: 2%;
+	line-height: 50px;
 }
 
 .footerCompletion {
@@ -403,6 +404,8 @@ td:nth-child(2), th:nth-child(2) {
 	padding-right: 2%;
 	font-size: 20px;
 	height: 50px;
+	text-align: right;
+	line-height: 50px;
 }
 .footerCompletion>.custom-checkbox {
 	margin-top: 16.5px;
@@ -830,32 +833,50 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 	}
 	
 	.menuFooterRow {
-		height: 50px;
+		height: 100px;
 		background-color: #f0f0f0;
 		margin-top: 4%;
 		line-height: 50px;
 		text-align: center;
 	}
+	
+	.menuLineBreak {
+		display: block;
+	}
 
 	.footerNote {
 		float: none !important;
 		text-align: center;
+		background-color: #f0f0f0;
 	}
 
 	.footerCompletion {
+		text-align: center;
 		float: none;
 		padding-right: 2%;
 		font-size: 20px;
 		height: 50px;
 		margin: auto;
+		margin-top: 0px;
+		background-color: #f0f0f0;
 	}
 	
-	.footerCompletion span {
-		float: none;
-	}
 	.footerCompletion>.custom-checkbox {
-		margin-top: 16.5px;
-		float:right;
+		right: 30px;
+		bottom: 10px;
+		float: right;
+		
+	}
+	
+	.footerCompletion .box {
+		width: 34px;
+		height: 34px;
+		background-color: #f0f0f0;
+	}
+	
+	.footerCompletion>.custom-checkbox input {
+		width: 32px;
+		height: 32px;
 	}
 	
 	.respo_cart {
@@ -863,10 +884,7 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
   }
 
   .ribbon-fix {
-    margin-top: -20px;
-	/*width: 30% !important;*/
-    text-align: left;
-    left: -45px !important;
+	  display: none;
   }
 
   .menu-plus {
