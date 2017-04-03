@@ -382,6 +382,14 @@ td:nth-child(2), th:nth-child(2) {
   text-align: right;
 }
 
+#ribbon-container, #ribbon-container-green {
+	top: -20px;
+}
+
+.mobile-ribbon {
+	display: none;
+}
+
 .menuItemsRow {
 	padding: 2%;
 }
@@ -779,6 +787,19 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 }
 
 @media (max-width: 992px) {
+	.mobile-ribbon {
+		display: block;
+		height: 40px;
+		background-color: #414042;
+		line-height: 40px;
+		font-size: 18px;
+		color: #ffffff;
+	}
+	
+	.mobile-ribbon a {
+		color: #ffffff;
+	}
+	
 	.sencer_fix {
 		padding-left: 40px !important;
 		text-align: center;
@@ -960,10 +981,6 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
     text-align: center;
   }
 
-  #ribbon-container, #ribbon-container-green {
-    top: -20px;
-  }
-
   button.btn {
     padding: 0% 10%;
   }
@@ -1037,12 +1054,7 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
     text-align: center;
   }
 
-  .ribbon-fix {
-    margin-top: -20px;
-    text-align: left;
-    left: -45px !important;
-  }
-
+  
   .menu-plus {
     font-size: 30px;
     color: #c49e56;

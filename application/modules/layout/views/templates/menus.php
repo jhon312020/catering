@@ -70,7 +70,7 @@ $buttonDisabled = '';
 						   <a href="javascript:;" id="ribbon"> <?php echo lang(strtolower($menu_type)); ?></a>
 						</div>
 						<!--Old code cut out here-->
-						<div class="mobile-ribbon col-md-2" id="ribbon-container<?php echo $headerClass; ?>">
+						<div class="mobile-ribbon col-md-2" id="">
 							<a href="javascript:;" id="ribbon"> <?php echo lang(strtolower($menu_type)); ?></a>		
 						</div>
 						<div class="menuItemsRow">
