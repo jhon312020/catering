@@ -70,7 +70,7 @@ class Clients extends Admin_Controller {
 					<a class='btn btn-primary edit btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-pencil'></i></a>
 					<a class='btn btn-warning btn-sm%s' style='margin-right:4px;' href='%s'><i class='entypo-check' title='%s'></i></a>
 					<a class='btn btn-warning btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-cancel' title=''></i></a>
-					<a class='btn btn-danger btn-sm' style='margin-right:4px;' href='%s' onclick='return confirm('%s');'><i class='entypo-trash'></i></a>", 
+					<a class='btn btn-danger btn-sm' style='margin-right:4px;' href='%s' onclick='return confirm(\"%s\");'><i class='entypo-trash'></i></a>", 
 					site_url('admin/clients/view/' . $value['id']), 
 					site_url('admin/clients/form/' . $value['id']),
 					$value['is_active'] ? '' : ' inactive', 
@@ -88,7 +88,7 @@ class Clients extends Admin_Controller {
 				$editFieldHtml = sprintf("<a class='btn btn-info btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-eye'></i></a>
 					<a class='btn btn-primary edit btn-sm' style='margin-right:4px;' href='%s'><i class='entypo-pencil'></i></a>
 					<a class='btn btn-warning btn-sm%s' style='margin-right:4px;' href='%s'><i class='entypo-check' title='%s'></i></a>
-					<a class='btn btn-danger btn-sm' style='margin-right:4px;' href='%s' onclick='return confirm('%s');'><i class='entypo-trash'></i></a>", 
+					<a class='btn btn-danger btn-sm' style='margin-right:4px;' href='%s' onclick='return confirm(\"%s\");'><i class='entypo-trash'></i></a>", 
 					site_url('admin/clients/view/' . $value['id']), 
 					site_url('admin/clients/form/' . $value['id']),
 					$value['is_active'] ? '' : ' inactive', 
@@ -143,6 +143,8 @@ class Clients extends Admin_Controller {
 			$data['password_key'] = base64_encode($password.'_catering');
 			unset($data['btn_submit']);
 			if(is_null($id) || $id == ''){
+        //Reason to find again is suppose anyother user registered in front-end
+        $data['client_code'] = $this->mdl_clients->getNextIncrementCode()+1;
 				$id = $this->mdl_clients->save(null, $data);
 			}
 			else{
@@ -155,14 +157,18 @@ class Clients extends Admin_Controller {
 		if ($id and !$this->input->post('btn_submit')) {
 			$this->mdl_clients->prep_form($id);
 		}
+    if ($id == NULL) {
+      $client_code = $this->mdl_clients->getNextIncrementCode() + 1;
+    }
 		$this->load->model('tarifes/mdl_tarifes');
 		$data = array();
 		$tarifa_list = $this->mdl_tarifes->get_tarifa_list();
 		$orders_by_client_id = $this->mdl_orders->get_orders_by_client_id($id);
 		
 		//$clientCode = 'GC-CL-' . sprintf("%04s", $this->mdl_clients->getNextIncrementId());
+    
 
-		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'orders_by_client_id' => $orders_by_client_id, 'tarifa_list'=>$tarifa_list));
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'orders_by_client_id' => $orders_by_client_id, 'tarifa_list'=>$tarifa_list, 'client_code'=>$client_code));
 		$this->layout->buffer('content', 'clients/form');
 		$this->layout->render();
 	}

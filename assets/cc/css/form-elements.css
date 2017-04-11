@@ -54,7 +54,7 @@ input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-i
 textarea::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder { color: #888; }
 
 
-a.btn, button.btn {
+a.cus-button, button.btn {
 	height: 40px;
     /*margin: 0;*/
     padding: 0% 20%;
@@ -71,22 +71,26 @@ a.btn, button.btn {
     -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
 }
-a.btn {
+a.cus-button {
   padding: 0% 2%;
+  height: 30px !important;
 }
 
-a.btn:hover,button.btn:hover { opacity: 0.6; color: #fff; }
+a.cus-button:hover,button.btn:hover { opacity: 0.6; color: #fff; }
 
-a.btn:active ,button.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+a.cus-button:active ,button.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 
-a.btn:focus, button.btn:focus { outline: 0; opacity: 0.6; background: #c49e56; color: #fff; }
+a.cus-button:focus, button.btn:focus { outline: 0; opacity: 0.6; background: #c49e56; color: #fff; }
 
-a.btn:active:focus, button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #c49e56; color: #fff; }
+a.cus-button:active:focus, button.btn:active:focus { outline: 0; opacity: 0.6; background: #c49e56; color: #fff; }
 .form-control{
     border-radius: 0px;
 }
 .btn{
     border-radius: 0px;
+}
+button.multiselect {
+  line-height: 0px !important;
 }
 input[type="checkbox1"]{
     vertical-align: middle;
@@ -96,7 +100,7 @@ input[type="checkbox1"]{
 .form-group label{
     font-weight: 400;
 }
-#ribbon-container, #ribbon-container-green {
+#ribbon-container-menus, #ribbon-container-menus-green, #ribbon-container, #ribbon-container-green {
     position: absolute;
     top: 0px;
     left: -30px;
@@ -131,7 +135,7 @@ input[type="checkbox1"]{
     right:3px;
 }*/
 
-#ribbon-container a, #ribbon-container-green a {
+#ribbon-container-menus a, #ribbon-container-menus-green a, #ribbon-container a, #ribbon-container-green a {
     display:block;
     padding:10px 40px;
     position:relative; /* allows us to position our pseudo-elements properly */
@@ -144,7 +148,7 @@ input[type="checkbox1"]{
 	text-align:left;
 }
 
-#ribbon-container a:after, #ribbon-container-green a:after { /* this creates the "folded" part of our ribbon */
+#ribbon-container-menus a:after, #ribbon-container-menus-green a:after, #ribbon-container a:after, #ribbon-container-green a:after { /* this creates the "folded" part of our ribbon */
     content:""; 
     height: 0;
     width: 0;
@@ -190,15 +194,16 @@ input[type="checkbox1"]{
 }
 .custom-checkbox {
   position: relative;
-  display: block;
+  display: inline-block;
 }
 
 .custom-checkbox > .box {
   position: relative;
   display: block;
-  width: 17px;
-  height: 17px;
-  border: 2px solid #c49e56;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #c49e56;
   background-color: #fff;
   border-radius: 0px;
 }
@@ -215,12 +220,12 @@ input[type="checkbox1"]{
 
 .custom-checkbox > .box > .tick {
   position: absolute;
-  left: 1px;
+  left: 2px;
   top: 3px;
-  width: 11px;
-  height: 5px;
-  border-bottom: 2px solid #c49e56;
-  border-left: 2px solid #c49e56;
+  width: 12px;
+  height: 6px;
+  border-bottom: 3px solid #c49e56;
+  border-left: 3px solid #c49e56;
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
@@ -290,26 +295,31 @@ input[type="checkbox1"]{
 button.multiselect{
 	padding:8px;
 	background-color: #fff;
-    color: #787878;
-    border: 1px solid #ba9551;
+  color: #707070;
+  border: 1px solid #ba9551;
+  font-size: 14px;
 }
 button.multiselect:hover{
 	background-color: #fff;
     border-color:#ba9551;
-	color: #787878;
+	color: #707070;
 }
 button.multiselect:active{
 	background-color: #fff;
     border-color:#ba9551;
-	color: #787878;
+	color: #707070;
 }
 button.multiselect:focus{
 	background-color: #fff;
-    border-color:#ba9551;
-	color: #787878;
+  border-color:#ba9551;
+	color: #707070;
 }
 button.multiselect:active:focus, button.multiselect.active:focus{
 	background-color: #fff;
     border-color:#ba9551;
-	color: #787878;
+	color: #707070;
+}
+.caret {
+  border-width: 8px;
+  margin-left: 45px !important;
 }

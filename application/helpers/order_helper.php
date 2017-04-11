@@ -12,10 +12,10 @@ function findOrderMenuType($order_code) {
     case 1:
       switch ($order_code[0]) {
         case 'N':
-          $menu_type = lang('basic_menu');
+          $menu_type = lang('c_basic_menu');
           break;
         case 'R':
-          $menu_type = lang('diet_menu');
+          $menu_type = lang('c_diet_menu');
           break;
         default:
           $menu_type = lang('medio_menu');

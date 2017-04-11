@@ -39,6 +39,7 @@ $(document).ready(function() {
 						if(result.menu_ids) {
 							$.each(result.order_ids, function(index, id){
 								$('tr.order_'+id).remove();
+								$('div.order_'+id).remove();
 								$total_price = parseFloat($total_price) - parseFloat($price_with_menu_id[id]);
 							});
 							var $count = $('.paymentTable tbody tr').length;
@@ -64,6 +65,8 @@ $(document).ready(function() {
 		loadAndSave.deleteRecord(formData, url).then(function(result){
 			if(result.success) {
 				$deleteTr.remove();
+				$('tr.order_'+order_id).remove();
+				$('div.order_'+order_id).remove();
 				$total_price = parseFloat($total_price) - parseFloat($price_with_menu_id[order_id]);
 				var $count = $('.paymentTable tbody tr').length;
 				$('.jsTotalCart').text($count);

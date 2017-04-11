@@ -1,6 +1,17 @@
 <?php
 $this->load->view('header');
 $this->load->view('navigation_menu');
+$total_price = 0.00;
+$bool = false;
+$price_with_menu_id = [];
+// running the loop for getting the total_price and price for each menu
+if($todaySelectedMenus) {
+  $bool = true;
+  foreach($todaySelectedMenus as $menu) {
+    $price_with_menu_id[$menu['id']] = $menu['price'];
+    $total_price += $menu['Total'];
+  }
+}
 ?>
 <style>
   td:nth-child(2), th:nth-child(2) {
@@ -20,59 +31,12 @@ $this->load->view('navigation_menu');
       <div class="row">
         <h3 class="head_2"><?php echo lang('orders'); ?> (<span id="order_count"><?php echo count($todaySelectedMenus); ?></span>)</h3>
         <div class="col-sm-9 fix-left-right">
-          <table class="table table-striped paymentTable">
-            <thead>
-              <tr>
-								<th><?php echo strtoupper(lang('menu')); ?></th>
-                <th><?php echo strtoupper(lang('day')); ?></th>
-                <th><?php echo strtoupper(lang('price')); ?></th>
-                <th><?php //echo lang('action'); ?></th>              
-							</tr>
-            </thead>
-            <tbody>
-							<?php
-							$total_price = 0;
-							$bool = false;
-							$price_with_menu_id = [];
-             	if($todaySelectedMenus) {
-								$bool = true;
-								foreach($todaySelectedMenus as $menu) {
-                  $price_with_menu_id[$menu['id']] = $menu['price'];
-                  $total_price += $menu['Total'];
-							?>
-							<tr class="order_<?php echo $menu['id']; ?>">
-                <td style="text-align:left">
-									<p><b>
-                    <?php 
-                      $order_detail = json_decode($menu['order_detail'],true);
-                      $order_code = $order_detail['order_code'];
-                      /*unset($order_detail['order_code']);
-                      $order_detail = array_values($order_detail);*/
-                      $menu_type = findOrderMenuType($order_code);
-                      echo $menu_type;
-                    ?>
-                  </b></p>
-                  <?php
-                    $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
-                    echo '- '.implode('<br/> - ', $description);
-									?><br/>- pan, aceite, vinagre y Cubiertos
-                </td>
-                <td><?php echo date('d/m/Y', strtotime($menu['order_date'])); ?></td>
-                <td><?php echo number_format($menu['Total'], 2); ?> &euro;</td>
-                <td>
-									<a href="javascript:;" class="removeOrder" data-id="<?php echo $menu['id']; ?>">
-										<i class="fa fa-trash fa-2x eyecon"></i>
-									</a>
-								</td>
-              </tr>
-							<?php
-								}
-							}
-							?>
-            </tbody>
-          </table>
+          <?php 
+            echo $this->load->view('payment-web', array('total_price'=>$total_price));
+            echo $this->load->view('payment-mobile', array('total_price'=>$total_price));
+          ?>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3 col-xs-12">
           <div class="form-bottom">
             <p id='server_error_response' class="error">
               <br> 
@@ -136,7 +100,7 @@ $this->load->view('navigation_menu');
                 </div>
               </div>
 
-              <div class="row payrow">
+              <div class="row">
                 <div class="col-sm-12">
                   <span class="error" id="jsPaymentType">Por favor, seleccionar un tipo pagar</span>
                 </div>
@@ -144,7 +108,7 @@ $this->load->view('navigation_menu');
             </div>
             <div class="paysection-3">
               <div class="row">
-                <div class="col-xs-12 col-xs-offset-2 col-sm-12 col-sm-offset-0 paysection3text">
+                <div class="col-xs-12 col-sm-12 col-sm-offset-0 paysection3text">
                   <input type="checkbox" name="accept" id="accept" value="1"> <a href="<?php echo site_url(PAGE_LANGUAGE); ?>/terms" class="btn-link" target="_blank"> Accepto los terminos y condiciones</a>
                     <span class="error" id="jsAcceptTerms">Por favor, acepte para poder continuar.</span>
                 </div>

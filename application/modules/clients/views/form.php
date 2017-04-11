@@ -28,7 +28,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('client_code');?> </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'client_code', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('client_code')? $this->mdl_clients->form_value('client_code') : (isset($client_code) ? $client_code : ''), 'readonly'=>true)); ?>
+						<?php echo form_input(array('name'=>'client_code', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('client_code')? $this->mdl_clients->form_value('client_code') : (isset($client_code) ? $client_code : ''))); ?>
 					</div>
 				</div>
 				<div class="form-group">

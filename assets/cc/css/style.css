@@ -136,7 +136,8 @@ button.btn a {
 /***** Top content *****/
 
 .inner-bg {
-  padding: 35px 0 40px 0;
+  /*padding: 35px 0 40px 0;*/
+  padding: 0px 0 40px 0;
 }
 
 .page-height {
@@ -383,7 +384,13 @@ td:nth-child(2), th:nth-child(2) {
 }
 
 #ribbon-container, #ribbon-container-green {
-	top: -20px;
+	/*top: -20px;*/
+  left: -30px;
+}
+
+#ribbon-container-menus, #ribbon-container-menus-green {
+  top: -20px;
+  left: -45px;
 }
 
 .mobile-ribbon {
@@ -391,7 +398,7 @@ td:nth-child(2), th:nth-child(2) {
 }
 
 .menuItemsRow {
-	padding: 2%;
+	padding: 3%;
 }
 
 .menuFooterRow {
@@ -403,17 +410,23 @@ td:nth-child(2), th:nth-child(2) {
 
 .footerNote {
 	float: left;
-	padding-left: 2%;
+	padding-left: 3%;
 	line-height: 50px;
+  background-color: #E8E8E8;
+  text-align: left;
+  margin-top: 20px;
 }
 
 .footerCompletion {
 	float: right;
-	padding-right: 2%;
+	padding-right: 3%;
 	font-size: 20px;
 	height: 50px;
 	text-align: right;
 	line-height: 50px;
+  margin-top: 20px;
+  background-color: #E8E8E8;
+}
 }
 .footerCompletion>.custom-checkbox {
 	margin-top: 16.5px;
@@ -436,16 +449,21 @@ td:nth-child(2), th:nth-child(2) {
 	font-size: 14px;
 	width: 80%;
 	float: left;
+  color: #a8a8a8;
+  margin-bottom: 5px;
 }
 
 .menuItemDiv .menuItemName {
 	text-align: left;
 	font-style: normal;
 	padding-left: 10px;
-	font-size: 18px;
+	font-size: 14px;
 	padding-bottom: 10px;
 	width: 80%;
 	float: left;
+  font-weight: normal !important;
+  color: #707070;
+  line-height: normal;
 }
 
 .noCheck>.menuItemCategoryName, .noCheck>.menuItemName {
@@ -454,7 +472,7 @@ td:nth-child(2), th:nth-child(2) {
 
 .checkboxDiv {
 	float: right;
-	width: 20%;
+	width: 16%;
 }
 
 .menuhead p {
@@ -548,13 +566,14 @@ td:nth-child(2), th:nth-child(2) {
 
 .paysection-3 {
   margin-top: 21px;
-  border-top: 1px #f7f7f7 solid;
+  border-top: 1px #d3d3d3 solid;
 }
 
 .paysection3text {
   font-size: 13px;
   padding-left: 20px;
   padding-top: 10px;
+  text-align: center;
 }
 
 .paytotalh2 {
@@ -620,7 +639,7 @@ div.top-content {
 
 .menu-img {
   width: 200px;
-  height: 80px;
+  /*height: 80px;*/
 }
 
 .img-plus {
@@ -720,8 +739,10 @@ html,body {
 }
 
 button.multiselect {
-  width: 150px;
+  /*width: auto;*/
+  width: 132px;
   overflow-x: hidden;
+  height: 30px !important;
 }
 
 #wrapper {
@@ -758,6 +779,12 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 }
 .dishCheckbox {
   padding-top: 10px;
+}
+.dropdown-menu {
+  min-width: 130px;
+}
+.datepicker table {
+  width: 250px;
 }
 /***** Media queries *****/
 @media (min-width: 1199px) {
@@ -869,24 +896,26 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 		float: none !important;
 		text-align: center;
 		background-color: #f0f0f0;
+    line-height: normal;
+    padding-top:10px;
+    margin-top: 0px;
 	}
 
 	.footerCompletion {
 		text-align: center;
 		float: none;
-		padding-right: 2%;
+		padding-right: 3%;
 		font-size: 20px;
 		height: 50px;
 		margin: auto;
-		margin-top: 0px;
 		background-color: #f0f0f0;
 	}
 	
 	.footerCompletion>.custom-checkbox {
-		right: 30px;
+		/*right: 30px;
 		bottom: 10px;
-		float: right;
-		
+		float: right;*/
+		top: 5px;
 	}
 	
 	.footerCompletion .box {
@@ -903,13 +932,17 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 	.respo_cart {
     display: none;
   }
+  .basketitems {
+    top: 175%;
+    left: 140%;
+  }
 
   .ribbon-fix {
 	  display: none;
   }
 
   .menu-plus {
-    font-size: 30px;
+    font-size: 30px !important;
     color: #c49e56;
     position: absolute;
     top: 0px;
@@ -1038,8 +1071,11 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 
   .respo_cart {
     display: block;
-    right: 20px;
+    right: 30px;
     top: 25px;
+  }
+  .respo_cart_count {
+    display: block;
   }
 
   .desk_cart {
@@ -1056,7 +1092,7 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 
   
   .menu-plus {
-    font-size: 30px;
+    font-size: 30px !important;
     color: #c49e56;
     position: absolute;
     bottom: -35px;
@@ -1093,6 +1129,10 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
   div.top-content {
     padding-bottom: 120px !important;
   }
+  .basketitems {
+    top: 65%;
+    left: 95%;
+  }
 }
 
 @media all and (orientation:portrait) {
@@ -1111,6 +1151,9 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
   div.top-content {
     padding-bottom: 180px !important;
   }
+  #ribbon-container, #ribbon-container-green {
+    top: -20px;
+  }
 }
 
 @media (max-width: 449px) {
@@ -1120,12 +1163,19 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 	.mob-show {
 		display:block; !important;
 	}
+  .basketitems {
+    top: 65%;
+    left: 92%;
+  }
   h1, h2 {
     font-size: 32px;
   }
 
   div.top-content {
     padding-bottom: 220px !important;
+  }
+  #ribbon-container, #ribbon-container-green {
+    top: -20px;
   }
 }
 
@@ -1154,5 +1204,8 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 
   .navbar-header {
     width: 100%;
+  }
+  #ribbon-container, #ribbon-container-green {
+    top: -20px;
   }
 }

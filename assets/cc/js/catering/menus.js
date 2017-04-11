@@ -16,6 +16,27 @@ $(document).ready(function() {
 	$(document).on('click', '.button-datepicker', function(){
 		$('.datepicker12').datepicker('show');
 	})
+	$('.datepicker-mob').datepicker({
+		format:'dd-mm-yyyy',
+		autoclose:true,
+		startDate:new Date(),
+		daysOfWeekDisabled: [0, 6],
+		weekStart:1,
+		beforeShowDay:function(dt) {
+			return isAvailableDates(dt);
+		}
+	}).on('show', function(e) {
+			$('.datepicker-dropdown').css({top:$('.button-datepicker-mob').offset().top + $('.button-datepicker-mob').height(), left:$('.button-datepicker-mob').offset().left})
+	}).on('changeDate', function(e) {
+			$('.datepicker12').val($('.datepicker-mob').val());
+			$('#menuListform').submit();
+	});
+	$(document).on('click', '.button-datepicker', function(){
+		$('.datepicker12').datepicker('show');
+	})
+	$(document).on('click', '.button-datepicker-mob', function(){
+		$('.datepicker-mob').datepicker('show');
+	})
 
 	var $menus_total = 0;
 	var $cool_drinks_selected = {};
@@ -24,7 +45,7 @@ $(document).ready(function() {
 		includeSelectAllOption: false,
 		enableFiltering: false,
 		// numberDisplayed: 0,
-		nonSelectedText: 'Seleccionar Bebida',
+		nonSelectedText: 'Bebida',
 		onChange: function(option, checked, select) {
 			var $mainDiv = $(option).closest('.jsSubMenu');
 			var $menu_id = $mainDiv.find('.jsSelectMenu').attr('name').replace ( /[^\d.]/g, '' );

@@ -192,7 +192,7 @@ class Orders extends Admin_Controller {
 			$data[] = str_replace(',','',$order->order_code);
 			$data[] = getDrinksInformation($order, $drinks_list);
 			$actionHtml = sprintf('<a class="btn btn-info btn-sm" href="%s"><i class="entypo-eye"></i></a>',site_url('admin/orders/view/' . $order->id));
-			$actionHtml .= sprintf('<a class="btn btn-danger btn-sm" href="%s" onclick="return confirm('.lang("delete_record_warning").');" ><i class="entypo-trash"></i></a>',site_url('admin/orders/delete/' . $order->id));
+			$actionHtml .= sprintf('<a class="btn btn-danger btn-sm" href="%s" onclick="return confirm(\''.lang("delete_record_warning").'\');" ><i class="entypo-trash"></i></a>',site_url('admin/orders/delete/' . $order->id));
 			$data[] = $actionHtml;
 			$datas[] = $data;
 		}

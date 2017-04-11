@@ -16,8 +16,12 @@
       </button>
       <a class="navbar-brand" href="#"><img src="<?php echo TEMPLATE_PATH; ?>gumen-logo.png" alt="Gumen-Catering">
       </a>
-      <a href="#"><img class="cart-logo respo_cart" src="<?php echo TEMPLATE_PATH; ?>cart-white.png">
-                        </a>
+       <?php $cartImage = ($menu_selected == 'payment') ? 'cart-green.png':'cart-white.png'; ?>
+      <a href="<?php echo site_url(PAGE_LANGUAGE.'/payment');?>"><img class="cart-logo respo_cart mob-show" src="<?php echo TEMPLATE_PATH.$cartImage; ?>">
+       <?php if ($totalCartItems) { ?>
+          <span class="basketitems jsTotalCart respo_cart_count mob-show"><?php echo $totalCartItems; ?></span>
+          <?php } ?>
+      </a>
     </div>
     <div id="navbar3" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">

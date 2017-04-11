@@ -5,6 +5,7 @@
 }
 .align-left {
   text-align: left;
+  padding:0px;
 }
 .pull-right { line-height: inherit; padding-right: 10px; color:#fff; }
 .margin-left {
@@ -44,14 +45,16 @@ p {
             echo '- '.implode('<br/> - ', $description);
             ?>
           <br/>- pan, aceite, vinagre y Cubiertos</p>
-    <p><b class='bold'>Precio: </b><?php echo $order['Total'];?> &euro;</p>
+    <p>
+    <b class='bold'>Precio: </b><?php echo $order['Total'];?> &euro;
+    </p>
  </div>
 <?php
     }}
     ?>
     <div id="order_total">
     <h3 style="text-align: center;"><div style="margin-bottom: 15px;">Total : <?php echo number_format($total_price,2); ?> &euro;</div>
-    <a href="<?php echo site_url(PAGE_LANGUAGE.'/orders/'); ?>" class="btn btn-menu cus-button" role="button"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> VOLVER</a>
+    <a href="<?php echo site_url(PAGE_LANGUAGE.'/menus/'); ?>" class="btn btn-menu cus-button" role="button"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> MENÚS</a>
     </h3>
 
   </div>
