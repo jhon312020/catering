@@ -53,7 +53,7 @@ class Mdl_menus extends Response_Model {
             ),
         );
     }
-		/**
+	/**
    * Function get_menus_by_date
    *
    * @return  Array
@@ -64,12 +64,12 @@ class Mdl_menus extends Response_Model {
 			
 			return $menus_by_date;
 		}
-		/**
+	/**
    * Function get_menu_by_id
    *
    * @return  Array
    * 
-  */
+   */
 		public function get_menu_by_id($id) {
 			$menu_by_id = $this->mdl_menus->where(array('id' => $id))->get()->row();
 			
@@ -97,7 +97,7 @@ class Mdl_menus extends Response_Model {
    *
    * @return  Array
    * 
-  */
+   */
     public function get_available_dates() {
       $menus_by_date = $this->mdl_menus->select('menu_date')->where(array('menu_date >= ' => date('Y-m-d'), 'disabled' => 0))->get()->result_array();
       $dates = [];
@@ -129,7 +129,7 @@ class Mdl_menus extends Response_Model {
    *
    * @return  Bool
    * 
-  */
+   */
   public function update_all_records($records) {
     if ($records) {
       foreach ($records as $record) {
@@ -137,6 +137,20 @@ class Mdl_menus extends Response_Model {
       }
     }
     return true;
+  }
+  /**
+   * Function get_basic_primer_id
+   *
+   * @return  Bool
+   * 
+   */
+  public function get_basic_guarnicio_id($menu_date) {
+    $guarnicio_id = '';
+    $guarnicio_by_date = $this->mdl_menus->select('Guarnicio')->where(array('menu_date = ' => $menu_date, 'Regim'=> 0,'disabled' => 0))->get()->result_array();
+    if ($guarnicio_by_date) {
+      $guarnicio_id = $guarnicio_by_date[0]['Guarnicio'];
+    }
+    return $guarnicio_id;
   }
 
 }
