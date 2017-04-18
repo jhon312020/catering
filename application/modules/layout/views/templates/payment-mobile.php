@@ -50,7 +50,7 @@ p {
  </div>
  <div class="col-x2-12 color order_<?php echo $menu['id']; ?>">
     <p> <?php
-          $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
+          $description = getOrderDescription($order_detail, $plates, $cool_drink_list, $menu['order_date']);
           echo '- '.implode('<br/> - ', $description);
         ?><br/>- pan, aceite, vinagre y Cubiertos</p>
     <p>
