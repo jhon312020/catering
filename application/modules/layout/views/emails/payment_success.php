@@ -77,7 +77,7 @@
                         ?>
                       </b></p>
                       <?php
-                        $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
+                        $description = getOrderDescription($order_detail, $plates, $cool_drink_list, $order['order_date']);
                         echo '- '.implode('<br/> - ', $description);
                       ?>
                       <br/>- pan, aceite, vinagre y Cubiertos

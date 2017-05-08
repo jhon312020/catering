@@ -28,6 +28,7 @@
             <?php 
               $order_detail = json_decode($order['order_detail'],true);
               $order_code = $order_detail['order_code'];
+              //echo '<pre>'; print_r($order); echo '</pre>';
               //unset($order_detail['order_code']);
               //$order_detail = array_values($order_detail);
               $menu_type = findOrderMenuType($order_code);
@@ -36,7 +37,7 @@
             </b>
           </p>
           <?php
-            $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
+            $description = getOrderDescription($order_detail, $plates, $cool_drink_list, $order['order_date']);
             echo '- '.implode('<br/> - ', $description);
             ?>
             <br/>
