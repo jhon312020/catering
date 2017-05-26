@@ -115,4 +115,5 @@ $route['es/logout'] = 'node/logout';
 $route['en'] = 'node/index';
 $route['es'] = 'node/index';
 
-
+$route['en/get_promo_code_detail'] = 'ajax/getPromoCodeDetail';
+$route['es/get_promo_code_detail'] = 'ajax/getPromoCodeDetail';

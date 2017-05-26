@@ -581,6 +581,11 @@ class Node extends Anonymous_Controller {
     $reference_no = $this->input->get('cm');
     $this->mdl_orders->setActive($reference_no);
 
+    $qry = $this->db->where('reference_no', $reference_no)->get('discount_applied');
+    if($qry->num_rows()){
+      $data_array['discount'] = current($qry->result_array());
+    }
+
     $data_array['orders'] = $this->mdl_orders->get_orders_by_ref_no($reference_no);
     $data_array['menu_titles'] = $this->menu_types;
     $data_array['plates'] = $this->mdl_plats->get_plat_list();

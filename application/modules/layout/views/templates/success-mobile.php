@@ -53,9 +53,18 @@ p {
     }}
     ?>
     <div id="order_total">
-    <h3 style="text-align: center;"><div style="margin-bottom: 15px;">Total : <?php echo number_format($total_price,2); ?> &euro;</div>
-    <a href="<?php echo site_url(PAGE_LANGUAGE.'/menus/'); ?>" class="btn btn-menu cus-button" role="button"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> MENÚS</a>
-    </h3>
+    <?php if (isset($discount) && $discount) { ?>
+      <h3><div style="margin-bottom: 15px;">
+      Discount : -<?php echo $discount['discount']; ?> &euro;<br/>
+      Total : <?php echo $discount['total_price']; ?> &euro;</div>
+       <a href="<?php echo site_url(PAGE_LANGUAGE.'/menus/'); ?>" class="btn btn-menu cus-button" role="button"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> MENÚS</a>
+      </h3>
+    <?php } else { ?>
+      <h3 style="text-align: center;"><div style="margin-bottom: 15px;">Total : <?php echo number_format($total_price,2); ?> &euro;</div>
+      <a href="<?php echo site_url(PAGE_LANGUAGE.'/menus/'); ?>" class="btn btn-menu cus-button" role="button"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> MENÚS</a>
+      </h3>
+    <?php } ?>
+    
 
   </div>
 </div>

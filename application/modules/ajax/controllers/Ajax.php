@@ -14,6 +14,7 @@ class Ajax extends Anonymous_Controller {
     parent::__construct();
 		$this->load->model('orders/mdl_orders');
 		$this->load->model('clients/mdl_clients');
+		$this->load->model('promotional_codes/mdl_promotional_codes');
   }
   /**
    * Function bankPaymentProcess
@@ -45,12 +46,17 @@ class Ajax extends Anonymous_Controller {
 				default:
 					echo json_encode(array('success' => false, 'msg' => 'Invalid order data'));
 			}
-			$result = $this->mdl_orders->check_today_menus_insert($payment_type);
+			$discount = $this->input->post('discount');
+			$result = $this->mdl_orders->check_today_menus_insert($payment_type,$discount);
 			if(!$result['success']) {
 				echo json_encode($result); exit;
 			}
 			if ($payment_type == 'TPV Online') {
-				echo $this->bankPaymentProcess($result);
+				if ($discount && $result['order_data']['total_price'] == 0) {
+					echo json_encode(array('success' => true, 'process_type'=>'others', 'redirectUrl' => site_url('es/success/?cm='.$result['order_data']['reference_no'])));
+				} else {
+					echo $this->bankPaymentProcess($result);
+				}
 			} else {
 				echo json_encode(array('success' => true, 'process_type'=>'others', 'redirectUrl' => site_url('es/success/?cm='.$result['order_data']['reference_no'])));
 			}
@@ -120,5 +126,23 @@ class Ajax extends Anonymous_Controller {
 				return json_encode(array('success' => false, 'msg' => 'Invalid order data'));exit;
 		}
   }
+
+  function getPromoCodeDetail() {
+	if ($this->input->post('code') && $this->input->post('total_price')) {
+		$promo_code_record = $this->mdl_promotional_codes->getcodebycode($this->input->post('code'));
+		$result = array();
+		if ($promo_code_record) {
+			$total_price = $this->input->post('total_price');
+			$result = $this->mdl_promotional_codes->calculateTotalPrice($total_price, $promo_code_record);
+			$result['id'] = $promo_code_record['id'];
+			echo json_encode($result);
+			exit;
+		} else {
+			echo json_encode(array('error'=>'Invalid Coupon Code'));
+			exit;
+		}
+	}	
+  }
+
 }
 ?>

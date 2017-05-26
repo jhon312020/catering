@@ -136,7 +136,7 @@ class Mdl_orders extends Response_Model {
    * @return  Array
    * 
   */
-	public function insert_from_temporary($payment_type = null) {
+	public function insert_from_temporary($payment_type = null, $discount) {
 		
 		$this->load->model('order_drinks/mdl_order_drinks');
 		$this->load->model('formapago/mdl_formapago');
@@ -230,8 +230,28 @@ class Mdl_orders extends Response_Model {
 		if(count($temporary_order_ids) > 0) {
 			$this->mdl_temporary_orders->order_delete_using_id($temporary_order_ids);
 		}
-		
+
 		$return_data = array('total_price' => number_format($total_price, 2), 'reference_no' => $reference_no);
+
+		if ($discount) {
+			$this->load->model('promotional_codes/mdl_promotional_codes');
+			$qry = $this->db->where('id', $discount['id'])->get('promotional_codes');
+			if($qry->num_rows()){
+				$promo_code_record = current($qry->result_array());
+			}
+			if ($promo_code_record) {
+				$result = $this->mdl_promotional_codes->calculateTotalPrice($total_price, $promo_code_record);
+				if ($result) {
+					$data = array('reference_no'=>$reference_no, 
+								'promotional_code_id'=>$discount['id'],
+								'original_total_price'=>$return_data['total_price'],
+								'discount' => $result['discount'],
+								'total_price' => $result['total_price'] );
+					$this->db->insert('discount_applied', $data);
+					$return_data['total_price'] = $result['total_price'];
+				}
+			}
+		}
 		
 		return $return_data;
 	}
@@ -241,7 +261,7 @@ class Mdl_orders extends Response_Model {
    * @return  Array
    * 
   */
-	public function check_today_menus_insert($payment_type = null) {
+	public function check_today_menus_insert($payment_type = null, $discount) {
 		
 		$this->load->model('temporary_orders/mdl_temporary_orders');
 		$this->load->model('menus/mdl_menus');
@@ -281,7 +301,7 @@ class Mdl_orders extends Response_Model {
 		if(count($today_menus_removed) > 0) {
 			return array('success' => false, 'msg' => 'Today menus expired', 'order_ids' => array_column($today_orders_removed, 'id'));
 		} else {
-			$data = $this->mdl_orders->insert_from_temporary($payment_type);
+			$data = $this->mdl_orders->insert_from_temporary($payment_type, $discount);
 			return array('success' => true, 'msg' => 'Order successfully placed', 'order_data' => $data);
 		}
 	}

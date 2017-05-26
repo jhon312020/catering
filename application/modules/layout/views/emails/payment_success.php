@@ -98,8 +98,16 @@
       </div>
     </div>
     <div style="padding-top:10px;text-align:right;width:100%;">
-      <strong>Total : <span style="color:#c49e56"><?php echo number_format($total_price,2); ?> &euro;</span><br/>
-      <?php echo lang('payment_method'); ?> : <span style="color:#c49e56;"><?php echo $orders[0]['payment_method']; ?></span></strong>
+      <?php if (isset($discount) && $discount) { ?>
+        <strong>
+        Discount : <span style="color:#c49e56">-<?php echo $discount['discount']; ?> &euro;</span><br/>
+        Total : <span style="color:#c49e56"><?php echo $discount['total_price']; ?> &euro;</span><br/>
+        <?php echo lang('payment_method'); ?> : <span style="color:#c49e56;">
+        <?php echo $orders[0]['payment_method']; ?></span></strong>
+      <?php } else { ?>
+        <strong>Total : <span style="color:#c49e56"><?php echo number_format($total_price,2); ?> &euro;</span><br/>
+        <?php echo lang('payment_method'); ?> : <span style="color:#c49e56;"><?php echo $orders[0]['payment_method']; ?></span></strong>
+      <?php } ?>
     </div>
   <div style="margin-top:30px;color:#999999;line-height:20px;font-size:13px;">
     <p>Un saludo y gracias <br/><b>Gumen Catering</b><br/><a href="http://www.gumen-catering.com">www.gumen-catering.com</a></p>

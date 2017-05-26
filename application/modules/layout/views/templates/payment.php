@@ -114,6 +114,20 @@ if($todaySelectedMenus) {
                 </div>
               </div>
             </div>
+            <div class="paysection-3" id="promo_code_section">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-sm-offset-0 paysection3text" style="padding-top:20px;">
+                  <div class="formsection">
+                  <?php 
+                    echo '<b>'.lang('code').'</b><br/>';
+                    echo form_input(array('id'=>'promo_code','name'=>'promo_code','style'=>'height:35px;margin-top:10px;margin-bottom:10px'));
+                  ?>
+                    <div class="promocode_error" style="color:red"></div>
+                    <button type="button" <?php !$bool?'disabled':''; ?> class="btn center-block" id="promo_code_apply"><?=lang('APPLY')?></button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="paysection-3">
               <div class="row">
                 <div class="col-xs-12 col-sm-12 col-sm-offset-0 paysection3text">

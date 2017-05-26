@@ -13,3 +13,13 @@ CREATE TABLE `tbl_promotional_codes` (
  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `tbl_discount_applied` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reference_code` varchar(255) NOT NULL,
+  `promotional_code_id` int(11) NOT NULL,
+  `original_total_price` double NOT NULL,
+  `discount` double NOT NULL,
+  `total_price` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

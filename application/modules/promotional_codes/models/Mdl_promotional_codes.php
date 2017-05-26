@@ -10,8 +10,8 @@ if (!defined('BASEPATH'))
 	public function default_order_by() {
 		$this->db->order_by('promotional_codes.id');
 	}
-	public function getcodebycode($data){
-		$qry = $this->db->where('code', $data['code'])->get('promotional_codes');
+	public function getcodebycode($code){
+		$qry = $this->db->where('code', $code)->get('promotional_codes');
 		if($qry->num_rows())
 			return current($qry->result_array());
 		
@@ -35,6 +35,25 @@ if (!defined('BASEPATH'))
 				'rules' => 'required'
 			),
 		);
+	}
+
+	public function calculateTotalPrice($total_price, $record) {
+		switch ($record['discount_type']) {
+			case 'percentage':
+					$discount = $total_price*$record['price_or_percentage']/100;
+				break;
+			case 'price':
+					$discount = $record['price_or_percentage'];
+				break;
+		}
+		$total_price = $total_price-$discount;
+		if ($total_price < 0) {
+			$total_price = 0.00;
+		} else {
+			$total_price = number_format($total_price,2,'.','');
+		}
+		$discount = number_format($discount,2,'.','');
+		return array('total_price'=>$total_price,'discount'=>$discount);
 	}
 }
 

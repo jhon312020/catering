@@ -1,3 +1,12 @@
+var discountObject = {};
+function applyDiscount() {
+	if (discountObject) {
+		$('#promo_code_section .row div').append('<span style="color:green;font-weight:bold">Coupon code Applied</span>');
+		$('#promo_code_section .row .formsection').hide();
+		$total_price = discountObject.total_price;
+		$('#total_price').text($total_price);
+	}
+}
 $(document).ready(function() {
 	var paymentSelectedId = '';
 	$(".jsPaymentType").click(function() {
@@ -23,7 +32,7 @@ $(document).ready(function() {
 			$('#jsAcceptTerms').show();
 		} else {
 			
-			loadAndSave.save({'payment_type':paymentSelectedId}, SITE_URL + '/es/checkout').then(function(result){
+			loadAndSave.save({'payment_type':paymentSelectedId,'discount':discountObject}, SITE_URL + '/es/checkout').then(function(result){
 				if(result.success) {
 					if (result.process_type == 'credit') {
 						$('#Ds_SignatureVersion').val(result.version);
@@ -72,6 +81,30 @@ $(document).ready(function() {
 				$('.jsTotalCart').text($count);
 				$('#order_count').text($count)
 				$('span#total_price').text($total_price.toFixed(2));
+			}
+		});
+	});
+
+	$(document).on('click', '#promo_code_apply', function() {
+		if ($('#promo_code').val().trim() == '') {
+			$('.promocode_error').html('Kindly type the Coupon code');
+			return false;
+		} else {
+			$('.promocode_error').html('');
+		}
+		inputs = {'code':$('#promo_code').val().trim(),'total_price':$total_price};
+		$.ajax({
+			url:SITE_URL+'ajax/getPromoCodeDetail',
+			type:'post',
+			data:inputs,
+			dataType:'json',
+			success:function(result){
+				if (result.error) {
+					$('.promocode_error').html(result.error);
+				} else {
+					discountObject = result;
+					applyDiscount();
+				}
 			}
 		});
 	});
