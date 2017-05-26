@@ -46,59 +46,67 @@ if($todaySelectedMenus) {
             <div class="paysection-2">
               <h4>COMO QUIERE PAGAR?</h4>
               <br>
-              <div class="row payrow">
-                <div class="col-xs-10 col-sm-10">
-                  <span class="paytext">Tarjeta crédito o débito</span>
-                </div>
-                <div class="col-xs-2 col-sm-2">
-                  <span class="custom-checkbox">
-                    <span class="box">
-                      <input type="checkbox" id="card" class="jsPaymentType" value="Credit/Debit" name="paymenttype[]"/>
-                      <span class="tick"></span>
+              <?php if ($business->card) { ?>
+                <div class="row payrow">
+                  <div class="col-xs-10 col-sm-10">
+                    <span class="paytext">Tarjeta crédito o débito</span>
+                  </div>
+                  <div class="col-xs-2 col-sm-2">
+                    <span class="custom-checkbox">
+                      <span class="box">
+                        <input type="checkbox" id="card" class="jsPaymentType" value="Credit/Debit" name="paymenttype[]"/>
+                        <span class="tick"></span>
+                      </span>
                     </span>
-                  </span>
+                  </div>
+                  <img class="img-responsive payment-img" src="<?php echo TEMPLATE_PATH; ?>payment.png">
                 </div>
-                <img class="img-responsive payment-img" src="<?php echo TEMPLATE_PATH; ?>payment.png">
-              </div>
-              <div class="row payrow">
-                <div class="col-xs-10 col-sm-10">
-                  <span class="paytext">Giro Bancario</span>
-                </div>
-                <div class="col-xs-2 col-sm-2">
-                  <span class="custom-checkbox">
-                    <span class="box">
-                      <input type="checkbox" id="draft" class="jsPaymentType" value="Bank Draft" name="paymenttype[]"/>
-                      <span class="tick"></span>
+              <?php } ?>
+              <?php if ($business->draft) { ?>
+                <div class="row payrow">
+                  <div class="col-xs-10 col-sm-10">
+                    <span class="paytext">Giro Bancario</span>
+                  </div>
+                  <div class="col-xs-2 col-sm-2">
+                    <span class="custom-checkbox">
+                      <span class="box">
+                        <input type="checkbox" id="draft" class="jsPaymentType" value="Bank Draft" name="paymenttype[]"/>
+                        <span class="tick"></span>
+                      </span>
                     </span>
-                  </span>
+                  </div>
                 </div>
-              </div>
-              <div class="row payrow">
-                <div class="col-xs-10 col-sm-10">
-                  <span class="paytext">Ticket Restaurante</span>
-                </div>
-                <div class="col-xs-2 col-sm-2">
-                  <span class="custom-checkbox">
-                    <span class="box">
-                      <input type="checkbox" id="ticket" class="jsPaymentType" value="Ticket Restaurant" name="paymenttype[]"/>
-                      <span class="tick"></span>
+              <?php } ?>
+              <?php if ($business->ticket) { ?>
+                <div class="row payrow">
+                  <div class="col-xs-10 col-sm-10">
+                    <span class="paytext">Ticket Restaurante</span>
+                  </div>
+                  <div class="col-xs-2 col-sm-2">
+                    <span class="custom-checkbox">
+                      <span class="box">
+                        <input type="checkbox" id="ticket" class="jsPaymentType" value="Ticket Restaurant" name="paymenttype[]"/>
+                        <span class="tick"></span>
+                      </span>
                     </span>
-                  </span>
+                  </div>
                 </div>
-              </div>
-              <div class="row payrow">
-                <div class="col-xs-10 col-sm-10">
-                  <span class="paytext">Efectivo</span>
-                </div>
-                <div class="col-xs-2 col-sm-2">
-                  <span class="custom-checkbox">
-                    <span class="box">
-                      <input type="checkbox" id="cash" class="jsPaymentType" value="Efectivo" name="paymenttype[]"/>
-                      <span class="tick"></span>
+              <?php } ?>
+              <?php if ($business->cash) { ?>
+                <div class="row payrow">
+                  <div class="col-xs-10 col-sm-10">
+                    <span class="paytext">Efectivo</span>
+                  </div>
+                  <div class="col-xs-2 col-sm-2">
+                    <span class="custom-checkbox">
+                      <span class="box">
+                        <input type="checkbox" id="cash" class="jsPaymentType" value="Efectivo" name="paymenttype[]"/>
+                        <span class="tick"></span>
+                      </span>
                     </span>
-                  </span>
+                  </div>
                 </div>
-              </div>
+              <?php } ?>
 
               <div class="row">
                 <div class="col-sm-12">

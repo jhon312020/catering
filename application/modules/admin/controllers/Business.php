@@ -37,6 +37,12 @@ class Business extends Admin_Controller {
 			}
 			if (!$email_exists) {
 				$data = $this->input->post();
+				$checkboxFields = array('card','draft','ticket','cash');
+				foreach ($checkboxFields as $field) {
+					if (!isset($data[$field])) {
+						$data[$field] = 0;
+					}
+				}
 				$centers = $data['center'];
 				unset($data['hours'], $data['minutes'], $data['btn_submit'], $data['center'], $data['form_number']);
 				if (is_null($id) || $id == '') {

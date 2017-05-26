@@ -185,7 +185,12 @@ $lang['hello'] = 'Hola';
 $lang['archive'] = 'ARCHIVO';
 $lang['close'] = 'CERRAR';
 $lang['datos'] = 'Datos';
+$lang['accept'] = 'ACEPTAR';
 $lang['register_success'] = 'Gracias por registrarte. Nos pondremos en contacto contigo muy pronto.';
 $lang['contact_success'] = 'Gracias!';
+$lang['promotional_codes'] = "Código Promocional";
+$lang['code'] = "Promotional Code";
+$lang['price_or_percentage'] = "Price or Percentage";
+$lang['discount_type'] = "Discount Type";
 /*---ó-*/
 ?>

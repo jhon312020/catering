@@ -290,6 +290,7 @@ class Node extends Anonymous_Controller {
 		
 		$data_array = array();
 
+    $data_array['business'] = $this->db->where('id', $this->login_client_profile->business_id)->get('business')->row();
     $data_array['menu_titles'] = $this->menu_types;
     $data_array['plates'] = $this->mdl_plats->get_plat_list();
     $data_array['cool_drink_list'] = $this->mdl_drinks->get_cool_drink_list();
@@ -537,9 +538,9 @@ class Node extends Anonymous_Controller {
             $body = $this->load->view('layout/emails/password_functions.php',$emailBody, TRUE);
             $this->email->message($body);
             $this->email->send();
-            //redirect($this->uri->segment(1));
             $this->session->set_flashdata('alert_success', lang('change_password_success_message'));
-            redirect($this->uri->uri_string());
+            redirect($this->uri->segment(1));
+            //redirect($this->uri->uri_string());
           }
         }
       }

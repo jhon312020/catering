@@ -67,6 +67,77 @@ $count = count($centres);
 							<?php echo form_input(array('name'=>'contact_person', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('contact_person'), $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="col-sm-2 pull-left">
+							Paid by
+						</label>
+						<div class="col-sm-10">
+							<?php
+								$options = array('user'=>'User','company'=>'Company');
+								if ($readonly != 'readonly') {
+									echo form_dropdown('paid_by',$options,$this->mdl_business->form_value('paid_by'),array( 'class'=>'form-control',  $readonly=>true, 'required'=>'required'));
+								} else {
+									echo form_input(array('name'=>'paid_by', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('paid_by'), $readonly=>true));
+								}
+							?>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 pull-left">
+							Tarjeta crédito o débito
+						</label>
+						<div class="col-sm-10">
+							<?php
+								if ($readonly != 'readonly') {
+									echo form_checkbox(array( 'id'=>'card', 'name'=>'card', 'value'=>1, 'checked'=>$this->mdl_business->form_value('card'),$readonly=>1));
+								} else {
+									echo form_checkbox(array( 'id'=>'card', 'name'=>'card', 'value'=>1, 'checked'=>$this->mdl_business->form_value('card'),'disabled'=>true));
+								}
+							?>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 pull-left">
+							Giro Bancario
+						</label>
+						<div class="col-sm-10">
+							<?php
+								if ($readonly != 'readonly') {
+									echo form_checkbox(array( 'id'=>'draft', 'name'=>'draft', 'value'=>1, 'checked'=>$this->mdl_business->form_value('draft'),'readonly'=>$readonly));
+								} else {
+									echo form_checkbox(array( 'id'=>'draft', 'name'=>'draft', 'value'=>1, 'checked'=>$this->mdl_business->form_value('draft'),'disabled'=>true));
+								}
+							?>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 pull-left">
+							Ticket Restaurante
+						</label>
+						<div class="col-sm-10">
+							<?php
+								if ($readonly != 'readonly') {
+									echo form_checkbox(array( 'id'=>'ticket', 'name'=>'ticket', 'value'=>1, 'checked'=>$this->mdl_business->form_value('ticket'),'readonly'=>$readonly));
+								} else {
+									echo form_checkbox(array( 'id'=>'ticket', 'name'=>'ticket', 'value'=>1, 'checked'=>$this->mdl_business->form_value('ticket'),'disabled'=>true));
+								}
+							?>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 pull-left">
+							Efectivo
+						</label>
+						<div class="col-sm-10">
+							<?php
+								if ($readonly != 'readonly') {
+									echo form_checkbox(array( 'id'=>'cash', 'name'=>'cash', 'value'=>1, 'checked'=>$this->mdl_business->form_value('cash'),'readonly'=>$readonly));
+								} else {
+									echo form_checkbox(array( 'id'=>'cash', 'name'=>'cash', 'value'=>1, 'checked'=>$this->mdl_business->form_value('cash'),'disabled'=>true));
+								}
+							?>
+						</div>
+					</div>
 				</div>
 				<!-- Center -- starts -->
 				<div id="jscenterForm">
