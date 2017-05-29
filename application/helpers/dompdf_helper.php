@@ -30,8 +30,8 @@ function pdf_create($html, $filename, $stream = TRUE) {
 		$CI =& get_instance();
 
 		$CI->load->helper('file');
-		if(!is_dir('../uploads/temp/')){
-			mkdir('../uploads/temp/', 0755, true);
+		if(!is_dir('./uploads/temp/')){
+			mkdir('./uploads/temp/', 0755, true);
 		}
         write_file('./uploads/temp/' . $filename . '.pdf', $dompdf->output());
 		

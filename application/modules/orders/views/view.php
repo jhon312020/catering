@@ -82,7 +82,7 @@ $disabled = ($readonly)?'disabled':'';
 											$order_detail = json_decode($order->order_detail,true);
 					                      	/*unset($order_detail['order_code']);
 					                      	$order_detail = array_values($order_detail);*/
-								            $description = getOrderDescription($order_detail, $plates, $cool_drink_list);
+								            $description = getOrderDescription($order_detail, $plates, $cool_drink_list,$order->order_date);
 								            echo '- '.implode('<br/> - ', $description);
 								            echo '<br/>- pan, aceite, vinagre y Cubiertos';
 							        	} else {

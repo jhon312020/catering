@@ -428,6 +428,12 @@ class Node extends Anonymous_Controller {
 
 		$data_array['orders'] = $this->mdl_orders->get_orders_by_ref_no($reference_no);
 
+    // Get the discount value.
+    $qry = $this->db->where('reference_no', $reference_no)->get('discount_applied');
+    if($qry->num_rows()){
+      $data_array['discount'] = current($qry->result_array());
+    }
+
     $data_array['menu_titles'] = $this->menu_types;
     $data_array['plates'] = $this->mdl_plats->get_plat_list();
     $data_array['cool_drink_list'] = $this->mdl_drinks->get_cool_drink_list();
@@ -578,9 +584,22 @@ class Node extends Anonymous_Controller {
 	 * @return	void
 	 */
   public function paymentSuccess() {
+    
     $reference_no = $this->input->get('cm');
     $this->mdl_orders->setActive($reference_no);
 
+    // Get the to email address based on the payment done by who.
+    $businessInfo = $this->mdl_business->businessInfo($this->session->userdata('business_id'));
+    $emailToAddress = $this->session->userdata('email');
+    //$data_array['businessInfo'] = $businessInfo;
+    /*if ($businessInfo) {
+      $data_array['businessInfo'] = $businessInfo;
+      if ($businessInfo->paid_by == 'company') {
+        $emailToAddress = $businessInfo->email;
+      }
+    }*/
+
+    // Get the discount value.
     $qry = $this->db->where('reference_no', $reference_no)->get('discount_applied');
     if($qry->num_rows()){
       $data_array['discount'] = current($qry->result_array());
@@ -594,15 +613,23 @@ class Node extends Anonymous_Controller {
     $data_array['user_name'] = $this->session->userdata('client_name');
     $this->load->library('email');
     $subject  = 'Pedido Online - '.$reference_no;
+
+    // Generate the invoie pdf
+    //$this->load->view('layout/pdf/invoice.php',$data_array);
     
+    /*$pdf = $this->load->view('layout/pdf/invoice.php',$data_array, TRUE);
+    $this->load->helper(array('dompdf', 'file'));
+    $invoice = pdf_create($pdf, $reference_no, false);*/
+
     $this->email->set_mailtype("html");
     //Need to change admin email dynamically
     $this->email->from($this->site_contact->email, 'Gumen-Catering');
-    $this->email->to($this->session->userdata('email'));
+    $this->email->to($emailToAddress);
     //$this->email->to('jeeva@proisc.com');
     $this->email->subject($subject);
     $body = $this->load->view('layout/emails/payment_success.php',$data_array, TRUE);
     $this->email->message($body);
+    //$this->email->attach($invoice);
     $this->email->send();
     $this->load->view('layout/templates/success');
     //$this->load->view('layout/emails/payment_success.php',$data_array);
