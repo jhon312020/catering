@@ -855,8 +855,10 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 	}
 	
 	.menuItemDiv .menuItemCategoryName {
-		height: 50px;
-		line-height: 50px;
+		/*height: 50px;
+		line-height: 50px;*/
+    height: 40px;
+    line-height: 40px;
 	}
 	.menuItemDiv .menuItemName {
 		height: 50px;
@@ -1113,6 +1115,8 @@ td.new.active.day.menuAvailable, td.old.active.day.menuAvailable {
 
   .custom-checkbox >  .box {
 		/*margin: 0 auto;*/;
+    width:34px;
+    height: 34px;
   }
 
   .menu-img {

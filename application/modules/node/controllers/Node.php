@@ -429,9 +429,14 @@ class Node extends Anonymous_Controller {
 		$data_array['orders'] = $this->mdl_orders->get_orders_by_ref_no($reference_no);
 
     // Get the discount value.
-    $qry = $this->db->where('reference_no', $reference_no)->get('discount_applied');
+    /*$qry = $this->db->where('reference_no', $reference_no)->get('discount_applied');
     if($qry->num_rows()){
       $data_array['discount'] = current($qry->result_array());
+    }*/
+    $this->load->model('discount_applied/mdl_discount_applied');
+    $discount = $this->mdl_discount_applied->getDiscountDetailByReferenceNo($reference_no);
+    if ($discount) {
+      $data_array['discount'] = $discount;
     }
 
     $data_array['menu_titles'] = $this->menu_types;
@@ -589,23 +594,21 @@ class Node extends Anonymous_Controller {
     $this->mdl_orders->setActive($reference_no);
 
     // Get the to email address based on the payment done by who.
-    $businessInfo = $this->mdl_business->businessInfo($this->session->userdata('business_id'));
     $emailToAddress = $this->session->userdata('email');
-    //$data_array['businessInfo'] = $businessInfo;
-    /*if ($businessInfo) {
-      $data_array['businessInfo'] = $businessInfo;
-      if ($businessInfo->paid_by == 'company') {
-        $emailToAddress = $businessInfo->email;
-      }
-    }*/
+    $businessInfo = $this->mdl_business->businessInfo($this->session->userdata('business_id'));
+    $data_array['businessInfo'] = $businessInfo;
 
-    // Get the discount value.
-    $qry = $this->db->where('reference_no', $reference_no)->get('discount_applied');
-    if($qry->num_rows()){
-      $data_array['discount'] = current($qry->result_array());
+    $data_array['client'] = $this->mdl_clients->where('id',$this->session->userdata('client_id'))->get()->result_array();
+
+    $this->load->model('discount_applied/mdl_discount_applied');
+    $discount = $this->mdl_discount_applied->getDiscountDetailByReferenceNo($reference_no);
+    //print_r($discount); exit;
+    if ($discount) {
+      $data_array['discount'] = $discount;
     }
 
     $data_array['orders'] = $this->mdl_orders->get_orders_by_ref_no($reference_no);
+    $company_invoice = ($data_array['orders'][0]['payment_method'] == 'Empresa');
     $data_array['menu_titles'] = $this->menu_types;
     $data_array['plates'] = $this->mdl_plats->get_plat_list();
     $data_array['cool_drink_list'] = $this->mdl_drinks->get_cool_drink_list();
@@ -615,11 +618,12 @@ class Node extends Anonymous_Controller {
     $subject  = 'Pedido Online - '.$reference_no;
 
     // Generate the invoie pdf
-    //$this->load->view('layout/pdf/invoice.php',$data_array);
+    //$this->load->view('layout/pdf/invoice.php',$data_array); 
     
-    /*$pdf = $this->load->view('layout/pdf/invoice.php',$data_array, TRUE);
+    $pdf = $this->load->view('layout/pdf/invoice.php',$data_array, TRUE);
     $this->load->helper(array('dompdf', 'file'));
-    $invoice = pdf_create($pdf, $reference_no, false);*/
+    $invoice = pdf_create($pdf, $reference_no, false);
+
 
     $this->email->set_mailtype("html");
     //Need to change admin email dynamically
@@ -629,8 +633,22 @@ class Node extends Anonymous_Controller {
     $this->email->subject($subject);
     $body = $this->load->view('layout/emails/payment_success.php',$data_array, TRUE);
     $this->email->message($body);
+    if (!$company_invoice) {
+      //Commented by JR.
+      //$this->email->attach($invoice);
+    }
     //$this->email->attach($invoice);
     $this->email->send();
+    if (0 && $company_invoice) {
+        $invoice_email = $this->load->view('layout/emails/invoice_company.php',$data_array, TRUE);
+        $this->email->set_mailtype("html");
+        $this->email->from($this->site_contact->email, 'Gumen-Catering');
+        $this->email->to($businessInfo->email);
+        $this->email->subject($subject);
+        $this->email->attach($invoice);
+        $this->email->message($invoice_email);
+        $this->email->send();
+    }
     $this->load->view('layout/templates/success');
     //$this->load->view('layout/emails/payment_success.php',$data_array);
   }

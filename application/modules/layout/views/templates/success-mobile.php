@@ -55,7 +55,7 @@ p {
     <div id="order_total">
     <?php if (isset($discount) && $discount) { ?>
       <h3><div style="margin-bottom: 15px;">
-      Discount : -<?php echo $discount['discount']; ?> &euro;<br/>
+      DESCUENTO : -<?php echo $discount['discount']; ?> &euro;<br/>
       Total : <?php echo $discount['total_price']; ?> &euro;</div>
        <a href="<?php echo site_url(PAGE_LANGUAGE.'/menus/'); ?>" class="btn btn-menu cus-button" role="button"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> MENÚS</a>
       </h3>

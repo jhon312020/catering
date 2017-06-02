@@ -189,10 +189,14 @@ $lang['accept'] = 'ACEPTAR';
 $lang['register_success'] = 'Gracias por registrarte. Nos pondremos en contacto contigo muy pronto.';
 $lang['contact_success'] = 'Gracias!';
 $lang['promotional_codes'] = "Código Promocional";
-$lang['code'] = "Coupon code";
+$lang['code'] = "Código Promocional";
 $lang['price_or_percentage'] = "Price or Percentage";
-$lang['discount_type'] = "Discount Type";
+$lang['discount_type'] = "Tipo Descuento";
 $lang['APPLY'] = "APLICAR";
-
+$lang['select_discount_type'] = "Seleccionar Tipo Descuento";
+$lang['Percentage'] = "Porcentaje";
+$lang['price_or_percentage'] = "Importe o %";
+$lang['Price'] = "Importe";
+$lang['options'] = "Opciones";
 /*---ó-*/
 ?>

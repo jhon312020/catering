@@ -28,7 +28,7 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 				<div class="form-group">
 					<label class="col-sm-2 pull-left"><?php echo lang('client_code');?> </label>
 					<div class="col-sm-10">
-						<?php echo form_input(array('name'=>'client_code', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('client_code')? $this->mdl_clients->form_value('client_code') : (isset($client_code) ? $client_code : ''))); ?>
+						<?php echo form_input(array('name'=>'client_code', 'class'=>'form-control', 'value'=>$this->mdl_clients->form_value('client_code')? $this->mdl_clients->form_value('client_code') : (isset($client_code) ? $client_code : ''), 'readonly'=>true)); ?>
 					</div>
 				</div>
 				<div class="form-group">
@@ -128,6 +128,21 @@ if($this->mdl_clients->form_value('password') && !$this->input->post()) {
 					<label class="col-sm-2 pull-left"><?php echo lang('billing_data');?> </label>
 					<div class="col-sm-10">
 						<textarea <?php echo $readonly || $this->mdl_clients->form_value('bill') == 0?'disabled':''; ?> name="billing_data" id="billing_data" class="form-control"><?php echo $this->mdl_clients->form_value('bill') == 1?$this->mdl_clients->form_value('billing_data'):'';  ?></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 pull-left">
+						Carrec Empresa
+					</label>
+					<div class="col-sm-10">
+						<?php
+							$options = array('0'=>'User','-1'=>'Company');
+							if ($readonly != 'readonly') {
+								echo form_dropdown('CarrecEmpresa',$options,$this->mdl_clients->form_value('CarrecEmpresa'),array( 'class'=>'form-control',  $readonly=>true, 'required'=>'required'));
+							} else {
+								echo form_input(array('name'=>'CarrecEmpresa', 'class'=>'form-control', 'value'=>(isset($options[$this->mdl_clients->form_value('CarrecEmpresa')]))? $options[$this->mdl_clients->form_value('CarrecEmpresa')]:'User', $readonly=>true));
+							}
+						?>
 					</div>
 				</div>
 				<div class="form-group">

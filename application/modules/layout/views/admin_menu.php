@@ -1,8 +1,8 @@
 <?php
 	$segments = $this->uri->segment_array();
 	$end_segment = end($segments);
-	$websiteClass = array('home','contacts','promotional_codes');
-	$settingClass = array('business','menus', 'conditions', 'drinks', 'settings', 'plats');
+	$websiteClass = array('home','contacts');
+	$settingClass = array('business','menus', 'conditions', 'drinks', 'settings', 'plats','promotional_codes');
 	$url_segment = $this->uri->segment_array();
 ?>
 <ul id="main-menu" class="">
@@ -25,12 +25,6 @@
 				<a href="<?php echo site_url('admin/contacts'); ?>">
 					<i class="entypo-list"></i>
 					<span><?php echo lang('contacts'); ?></span>
-				</a>
-			</li>
-			<li class="<?php echo ($this->router->class == 'promotional_codes' or $end_segment == 'promotional_codes') ? 'opened active' : ''; ?>">
-				<a href="<?php echo site_url('admin/promotional_codes/index'); ?>">
-					<i class="entypo-list"></i>
-					<span><?php echo lang('promotional_codes'); ?></span>
 				</a>
 			</li>
 		</ul>
@@ -78,6 +72,12 @@
 				<a href="<?php echo site_url('admin/plats/index'); ?>">
 					<i class="entypo-ticket"></i>
 					<span><?php echo lang('platos'); ?></span>
+				</a>
+			</li>
+			<li class="<?php echo ($this->router->class == 'promotional_codes' or $end_segment == 'promotional_codes') ? 'opened active' : ''; ?>">
+				<a href="<?php echo site_url('admin/promotional_codes/index'); ?>">
+					<i class="entypo-list"></i>
+					<span><?php echo lang('promotional_codes'); ?></span>
 				</a>
 			</li>
 			<li class="<?php echo $this->router->class == 'settings' && $this->router->method == 'index' ? 'opened active' : ''; ?>">

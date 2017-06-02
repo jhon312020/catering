@@ -22,7 +22,7 @@ $disabled = ($readonly)?'disabled':'';
 						<label class="col-sm-3 control-label"><?php echo lang('discount_type'); ?>: </label>
 						<div class="col-sm-5">
 							<?php 
-								echo form_dropdown('discount_type', array(''=>'Select Discount Type', 'percentage'=>'Percentage', 'price'=>'Price', ), $this->mdl_promotional_codes->form_value('discount_type'), 'class="form-control" '.($readonly ? 'readonly' : ''));
+								echo form_dropdown('discount_type', array(''=>lang('select_discount_type'), 'percentage'=>'Percentage', 'price'=>'Price', ), $this->mdl_promotional_codes->form_value('discount_type'), 'class="form-control" '.($readonly ? 'readonly' : ''));
 							?>
 						</div>
 					</div>

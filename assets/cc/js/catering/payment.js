@@ -1,7 +1,11 @@
 var discountObject = {};
 function applyDiscount() {
 	if (discountObject) {
-		$('#promo_code_section .row div').append('<span style="color:green;font-weight:bold">Coupon code Applied</span>');
+		if (discountObject.detail.discount_type == 'percentage') {
+			$('#promo_code_section .row div').append('<span style="color:green;font-weight:bold">El descuento de '+discountObject.detail.price_or_percentage+'%  ha sido aplicado correctamente</span>');
+		} else {
+			$('#promo_code_section .row div').append('<span style="color:green;font-weight:bold">El descuento de '+discountObject.detail.price_or_percentage+'&euro;  ha sido aplicado correctamente</span>');
+		}
 		$('#promo_code_section .row .formsection').hide();
 		$total_price = discountObject.total_price;
 		$('#total_price').text($total_price);
@@ -26,13 +30,13 @@ $(document).ready(function() {
 			return false;
 		}
     $('.error').hide();
-		if (!$('#card').is(':checked') && !$('#draft').is(':checked') && !$('#ticket').is(':checked') && !$('#cash').is(':checked')) {
+		if ($('#paid_by_company').val() == 0 && !$('#card').is(':checked') && !$('#draft').is(':checked') && !$('#ticket').is(':checked') && !$('#cash').is(':checked')) {
       $('#jsPaymentType').show();
     } else if(!$('#accept').is(':checked')) {
 			$('#jsAcceptTerms').show();
 		} else {
 			
-			loadAndSave.save({'payment_type':paymentSelectedId,'discount':discountObject}, SITE_URL + '/es/checkout').then(function(result){
+			loadAndSave.save({'payment_type':paymentSelectedId,'discount':discountObject,'paid_by_company':$('#paid_by_company').val()}, SITE_URL + '/es/checkout').then(function(result){
 				if(result.success) {
 					if (result.process_type == 'credit') {
 						$('#Ds_SignatureVersion').val(result.version);
@@ -87,7 +91,7 @@ $(document).ready(function() {
 
 	$(document).on('click', '#promo_code_apply', function() {
 		if ($('#promo_code').val().trim() == '') {
-			$('.promocode_error').html('Kindly type the Coupon code');
+			$('.promocode_error').html('Kindly type the Código Promocional');
 			return false;
 		} else {
 			$('.promocode_error').html('');

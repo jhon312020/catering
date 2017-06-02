@@ -49,7 +49,7 @@ $this->load->view('header');
               </div>
               <div class="form-group">
                 <label class="sr-only" for="form-business"><?php echo lang('business');?></label>
-                <input type="text" name="client_business_name" id="client_business_name" placeholder="<?php echo lang('reg_business'); ?>" class="form-control" 
+                <input type="text" name="client_business_name" id="client_business_name" placeholder="Empresa y Centro" class="form-control" 
                   data-error="<?php echo lang('bussiness_error');?>" 
                 required>
                 <div class="help-block with-errors"></div>

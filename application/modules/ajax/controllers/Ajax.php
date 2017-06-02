@@ -60,6 +60,17 @@ class Ajax extends Anonymous_Controller {
 			} else {
 				echo json_encode(array('success' => true, 'process_type'=>'others', 'redirectUrl' => site_url('es/success/?cm='.$result['order_data']['reference_no'])));
 			}
+		} else {
+			if ($this->input->post('paid_by_company') == 1){
+				$payment_type = 'Empresa';
+				$discount = $this->input->post('discount');
+				$result = $this->mdl_orders->check_today_menus_insert($payment_type,$discount);
+				if (!$result['success']) {
+					echo json_encode($result); exit;
+				} else {
+					echo json_encode(array('success' => true, 'process_type'=>'others', 'redirectUrl' => site_url('es/success/?cm='.$result['order_data']['reference_no']))); exit;
+				}
+			}
 		}
 	}
 
@@ -129,16 +140,17 @@ class Ajax extends Anonymous_Controller {
 
   function getPromoCodeDetail() {
 	if ($this->input->post('code') && $this->input->post('total_price')) {
-		$promo_code_record = $this->mdl_promotional_codes->getcodebycode($this->input->post('code'));
+		$promo_code_record = $this->mdl_promotional_codes->getcodebycode($this->input->post('code'),1);
 		$result = array();
 		if ($promo_code_record) {
 			$total_price = $this->input->post('total_price');
 			$result = $this->mdl_promotional_codes->calculateTotalPrice($total_price, $promo_code_record);
 			$result['id'] = $promo_code_record['id'];
+			$result['detail'] = $promo_code_record;
 			echo json_encode($result);
 			exit;
 		} else {
-			echo json_encode(array('error'=>'Invalid Coupon Code'));
+			echo json_encode(array('error'=>'Invalid Código Promocional'));
 			exit;
 		}
 	}	

@@ -157,6 +157,7 @@ class Clients extends Admin_Controller {
 		if ($id and !$this->input->post('btn_submit')) {
 			$this->mdl_clients->prep_form($id);
 		}
+		$client_code = NULL;
     if ($id == NULL) {
       $client_code = $this->mdl_clients->getNextIncrementCode() + 1;
     }
@@ -178,10 +179,14 @@ class Clients extends Admin_Controller {
 		if ($this->input->post('btn_cancel')) {
 			redirect('admin/clients');
 		}
+		$this->load->model('tarifes/mdl_tarifes');
+		$data = array();
+		$tarifa_list = $this->mdl_tarifes->get_tarifa_list();
+
 		$this->mdl_clients->prep_form($id);
 		$orders_by_client_id = $this->mdl_orders->get_orders_by_client_id($id);
 		
-		$this->layout->set(array('readonly'=>true, 'error'=>$error, 'path'=>'./assets/cc/images/clients/', 'orders_by_client_id' => $orders_by_client_id));
+		$this->layout->set(array('readonly'=>true, 'error'=>$error, 'path'=>'./assets/cc/images/clients/', 'orders_by_client_id' => $orders_by_client_id, 'tarifa_list'=>$tarifa_list));
 		$this->layout->buffer('content', 'clients/form');
 		$this->layout->render();
 	}

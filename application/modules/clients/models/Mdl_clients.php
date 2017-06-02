@@ -263,7 +263,7 @@ class Mdl_clients extends Response_Model {
     public function get_client_details_by_id($id) {
 			
 			$client_details_by_id = $this->mdl_clients
-																		->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, business.name as business_name, centres.Centre as centre_name,clients.password_key, clients.bill')
+																		->select('clients.id, clients.client_code, clients.name, clients.surname, clients.business_id, clients.email, clients.password, clients.telephone, clients.dni, clients.intolerances, clients.iban, clients.bill, clients.billing_data, business.name as business_name, centres.Centre as centre_name,clients.password_key, clients.bill, clients.CarrecEmpresa')
                                     ->join('business', 'business.id = clients.business_id', 'left')
 																		->join('centres', 'centres.Id = clients.centre_id', 'left')
 																		->where('clients.id', $id)->get()->row();

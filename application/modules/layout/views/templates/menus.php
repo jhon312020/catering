@@ -38,6 +38,7 @@ div.disabled
 						<?php if ($today_menu_expired) { ?>
 						<p class='today_menu_expired'>No es posible solicitar un menú para el día de hoy debido a haber expirado la hora límite</p>
 						<?php } ?>
+						<p>* Todos los medios menús siempre van acompañados de entrante ensalada</p>
 					</div>
 					<div class="col-sm-4">
 						<span class="col-xs-12 mob-show" style="padding-right: 0px">
@@ -102,7 +103,7 @@ div.disabled
 							<a href="javascript:;" id="ribbon"> <?php echo lang(strtolower($menu_type)); ?></a>		
 						</div>
 						<div class="menuItemsRow">
-							<div class="col-md-2 menuItemDiv noCheck">
+							<div class="col-md-2 menuItemDiv noCheck" style="margin-bottom: 15px;">
 							<img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Guarnicio']]['image']; ?>">
 								<div class="sectionForMobile">
 									<div class="menuItemCategoryName">Entrante</div>
@@ -114,7 +115,7 @@ div.disabled
 								<span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span>
 							</div>
 
-							<div class="col-md-2 menuItemDiv">
+							<div class="col-md-2 menuItemDiv" style="margin-bottom: 15px;">
 								<img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Primer']]['image']; ?>">
 								<div class="sectionForMobile">
 									<div class="menuItemCategoryName">Primer plato</div>
@@ -132,7 +133,7 @@ div.disabled
 								<span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span>
 							</div>
 							
-							<div class="col-md-2 menuItemDiv">
+							<div class="col-md-2 menuItemDiv" style="margin-bottom: 15px;">
 								<img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Segon']]['image']; ?>">
 								<div class="sectionForMobile">
 									<div class="menuItemCategoryName">Segundo plato</div>
@@ -150,7 +151,7 @@ div.disabled
 								<span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span>
 							</div>
 							
-							<div class="col-md-2 menuItemDiv noCheck">
+							<div class="col-md-2 menuItemDiv noCheck" style="margin-bottom: 15px;">
 								<img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.$plates[$menu_list['Postre']]['image']; ?>">
 								<div class="sectionForMobile">
 									<div class="menuItemCategoryName">Postre</div>
@@ -162,7 +163,7 @@ div.disabled
 								<span class="menu-plus img-plus <?php echo $plusColor; ?>">+</span>
 							</div>
 							
-							<div class="col-md-2 menuItemDiv">
+							<div class="col-md-2 menuItemDiv" >
 								<img class="img-responsive menu-img" src="<?php echo PLAT_IMAGE_PATH.'imagen-bebida.jpg'; ?>">
 								<div class="sectionForMobile" style="padding-top: 10px;">
 									<select class="selectpicker select-menu boostrap-multiselect" name="cool_drinks[<?php echo $menu_list['id']; ?>][]" multiple="multiple">

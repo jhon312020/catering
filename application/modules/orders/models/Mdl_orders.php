@@ -3,7 +3,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Mdl_orders extends Response_Model {
-		public $payment_types = array('Gir bancari', 'Ticket Restaurant', 'Efectiu Dia', 'TPV Online');
+		public $payment_types = array('Gir bancari', 'Ticket Restaurant', 'Efectiu Dia', 'TPV Online','Empresa');
     public $table               = 'orders';
     public $primary_key         = 'orders.id';
     public function default_order_by() {

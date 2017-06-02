@@ -10,8 +10,13 @@ if (!defined('BASEPATH'))
 	public function default_order_by() {
 		$this->db->order_by('promotional_codes.id');
 	}
-	public function getcodebycode($code){
-		$qry = $this->db->where('code', $code)->get('promotional_codes');
+	public function getcodebycode($code, $is_active = 0){
+		if ($is_active) {
+			$qry = $this->db->where('code', $code)->where('is_active',1)->get('promotional_codes');	
+		} else {
+			$qry = $this->db->where('code', $code)->get('promotional_codes');
+		}
+		
 		if($qry->num_rows())
 			return current($qry->result_array());
 		
