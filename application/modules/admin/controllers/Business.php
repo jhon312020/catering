@@ -67,7 +67,12 @@ class Business extends Admin_Controller {
 			$this->mdl_business->prep_form($id);
 			$centres = $this->mdl_centres->getByBusinessId($id);
 		}
-		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'centres'=>$centres));
+		if (!$id and !$this->input->post('btn_submit')) {
+			$load_default_value = true;
+		} else {
+			$load_default_value = false;
+		}
+		$this->layout->set(array('readonly'=>false, 'error'=>$error, 'centres'=>$centres, 'load_default_value'=>$load_default_value));
 		$this->layout->buffer('content', 'business/form');
 		$this->layout->render();
 	}

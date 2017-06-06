@@ -370,7 +370,7 @@ class Mdl_orders extends Response_Model {
 	}
 
 	public function get_menu_statistics_by_date($from_date, $to_date) {
-		$total_income = $this->mdl_orders->select('SUM(price) as total_income, order_code')
+		$total_income = $this->mdl_orders->select('count(price) as total_income, order_code')
 							->where('order_date >=', $from_date)
 							->where('order_date <=', $to_date)
 							->where('is_active', 1)

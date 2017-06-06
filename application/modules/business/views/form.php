@@ -74,7 +74,13 @@ $count = count($centres);
 						<div class="col-sm-10">
 							<?php
 								if ($readonly != 'readonly') {
-									echo form_checkbox(array( 'id'=>'card', 'name'=>'card', 'value'=>1, 'checked'=>$this->mdl_business->form_value('card'),$readonly=>1));
+									
+									if ($load_default_value) {
+										echo form_checkbox(array( 'id'=>'card', 'name'=>'card', 'value'=>1, 'checked'=>true, $readonly=>1));
+									} else {
+										echo form_checkbox(array( 'id'=>'card', 'name'=>'card', 'value'=>1, 'checked'=>$this->mdl_business->form_value('card'),$readonly=>1));
+									}
+
 								} else {
 									echo form_checkbox(array( 'id'=>'card', 'name'=>'card', 'value'=>1, 'checked'=>$this->mdl_business->form_value('card'),'disabled'=>true));
 								}
@@ -88,7 +94,11 @@ $count = count($centres);
 						<div class="col-sm-10">
 							<?php
 								if ($readonly != 'readonly') {
-									echo form_checkbox(array( 'id'=>'draft', 'name'=>'draft', 'value'=>1, 'checked'=>$this->mdl_business->form_value('draft'),'readonly'=>$readonly));
+									if ($load_default_value) {
+										echo form_checkbox(array( 'id'=>'draft', 'name'=>'draft', 'value'=>1, 'checked'=>true,'readonly'=>$readonly));
+									} else {
+										echo form_checkbox(array( 'id'=>'draft', 'name'=>'draft', 'value'=>1, 'checked'=>$this->mdl_business->form_value('draft'),'readonly'=>$readonly));
+									}
 								} else {
 									echo form_checkbox(array( 'id'=>'draft', 'name'=>'draft', 'value'=>1, 'checked'=>$this->mdl_business->form_value('draft'),'disabled'=>true));
 								}
@@ -102,7 +112,11 @@ $count = count($centres);
 						<div class="col-sm-10">
 							<?php
 								if ($readonly != 'readonly') {
-									echo form_checkbox(array( 'id'=>'ticket', 'name'=>'ticket', 'value'=>1, 'checked'=>$this->mdl_business->form_value('ticket'),'readonly'=>$readonly));
+									if ($load_default_value) {
+										echo form_checkbox(array( 'id'=>'ticket', 'name'=>'ticket', 'value'=>1, 'checked'=>true,'readonly'=>$readonly));
+									} else {
+										echo form_checkbox(array( 'id'=>'ticket', 'name'=>'ticket', 'value'=>1, 'checked'=>$this->mdl_business->form_value('ticket'),'readonly'=>$readonly));
+									}
 								} else {
 									echo form_checkbox(array( 'id'=>'ticket', 'name'=>'ticket', 'value'=>1, 'checked'=>$this->mdl_business->form_value('ticket'),'disabled'=>true));
 								}
@@ -116,7 +130,11 @@ $count = count($centres);
 						<div class="col-sm-10">
 							<?php
 								if ($readonly != 'readonly') {
-									echo form_checkbox(array( 'id'=>'cash', 'name'=>'cash', 'value'=>1, 'checked'=>$this->mdl_business->form_value('cash'),'readonly'=>$readonly));
+									if ($load_default_value) {
+										echo form_checkbox(array( 'id'=>'cash', 'name'=>'cash', 'value'=>1, 'checked'=>true,'readonly'=>$readonly));
+									} else {
+										echo form_checkbox(array( 'id'=>'cash', 'name'=>'cash', 'value'=>1, 'checked'=>$this->mdl_business->form_value('cash'),'readonly'=>$readonly));
+									}
 								} else {
 									echo form_checkbox(array( 'id'=>'cash', 'name'=>'cash', 'value'=>1, 'checked'=>$this->mdl_business->form_value('cash'),'disabled'=>true));
 								}
