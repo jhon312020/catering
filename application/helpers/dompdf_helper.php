@@ -10,7 +10,7 @@ function pdf_create($html, $filename, $stream = TRUE) {
     
     $dompdf = new DOMPDF();
 	
-    $paper_size = array(0,0,595,850);
+    $paper_size = array(0,0,660,900);
 	
 	$dompdf->set_paper($paper_size);
 	

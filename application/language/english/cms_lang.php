@@ -143,7 +143,7 @@ $lang['telephone'] = 'Telephone';
 $lang['options'] = 'Options';
 $lang['hello'] = 'Hello';
 $lang['archive'] = 'ARCHIVE';
-$lang['close'] = 'CLOSE'
+$lang['close'] = 'CLOSE';
 $lang['datos'] = 'Datos';
 $lang['register_success'] = 'Gracias por registrarte. Nos pondremos en contacto contigo muy pronto.';
 
