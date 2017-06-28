@@ -58,6 +58,7 @@ class Business extends Admin_Controller {
 				}
 			} else {
 				$error[] = lang('exists_username');
+				$error_flg = true;
 			}
 			if (!$error_flg) {
 				redirect('admin/business');
@@ -65,7 +66,9 @@ class Business extends Admin_Controller {
 		}
 		if ($id and !$this->input->post('btn_submit')) {
 			$this->mdl_business->prep_form($id);
-			$centres = $this->mdl_centres->getByBusinessId($id);
+		}
+		if ($id) {
+			$centres = $this->mdl_centres->getByBusinessId($id);	
 		}
 		if (!$id and !$this->input->post('btn_submit')) {
 			$load_default_value = true;
