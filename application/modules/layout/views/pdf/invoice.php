@@ -30,7 +30,6 @@
         color:#c49e56;
       }
       .bg-img:before {
-			  
 			  background: linear-gradient(to right, red , yellow); /* Standard syntax */
 			}
     </style>
@@ -40,14 +39,14 @@
     $color1 = '#9A9A9A';
     $color2 = '#B3B3B3';
     $color3 = '#E6E6E6';
-  ?>
+
+	  if (strlen((string)$reference_no) < 9) {
+	    $reference_no = sprintf("%09s", $reference_no);
+	  } 
+	?>
   <body style="font-family:Helvetica">
     <div style="width:100%;">
       <div class="header_background white_text" style="padding-bottom:20px;">
-        <!-- <div class="logo" style="width:100%;background-color:#414042;text-align:right;">
-          <img src="./assets/cc/img/gumen-logo.png" alt="Gumen-Catering">
-        </div> -->
-        <!-- Header section -->
 				<table style="font-size:13px !important;margin-top:80px;margin-left:40px;width:100%;padding:0px;" cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr>
@@ -99,7 +98,7 @@
 									</tr>
 									<tr>
 										<td style="font-size:17px !important;color:#B9996F;font-weight:bold !important;">
-											XXXX XXXX
+											<?php echo $reference_no; ?>
 										</td>
 									</tr>
 								</table>
@@ -143,7 +142,7 @@
 								n º
 							</span>
 							<span style="text-align:right !important;letter-spacing: 5px;">
-								XXXXXXXXX
+								<?php echo $reference_no; ?>
 							</span>
 						</span>
 					</div>
@@ -153,7 +152,7 @@
 								Fecha factura:
 							</td>
 							<td style="text-align:right !important;">
-								30/05/2017
+								<?php date('d/m/Y',strtotime($orders[0]['created_at'])); ?>
 							</td>
 						</tr>
 						<tr>
@@ -161,54 +160,11 @@
 								ID cliente: 
 							</td>
 							<td style="text-align:right !important;">
-								XXXXXXXX
+								<?php echo $client[0]['client_code']; ?>
 							</td>
 						</tr>
 					</table>
 				</div>
-				
-
-
-        <!-- End Header section -->
-        
-        <!--billing section -->
-        <!-- <table style="width:100%;padding-left:10px;" class="header_background white_text">
-          <tbody>
-            <tr>
-              <td style="vertical-align:top;" rowspan="2">
-                <b class="header_title">Cliente:</b><br/>
-                <b><?=$user_name?>,</b><br/>
-                <?=$businessInfo->name?><br/>
-                <?php echo $client[0]['billing_data']; ?>
-              </td>
-              <td style="width:200px;">
-                <table style="width:100%;text-align:left;float:right;" class="header_background white_text">
-                  <tbody>
-                  <tr>
-                    <td style="padding:2px;padding-bottom:15px;font-weight:bold;">
-                    <b class="header_title">Factura Nº:</b><br/>
-                    <?php
-                      if (strlen((string)$reference_no) < 9) {
-                        $reference_no = sprintf("%09s", $reference_no);
-                      } 
-                      echo $reference_no;
-                    ?>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding:2px;font-weight:bold;">
-                    <b class="header_title">Fecha:</b><br/>
-                    <?=date('d/m/Y',strtotime($orders[0]['created_at']))?>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
-        <!-- end billing section -->
-        
       </div>
 
       <table style="width:100%;" cellspacing="0" cellpadding="0">
@@ -233,127 +189,7 @@
 					</tr>
 				</tbody>
 				<tbody style="font-size:13px !important;color:#000 !important;background:#fff !important;">
-					<tr style="border:none !important;">
-						<td style="padding:30px;border-bottom:1px solid #999C9C !important;">
-						</td>
-						<td style="text-align:left !important;border-bottom:1px solid #999C9C !important;">
-							<span style="line-height:1pt;">Menú diario</span><br>
-							<span style="color:#696969 !important;">Primer plato + Segundo plato + Postre</span>
-						</td>
-						<td style="text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
-							5,99 €							
-						</td>
-						<td style="text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
-							2
-						</td>
-						<td style="text-align:right !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
-							11,98 €
-						</td>
-						<td style="border-bottom:1px solid #999C9C !important;width:15px !important;">
-						</td>
-					</tr>
-					<tr style="border:none !important;">
-						<td style="padding:30px;border-bottom:1px solid #999C9C !important;">
-						</td>
-						<td style="text-align:left !important;border-bottom:1px solid #999C9C !important;">
-							<span style="line-height:1pt;">Menú diario</span><br>
-							<span style="color:#696969 !important;">Primer plato + Segundo plato + Postre</span>
-						</td>
-						<td style="text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
-							5,99 €							
-						</td>
-						<td style="text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
-							2
-						</td>
-						<td style="text-align:right !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
-							11,98 €
-						</td>
-						<td style="border-bottom:1px solid #999C9C !important;">
-						</td>
-					</tr>
-					<tr style="border:none !important;">
-						<td style="padding:30px;border-bottom:1px solid #999C9C !important;">
-						</td>
-						<td style="text-align:left !important;border-bottom:1px solid #999C9C !important;">
-							<span style="line-height:1pt;">Menú diario</span><br>
-							<span style="color:#696969 !important;">Primer plato + Segundo plato + Postre</span>
-						</td>
-						<td style="text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
-							5,99 €							
-						</td>
-						<td style="text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
-							2
-						</td>
-						<td style="text-align:right !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
-							11,98 €
-						</td>
-						<td style="border-bottom:1px solid #999C9C !important;">
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">Subtotal</td>
-						<td style="text-align:right !important;padding-top:15px;">71,98 €</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">Descuento</td>
-						<td style="text-align:right !important;padding-top:10px;">6,98 €</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">IVA (21%)</td>
-						<td style="text-align:right !important;padding-top:10px;">15,11 €</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td colspan="2"></td>
-						<td colspan="2" style="padding-top:15px;text-align:right !important;padding-left:70px;">
-							<div style="padding-top:20px;padding-bottom:20px;background:#B9996F !important;padding-right:70px;color:#fff !important;font-weight:bold !important;font-size:16px !important;">Total pedido</div>
-						</td>
-						<td style="text-align:right !important;padding-top:15px;">
-							<div style="padding-top:20px;padding-bottom:20px;background:#B9996F !important;color:#fff !important;font-weight:bold !important;font-size:16px !important;">80,99 €</div>
-						</td>
-						<td style="padding-top:15px;">
-							<div style="padding-top:20px;padding-bottom:20px;background:#B9996F !important;font-weight:bold !important;font-size:16px !important;">&nbsp;</div>
-						</td>
-					</tr>
-					<tr>
-						<td style="padding-top:80px;"></td>
-						<td colspan="5" style="padding-top:80px;">
-							<p style="font-size:16px !important;font-style:italic !important;">Gracias por su pedido!</p>
-						</td>
-					</tr>
-					<tr>
-						<td style="padding-top:10px !important;"></td>
-						<td colspan="5">
-							<p style="font-size:10px !important;color:#696969 !important;">Cumplimos la ley de protección de datos 37738:9/9, para cualquier consulta, pueden ejercer sus derechos notificándolo a Gumen Càtering S.L.<br> Ins. Reg. Mercantil de Barcelona, Tomo 35808, Folio 141, Hoja B266855, Inscrip. 1ª B63264915</p>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="6">
-							<!-- <div class="bg-img" style="background-image: url('assets/cc/img/footer.png');background-repeat: no-repeat !important;background-position: center right !important;background-color: #ccc !important;border: 1px solid !important;width: 100% !important;background-size: cover !important;height: 10em !important;">
-								<div>
-								<div style="width:300px !important;height:10em;background:#353C36;">
-				          <img src="./assets/cc/img/gumen-logo.png" alt="Gumen-Catering" style="text-align:center;margin-top:30px;margin-left:40px;">
-				        </div>
-			        </div> -->
-			        <div class="bg-img" style="background-image: url('assets/cc/img/footer.jpg');background-repeat: no-repeat !important;background-position: center left !important;background-color: #ccc !important;border: 1px solid !important;background-size: cover !important;height: 130px !important;">
-			        </div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
-      <!-- Order section -->
-      <!-- <table style="width:100%;margin:0px;border-collapse:collapse;background-color:<?=$color3?>;" id="order-table">
-        <thead>
-          <tr style="background-color:#c49e56;">
-            <th style="padding:5px;padding-left:10px;text-align:left;border-right:2px solid #fff;color:white;">CONCEPTO</th>
-            <th style="padding:5px;color:white;">IMPORTE</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
+					<?php
           $total_price = 0;
           $bool = false;
           if($orders) {
@@ -361,8 +197,10 @@
             foreach($orders as $order) {
           ?>
           <tr class="order-row">
-            <td width="70%" style="text-align:left">
-              <b>
+          	<td style="padding:15px;border-bottom:1px solid #999C9C !important;">
+						</td>
+            <td style="padding:15px;text-align:left !important;border-bottom:1px solid #999C9C !important;">
+              <span style="line-height:1pt;">
                 <?php 
                   $order_detail = json_decode($order['order_detail'],true);
                   $order_code = $order_detail['order_code'];
@@ -392,45 +230,117 @@
                         $menu_type = lang('combine_menu');
                       }
                   }
-                  echo date('d/m/Y', strtotime($order['order_date'])).' - '.$menu_type ;
+
+                  echo $menu_type;
                 ?>
-              </b>
+              </span><br>
+              <span style="color:#696969 !important;">
+              	<?php
+			            $description = getOrderDescription($order_detail, $plates, $cool_drink_list, $order['order_date']);
+			            echo '- '.implode('<br/> - ', $description);
+			          ?>
+			          <br/>
+			          - pan, aceite, vinagre y Cubiertos
+              </span>
             </td>
-            <td style="text-align:right;padding-right:10px;"><?php echo $order['price']; ?> &euro;</td>
+            <td style="padding:15px;text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
+							<?php echo $order['price']; ?> &euro;	
+						</td>
+						<td style="padding:15px;text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
+							2
+						</td>
+						<td style="padding-top:15px;padding-bottom:15px;text-align:right !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
+							<?php echo $order['price']; ?> &euro;
+						</td>
+						<td style="padding:15px;border-bottom:1px solid #999C9C !important;width:15px !important;">
+						</td>
           </tr>
           <?php
               $total_price += $order['price'];
             }
           }
           ?>
-          <tr class="order-row"><td><p></p></td><td></td></tr>
-          <tr class="order-row"><td><p></p></td><td></td></tr>
-          <tr class="order-row"><td><p></p></td><td></td></tr>
-          <tr style="color:white;background-color:<?=$color2?>;border:1px solid #fff;">
-            <td style="padding-left:10px;">BASE IMPONIBLE</td>
-            <td style="text-align:right;padding-right:10px;"><?php echo number_format($total_price-($total_price*10/100),2,'.',''); ?> &euro;</td>
-          </tr>
-          <tr style="color:white;background-color:<?=$color2?>;border:1px solid #fff;">
-            <td style="padding-left:10px;">TAX: 10% I.V.A.</td>
-            <td style="text-align:right;padding-right:10px;"><?php echo number_format($total_price*10/100,2,'.',''); ?> &euro;</td>
-          </tr>
-          <tr style="color:white;border:1px solid #fff;">
-            <td style="padding-left:10px;background-color:<?=$color1?>;"><b>TOTAL</b> </td>
-            <td style="text-align:right;background:#414042;padding-right:10px;"><?php echo number_format($total_price,2,'.',''); ?> &euro;</td>
-          </tr>
-          <?php if (isset($discount) && $discount) {  ?>
-            <tr style="color:white;background-color:<?=$color2?>;border:1px solid #fff;">
-              <td style="padding-left:10px;">DESCUENTO</td>
-              <td style="text-align:right;padding-right:10px;"><?php echo $discount['discount']; ?> &euro;</td>
-            </tr>
-            <tr style="color:white;border:1px solid #fff;">
-              <td style="padding-left:10px;background-color:<?=$color1?>;"><b>TOTAL A PAGAR</b> </td>
-              <td style="text-align:right;background:#414042;padding-right:10px;"><?php echo $discount['total_price']; ?> &euro;</td>
-            </tr>
-          <?php } ?>
-        </tbody>
-      </table> -->
-      <!-- end order section -->
+					<!-- <tr style="border:none !important;">
+						<td style="padding:30px;border-bottom:1px solid #999C9C !important;">
+						</td>
+						<td style="text-align:left !important;border-bottom:1px solid #999C9C !important;">
+							<span style="line-height:1pt;">Menú diario</span><br>
+							<span style="color:#696969 !important;">Primer plato + Segundo plato + Postre</span>
+						</td>
+						<td style="text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
+							5,99 €							
+						</td>
+						<td style="text-align:center !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
+							2
+						</td>
+						<td style="text-align:right !important;border-bottom:1px solid #999C9C !important;color:#696969 !important;">
+							11,98 €
+						</td>
+						<td style="border-bottom:1px solid #999C9C !important;width:15px !important;">
+						</td>
+					</tr> -->
+					<tr>
+						<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">Subtotal</td>
+						<td style="text-align:right !important;padding-top:15px;"><?php echo number_format($total_price-($total_price*10/100),2,'.',''); ?> &euro;</td>
+						<td></td>
+					</tr>
+					<?php 
+						$overall_total = $total_price;
+						if (isset($discount) && $discount) {
+							$overall_total = $total_price - $discount['discount'];
+					?>
+            <tr>
+							<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">Descuento</td>
+							<td style="text-align:right !important;padding-top:10px;"><?php echo $discount['discount']; ?> &euro;</td>
+							<td></td>
+						</tr>
+          <?php 
+        		}
+
+        		$iva_price = $total_price*21/100;
+        		$overall_total -= $iva_price;
+        	?>
+					
+					<tr>
+						<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">IVA (21%)</td>
+						<td style="text-align:right !important;padding-top:10px;"><?php echo number_format($total_price*21/100,2,'.',''); ?> &euro;</td>
+						<td></td>
+					</tr>
+					<?php
+
+					?>
+					<tr>
+						<td colspan="2"></td>
+						<td colspan="2" style="padding-top:15px;text-align:right !important;padding-left:70px;">
+							<div style="padding-top:20px;padding-bottom:20px;background:#B9996F !important;padding-right:70px;color:#fff !important;font-weight:bold !important;font-size:16px !important;">Total pedido</div>
+						</td>
+						<td style="text-align:right !important;padding-top:15px;">
+							<div style="padding-top:20px;padding-bottom:20px;background:#B9996F !important;color:#fff !important;font-weight:bold !important;font-size:16px !important;"><?php echo number_format($overall_total,2,'.',''); ?> &euro;</div>
+						</td>
+						<td style="padding-top:15px;">
+							<div style="padding-top:20px;padding-bottom:20px;background:#B9996F !important;font-weight:bold !important;font-size:16px !important;">&nbsp;</div>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-top:80px;"></td>
+						<td colspan="5" style="padding-top:80px;">
+							<p style="font-size:16px !important;font-style:italic !important;">Gracias por su pedido!</p>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-top:10px !important;"></td>
+						<td colspan="5">
+							<p style="font-size:10px !important;color:#696969 !important;">Cumplimos la ley de protección de datos 37738:9/9, para cualquier consulta, pueden ejercer sus derechos notificándolo a Gumen Càtering S.L.<br> Ins. Reg. Mercantil de Barcelona, Tomo 35808, Folio 141, Hoja B266855, Inscrip. 1ª B63264915</p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6">
+			        <div class="bg-img" style="background-image: url('assets/cc/img/footer.jpg');background-repeat: no-repeat !important;background-position: center left !important;background-color: #ccc !important;border: 1px solid !important;background-size: cover !important;height: 130px !important;">
+			        </div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
     </div>
   </body>
 </html>
