@@ -281,29 +281,32 @@
 					</tr> -->
 					<tr>
 						<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">Subtotal</td>
-						<td style="text-align:right !important;padding-top:15px;"><?php echo number_format($total_price-($total_price*10/100),2,'.',''); ?> &euro;</td>
+						<?php 
+							$subtotal = $total_price;
+							if (isset($discount) && $discount) {
+								$subtotal = $total_price-$discount['discount'];
+							}
+							$iva_price = $subtotal*10/100;
+							$overall_total = $subtotal;
+						?>
+						<td style="text-align:right !important;padding-top:15px;"><?php echo number_format($subtotal-$iva_price,2,'.',''); ?> &euro;</td>
 						<td></td>
 					</tr>
 					<?php 
-						$overall_total = $total_price;
 						if (isset($discount) && $discount) {
-							$overall_total = $total_price - $discount['discount'];
 					?>
-            <tr>
-							<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">Descuento</td>
-							<td style="text-align:right !important;padding-top:10px;"><?php echo $discount['discount']; ?> &euro;</td>
-							<td></td>
-						</tr>
-          <?php 
-        		}
-
-        		$iva_price = $total_price*21/100;
-        		$overall_total -= $iva_price;
-        	?>
+	            			<tr>
+								<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">Descuento</td>
+								<td style="text-align:right !important;padding-top:10px;"><?php echo $discount['discount']; ?> &euro;</td>
+								<td></td>
+							</tr>
+		          	<?php 
+		        		}
+		        	?>
 					
 					<tr>
-						<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">IVA (21%)</td>
-						<td style="text-align:right !important;padding-top:10px;"><?php echo number_format($total_price*21/100,2,'.',''); ?> &euro;</td>
+						<td colspan="4" style="padding-top:10px;text-align:right !important;padding-right:70px;color:#696969 !important;">IVA (10%)</td>
+						<td style="text-align:right !important;padding-top:10px;"><?php echo number_format($iva_price,2,'.',''); ?> &euro;</td>
 						<td></td>
 					</tr>
 					<?php

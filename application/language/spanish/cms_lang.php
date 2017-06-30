@@ -198,5 +198,9 @@ $lang['Percentage'] = "Porcentaje";
 $lang['price_or_percentage'] = "Importe o %";
 $lang['Price'] = "Importe";
 $lang['options'] = "Opciones";
+
+$lang['expired_date'] = 'Fecha de vencimiento';
+$lang['company'] = 'Empresa';
+$lang['companies'] = 'Empresa';
 /*---ó-*/
 ?>

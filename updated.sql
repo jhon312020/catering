@@ -28,3 +28,9 @@ CREATE TABLE IF NOT EXISTS `tbl_discount_applied` (
 /* 30-May-2017 */
 ALTER TABLE `tbl_business`
   DROP `paid_by`;
+
+
+/* 28-June-2017 */
+ALTER TABLE `tbl_promotional_codes` ADD `expired_at` DATE NULL DEFAULT NULL AFTER `price_or_percentage`;
+
+ALTER TABLE `tbl_promotional_codes` ADD `company_ids` TEXT NULL AFTER `expired_at`;

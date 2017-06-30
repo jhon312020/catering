@@ -140,15 +140,27 @@ class Ajax extends Anonymous_Controller {
 
   function getPromoCodeDetail() {
 	if ($this->input->post('code') && $this->input->post('total_price')) {
+		$this->login_client_profile = $this->mdl_clients->get_client_details_by_id($this->session->userdata('client_id'));
 		$promo_code_record = $this->mdl_promotional_codes->getcodebycode($this->input->post('code'),1);
 		$result = array();
-		if ($promo_code_record) {
-			$total_price = $this->input->post('total_price');
-			$result = $this->mdl_promotional_codes->calculateTotalPrice($total_price, $promo_code_record);
-			$result['id'] = $promo_code_record['id'];
-			$result['detail'] = $promo_code_record;
-			echo json_encode($result);
-			exit;
+		if ($promo_code_record && time() <= strtotime($promo_code_record['expired_at'])) {
+			$company_ids = json_decode($promo_code_record['company_ids']);
+			if (in_array($this->login_client_profile->business_id, $company_ids)) {
+				if ($this->mdl_promotional_codes->validateAlreadyUsed($this->session->userdata('client_id'),$promo_code_record['id'] ) == false) {
+					$total_price = $this->input->post('total_price');
+					$result = $this->mdl_promotional_codes->calculateTotalPrice($total_price, $promo_code_record);
+					$result['id'] = $promo_code_record['id'];
+					$result['detail'] = $promo_code_record;
+					echo json_encode($result);
+					exit;	
+				} else {
+					echo json_encode(array('error'=>'Invalid Código Promocional'));
+					exit;
+				}
+			} else {
+				echo json_encode(array('error'=>'Invalid Código Promocional'));
+					exit;
+			}
 		} else {
 			echo json_encode(array('error'=>'Invalid Código Promocional'));
 			exit;

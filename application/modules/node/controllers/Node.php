@@ -591,6 +591,12 @@ class Node extends Anonymous_Controller {
   public function paymentSuccess() {
     
     $reference_no = $this->input->get('cm');
+
+    if ($this->mdl_orders->referenceNoExists($reference_no,$this->session->userdata('client_id')) == false) {
+    	redirect($this->uri->segment(1));
+    	exit;
+    }
+
     $this->mdl_orders->setActive($reference_no);
 
     // Get the to email address based on the payment done by who.
@@ -620,9 +626,9 @@ class Node extends Anonymous_Controller {
     // Generate the invoie pdf
     //$this->load->view('layout/pdf/invoice.php',$data_array); 
     
-    $pdf = $this->load->view('layout/pdf/invoice.php',$data_array, TRUE);
+    /*$pdf = $this->load->view('layout/pdf/invoice.php',$data_array, TRUE);
     $this->load->helper(array('dompdf', 'file'));
-    $invoice = pdf_create($pdf, $reference_no, false);
+    $invoice = pdf_create($pdf, $reference_no, false);*/
 
 
     $this->email->set_mailtype("html");
@@ -645,7 +651,7 @@ class Node extends Anonymous_Controller {
         $this->email->from($this->site_contact->email, 'Gumen-Catering');
         $this->email->to($businessInfo->email);
         $this->email->subject($subject);
-        $this->email->attach($invoice);
+        //$this->email->attach($invoice);
         $this->email->message($invoice_email);
         $this->email->send();
     }

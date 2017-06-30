@@ -9,6 +9,7 @@ if (!defined('BASEPATH'))
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('promotional_codes/mdl_promotional_codes');
+		$this->load->model('business/mdl_business');
 		$this->path = $this->mdl_settings->setting('site_url').$this->mdl_settings->setting('upload_folder')."images/promotional_codes/";
 	}
 
@@ -26,7 +27,10 @@ if (!defined('BASEPATH'))
 		}
 		if ($this->mdl_promotional_codes->run_validation()) {
 			unset($_POST['btn_submit']);
-			$id = $this->mdl_promotional_codes->save($id, $this->input->post());
+			$post_params = $this->input->post();
+			$post_params['company_ids'] = json_encode($post_params['company_ids']);
+			$post_params['expired_at'] = date('Y-m-d',strtotime(str_replace('/','-',$post_params['expired_at'])));
+			$id = $this->mdl_promotional_codes->save($id, $post_params);
 			if(!$error_flg)
 				redirect('admin/promotional_codes');
 		}
@@ -34,8 +38,10 @@ if (!defined('BASEPATH'))
 		if ($id and !$this->input->post('btn_submit')) {
 			$this->mdl_promotional_codes->prep_form($id);
 		}
+
+		$companies = $this->mdl_business->getList();
 		$this->db->select(array('name','zone'));
-		$this->layout->set(array('path'=>$this->path, 'readonly'=>false));
+		$this->layout->set(array('path'=>$this->path, 'readonly'=>false, 'companies'=>$companies));
 		$this->layout->buffer('content', 'promotional_codes/form');
 		$this->layout->render();
 	}
@@ -48,9 +54,10 @@ if (!defined('BASEPATH'))
 		if ($id) {
 			$this->mdl_promotional_codes->prep_form($id);
 		}
-		$this->db->select(array('name','zone'));
+		//$this->db->select(array('name','zone'));
+		$companies = $this->mdl_business->getList();
 		
-		$this->layout->set(array('path'=>$this->path, 'readonly'=>true));
+		$this->layout->set(array('path'=>$this->path, 'readonly'=>true, 'companies'=>$companies));
 		$this->layout->buffer('content', 'promotional_codes/form');
 		$this->layout->render();
 	}

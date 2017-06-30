@@ -20,6 +20,10 @@ class Cron extends Anonymous_Controller {
 									->where("created_at < date_sub(now(),INTERVAL 5 MINUTE)")->get();
 		if ($qry->num_rows()) {
 			$result = $qry->result_array();
+			foreach ($result as $key=>$record) {
+				$result[$key]['reason'] = 'expired';
+			}
+			$this->db->insert_batch('tbl_orders_deleted',$result);
 			$id = array_map(function ($value) {return  $value['id'];}, $result);
 			$this->db->where(array('order_code !='=>'', 'is_active'=>0))->where("created_at < date_sub(now(),INTERVAL 5 MINUTE)");
 			$this->db->delete('orders');

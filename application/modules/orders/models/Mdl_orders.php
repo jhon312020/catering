@@ -454,6 +454,15 @@ class Mdl_orders extends Response_Model {
 		$this->db->query("UPDATE tbl_clients t1 INNER JOIN tbl_centres t2 ON t1.centre_id = t2.id SET t1.business_id = t2.bussiness_id");
 	}
 
+	function referenceNoExists($reference_no, $client_id) {
+		$result = $this->mdl_orders->where('reference_no',$reference_no)->where('client_id',$client_id)->get()->result();
+		if ($result) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 
 }
 ?>

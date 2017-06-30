@@ -60,6 +60,17 @@ if (!defined('BASEPATH'))
 		$discount = number_format($discount,2,'.','');
 		return array('total_price'=>$total_price,'discount'=>$discount);
 	}
+
+	public function validateAlreadyUsed($client_id,$promo_code_id) {
+		$query = "SELECT ta.id FROM `tbl_discount_applied` ta inner join tbl_orders tr ON ta.reference_no = tr.reference_no where tr.client_id = $client_id and ta.promotional_code_id = $promo_code_id";
+		$result = $this->db->query($query)->result();
+		if ($result) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }
 
 ?>

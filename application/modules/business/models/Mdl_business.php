@@ -63,5 +63,14 @@ class Mdl_business extends Response_Model {
 			else
 				return false;
 		}
+
+        public function getList() {
+            $result = $this->db->select('id,name')->get('business')->result();
+            $list = array();
+            foreach ($result as $record) {
+                $list[$record->id] = $record->name;
+            }
+            return $list;
+        }
 }
 ?>
