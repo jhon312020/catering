@@ -578,6 +578,8 @@ class Node extends Anonymous_Controller {
     //~ $this->email->message('rejected');
     //~ $this->email->send();
     /*return journey end*/
+    $reference_no = $this->input->get('cm');
+    $this->db->query('delete from tbl_discount_applied where reference_no='.$reference_no);
     $this->load->view('layout/templates/error');
   }
   

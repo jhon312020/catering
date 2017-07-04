@@ -1,4 +1,4 @@
-<?php
+	<?php
 /*----*/
 //Ú É Á
 $lang['exists_username'] = 'Email id alredy exists';
@@ -202,5 +202,6 @@ $lang['options'] = "Opciones";
 $lang['expired_date'] = 'Fecha de vencimiento';
 $lang['company'] = 'Empresa';
 $lang['companies'] = 'Empresa';
+$lang['is_per_user'] = 'Por usuario';
 /*---ó-*/
 ?>

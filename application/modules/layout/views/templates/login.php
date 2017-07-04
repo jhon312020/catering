@@ -45,7 +45,7 @@ p {
             <form role="form" action="" method="post" class="login-form" data-toggle="validator">
               <div class="form-group">
                 <label class="sr-only" for="form-username">Username</label>
-                <input type="email" required name="email" placeholder="<?php echo lang('username'); ?>" class="form-username form-control" id="form-username" data-error="<?php echo lang('invalid_email'); ?>">
+                <input type="email" required name="email" placeholder="<?php echo lang('email'); ?>" class="form-username form-control" id="form-username" data-error="<?php echo lang('invalid_email'); ?>">
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">

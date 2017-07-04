@@ -136,7 +136,7 @@ if($todaySelectedMenus) {
             <div class="paysection-3">
               <div class="row">
                 <div class="col-xs-12 col-sm-12 col-sm-offset-0 paysection3text">
-                  <input type="checkbox" name="accept" id="accept" value="1"> <a href="<?php echo site_url(PAGE_LANGUAGE); ?>/terms" class="btn-link" target="_blank"> Accepto los terminos y condiciones</a>
+                  <input type="checkbox" name="accept" id="accept" value="1"> <a href="<?php echo site_url(PAGE_LANGUAGE); ?>/terms" class="btn-link" target="_blank"> Acepto los terminos y condiciones</a>
                     <span class="error" id="jsAcceptTerms">Por favor, acepte para poder continuar.</span>
                 </div>
                 <div class="row">

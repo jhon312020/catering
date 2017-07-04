@@ -147,4 +147,5 @@ $lang['close'] = 'CLOSE';
 $lang['datos'] = 'Datos';
 $lang['register_success'] = 'Gracias por registrarte. Nos pondremos en contacto contigo muy pronto.';
 
+$lang['is_per_user'] = 'Per user';
 ?>

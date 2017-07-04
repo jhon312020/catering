@@ -44,6 +44,12 @@ $disabled = ($readonly)?'disabled':'';
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-sm-3 control-label"><?php echo lang('is_per_user'); ?>: </label>
+						<div class="col-sm-5">
+							<?php echo form_dropdown(array('name'=>'is_per_user', 'options'=>array('0'=>'No','1'=>'Yes') ,'class'=>'form-control', $readonly=>true, 'selected'=>$this->mdl_promotional_codes->form_value('is_per_user'))); ?>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-sm-3 control-label"><?php echo lang('companies'); ?>: </label>
 						<div class="col-sm-5">
 							<?php 
