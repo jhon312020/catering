@@ -132,7 +132,8 @@ class Cron extends Anonymous_Controller {
 
   			/*PDF creation*/
   			$data_array['orders'] = $this->mdl_orders->get_orders_by_business_month($business_id, $month, $year, $i);
-  			//print_r($data_array['orders']);die;
+  			/*echo "<pre>";
+  			print_r($data_array);die;*/
   			$pdf = $this->load->view('layout/pdf/invoice_business.php',$data_array, TRUE);		
   			$file_name = 'business_'.$business_id.'_'.$month.'_'.$year.'_'.($i + 1).'_to_'.$limit;
   			$output = pdf_create($pdf, $file_name, false);

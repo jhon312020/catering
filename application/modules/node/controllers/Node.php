@@ -696,15 +696,15 @@ class Node extends Anonymous_Controller {
   	/*echo "<pre>";
   	print_r($data_array);die;*/
   	$users = $this->mdl_clients->where('id', $user_id)->get()->row();
-    $emailToAddress = $users->email;
-    //$emailToAddress = 'bright@proisc.com';
+    //$emailToAddress = $users->email;
+    $emailToAddress = 'bright@proisc.com';
 
   	$pdf = $this->load->view('layout/pdf/invoice_users.php',$data_array, TRUE);
 		$this->load->helper(array('dompdf', 'file'));
     $output = pdf_create($pdf, 'user_invoice_'.$users->id.'_'.$month.'_'.$year, false);
 
     /*Email*/
-    $this->load->library('email');
+    /*$this->load->library('email');
 		$subject  = 'Pedido online orders for the month  '.$month_text.' '.$year;
 		$body = "Please find the attached pdf for orders in the month of ".$month_text.' '.$year;
     $this->email->set_mailtype("html");
@@ -715,7 +715,7 @@ class Node extends Anonymous_Controller {
     $this->email->subject($subject);
     $this->email->message($body);
     $this->email->attach($output);
-		$this->email->send();
+		$this->email->send();*/
 
 		return true;
   }
@@ -769,7 +769,7 @@ class Node extends Anonymous_Controller {
   			//$file_lists[] = $file_name;
 
   			/*Email*/
-  			$subject  = 'Pedido online orders for the month  '.$month_text.' '.$year.' record from '.($i + 1).' to '.$limit;
+  			/*$subject  = 'Pedido online orders for the month  '.$month_text.' '.$year.' record from '.($i + 1).' to '.$limit;
   			$body = "Please find the attached pdf for orders in the month of ".$month_text.' '.$year;
 		    $this->email->set_mailtype("html");
 		    //Need to change admin email dynamically
@@ -779,7 +779,7 @@ class Node extends Anonymous_Controller {
 		    $this->email->subject($subject);
 		    $this->email->message($body);
 		    $this->email->attach($output);
-    		$this->email->send();
+    		$this->email->send();*/
 
   			$count--;
   			$i+=$pdf_limit;
@@ -790,11 +790,11 @@ class Node extends Anonymous_Controller {
   		$data_array['orders'] = $this->mdl_orders->get_orders_by_business_month($business_id, $month, $year, $i);
 			//print_r($data_array['orders']);die;
 			$pdf = $this->load->view('layout/pdf/invoice_business.php',$data_array, TRUE);		
-			$file_name = 'business_'.$month.'_'.$year;
+			$file_name = 'business_'.$business_id.'_'.$month.'_'.$year;
 			$output = pdf_create($pdf, $file_name, false);
 
 			/*Email*/
-			$subject  = 'Pedido online orders for the month  '.date('F', strtotime($date)).' '.$year;
+			/*$subject  = 'Pedido online orders for the month  '.date('F', strtotime($date)).' '.$year;
 			$body = "Please find the attached pdf for orders in the month of ".date('F', strtotime($date)).' '.$year;
 	    $this->email->set_mailtype("html");
 	    //Need to change admin email dynamically
@@ -804,7 +804,7 @@ class Node extends Anonymous_Controller {
 	    $this->email->subject($subject);
 	    $this->email->message($body);
 	    $this->email->attach($output);
-  		$this->email->send();
+  		$this->email->send();*/
 			//$file_lists[] = $file_name;
 
   	}
