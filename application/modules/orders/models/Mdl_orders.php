@@ -508,9 +508,10 @@ class Mdl_orders extends Response_Model {
 				->join('centres', 'centres.Id = clients.centre_id', 'left')
 				->where('MONTH(tbl_orders.order_date)', $month)
 				->where('YEAR(tbl_orders.order_date)', $year)
+				->where('orders.reference_no is not null')
 				->where('orders.is_active', 1)
 				->where('business.id', $company_id)
-				->group_by(['orders.order_date', 'business.id'])
+				->group_by(['orders.order_date', 'orders.client_id'])
 				->order_by('orders.order_date','asc');
 		if ($offset >= 0) {
 			$query->limit(PDF_LIMIT, $offset);
@@ -538,8 +539,9 @@ class Mdl_orders extends Response_Model {
 				->where('MONTH(tbl_orders.order_date)', $month)
 				->where('YEAR(tbl_orders.order_date)', $year)
 				->where('orders.is_active', 1)
+				->where('orders.reference_no is not null')
 				->where('business.id', $company_id)
-				->group_by(['orders.order_date', 'business.id'])
+				->group_by(['orders.order_date', 'orders.client_id'])
 				->order_by('orders.order_date','asc');
 		
 		$orders_list_by_month_count = $query->get()->num_rows();
