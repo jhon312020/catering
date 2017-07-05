@@ -673,5 +673,142 @@ class Node extends Anonymous_Controller {
     $template_vars['conditions'] = $this->mdl_conditions->get_terms_and_condtions();
     $this->load->view('layout/templates/terms', $template_vars);
   }
+
+  /**
+	 * @Function invoiceUsers
+	 * Create the pdf for users with in month
+   * for payment success
+   * @params
+   *  	$month                   - Month which is going to generate the pdf for users
+   *  	$year                    - Year which is going to generate the pdf for users
+   *  	$user_id                 - Unique id for the users.
+	 *
+	 * @return
+	 * 		The generated pdf url.
+   * 
+	*/
+  public function invoiceUsers ($user_id, $month, $year) {
+  	//echo $user_id.'-----'.$month.'-----'.$year;die;
+  	$data_array = [];
+  	$date = '01-'.$month.'-'.$year;
+  	$month_text = date('F', strtotime($date));
+  	$data_array['orders'] = $this->mdl_orders->get_orders_by_user_month($user_id, $month, $year);
+  	/*echo "<pre>";
+  	print_r($data_array);die;*/
+  	$users = $this->mdl_clients->where('id', $user_id)->get()->row();
+    $emailToAddress = $users->email;
+    //$emailToAddress = 'bright@proisc.com';
+
+  	$pdf = $this->load->view('layout/pdf/invoice_users.php',$data_array, TRUE);
+		$this->load->helper(array('dompdf', 'file'));
+    $output = pdf_create($pdf, 'user_invoice_'.$users->id.'_'.$month.'_'.$year, false);
+
+    /*Email*/
+    $this->load->library('email');
+		$subject  = 'Pedido online orders for the month  '.$month_text.' '.$year;
+		$body = "Please find the attached pdf for orders in the month of ".$month_text.' '.$year;
+    $this->email->set_mailtype("html");
+    //Need to change admin email dynamically
+    $this->email->from($this->site_contact->email, 'Gumen-Catering');
+    $this->email->to($emailToAddress);
+    //$this->email->to('jeeva@proisc.com');
+    $this->email->subject($subject);
+    $this->email->message($body);
+    $this->email->attach($output);
+		$this->email->send();
+
+		return true;
+  }
+
+	/**
+	 * @Function invoiceBussiness
+	 * Create the pdf for bussiness with in month
+   * for payment success
+   * @params
+   *  	$month                   - Month which is going to generate the pdf for users
+   *  	$year                    - Year which is going to generate the pdf for users
+   *  	$business_id            - Unique id for the bussiness.
+	 *
+	 * @return
+	 * 		The generated pdf url.
+   * 
+	*/
+  public function invoiceBusiness ($business_id, $month, $year) {
+  	$data_array = [];
+
+  	$business = $this->mdl_business->where('id', $business_id)->get()->row();
+    $emailToAddress = $business->email;
+    //$emailToAddress = 'bright@proisc.com';
+
+  	//echo "<pre>";
+  	$date = '01-'.$month.'-'.$year;
+  	$month_text = date('F', strtotime($date));
+  	$length = $this->mdl_orders->get_orders_by_business_month_count($business_id, $month, $year);
+  	//echo $length;die;
+  	$this->load->helper(array('dompdf', 'file'));
+  	$file_lists = [];
+  	$i = 0;
+  	$pdf_limit = PDF_LIMIT;
+
+  	$this->load->library('email');
+  	if ($length >= $pdf_limit) {
+  		$count = floor($length/$pdf_limit);
+  		//echo $count;die;
+  		while ($count >= 1) {
+  			$limit = $i + $pdf_limit;
+  			if ($count == 1) {
+  				$limit = $length % $pdf_limit;
+  			}
+
+  			/*PDF creation*/
+  			$data_array['orders'] = $this->mdl_orders->get_orders_by_business_month($business_id, $month, $year, $i);
+  			//print_r($data_array['orders']);die;
+  			$pdf = $this->load->view('layout/pdf/invoice_business.php',$data_array, TRUE);		
+  			$file_name = 'business_'.$business_id.'_'.$month.'_'.$year.'_'.($i + 1).'_to_'.$limit;
+  			$output = pdf_create($pdf, $file_name, false);
+  			//$file_lists[] = $file_name;
+
+  			/*Email*/
+  			$subject  = 'Pedido online orders for the month  '.$month_text.' '.$year.' record from '.($i + 1).' to '.$limit;
+  			$body = "Please find the attached pdf for orders in the month of ".$month_text.' '.$year;
+		    $this->email->set_mailtype("html");
+		    //Need to change admin email dynamically
+		    $this->email->from($this->site_contact->email, 'Gumen-Catering');
+		    $this->email->to($emailToAddress);
+		    //$this->email->to('jeeva@proisc.com');
+		    $this->email->subject($subject);
+		    $this->email->message($body);
+		    $this->email->attach($output);
+    		$this->email->send();
+
+  			$count--;
+  			$i+=$pdf_limit;
+  		}
+  	} else {
+
+  		/*PDF creation*/
+  		$data_array['orders'] = $this->mdl_orders->get_orders_by_business_month($business_id, $month, $year, $i);
+			//print_r($data_array['orders']);die;
+			$pdf = $this->load->view('layout/pdf/invoice_business.php',$data_array, TRUE);		
+			$file_name = 'business_'.$month.'_'.$year;
+			$output = pdf_create($pdf, $file_name, false);
+
+			/*Email*/
+			$subject  = 'Pedido online orders for the month  '.date('F', strtotime($date)).' '.$year;
+			$body = "Please find the attached pdf for orders in the month of ".date('F', strtotime($date)).' '.$year;
+	    $this->email->set_mailtype("html");
+	    //Need to change admin email dynamically
+	    $this->email->from($this->site_contact->email, 'Gumen-Catering');
+	    $this->email->to($emailToAddress);
+	    //$this->email->to('jeeva@proisc.com');
+	    $this->email->subject($subject);
+	    $this->email->message($body);
+	    $this->email->attach($output);
+  		$this->email->send();
+			//$file_lists[] = $file_name;
+
+  	}
+  	return true;
+  }
 }
 ?>

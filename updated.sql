@@ -34,3 +34,6 @@ ALTER TABLE `tbl_business`
 ALTER TABLE `tbl_promotional_codes` ADD `expired_at` DATE NULL DEFAULT NULL AFTER `price_or_percentage`;
 
 ALTER TABLE `tbl_promotional_codes` ADD `company_ids` TEXT NULL AFTER `expired_at`;
+
+/* 04-July-2017 by Bright */
+ALTER TABLE `tbl_discount_applied` CHANGE `reference_no` `reference_no` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

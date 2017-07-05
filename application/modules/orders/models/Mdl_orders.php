@@ -462,7 +462,90 @@ class Mdl_orders extends Response_Model {
 			return false;
 		}
 	}
+	/**
+   * Get the order by user id amd month
+   *
+   * @return  Array
+   * 
+  */
+	public function get_orders_by_user_month ($user_id, $month, $year) {
 
+		$query = 
+			$this->mdl_orders
+				->select('clients.name as invoice_to, clients.surname, clients.client_code as code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no as reference_no, SUM(IF(tbl_discount_applied.id is null, tbl_orders.price, tbl_discount_applied.total_price)) as price, orders.is_active,orders.menu_type_id as order_code, orders.order_detail, centres.Centre, orders.drink1_id, orders.drink2_id, clients.telephone as phone')
+				->join('clients', 'clients.id = orders.client_id', 'left')
+				->join('business', 'business.id = clients.business_id', 'left')
+				->join('discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
+				->join('centres', 'centres.Id = clients.centre_id', 'left')
+				->where('MONTH(tbl_orders.order_date)', $month)
+				->where('YEAR(tbl_orders.order_date)', $year)
+				->where('orders.is_active', 1)
+				->where('orders.client_id', $user_id)
+				->group_by('orders.order_date')
+				->order_by('orders.id','desc');
+		
+		$orders_list_by_month = $query->get()->result_array();
+
+		return $orders_list_by_month;
+	}
+	/**
+   * Get the order by company id amd month
+   *
+   * @return  Array
+   * 
+  */
+	public function get_orders_by_business_month ($company_id, $month, $year, $offset = null) {
+		/*
+			SELECT tor.* FROM `tbl_orders` tor left join tbl_clients tc on tc.id = tor.client_id left join tbl_business tb on tb.id = tc.business_id   where tor.is_active=1 and tb.id = 1 and month(tor.order_date) = 03 and year(tor.order_date) = 2017  group by tor.client_id, tor.order_date
+		*/
+			
+		$query = 
+			$this->mdl_orders
+				->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no as reference_no, SUM(IF(tbl_discount_applied.id is null, tbl_orders.price, tbl_discount_applied.total_price)) as price, orders.is_active,orders.menu_type_id as order_code, orders.order_detail, centres.Centre, orders.drink1_id, orders.drink2_id, business.telephone as phone, business.CodiEmpresa as code, business.name as invoice_to')
+				->join('clients', 'clients.id = orders.client_id', 'left')
+				->join('business', 'business.id = clients.business_id', 'left')
+				->join('discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
+				->join('centres', 'centres.Id = clients.centre_id', 'left')
+				->where('MONTH(tbl_orders.order_date)', $month)
+				->where('YEAR(tbl_orders.order_date)', $year)
+				->where('orders.is_active', 1)
+				->where('business.id', $company_id)
+				->group_by(['orders.order_date', 'orders.client_id'])
+				->order_by('orders.order_date','asc');
+		if ($offset >= 0) {
+			$query->limit(PDF_LIMIT, $offset);
+		}
+		
+		$orders_list_by_month = $query->get()->result_array();
+
+		return $orders_list_by_month;
+	}
+
+	/**
+   * Get the order by company id amd month
+   *
+   * @return  Array
+   * 
+  */
+	public function get_orders_by_business_month_count ($company_id, $month, $year) {
+		$query = 
+			$this->mdl_orders
+				->select('clients.name,clients.surname, clients.client_code, business.name as business, orders.id, orders.order_date, orders.payment_method,orders.reference_no as reference_no, SUM(IF(tbl_discount_applied.id is null, tbl_orders.price, tbl_discount_applied.total_price)) as price, orders.is_active,orders.menu_type_id as order_code, orders.order_detail, centres.Centre, orders.drink1_id, orders.drink2_id, business.telephone as phone, business.CodiEmpresa as code, business.name as invoice_to')
+				->join('clients', 'clients.id = orders.client_id', 'left')
+				->join('business', 'business.id = clients.business_id', 'left')
+				->join('discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
+				->join('centres', 'centres.Id = clients.centre_id', 'left')
+				->where('MONTH(tbl_orders.order_date)', $month)
+				->where('YEAR(tbl_orders.order_date)', $year)
+				->where('orders.is_active', 1)
+				->where('business.id', $company_id)
+				->group_by(['orders.order_date', 'orders.client_id'])
+				->order_by('orders.order_date','asc');
+		
+		$orders_list_by_month_count = $query->get()->num_rows();
+
+		return $orders_list_by_month_count;
+	}
 
 }
 ?>
