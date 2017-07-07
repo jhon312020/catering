@@ -124,12 +124,28 @@ class Node extends Anonymous_Controller {
 			if ($data) {
 				redirect(PAGE_LANGUAGE.'/menus');
 			} else {
-				redirect(PAGE_LANGUAGE);
+				$business_login_details = $this->mdl_business->check_credetials($this->input->post());
+				if ($business_login_details) {
+					redirect(PAGE_LANGUAGE.'/business-invoice');
+				} else {
+					redirect(PAGE_LANGUAGE);
+				}
 			}
 		}
     $res = array();
     
     $this->load->view('layout/templates/login', $res);
+  }
+
+  /**
+   * Function display_home
+   *
+   * @return  void
+   * 
+   */
+  public function businessInvoice () {
+		$data_array['invoice_list'] = $this->mdl_orders->get_invoice_monthwise();
+    $this->load->view('layout/templates/business-invoice', $data_array);
   }
 
 	/**
@@ -469,7 +485,7 @@ class Node extends Anonymous_Controller {
    * 
    */
   public function logout(){
-    $this->session->sess_destroy();
+  	$this->session->sess_destroy();
     redirect(PAGE_LANGUAGE);
   }
   

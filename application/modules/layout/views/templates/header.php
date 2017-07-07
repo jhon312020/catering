@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/style.css">
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/bootstrap-datepicker.min.css">
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/bootstrap-multiselect.css">
+		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/cc/css/dataTables.bootstrap.min.css">
 		<script src="<?php echo base_url(); ?>assets/cc/js/jquery-1.11.1.min.js"></script>
 		<script>
 		var SITE_URL = "<?php echo site_url(); ?>";

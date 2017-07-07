@@ -1,7 +1,11 @@
 <?php
   $menu_selected = $this->uri->segment(2);
   /* Forming the menu statically with the url as key */
-  $menus = array('profile' => lang('profile'), 'menus' => lang('menus'), 'orders'=> lang('orders'), 'contact' => lang('contact'));
+  if (isset($user_info['client_name'])) {
+  	$menus = array('profile' => lang('profile'), 'menus' => lang('menus'), 'orders'=> lang('orders'), 'contact' => lang('contact'));
+	} else {
+		$menus = array('business-invoice' => lang('business_invoice'));
+	}
   # Used for printing all the array variables */
   //print_r($this->_ci_cached_vars);
 ?>
@@ -25,10 +29,10 @@
     </div>
     <div id="navbar3" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="" javascript="return false" class="discard_links"><?php echo $user_info['client_name']; ?></a></li>
-		<li><a href="" javascript="return false" class="discard_links"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+        <li><a href="javascript:;" class="discard_links"><?php echo isset($user_info['client_name'])?$user_info['client_name']:$user_info['business_name']; ?></a></li>
+		<li><a href="javascript:;" class="discard_links"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
         <?php 
-		$licount = 1;
+				$licount = 1;
         foreach ($menus as $url=>$menu) { 
 				?>
           <li class="<?php echo $url == $menu_selected? 'active' : ''; ?>">
@@ -44,6 +48,7 @@
 		$licount;
 		} ?>
         <li><a href="<?php echo site_url(PAGE_LANGUAGE.'/logout');?>">LOGOUT</a></li>
+        <?php if (isset($user_info['client_name'])) { ?>
         <li>
           <?php $cartImage = ($menu_selected == 'payment') ? 'cart-green.png':'cart-white.png'; ?>
           <a href="<?php echo site_url(PAGE_LANGUAGE.'/payment'); ?>"><img class="cart-logo desk_cart" src="<?php echo TEMPLATE_PATH.$cartImage; ?>">
@@ -52,6 +57,7 @@
           <?php } ?>
           </a>
         </li>
+        <?php } ?>
       </ul>
     </div>
     <!--/.nav-collapse -->

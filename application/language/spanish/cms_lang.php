@@ -203,5 +203,9 @@ $lang['expired_date'] = 'Fecha de vencimiento';
 $lang['company'] = 'Empresa';
 $lang['companies'] = 'Empresa';
 $lang['is_per_user'] = 'Por usuario';
+
+$lang['invoice_month_year'] = 'Invoice month and year';
+$lang['download_link'] = 'Download link';
+$lang['business_invoice'] = 'Business invoice';
 /*---ó-*/
 ?>

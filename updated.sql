@@ -37,3 +37,19 @@ ALTER TABLE `tbl_promotional_codes` ADD `company_ids` TEXT NULL AFTER `expired_a
 
 /* 04-July-2017 by Bright */
 ALTER TABLE `tbl_discount_applied` CHANGE `reference_no` `reference_no` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+CREATE TABLE IF NOT EXISTS `tbl_invoices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `invoice_no` varchar(255) NOT NULL,
+  `date_of_invoice` date NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*07-July-2017*/
+ALTER TABLE `tbl_business`  ADD `password` VARCHAR(255) NULL DEFAULT NULL  AFTER `email`;
+ALTER TABLE `tbl_business`  ADD `password_key` VARCHAR(255) NULL DEFAULT NULL  AFTER `password`;

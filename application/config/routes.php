@@ -121,5 +121,8 @@ $route['es/get_promo_code_detail'] = 'ajax/getPromoCodeDetail';
 $route['en/invoice-users/(:num)/(:num)/(:num)'] = 'node/invoiceUsers/$1/$2/$3';
 $route['es/invoice-users/(:num)/(:num)/(:num)'] = 'node/invoiceUsers/$1/$2/$3';
 
+$route['en/business-invoice'] = 'node/businessInvoice';
+$route['es/business-invoice'] = 'node/businessInvoice';
+
 $route['en/invoice-business/(:num)/(:num)/(:num)'] = 'node/invoiceBusiness/$1/$2/$3';
 $route['es/invoice-business/(:num)/(:num)/(:num)'] = 'node/invoiceBusiness/$1/$2/$3';
