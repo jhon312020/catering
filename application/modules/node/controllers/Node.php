@@ -707,6 +707,7 @@ class Node extends Anonymous_Controller {
   public function invoiceUsers ($user_id, $month, $year) {
   	//echo $user_id.'-----'.$month.'-----'.$year;die;
   	$data_array = [];
+    $invoice_no = '';
   	$date = '01-'.$month.'-'.$year;
   	$month_text = date('F', strtotime($date));
   	
@@ -714,6 +715,7 @@ class Node extends Anonymous_Controller {
   	print_r($data_array);die;*/
   	$users = $this->mdl_clients->where('id', $user_id)->get()->row();
     $emailToAddress = $users->email;
+    $data_array['dni'] = $users->dni;
     //$emailToAddress = 'bright@proisc.com';
 
     $invoice_date = date("Y-m-d", strtotime($date));
@@ -723,19 +725,25 @@ class Node extends Anonymous_Controller {
     	$invoice_file_lists = json_decode($invoice->file_name, true);
     	$file_path = 'uploads/temp/'.$invoice_file_lists[0];
     	if (file_exists($file_path)) {
-    		$is_create = false;
+    		$is_create = true;
     	}
     }
 
+
     if ($is_create) {
     	$data_array['orders'] = $this->mdl_orders->get_orders_by_user_month($user_id, $month, $year);
-    	$pdf = $this->load->view('layout/pdf/invoice_users.php',$data_array, TRUE);
-			$this->load->helper(array('dompdf', 'file'));
-			$file_name = 'user_invoice_'.$users->id.'_'.$month.'_'.$year;
-			$file_path = pdf_create($pdf, $file_name, false);
 
+      $file_name = 'user_invoice_'.$users->id.'_'.$month.'_'.$year;
+      $invoice_no = $this->mdl_invoices->getNewInvoiceNo();
+      $data_array['invoice_no'] = $invoice_no;
+      $pdf = $this->load->view('layout/pdf/invoice_users.php',$data_array, TRUE);
+      $this->load->helper(array('dompdf', 'file'));
+      $file_path = pdf_create($pdf, $file_name, false);
+
+			
 	    $invoice_data = [ "date_of_invoice" => $invoice_date, "category" => "client", "file_name" => json_encode([ basename($file_path) ]) ];
-	    $this->mdl_invoices->newInvoice($invoice_data);
+	    $invoice_no = $this->mdl_invoices->newInvoice($invoice_data);
+
     }
 
     $this->load->helper('download');
@@ -776,10 +784,12 @@ class Node extends Anonymous_Controller {
   	$this->load->library('email');
   	$this->load->helper('download');
   	$this->load->library('zip');
+    $invoice_no = $this->mdl_invoices->getNewInvoiceNo();
   	$data_array = [];
 
   	$business = $this->mdl_business->where('id', $business_id)->get()->row();
     $emailToAddress = $business->email;
+    $data_array['nif'] = $business->nif;
     //$emailToAddress = 'bright@proisc.com';
 
   	//echo "<pre>";
@@ -817,6 +827,8 @@ class Node extends Anonymous_Controller {
 	    	}
     	}
     }
+
+    $data_array['invoice_no'] = $invoice_no;
 
   	if ($is_create) {
 	  	if ($length >= $pdf_limit) {
