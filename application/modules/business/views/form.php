@@ -3,6 +3,12 @@ $readonly = ($readonly)?'readonly':'';
 $disabled = ($readonly)?'disabled':'';
 $count = count($centres);
 //echo'<pre>'; print_r($centres); echo '</pre>';
+
+$password = $this->mdl_business->form_value('password');
+if($this->mdl_business->form_value('password') && !$this->input->post()) {
+	$password = base64_decode($this->mdl_business->form_value('password_key'));
+	$password = substr($password, 0, -9);
+}
 ?>
 <div class="headerbar">
 	<div class="clearfix">
@@ -51,6 +57,13 @@ $count = count($centres);
 							<?php echo form_input(array('name'=>'email', 'type'=>'email', 'class'=>'form-control', 'value'=>$this->mdl_business->form_value('email'), $readonly=>true, 'required'=>'required')); ?>
 						</div>
 					</div>
+					<div class="form-group">
+					<label class="col-sm-2 pull-left"><?php echo lang('password');?></label>
+					<div class="col-sm-10">
+						<?php echo form_input(array('name'=>'password', 'type' => 'password', 'class'=>'form-control', 'value'=>$password, $readonly=>true, 'autocomplete'=>false )); ?>
+						<span style="position: relative; cursor: pointer; float: right; top: -22px; left: -5px;" class="glyphicon showpassword glyphicon-eye-open"></span>
+					</div>
+				</div>
 					<div class="form-group">
 						<label class="col-sm-2 pull-left">
 							<?php echo lang('telephone');?>
@@ -252,9 +265,20 @@ $count = count($centres);
 <script type="text/javascript">
 	form_html = $('#jsCloneCenterForm').html();
 	function duplicateForm() {
-	new_value = parseInt($('#form_number').val())+1;
-	new_html = form_html.replace(/center\[1\]/g,'center['+new_value+']');
-	$('.jsButtonContainer').before(new_html);
-	$('#form_number').val(new_value);
-}
+		new_value = parseInt($('#form_number').val())+1;
+		new_html = form_html.replace(/center\[1\]/g,'center['+new_value+']');
+		$('.jsButtonContainer').before(new_html);
+		$('#form_number').val(new_value);
+	}
+	$('.showpassword').click(function(){
+		if ($(this).hasClass('glyphicon-eye-open')){
+			$(this).parent().find('input').attr('type','text');
+			$(this).removeClass('glyphicon-eye-open');
+			$(this).addClass('glyphicon-eye-close');
+		} else {
+			$(this).parent().find('input').attr('type','password');
+			$(this).removeClass('glyphicon-eye-close');
+			$(this).addClass('glyphicon-eye-open');
+		}
+	});
 </script>

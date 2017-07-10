@@ -44,6 +44,9 @@ class Business extends Admin_Controller {
 					}
 				}
 				$centers = $data['center'];
+				$password = $this->input->post('password');
+				$data['password'] = md5($password);
+				$data['password_key'] = base64_encode($password.'_catering');
 				unset($data['hours'], $data['minutes'], $data['btn_submit'], $data['center'], $data['form_number']);
 				if (is_null($id) || $id == '') {
 					$data['created_at'] = date('Y-m-d H:i:s');

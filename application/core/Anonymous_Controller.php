@@ -32,13 +32,25 @@ class Anonymous_Controller extends MX_Controller {
 			$controller_method = $this->router->fetch_method();
 			
 			$method_array = array('register', 'index', 'forgotPassword', 'changePassword', 'terms', 'clean_incomplete_orders');
+			$business_method = array('businessInvoice');
+
+			$is_credentials = $this->mdl_clients->is_login_clients();
 			//echo $controller_method;die;
-			if($this->mdl_clients->is_login_clients()) {
+			if($is_credentials['valid']) {
 				//echo "true";
 				//check the requested page is an register page.
-				if (!$this->input->post() && in_array($controller_method, $method_array) && !in_array($controller_method, array('terms', 'logout'))) {
-					//echo "hello";die;
-					redirect(PAGE_LANGUAGE.'/profile');
+				switch ($is_credentials['type_of_user']) {
+					case 'normal_user':
+						if (!$this->input->post() && ((in_array($controller_method, $method_array) && !in_array($controller_method, array('terms', 'logout'))) || (in_array($controller_method, $business_method)))) {
+							redirect(PAGE_LANGUAGE.'/profile');
+						}
+						break;
+					
+					case 'business_user':
+						if (!$this->input->post() && !in_array($controller_method, $business_method) && !in_array($controller_method, array('terms', 'logout'))) {
+							redirect(PAGE_LANGUAGE.'/business-invoice');
+						}
+						break;
 				}
 			} else {
 				//echo "false";

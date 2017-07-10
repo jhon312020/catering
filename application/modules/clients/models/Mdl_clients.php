@@ -246,11 +246,10 @@ class Mdl_clients extends Response_Model {
    */
     public function is_login_clients() {
 			$session = $this->session->get_userdata();
-			
-			if(isset($session['client_id'])) {
-				return true;
+			if(isset($session['client_id']) || isset($session['business_email'])) {
+				return [ "valid" => true, "type_of_user" => (isset($session['business_email'])?"business_user":"normal_user") ];
 			} else {
-				return false;
+				return [ "valid" => false ];
 			}
 		}
 		

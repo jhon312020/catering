@@ -33,6 +33,7 @@ class Node extends Anonymous_Controller {
     $this->load->model('plats/mdl_plats');
     $this->load->model('order_reports/mdl_order_reports');
     $this->load->model('centres/mdl_centres');
+    $this->load->model('invoices/mdl_invoices');
 
     $this->load->helper("order_helper");
     
@@ -123,12 +124,28 @@ class Node extends Anonymous_Controller {
 			if ($data) {
 				redirect(PAGE_LANGUAGE.'/menus');
 			} else {
-				redirect(PAGE_LANGUAGE);
+				$business_login_details = $this->mdl_business->check_credetials($this->input->post());
+				if ($business_login_details) {
+					redirect(PAGE_LANGUAGE.'/business-invoice');
+				} else {
+					redirect(PAGE_LANGUAGE);
+				}
 			}
 		}
     $res = array();
     
     $this->load->view('layout/templates/login', $res);
+  }
+
+  /**
+   * Function display_home
+   *
+   * @return  void
+   * 
+   */
+  public function businessInvoice () {
+		$data_array['invoice_list'] = $this->mdl_orders->get_invoice_monthwise();
+    $this->load->view('layout/templates/business-invoice', $data_array);
   }
 
 	/**
@@ -468,7 +485,7 @@ class Node extends Anonymous_Controller {
    * 
    */
   public function logout(){
-    $this->session->sess_destroy();
+  	$this->session->sess_destroy();
     redirect(PAGE_LANGUAGE);
   }
   
@@ -672,6 +689,185 @@ class Node extends Anonymous_Controller {
     $this->load->model('conditions/mdl_conditions');
     $template_vars['conditions'] = $this->mdl_conditions->get_terms_and_condtions();
     $this->load->view('layout/templates/terms', $template_vars);
+  }
+
+  /**
+	 * @Function invoiceUsers
+	 * Create the pdf for users with in month
+   * for payment success
+   * @params
+   *  	$month                   - Month which is going to generate the pdf for users
+   *  	$year                    - Year which is going to generate the pdf for users
+   *  	$user_id                 - Unique id for the users.
+	 *
+	 * @return
+	 * 		The generated pdf url.
+   * 
+	*/
+  public function invoiceUsers ($user_id, $month, $year) {
+  	//echo $user_id.'-----'.$month.'-----'.$year;die;
+  	$data_array = [];
+  	$date = '01-'.$month.'-'.$year;
+  	$month_text = date('F', strtotime($date));
+  	
+  	/*echo "<pre>";
+  	print_r($data_array);die;*/
+  	$users = $this->mdl_clients->where('id', $user_id)->get()->row();
+    $emailToAddress = $users->email;
+    //$emailToAddress = 'bright@proisc.com';
+
+    $invoice_date = date("Y-m-d", strtotime($date));
+    $invoice = $this->mdl_invoices->getInvoiceUsingDate($invoice_date, 'client');
+    $is_create = true;
+    if ($invoice) {
+    	$invoice_file_lists = json_decode($invoice->file_name, true);
+    	$file_path = 'uploads/temp/'.$invoice_file_lists[0];
+    	if (file_exists($file_path)) {
+    		$is_create = false;
+    	}
+    }
+
+    if ($is_create) {
+    	$data_array['orders'] = $this->mdl_orders->get_orders_by_user_month($user_id, $month, $year);
+    	$pdf = $this->load->view('layout/pdf/invoice_users.php',$data_array, TRUE);
+			$this->load->helper(array('dompdf', 'file'));
+			$file_name = 'user_invoice_'.$users->id.'_'.$month.'_'.$year;
+			$file_path = pdf_create($pdf, $file_name, false);
+
+	    $invoice_data = [ "date_of_invoice" => $invoice_date, "category" => "client", "file_name" => json_encode([ basename($file_path) ]) ];
+	    $this->mdl_invoices->newInvoice($invoice_data);
+    }
+
+    $this->load->helper('download');
+    force_download($file_path, null);
+
+    /*Email*/
+    /*$this->load->library('email');
+		$subject  = 'Pedido online orders for the month  '.$month_text.' '.$year;
+		$body = "Please find the attached pdf for orders in the month of ".$month_text.' '.$year;
+    $this->email->set_mailtype("html");
+    //Need to change admin email dynamically
+    $this->email->from($this->site_contact->email, 'Gumen-Catering');
+    $this->email->to($emailToAddress);
+    //$this->email->to('jeeva@proisc.com');
+    $this->email->subject($subject);
+    $this->email->message($body);
+    $this->email->attach($output);
+		$this->email->send();*/
+
+		return true;
+  }
+
+	/**
+	 * @Function invoiceBussiness
+	 * Create the pdf for bussiness with in month
+   * for payment success
+   * @params
+   *  	$month                   - Month which is going to generate the pdf for users
+   *  	$year                    - Year which is going to generate the pdf for users
+   *  	$business_id            - Unique id for the bussiness.
+	 *
+	 * @return
+	 * 		The generated pdf url.
+   * 
+	*/
+  public function invoiceBusiness ($business_id, $month, $year) {
+
+  	$this->load->library('email');
+  	$this->load->helper('download');
+  	$this->load->library('zip');
+  	$data_array = [];
+
+  	$business = $this->mdl_business->where('id', $business_id)->get()->row();
+    $emailToAddress = $business->email;
+    //$emailToAddress = 'bright@proisc.com';
+
+  	//echo "<pre>";
+  	$date = '01-'.$month.'-'.$year;
+  	$month_text = date('F', strtotime($date));
+  	$length = $this->mdl_orders->get_orders_by_business_month_count($business_id, $month, $year);
+  	//echo $length;die;
+  	$this->load->helper(array('dompdf', 'file'));
+  	$file_lists = [];
+  	$i = 0;
+  	$pdf_limit = PDF_LIMIT;
+
+  	$invoice_date = date("Y-m-d", strtotime($date));
+    $invoice = $this->mdl_invoices->getInvoiceUsingDate($invoice_date, 'business');
+    $is_create = false;
+    if ($invoice) {
+    	$invoice_file_lists = json_decode($invoice->file_name, true);
+    	foreach ($invoice_file_lists as $key => $file) {
+    		$file_path = 'uploads/temp/'.$file;
+    		if (!file_exists($file_path)) {
+	    		$is_create = true;
+	    	}
+    	}
+    } else {
+    	$is_create = true;
+    }
+
+    if (!$is_create) {
+    	foreach ($invoice_file_lists as $key => $file) {
+    		$file_path = 'uploads/temp/'.$file;
+    		if (file_exists($file_path)) {
+    			$file_lists[] = $file_path;
+    			$this->zip->read_file($file_path);
+	    		//force_download($file_path, null);
+	    	}
+    	}
+    }
+
+  	if ($is_create) {
+	  	if ($length >= $pdf_limit) {
+	  		$count = ceil($length/$pdf_limit);
+	  		//echo $count;die;
+	  		while ($count >= 1) {
+	  			$limit = $i + $pdf_limit;
+	  			if ($count == 1) {
+	  				$limit = $length % $pdf_limit;
+	  			}
+
+	  			/*PDF creation*/
+	  			$data_array['orders'] = $this->mdl_orders->get_orders_by_business_month($business_id, $month, $year, $i);
+	  			/*echo "<pre>";
+	  			print_r($data_array['orders']);die;*/
+	  			$pdf = $this->load->view('layout/pdf/invoice_business.php',$data_array, TRUE);		
+	  			$file_name = 'business_'.$business_id.'_'.$month.'_'.$year.'_'.($i + 1).'_to_'.$limit;
+	  			$file_path = pdf_create($pdf, $file_name, false);
+	  			$file_lists[] = $file_path;
+
+	  			$this->zip->read_file($file_path);
+
+	  			$count--;
+	  			$i+=$pdf_limit;
+	  		}
+	  	} else {
+
+	  		/*PDF creation*/
+	  		$data_array['orders'] = $this->mdl_orders->get_orders_by_business_month($business_id, $month, $year, $i);
+	  		/*echo "<pre>";
+				print_r($data_array['orders']);die;*/
+				$pdf = $this->load->view('layout/pdf/invoice_business.php',$data_array, TRUE);		
+				$file_name = 'business_'.$business_id.'_'.$month.'_'.$year;
+				$file_path = pdf_create($pdf, $file_name, false);
+				$file_lists[] = $file_path;
+
+				$this->zip->read_file($file_path);
+				//force_download($file_path, null);
+	  	}
+
+	  	$invoice_data = [ "date_of_invoice" => $invoice_date, "category" => "business", "file_name" => json_encode($file_lists) ];
+	    $this->mdl_invoices->newInvoice($invoice_data);
+	  }
+
+	  // Write the zip file to a folder on your server. Name it "invoice.zip"
+		$this->zip->archive('invoice.zip');
+
+		// Download the file to your desktop. Name it "invoice.zip"
+		$this->zip->download('invoice.zip');
+
+  	return true;
   }
 }
 ?>

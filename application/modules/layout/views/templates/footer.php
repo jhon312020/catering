@@ -8,6 +8,9 @@
 <script src="<?php echo base_url(); ?>assets/cc/js/bootstrap-multiselect.js"></script>
 <script src="<?php echo base_url(); ?>assets/cc/js/scripts.js"></script>
 <script src="<?php echo base_url(); ?>assets/cc/js/load-save.js"></script>
+<script src="<?php echo base_url(); ?>assets/cc/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/cc/js/dataTables.bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/cc/js/catering/web_custom.js"></script>
 <?php if (isset($backstretch) && $backstretch) { ?>
 	<script type='text/javascript'>
 		/*
