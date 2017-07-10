@@ -17,7 +17,7 @@ class Cron extends Anonymous_Controller {
 		$time = date('Y-m-d H:i:s', $newTime);*/
 
 		$qry = $this->db->from('orders')->where(array('order_code !='=>'', 'is_active'=>0))
-									->where("created_at < date_sub(now(),INTERVAL 5 MINUTE)")->get();
+									->where("created_at < date_sub(now(),INTERVAL 10 MINUTE)")->get();
 		if ($qry->num_rows()) {
 			$result = $qry->result_array();
 			foreach ($result as $key=>$record) {
