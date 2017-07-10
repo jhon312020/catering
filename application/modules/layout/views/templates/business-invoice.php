@@ -29,7 +29,6 @@ $this->load->view('navigation_menu');
     </thead>
     <tbody>
       <?php
-      	$business_id = $this->session->userdata('business_id');
         if($invoice_list) {
         	foreach($invoice_list as $invoice) {
         		$month = date('m', strtotime($invoice['created_at']));
@@ -37,7 +36,7 @@ $this->load->view('navigation_menu');
         ?>
       <tr>
         <td><?php echo date('F-Y', strtotime($invoice['created_at'])); ?></td>
-        <td style="text-align:center !important;"><a href='<?php echo site_url(PAGE_LANGUAGE."/invoice-business/$business_id/$month/$year"); ?>' class="btn btn-primary" ><i class="fa fa-download"></i></a></td>
+        <td style="text-align:center !important;"><a href='<?php echo site_url(PAGE_LANGUAGE."/invoice-business/$month/$year"); ?>' class="btn btn-primary" ><i class="fa fa-download"></i></a></td>
       </tr>
       <?php } } ?>
     </tbody>

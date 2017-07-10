@@ -137,17 +137,6 @@ class Node extends Anonymous_Controller {
     $this->load->view('layout/templates/login', $res);
   }
 
-  /**
-   * Function display_home
-   *
-   * @return  void
-   * 
-   */
-  public function businessInvoice () {
-		$data_array['invoice_list'] = $this->mdl_orders->get_invoice_monthwise();
-    $this->load->view('layout/templates/business-invoice', $data_array);
-  }
-
 	/**
    * Function register
    *
@@ -704,8 +693,8 @@ class Node extends Anonymous_Controller {
 	 * 		The generated pdf url.
    * 
 	*/
-  public function invoiceUsers ($user_id, $month, $year) {
-  	//echo $user_id.'-----'.$month.'-----'.$year;die;
+  public function invoiceUsers ($month, $year) {
+  	$user_id = $this->session->userdata('client_id');
   	$data_array = [];
     $invoice_no = '';
   	$date = '01-'.$month.'-'.$year;
@@ -721,9 +710,11 @@ class Node extends Anonymous_Controller {
     $invoice_date = date("Y-m-d", strtotime($date));
     $invoice = $this->mdl_invoices->getInvoiceUsingDate($invoice_date, 'client');
     $is_create = true;
+    $clients_path = 'clients/'.$user_id.'/'.$year.'/'.$month;
+
     if ($invoice) {
     	$invoice_file_lists = json_decode($invoice->file_name, true);
-    	$file_path = 'uploads/temp/'.$invoice_file_lists[0];
+    	$file_path = 'uploads/temp/'.$clients_path.'/'.$invoice_file_lists[0];
     	if (file_exists($file_path)) {
     		$is_create = true;
     	}
@@ -732,8 +723,11 @@ class Node extends Anonymous_Controller {
 
     if ($is_create) {
     	$data_array['orders'] = $this->mdl_orders->get_orders_by_user_month($user_id, $month, $year);
+    	$pdf = $this->load->view('layout/pdf/invoice_users.php',$data_array, TRUE);
+			$this->load->helper(array('dompdf', 'file'));
+			$file_name = $clients_path.'/user_invoice_'.$users->id.'_'.$month.'_'.$year;
+			$file_path = pdf_create($pdf, $file_name, false);
 
-      $file_name = 'user_invoice_'.$users->id.'_'.$month.'_'.$year;
       $invoice_no = $this->mdl_invoices->getNewInvoiceNo();
       $data_array['invoice_no'] = $invoice_no;
       $pdf = $this->load->view('layout/pdf/invoice_users.php',$data_array, TRUE);
@@ -779,8 +773,8 @@ class Node extends Anonymous_Controller {
 	 * 		The generated pdf url.
    * 
 	*/
-  public function invoiceBusiness ($business_id, $month, $year) {
-
+  public function invoiceBusiness ($month, $year) {
+  	$business_id = $this->session->userdata('business_id');
   	$this->load->library('email');
   	$this->load->helper('download');
   	$this->load->library('zip');
@@ -805,10 +799,13 @@ class Node extends Anonymous_Controller {
   	$invoice_date = date("Y-m-d", strtotime($date));
     $invoice = $this->mdl_invoices->getInvoiceUsingDate($invoice_date, 'business');
     $is_create = false;
+    $business_path = 'business/'.$business_id.'/'.$year.'/'.$month;
+
     if ($invoice) {
     	$invoice_file_lists = json_decode($invoice->file_name, true);
+
     	foreach ($invoice_file_lists as $key => $file) {
-    		$file_path = 'uploads/temp/'.$file;
+    		$file_path = 'uploads/temp/'.$business_path.'/'.$file;
     		if (!file_exists($file_path)) {
 	    		$is_create = true;
 	    	}
@@ -819,7 +816,7 @@ class Node extends Anonymous_Controller {
 
     if (!$is_create) {
     	foreach ($invoice_file_lists as $key => $file) {
-    		$file_path = 'uploads/temp/'.$file;
+    		$file_path = 'uploads/temp/'.$business_path.'/'.$file;
     		if (file_exists($file_path)) {
     			$file_lists[] = $file_path;
     			$this->zip->read_file($file_path);
@@ -837,7 +834,7 @@ class Node extends Anonymous_Controller {
 	  		while ($count >= 1) {
 	  			$limit = $i + $pdf_limit;
 	  			if ($count == 1) {
-	  				$limit = $length % $pdf_limit;
+	  				$limit = $length;
 	  			}
 
 	  			/*PDF creation*/
@@ -845,9 +842,9 @@ class Node extends Anonymous_Controller {
 	  			/*echo "<pre>";
 	  			print_r($data_array['orders']);die;*/
 	  			$pdf = $this->load->view('layout/pdf/invoice_business.php',$data_array, TRUE);		
-	  			$file_name = 'business_'.$business_id.'_'.$month.'_'.$year.'_'.($i + 1).'_to_'.$limit;
+	  			$file_name = $business_path.'/business_'.$business_id.'_'.$month.'_'.$year.'_'.($i + 1).'_to_'.$limit;
 	  			$file_path = pdf_create($pdf, $file_name, false);
-	  			$file_lists[] = $file_path;
+	  			$file_lists[] = basename($file_path);
 
 	  			$this->zip->read_file($file_path);
 
@@ -861,9 +858,9 @@ class Node extends Anonymous_Controller {
 	  		/*echo "<pre>";
 				print_r($data_array['orders']);die;*/
 				$pdf = $this->load->view('layout/pdf/invoice_business.php',$data_array, TRUE);		
-				$file_name = 'business_'.$business_id.'_'.$month.'_'.$year;
+				$file_name = $business_path.'/business_'.$business_id.'_'.$month.'_'.$year;
 				$file_path = pdf_create($pdf, $file_name, false);
-				$file_lists[] = $file_path;
+				$file_lists[] = basename($file_path);
 
 				$this->zip->read_file($file_path);
 				//force_download($file_path, null);
@@ -880,6 +877,28 @@ class Node extends Anonymous_Controller {
 		$this->zip->download('invoice.zip');
 
   	return true;
+  }
+
+  /**
+   * Function businessInvoice
+   *
+   * @return  void
+   * 
+   */
+  public function businessInvoice () {
+		$data_array['invoice_list'] = $this->mdl_orders->get_business_invoice_monthwise();
+    $this->load->view('layout/templates/business-invoice', $data_array);
+  }
+
+  /**
+   * Function userInvoice
+   *
+   * @return  void
+   * 
+   */
+  public function userInvoice () {
+		$data_array['invoice_list'] = $this->mdl_orders->get_user_invoice_monthwise();
+    $this->load->view('layout/templates/user-invoice', $data_array);
   }
 }
 ?>

@@ -32,7 +32,7 @@ class Anonymous_Controller extends MX_Controller {
 			$controller_method = $this->router->fetch_method();
 			
 			$method_array = array('register', 'index', 'forgotPassword', 'changePassword', 'terms', 'clean_incomplete_orders');
-			$business_method = array('businessInvoice');
+			$business_method = array('businessInvoice', 'invoiceBusiness');
 
 			$is_credentials = $this->mdl_clients->is_login_clients();
 			//echo $controller_method;die;
