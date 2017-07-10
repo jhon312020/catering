@@ -53,8 +53,17 @@ class Mdl_Invoices extends Response_Model {
   		$this->db->set([ "invoice_no" => $invoice_no ]);
   		$this->db->update('invoices');
 
-  		return true;
+  		return $invoice_no;
     } 
+
+    public function getNewInvoiceNo () {
+      $invoice_id = $this->db->query('select max(id) as last_id from tbl_invoices')->result();
+      if (isset($invoice_id[0])) {
+        return str_pad((string)$invoice_id[0]->last_id+1, 5, '0', STR_PAD_LEFT);
+      } else {
+        return str_pad('1', 5, '0', STR_PAD_LEFT);
+      }
+    }
 
 }
 

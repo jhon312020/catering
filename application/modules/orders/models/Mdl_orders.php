@@ -470,7 +470,7 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_user_month ($user_id, $month, $year) {
 
-		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.price), tbl_discount_applied.total_price) as price, orders.created_at, orders.client_id")
+		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.Total), tbl_discount_applied.total_price) as price, orders.created_at, orders.client_id")
 			->from("orders")
 			->join('tbl_discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
 			->where('orders.is_active', 1)
@@ -506,7 +506,7 @@ class Mdl_orders extends Response_Model {
 		*/
 			
 		$limit = PDF_LIMIT;
-		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.price), tbl_discount_applied.total_price) as price, orders.created_at, orders.client_id")
+		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.Total), tbl_discount_applied.total_price) as price, orders.created_at, orders.client_id")
 			->from("orders")
 			->join('tbl_discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
 			->where('orders.is_active', 1)
@@ -545,7 +545,7 @@ class Mdl_orders extends Response_Model {
 		
 		/*Select IF(tod.reference_no is null, CONCAT('unique_', tod.id), tod.reference_no) as ref_no, tod.client_id, IF(tda.id is null, SUM(tod.price), tda.total_price) as price, tod.created_at from tbl_orders tod left join tbl_discount_applied tda on tod.reference_no = tda.reference_no where tod.is_active = 1 and MONTH(tod.created_at) = '07' and YEAR(tod.created_at) = '2017' group by ref_no*/
 
-		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.price), tbl_discount_applied.total_price) as price, orders.created_at, orders.client_id")
+		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.Total), tbl_discount_applied.total_price) as price, orders.created_at, orders.client_id")
 			->from("orders")
 			->join('tbl_discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
 			->where('orders.is_active', 1)

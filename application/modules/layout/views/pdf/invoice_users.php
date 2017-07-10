@@ -124,7 +124,7 @@
 											NIF:
 										</td>
 										<td>
-											xxxxxxxx-X
+											<?php echo $dni; ?>
 										</td>
 									</tr>
 								</table>
@@ -142,7 +142,7 @@
 								n º
 							</span>
 							<span style="text-align:right !important;letter-spacing: 5px;">
-								
+								<?php echo $invoice_no; ?>
 							</span>
 						</span>
 					</div>
