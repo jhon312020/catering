@@ -323,3 +323,7 @@ button.multiselect:active:focus, button.multiselect.active:focus{
   border-width: 8px;
   margin-left: 45px !important;
 }
+.btn-color {
+	background-color: #c49e56 !important;
+	border-color: #c49e56 !important;
+}

@@ -574,18 +574,35 @@ class Mdl_orders extends Response_Model {
 	}
 
 	/**
-   * Function get_orders_list
+   * Function get_business_invoice_monthwise
    *
    * @return  Array
    * 
   */
-	public function get_invoice_monthwise() {
+	public function get_business_invoice_monthwise() {
 		$business_id = $this->session->userdata('business_id');
 		$invoice_list = $this->mdl_orders
 											->select('DATE(tbl_orders.created_at) as created_at')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->where('business.id', $business_id)
+											->group_by('YEAR(tbl_orders.created_at), MONTH(tbl_orders.created_at)')
+											->get()->result_array();
+											
+		return $invoice_list;
+	}
+
+	/**
+   * Function get_user_invoice_monthwise
+   *
+   * @return  Array
+   * 
+  */
+	public function get_user_invoice_monthwise() {
+		$client_id = $this->session->userdata('client_id');
+		$invoice_list = $this->mdl_orders
+											->select('DATE(tbl_orders.created_at) as created_at')
+											->where('orders.client_id', $client_id)
 											->group_by('YEAR(tbl_orders.created_at), MONTH(tbl_orders.created_at)')
 											->get()->result_array();
 											

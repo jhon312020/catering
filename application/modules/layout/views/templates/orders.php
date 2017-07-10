@@ -7,7 +7,10 @@ $this->load->view('navigation_menu');
     <div class="container">
       <div class="row">
         <h3 class="head_2"><?php echo lang('orders_list'); ?></h3>
-        <div class="col-sm-12 fix-left-right">
+        <!-- <div class="col-sm-12">
+        	<a href="<?php echo site_url(PAGE_LANGUAGE."/user-invoice"); ?>" class="btn btn-primary pull-right btn-color" style="margin-right:15px;"><?php echo lang('invoice'); ?></a>
+        </div> -->
+        <div class="col-sm-12 fix-left-right" style="margin-top:15px;">
           <?php $this->load->view('orders-web');?>
           <?php $this->load->view('orders-mobile');?>
         </div>
