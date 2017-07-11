@@ -470,30 +470,34 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_orders_by_user_month ($user_id, $month, $year) {
 
-		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.Total), tbl_discount_applied.total_price) as price, orders.created_at, orders.client_id")
+		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, tbl_orders.reference_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.Total), tbl_discount_applied.total_price) as ref_price, orders.created_at, clients.id, orders.client_id, clients.name as invoice_no, clients.surname, clients.client_code as code, business.name as business, clients.telephone as phone, clients.billing_data as address")
 			->from("orders")
-			->join('tbl_discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
+			->join('discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
+			->join('clients', 'clients.id = orders.client_id', 'left')
+			->join('business', 'business.id = clients.business_id', 'left')
 			->where('orders.is_active', 1)
-			->where('orders.client_id', $user_id)
+			->where('clients.id', $user_id)
 			->where('MONTH(tbl_orders.created_at)', $month)
 			->where('YEAR(tbl_orders.created_at)', $year)
 			->group_by("ref_no");
 
 		$subQuery =  $this->db->get_compiled_select();
 
+		//echo $subQuery;die;
 		$query = "
-		SELECT tbl_clients.name as invoice_to, tbl_clients.surname, tbl_clients.client_code as code, tbl_business.name as business, DATE(tbl_orders.created_at) as created_at, SUM(tbl_orders.price) as price, tbl_clients.telephone as phone, tbl_clients.billing_data as address 
+			SELECT tbl_orders.*, SUM(tbl_orders.ref_price) as price
 			from ({$subQuery}) as tbl_orders 
-			left join tbl_clients on tbl_clients.id = tbl_orders.client_id 
-			left join tbl_business on tbl_business.id = tbl_clients.business_id 
-			left join tbl_centres on tbl_centres.Id = tbl_clients.centre_id
-			group by DATE(tbl_orders.created_at), tbl_orders.client_id
-			order by tbl_orders.created_at asc";
-		
+			group by DATE(tbl_orders.created_at), 
+			tbl_orders.client_id,
+			tbl_orders.reference_no
+			order by tbl_orders.created_at asc
+		";
+
 		$orders_list_by_month = $this->db->query($query)->result_array();
 
 		return $orders_list_by_month;
 	}
+
 	/**
    * Get the order by company id amd month
    *
@@ -501,34 +505,35 @@ class Mdl_orders extends Response_Model {
    * 
   */
 	public function get_orders_by_business_month ($company_id, $month, $year, $offset = null) {
-		/*
-			SELECT tor.* FROM `tbl_orders` tor left join tbl_clients tc on tc.id = tor.client_id left join tbl_business tb on tb.id = tc.business_id   where tor.is_active=1 and tb.id = 1 and month(tor.order_date) = 03 and year(tor.order_date) = 2017  group by tor.client_id, tor.order_date
-		*/
-			
+
 		$limit = PDF_LIMIT;
-		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.Total), tbl_discount_applied.total_price) as price, orders.created_at, orders.client_id")
+		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, tbl_orders.reference_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.Total), tbl_discount_applied.total_price) as ref_price, orders.created_at, orders.client_id, clients.name, clients.surname, clients.client_code, business.name as business, business.telephone as phone, business.CodiEmpresa as code, business.name as invoice_to ")
 			->from("orders")
-			->join('tbl_discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
+			->join('discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
+			->join('clients', 'clients.id = orders.client_id', 'left')
+			->join('business', 'business.id = clients.business_id', 'left')
 			->where('orders.is_active', 1)
+			->where('business.id', $company_id)
 			->where('MONTH(tbl_orders.created_at)', $month)
 			->where('YEAR(tbl_orders.created_at)', $year)
 			->group_by("ref_no");
 
 		$subQuery =  $this->db->get_compiled_select();
 
-		$query = "
-		SELECT tbl_clients.id, tbl_clients.name, tbl_clients.surname, tbl_clients.client_code, tbl_business.name as business, DATE(tbl_orders.created_at) as created_at, SUM(tbl_orders.price) as price, tbl_business.telephone as phone, tbl_business.CodiEmpresa as code, tbl_business.name as invoice_to 
-		from ({$subQuery}) as tbl_orders 
-		left join tbl_clients on tbl_clients.id = tbl_orders.client_id 
-		left join tbl_business on tbl_business.id = tbl_clients.business_id 
-		left join tbl_centres on tbl_centres.Id = tbl_clients.centre_id 
-		where tbl_business.id = $company_id 
-		group by DATE(tbl_orders.created_at), tbl_orders.client_id
-		order by tbl_orders.created_at asc";
 		//echo $subQuery;die;
-		if ($offset >= 0) {
+		$query = "
+			SELECT tbl_orders.*, SUM(tbl_orders.ref_price) as price
+			from ({$subQuery}) as tbl_orders 
+			group by DATE(tbl_orders.created_at), 
+			tbl_orders.client_id,
+			tbl_orders.reference_no
+			order by tbl_orders.created_at asc
+		";
+		//echo $subQuery;die;
+		if ($offset && $offset >= 0) {
 			$query .= " limit $limit offset $offset";
 		}
+
 		
 		$orders_list_by_month = $this->db->query($query)->result_array();
 
@@ -545,26 +550,26 @@ class Mdl_orders extends Response_Model {
 		
 		/*Select IF(tod.reference_no is null, CONCAT('unique_', tod.id), tod.reference_no) as ref_no, tod.client_id, IF(tda.id is null, SUM(tod.price), tda.total_price) as price, tod.created_at from tbl_orders tod left join tbl_discount_applied tda on tod.reference_no = tda.reference_no where tod.is_active = 1 and MONTH(tod.created_at) = '07' and YEAR(tod.created_at) = '2017' group by ref_no*/
 
-		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.Total), tbl_discount_applied.total_price) as price, orders.created_at, orders.client_id")
+		$this->db->select("IF(tbl_orders.reference_no is null, CONCAT('unique_', tbl_orders.id), tbl_orders.reference_no) as ref_no, tbl_orders.reference_no, IF(tbl_discount_applied.id is null, SUM(tbl_orders.Total), tbl_discount_applied.total_price) as ref_price, orders.created_at, orders.client_id, clients.name, clients.surname, clients.client_code, business.name as business, business.telephone as phone, business.CodiEmpresa as code, business.name as invoice_to ")
 			->from("orders")
-			->join('tbl_discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
+			->join('discount_applied', 'discount_applied.reference_no = orders.reference_no', 'left')
+			->join('clients', 'clients.id = orders.client_id', 'left')
+			->join('business', 'business.id = clients.business_id', 'left')
 			->where('orders.is_active', 1)
+			->where('business.id', $company_id)
 			->where('MONTH(tbl_orders.created_at)', $month)
 			->where('YEAR(tbl_orders.created_at)', $year)
 			->group_by("ref_no");
 
 		$subQuery =  $this->db->get_compiled_select();
 
-		echo $subQuery;die;
+		//echo $subQuery;die;
 		$query = $this->db->query("
-			SELECT tbl_clients.name, tbl_clients.surname, tbl_clients.client_code, tbl_business.name as business, tbl_orders.created_at, SUM(tbl_orders.price) as price, tbl_business.telephone as phone, tbl_business.CodiEmpresa as code, tbl_business.name as invoice_to 
+			SELECT tbl_orders.*, SUM(tbl_orders.ref_price) as price
 			from ({$subQuery}) as tbl_orders 
-			left join tbl_clients on tbl_clients.id = tbl_orders.client_id 
-			left join tbl_business on tbl_business.id = tbl_clients.business_id 
-			left join tbl_centres on tbl_centres.Id = tbl_clients.centre_id 
-			where tbl_business.id = $company_id 
 			group by DATE(tbl_orders.created_at), 
-			tbl_orders.client_id
+			tbl_orders.client_id,
+			tbl_orders.reference_no
 			order by tbl_orders.created_at asc
 		");
 
@@ -581,13 +586,16 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_business_invoice_monthwise() {
 		$business_id = $this->session->userdata('business_id');
+		//$today = date('Y-m-01');
 		$invoice_list = $this->mdl_orders
 											->select('DATE(tbl_orders.created_at) as created_at')
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->where('business.id', $business_id)
 											->where('tbl_orders.is_active', 1)
+											//->where('DATE(tbl_orders.created_at) < ', $today)
 											->group_by('YEAR(tbl_orders.created_at), MONTH(tbl_orders.created_at)')
+											->order_by('DATE(tbl_orders.created_at) desc')
 											->get()->result_array();
 											
 		return $invoice_list;
@@ -601,11 +609,14 @@ class Mdl_orders extends Response_Model {
   */
 	public function get_user_invoice_monthwise() {
 		$client_id = $this->session->userdata('client_id');
+		//$today = date('Y-m-01');
 		$invoice_list = $this->mdl_orders
 											->select('DATE(tbl_orders.created_at) as created_at')
 											->where('orders.client_id', $client_id)
 											->where('orders.is_active', 1)
+											//->where('DATE(tbl_orders.created_at) < ', $today)
 											->group_by('YEAR(tbl_orders.created_at), MONTH(tbl_orders.created_at)')
+											->order_by('DATE(tbl_orders.created_at) desc')
 											->get()->result_array();
 											
 		return $invoice_list;
