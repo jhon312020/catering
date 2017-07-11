@@ -19,6 +19,7 @@ $this->load->view('navigation_menu');
   	text-align: left !important;
   }
 </style>
+<div class="container">
 <div class="col-sm-12 fix-left-right mob-hide">
   <table class="table table-striped dataTable">
     <thead>
@@ -41,6 +42,7 @@ $this->load->view('navigation_menu');
       <?php } } ?>
     </tbody>
   </table>
+</div>
 </div>
 <?php
 $this->load->view('footer');

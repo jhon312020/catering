@@ -716,7 +716,7 @@ class Node extends Anonymous_Controller {
     	$invoice_file_lists = json_decode($invoice->file_name, true);
     	$file_path = 'uploads/temp/'.$clients_path.'/'.$invoice_file_lists[0];
     	if (file_exists($file_path)) {
-    		$is_create = true;
+    		$is_create = false;
     	}
     }
 
@@ -795,6 +795,7 @@ class Node extends Anonymous_Controller {
   	$file_lists = [];
   	$i = 0;
   	$pdf_limit = PDF_LIMIT;
+    $pdf_limit = 1000;
 
   	$invoice_date = date("Y-m-d", strtotime($date));
     $invoice = $this->mdl_invoices->getInvoiceUsingDate($invoice_date, 'business');

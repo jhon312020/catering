@@ -555,7 +555,7 @@ class Mdl_orders extends Response_Model {
 
 		$subQuery =  $this->db->get_compiled_select();
 
-		//echo $subQuery;die;
+		echo $subQuery;die;
 		$query = $this->db->query("
 			SELECT tbl_clients.name, tbl_clients.surname, tbl_clients.client_code, tbl_business.name as business, tbl_orders.created_at, SUM(tbl_orders.price) as price, tbl_business.telephone as phone, tbl_business.CodiEmpresa as code, tbl_business.name as invoice_to 
 			from ({$subQuery}) as tbl_orders 
@@ -586,6 +586,7 @@ class Mdl_orders extends Response_Model {
 											->join('clients', 'clients.id = orders.client_id', 'left')
 											->join('business', 'business.id = clients.business_id', 'left')
 											->where('business.id', $business_id)
+											->where('tbl_orders.is_active', 1)
 											->group_by('YEAR(tbl_orders.created_at), MONTH(tbl_orders.created_at)')
 											->get()->result_array();
 											
@@ -603,6 +604,7 @@ class Mdl_orders extends Response_Model {
 		$invoice_list = $this->mdl_orders
 											->select('DATE(tbl_orders.created_at) as created_at')
 											->where('orders.client_id', $client_id)
+											->where('orders.is_active', 1)
 											->group_by('YEAR(tbl_orders.created_at), MONTH(tbl_orders.created_at)')
 											->get()->result_array();
 											
