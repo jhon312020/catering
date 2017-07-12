@@ -555,7 +555,7 @@ class Mdl_orders extends Response_Model {
 
 		$subQuery =  $this->db->get_compiled_select();
 
-		echo $subQuery;die;
+		//echo $subQuery;die;
 		$query = $this->db->query("
 			SELECT tbl_clients.name, tbl_clients.surname, tbl_clients.client_code, tbl_business.name as business, tbl_orders.created_at, SUM(tbl_orders.price) as price, tbl_business.telephone as phone, tbl_business.CodiEmpresa as code, tbl_business.name as invoice_to 
 			from ({$subQuery}) as tbl_orders 
